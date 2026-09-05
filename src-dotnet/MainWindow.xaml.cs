@@ -1,191 +1,186 @@
 using System;
-using System.Diagnostics;
 using System.IO;
-using System.Text.Json;
 using System.Windows;
-using Microsoft.Web.WebView2.Core;
+using System.Windows.Input;
+using System.Windows.Interop;
 
 namespace TeachMeAI;
 
-/// <summary>
-/// TeachMe AI Main WPF Window Host
-/// Bridges Windows 11 Native APIs & Rust Engine with WebView2 Transparent Acrylic HUD
-/// </summary>
 public partial class MainWindow : Window
 {
     private GlobalHotKey? _globalHotKey;
+    private DwellEngine? _dwellEngine;
 
     public MainWindow()
     {
         InitializeComponent();
 
-        // Position across virtual desktop (supporting multi-monitor configurations)
-        this.Left = SystemParameters.VirtualScreenLeft;
-        this.Top = SystemParameters.VirtualScreenTop;
-        this.Width = SystemParameters.VirtualScreenWidth;
-        this.Height = SystemParameters.VirtualScreenHeight;
+        string logFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TeachMeAI", "run.log");
+
+        this.Closed += (s, e) =>
+        {
+            try { File.AppendAllText(logFile, $"[TeachMe AI] MainWindow Closed event fired. Stack:\n{Environment.StackTrace}\n"); } catch { }
+        };
+
+        this.Deactivated += (s, e) =>
+        {
+            try { File.AppendAllText(logFile, $"[TeachMe AI] MainWindow Deactivated event fired.\n"); } catch { }
+        };
     }
 
-    private async void Window_Loaded(object sender, RoutedEventArgs e)
+    private void Window_Loaded(object sender, RoutedEventArgs e)
     {
+        string logFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TeachMeAI", "run.log");
+        try { File.AppendAllText(logFile, $"[TeachMe AI] Window_Loaded entered at {DateTime.Now}\n"); } catch { }
+
         try
         {
-            // Initialize WebView2 with 100% transparent composition
-            var env = await CoreWebView2Environment.CreateAsync(null, Path.Combine(Path.GetTempPath(), "TeachMeAI_WebView2Profile"));
-            await WebViewControl.EnsureCoreWebView2Async(env);
+            IntPtr hwnd = new WindowInteropHelper(this).Handle;
+            try { File.AppendAllText(logFile, $"[TeachMe AI] HWND acquired: {hwnd}\n"); } catch { }
 
-            WebViewControl.DefaultBackgroundColor = System.Drawing.Color.Transparent;
-            WebViewControl.CoreWebView2.Settings.IsStatusBarEnabled = false;
-            WebViewControl.CoreWebView2.Settings.AreDevToolsEnabled = true;
-
-            // Wire IPC Message handling
-            WebViewControl.CoreWebView2.WebMessageReceived += OnWebMessageReceived;
-
-            // Navigate to local wwwroot UI
-            string localHtmlPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "wwwroot", "index.html");
-            if (File.Exists(localHtmlPath))
+            // 1. Global HotKeys
+            try
             {
-                WebViewControl.CoreWebView2.Navigate(new Uri(localHtmlPath).AbsoluteUri);
+                _globalHotKey = new GlobalHotKey();
+                _globalHotKey.RegisterWindow(hwnd);
+                _globalHotKey.OnSnipTriggered += HandleSnipShortcut;
+                _globalHotKey.OnSettingsTriggered += HandleSettingsShortcut;
+                _globalHotKey.OnUserKeyboardActivity += () => _dwellEngine?.NotifyUserActivity();
+                try { File.AppendAllText(logFile, "[TeachMe AI] GlobalHotKey initialized with Shift+A and Shift+C.\n"); } catch { }
             }
-            else
+            catch (Exception ex)
             {
-                // Fallback to project root if running from bin
-                string fallbackPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\wwwroot\index.html"));
-                if (File.Exists(fallbackPath))
+                try { File.AppendAllText(logFile, $"[TeachMe AI] HotKey setup error: {ex.Message}\n"); } catch { }
+            }
+
+            // 2. Native Mouse Dwell Radar
+            try
+            {
+                _dwellEngine = new DwellEngine();
+                _dwellEngine.OnDwellTriggered += (data, bytes, x, y) =>
                 {
-                    WebViewControl.CoreWebView2.Navigate(new Uri(fallbackPath).AbsoluteUri);
-                }
+                    Dispatcher.Invoke(() =>
+                    {
+                        HudWindow.Instance.ShowInspection(data, bytes, x, y);
+                    });
+                };
+                _dwellEngine.Start();
+                try { File.AppendAllText(logFile, "[TeachMe AI] DwellEngine initialized and started.\n"); } catch { }
+            }
+            catch (Exception ex)
+            {
+                try { File.AppendAllText(logFile, $"[TeachMe AI] DwellEngine setup error: {ex.Message}\n"); } catch { }
             }
 
-            // Register global low-level Windows keyboard hook for Shift + A / Ctrl + Shift + A / Alt + A
-            _globalHotKey = new GlobalHotKey();
-            _globalHotKey.OnSnipTriggered += HandleGlobalSnipShortcut;
-
-            Debug.WriteLine("[TeachMe AI] Host initialized successfully with Rust/Win32 Interop.");
+            // 3. Connect HUD callbacks
+            try
+            {
+                HudWindow.Instance.OnRequestSnipping += StartSnipping;
+                try { File.AppendAllText(logFile, "[TeachMe AI] HUD callback connected.\n"); } catch { }
+            }
+            catch (Exception ex)
+            {
+                try { File.AppendAllText(logFile, $"[TeachMe AI] HUD setup error: {ex.Message}\n"); } catch { }
+            }
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Error inicializando TeachMe AI Engine: {ex.Message}", "TeachMe AI Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            try { File.AppendAllText(logFile, $"[TeachMe AI] Window_Loaded fatal: {ex}\n"); } catch { }
         }
     }
 
-    private void HandleGlobalSnipShortcut()
+    private void HandleSnipShortcut()
     {
         Dispatcher.Invoke(() =>
         {
-            this.Show();
-            this.Activate();
-            this.Topmost = true;
-
-            // Dispatch command to WebView2 frontend
-            var msg = new { action = "trigger_snipping" };
-            WebViewControl.CoreWebView2?.PostWebMessageAsJson(JsonSerializer.Serialize(msg));
+            StartSnipping();
         });
     }
 
-    private void OnWebMessageReceived(object? sender, CoreWebView2WebMessageReceivedEventArgs e)
+    private void HandleSettingsShortcut()
     {
-        try
+        Dispatcher.Invoke(() =>
         {
-            string rawJson = e.WebMessageAsJson;
-            using var doc = JsonDocument.Parse(rawJson);
-            var root = doc.RootElement;
+            HudWindow.Instance.ShowSettingsOrAdjustments();
+        });
+    }
 
-            if (root.TryGetProperty("action", out var actionProp))
+    private void StartSnipping()
+    {
+        string logFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TeachMeAI", "run.log");
+        try { File.AppendAllText(logFile, $"[TeachMe AI] StartSnipping invoked at {DateTime.Now}\n"); } catch { }
+
+        var snipWin = new SnippingWindow();
+        snipWin.OnSnipCompleted += (bytes, data, x, y) =>
+        {
+            Dispatcher.Invoke(() =>
             {
-                string action = actionProp.GetString() ?? string.Empty;
+                try { File.AppendAllText(logFile, $"[TeachMe AI] OnSnipCompleted: {data.Name} ({data.ProcessName}), Showing HUD.\n"); } catch { }
+                HudWindow.Instance.ShowInspection(data, bytes, x, y);
+            });
+        };
+        snipWin.Show();
+    }
 
-                switch (action)
-                {
-                    case "snip_completed":
-                        HandleSnipCompleted(root);
-                        break;
-
-                    case "query_window_under_cursor":
-                        HandleQueryWindow(root);
-                        break;
-
-                    case "close_app":
-                        this.Close();
-                        break;
-
-                    case "hide_overlay":
-                        this.Hide();
-                        break;
-
-                    case "minimize_app":
-                        this.WindowState = WindowState.Minimized;
-                        break;
-                }
-            }
-        }
-        catch (Exception ex)
+    private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        if (e.LeftButton == MouseButtonState.Pressed)
         {
-            Debug.WriteLine($"[TeachMe AI] WebMessage error: {ex.Message}");
+            this.DragMove();
         }
     }
 
-    private void HandleSnipCompleted(JsonElement root)
+    private void BtnTriggerSnipping_Click(object sender, RoutedEventArgs e)
     {
-        int x = root.GetProperty("x").GetInt32();
-        int y = root.GetProperty("y").GetInt32();
-        int width = root.GetProperty("width").GetInt32();
-        int height = root.GetProperty("height").GetInt32();
-
-        // 1. Capture real pixels from Windows desktop
-        string base64Image = RustNativeBridge.CaptureRectToBase64(x, y, width, height);
-
-        // 2. Query target window beneath center of snip
-        int centerX = x + (width / 2);
-        int centerY = y + (height / 2);
-        var winInfo = RustNativeBridge.InspectWindowAtPoint(centerX, centerY);
-
-        // 3. Send rich result back to WebView2 UI
-        var response = new
-        {
-            action = "snip_result",
-            x = x,
-            y = y,
-            width = width,
-            height = height,
-            title = winInfo.Title,
-            process = winInfo.ProcessName,
-            pid = winInfo.ProcessId,
-            hwnd = winInfo.Hwnd.ToInt64(),
-            image = base64Image,
-            isRustEngine = RustNativeBridge.IsRustEngineActive
-        };
-
-        string json = JsonSerializer.Serialize(response);
-        WebViewControl.CoreWebView2.PostWebMessageAsJson(json);
+        StartSnipping();
     }
 
-    private void HandleQueryWindow(JsonElement root)
+    private void BtnOpenHud_Click(object sender, RoutedEventArgs e)
     {
-        int x = root.GetProperty("x").GetInt32();
-        int y = root.GetProperty("y").GetInt32();
-
-        var winInfo = RustNativeBridge.InspectWindowAtPoint(x, y);
-
-        var response = new
+        var dummyData = new InspectionData
         {
-            action = "window_inspection_result",
-            x = x,
-            y = y,
-            title = winInfo.Title,
-            process = winInfo.ProcessName,
-            pid = winInfo.ProcessId,
-            hwnd = winInfo.Hwnd.ToInt64(),
-            isRustEngine = RustNativeBridge.IsRustEngineActive
+            Name = "TeachMe AI Inspector",
+            ProcessName = "TeachMeAI.exe",
+            ProcessId = (uint)System.Diagnostics.Process.GetCurrentProcess().Id,
+            Summary = "Panel principal de TeachMe AI activo. Pulsa 'Shift + A' para seleccionar cualquier área de tu escritorio.",
+            VerdictText = "Sistema Activo • Listo para Recortar",
+            SafetyTag = "Seguro",
+            ActionTag = "Recortar"
         };
+        HudWindow.Instance.ShowInspection(dummyData, null, (int)(this.Left + this.Width + 10), (int)this.Top);
+    }
 
-        string json = JsonSerializer.Serialize(response);
-        WebViewControl.CoreWebView2.PostWebMessageAsJson(json);
+    private void BtnMinimize_Click(object sender, RoutedEventArgs e)
+    {
+        this.WindowState = WindowState.Minimized;
+    }
+
+    private void BtnClose_Click(object sender, RoutedEventArgs e)
+    {
+        this.Hide();
+    }
+
+    private bool _isExplicitExit = false;
+
+    private void BtnQuit_Click(object sender, RoutedEventArgs e)
+    {
+        _isExplicitExit = true;
+        Application.Current.Shutdown();
     }
 
     private void Window_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
     {
+        string logFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TeachMeAI", "run.log");
+        try { File.AppendAllText(logFile, $"[TeachMe AI] Window_Closing triggered. ExplicitExit: {_isExplicitExit}. Cancel: {!_isExplicitExit}\n"); } catch { }
+
+        if (!_isExplicitExit)
+        {
+            e.Cancel = true;
+            this.Hide();
+            return;
+        }
+
+        _dwellEngine?.Stop();
         _globalHotKey?.Dispose();
-        _globalHotKey = null;
     }
 }

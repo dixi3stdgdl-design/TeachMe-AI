@@ -1813,3 +1813,178 @@ kbd {
   color: var(--text-primary);
   border-color: var(--accent-current);
 }
+
+/* ========================================================================== */
+/* GEMINI AI CONFIGURATION & NEURAL SHIMMER STYLES                            */
+/* ========================================================================== */
+
+.ai-config-section {
+  background: rgba(10, 14, 24, 0.65);
+  border: 1px solid var(--border-luminous);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  margin-bottom: 24px;
+}
+
+.section-badge-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.ai-status-pill {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: all 0.25s var(--spring-ease);
+}
+
+.ai-status-pill.connected {
+  background: rgba(0, 245, 160, 0.18);
+  color: var(--accent-cyan);
+  border-color: rgba(0, 245, 160, 0.45);
+  box-shadow: 0 0 12px rgba(0, 245, 160, 0.25);
+}
+
+.tuning-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin-bottom: 12px;
+}
+
+.input-group-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.fluent-input {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #fff;
+  font-family: var(--font-mono);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.fluent-input:focus {
+  border-color: var(--accent-current);
+  box-shadow: 0 0 0 2px var(--accent-current-dim);
+}
+
+.btn-toggle-reveal {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0 10px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-toggle-reveal:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.select-group-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.fluent-select {
+  background: rgba(10, 14, 25, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 12px;
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+}
+
+.fluent-select:focus {
+  border-color: var(--accent-current);
+}
+
+.fluent-select option {
+  background: #0a0e19;
+  color: #fff;
+}
+
+.button-row {
+  display: flex;
+  gap: 8px;
+}
+
+.primary-accent-btn {
+  flex: 1;
+  background: var(--accent-current);
+  color: #060811;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  padding: 9px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.primary-accent-btn:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+
+.secondary-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-secondary);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.secondary-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* Card Neural Analyzing Shimmer */
+.card-analyzing-shimmer {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--acrylic-radius);
+  background: linear-gradient(90deg, transparent, var(--accent-current-dim), transparent);
+  background-size: 200% 100%;
+  animation: shimmerMove 1.5s infinite;
+  pointer-events: none;
+  z-index: 10;
+  display: none;
+}
+
+.teachme-overlay-card.analyzing .card-analyzing-shimmer {
+  display: block;
+}
+
+@keyframes shimmerMove {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+

@@ -624,10 +624,17 @@ const state = {
   dwellAnimationFrame: null,
   dwellAnchorMouse: { x: 0, y: 0 },
   activeTargetEl: null,
+  mouseStillTimer: null,
 
   // Hover Bridge (permite mover el mouse hacia la tarjeta sin que desaparezca)
   isMouseOverCard: false,
-  hoverLeaveTimeout: null
+  hoverLeaveTimeout: null,
+
+  // Motor Multimodal de Inteligencia Artificial (Google Gemini)
+  geminiApiKey: localStorage.getItem('teachme_gemini_api_key') || '',
+  geminiModel: localStorage.getItem('teachme_gemini_model') || 'gemini-2.5-flash',
+  lastCapturedImage: null,
+  isAnalyzing: false
 };
 
 // Cached DOM Elements
@@ -645,7 +652,15 @@ const DOM = {
   cardOcrText: document.getElementById('cardOcrText'),
   btnCopyOcr: document.getElementById('btnCopyOcr'),
   
-  // Dwell Indicator (5s Radial Countdown & Interactive Scanner)
+  // Gemini AI Engine Controls
+  inputApiKey: document.getElementById('inputApiKey'),
+  btnToggleKeyVisibility: document.getElementById('btnToggleKeyVisibility'),
+  selectAiModel: document.getElementById('selectAiModel'),
+  btnSaveApiKey: document.getElementById('btnSaveApiKey'),
+  btnTestApiKey: document.getElementById('btnTestApiKey'),
+  aiStatusPill: document.getElementById('aiStatusPill'),
+
+  // Dwell Indicator (3s Radial Countdown & Interactive Scanner)
   mouseDwellIndicator: document.getElementById('mouseDwellIndicator'),
   dwellProgressCircle: document.getElementById('dwellProgressCircle'),
   dwellTimeText: document.getElementById('dwellTimeText'),
@@ -790,26 +805,56 @@ function updateClock() {
 
 // Event Listeners
 function setupEventListeners() {
-  // Global Mouse Move
+  // Global Mouse Move & Universal Stillness Tracker
   window.addEventListener('mousemove', (e) => {
     state.mousePos.x = e.clientX;
     state.mousePos.y = e.clientY;
 
-    // Reposition active dwell indicator with mouse
+    // Si el recorte está activo, manejar el arrastre
+    if (state.isSnipping) {
+      handleSnipDrag(e);
+      return;
+    }
+
+    // Reposicionar el indicador radial de dwell si está activo
     if (state.dwellAnimationFrame) {
       DOM.mouseDwellIndicator.style.left = `${e.clientX}px`;
       DOM.mouseDwellIndicator.style.top = `${e.clientY}px`;
 
-      // Check if mouse moved beyond resting tolerance threshold
+      // Cancelar dwell si el ratón se mueve bruscamente
       const dist = Math.hypot(e.clientX - state.dwellAnchorMouse.x, e.clientY - state.dwellAnchorMouse.y);
-      if (dist > 15) {
-        // User is actively moving mouse; reset dwell timer to require fresh rest
-        state.dwellAnchorMouse = { x: e.clientX, y: e.clientY };
-        state.dwellStartTime = performance.now();
+      if (dist > 14) {
+        cancelDwellCountdown();
       }
     }
 
-    // Update Specular Highlight coordinates relative to card
+    // Limpiar temporizador de reposo previo
+    if (state.mouseStillTimer) {
+      clearTimeout(state.mouseStillTimer);
+      state.mouseStillTimer = null;
+    }
+
+    // Verificar si el cursor está sobre la UI del HUD, cajón o dock superior
+    const targetEl = document.elementFromPoint(e.clientX, e.clientY);
+    const isOverUi = targetEl && (targetEl.closest('#teachmeOverlayCard') || targetEl.closest('#designStudioDrawer') || targetEl.closest('.top-nav-bar'));
+
+    // Detector Universal de Reposo: si el ratón se detiene durante 250ms fuera de la UI, arrancar Dwell
+    if (!state.isPinned && !isOverUi && !state.dwellAnimationFrame) {
+      state.mouseStillTimer = setTimeout(() => {
+        const el = document.elementFromPoint(e.clientX, e.clientY);
+        if (!el || el.closest('#teachmeOverlayCard') || el.closest('#designStudioDrawer') || el.closest('.top-nav-bar')) return;
+
+        let targetId = el.getAttribute('data-target-id') || el.closest('[data-target-id]')?.getAttribute('data-target-id');
+        if (!targetId) {
+          targetId = 'target_at_' + Math.round(e.clientX) + '_' + Math.round(e.clientY);
+        }
+        state.currentTargetKey = targetId;
+        state.activeTargetEl = el;
+        startDwellCountdown(el, targetId);
+      }, 250);
+    }
+
+    // Actualizar coordenadas de resplandor especular
     if (state.specular) {
       const cardRect = DOM.card.getBoundingClientRect();
       const relX = ((e.clientX - cardRect.left) / cardRect.width) * 100;
@@ -934,20 +979,25 @@ function setupEventListeners() {
   
   // Keyboard Shortcuts (Shift + A for Snipping, Space to Skip Dwell, Esc to Close)
   window.addEventListener('keydown', (e) => {
-    // Si la espera de 5s está activa y se pulsa Espacio, se abre de inmediato
-    if (e.code === 'Space' && state.dwellAnimationFrame && state.activeTargetEl) {
-      e.preventDefault();
-      onDwellSuccess(state.activeTargetEl, state.currentTargetKey);
-      return;
+    // Si la espera de dwell está activa y se pulsa Espacio, se abre de inmediato
+    if (e.code === 'Space') {
+      if (state.dwellAnimationFrame) {
+        e.preventDefault();
+        const target = state.activeTargetEl || document.elementFromPoint(state.mousePos.x, state.mousePos.y);
+        onDwellSuccess(target, state.currentTargetKey);
+        return;
+      }
     }
 
     if (e.key === 'Escape') {
       if (state.isSnipping) {
         cancelSnipping();
+      } else if (DOM.drawer && DOM.drawer.classList.contains('open')) {
+        DOM.drawer.classList.remove('open');
       } else {
         hideCard();
       }
-    } else if (e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+    } else if ((e.shiftKey && (e.key === 'A' || e.key === 'a')) || (e.altKey && (e.key === 'A' || e.key === 'a'))) {
       e.preventDefault();
       triggerSnipping();
     }
@@ -1026,20 +1076,38 @@ function switchTab(tabId) {
   if (view) view.classList.add('active');
 }
 
-function sendUserQuestion(question) {
+async function sendUserQuestion(question) {
   const userMsg = document.createElement('div');
   userMsg.className = 'msg user';
   userMsg.textContent = question;
   DOM.chatHistory.appendChild(userMsg);
   DOM.chatHistory.scrollTop = DOM.chatHistory.scrollHeight;
 
-  setTimeout(() => {
+  const thinkingMsg = document.createElement('div');
+  thinkingMsg.className = 'msg bot thinking';
+  thinkingMsg.innerHTML = state.geminiApiKey 
+    ? '✨ <i>Analizando con Gemini Multimodal...</i>' 
+    : '🧠 <i>Consultando TeachMe AI...</i>';
+  DOM.chatHistory.appendChild(thinkingMsg);
+  DOM.chatHistory.scrollTop = DOM.chatHistory.scrollHeight;
+
+  try {
+    const answer = await callGeminiChat(question);
+    thinkingMsg.remove();
+
+    const botMsg = document.createElement('div');
+    botMsg.className = 'msg bot';
+    botMsg.innerHTML = answer.replace(/\n/g, '<br>');
+    DOM.chatHistory.appendChild(botMsg);
+    DOM.chatHistory.scrollTop = DOM.chatHistory.scrollHeight;
+  } catch (err) {
+    thinkingMsg.remove();
     const botMsg = document.createElement('div');
     botMsg.className = 'msg bot';
     botMsg.textContent = generateSmartAnswer(question, state.currentTargetKey);
     DOM.chatHistory.appendChild(botMsg);
     DOM.chatHistory.scrollTop = DOM.chatHistory.scrollHeight;
-  }, 350);
+  }
 }
 
 function generateSmartAnswer(q, targetKey) {
@@ -1065,7 +1133,7 @@ function generateSmartAnswer(q, targetKey) {
 }
 
 // ==========================================================================
-// DWELL & REST DETECTION ENGINE (5s Interactive Wait Experience)
+// DWELL & REST DETECTION ENGINE (3s Interactive Wait Experience)
 // ==========================================================================
 
 const SCAN_PHASES = [
@@ -1131,7 +1199,23 @@ function cancelDwellCountdown() {
 function onDwellSuccess(targetEl, targetId) {
   cancelDwellCountdown();
 
-  // Populate data (static curated or dynamically synthesized)
+  const mouseX = (state.dwellAnchorMouse && typeof state.dwellAnchorMouse.x === 'number') 
+    ? state.dwellAnchorMouse.x 
+    : state.mousePos.x;
+  const mouseY = (state.dwellAnchorMouse && typeof state.dwellAnchorMouse.y === 'number') 
+    ? state.dwellAnchorMouse.y 
+    : state.mousePos.y;
+
+  // Si estamos en el host nativo de .NET / WebView2, consultar la ventana de Windows bajo el cursor
+  if (window.chrome && window.chrome.webview) {
+    window.chrome.webview.postMessage({
+      action: 'query_window_under_cursor',
+      x: Math.round(mouseX),
+      y: Math.round(mouseY)
+    });
+  }
+
+  // Cargar datos estáticos o sintetizados
   if (INSPECTION_DATABASE[targetId]) {
     populateCard(INSPECTION_DATABASE[targetId]);
   } else {
@@ -1140,22 +1224,16 @@ function onDwellSuccess(targetEl, targetId) {
     populateCard(dynamicData);
   }
 
-  // Calculate target bounding box & crop anchor
-  const rect = targetEl.getBoundingClientRect();
-  
-  // Point / ray origin connects EXACTLY to where the mouse cursor rested / positioned
-  const mouseX = (state.dwellAnchorMouse && typeof state.dwellAnchorMouse.x === 'number') 
-    ? state.dwellAnchorMouse.x 
-    : state.mousePos.x;
-  const mouseY = (state.dwellAnchorMouse && typeof state.dwellAnchorMouse.y === 'number') 
-    ? state.dwellAnchorMouse.y 
-    : state.mousePos.y;
+  // Calcular caja delimitadora segura
+  const rect = (targetEl && typeof targetEl.getBoundingClientRect === 'function')
+    ? targetEl.getBoundingClientRect()
+    : { left: mouseX - 24, top: mouseY - 24, width: 48, height: 48 };
 
   state.anchorPoint = { x: mouseX, y: mouseY };
   updateCropAnchor(rect.left, rect.top, rect.width, rect.height);
   calculateTargetPosition(mouseX, mouseY);
 
-  // Reveal card with smooth transition
+  // Revelar panel con animación
   showCard();
 }
 
@@ -1439,6 +1517,8 @@ function setupNativeInterop() {
 function applyRealDesktopData(data) {
   if (!data) return;
 
+  state.lastCapturedImage = data.image || null;
+
   const realItem = {
     name: data.title || "Ventana Activa de Windows 11",
     controlType: data.isRustEngine ? "Rust_Kernel_GDI_Region" : "Win32_Window_Surface",
@@ -1468,10 +1548,177 @@ Get-Process -Id ${data.pid} | Select-Object Id, ProcessName, Path, CPU, WorkingS
   populateCard(realItem);
 
   // If real screenshot was returned by C# / Rust, update crop anchor preview!
-  if (data.image && DOM.activeCropAnchor) {
-    DOM.activeCropAnchor.style.backgroundImage = `url(${data.image})`;
-    DOM.activeCropAnchor.style.backgroundSize = 'cover';
-    DOM.activeCropAnchor.style.backgroundPosition = 'center';
+  if (data.image) {
+    if (DOM.activeCropAnchor) {
+      DOM.activeCropAnchor.style.backgroundImage = `url(${data.image})`;
+      DOM.activeCropAnchor.style.backgroundSize = 'cover';
+      DOM.activeCropAnchor.style.backgroundPosition = 'center';
+    }
+
+    const miniThumb = document.getElementById('cropMiniThumbnail');
+    if (miniThumb) {
+      miniThumb.style.backgroundImage = `url(${data.image})`;
+      miniThumb.style.backgroundSize = 'cover';
+      miniThumb.style.backgroundPosition = 'center';
+    }
+
+    // SI HAY CLAVE DE GEMINI CONFIGURADA, LLAMAR AL MOTOR DE VISIÓN MULTIMODAL EN VIVO
+    if (state.geminiApiKey) {
+      callGeminiVision(data.image, data);
+    }
+  }
+}
+
+// ==========================================================================
+// GEMINI MULTIMODAL AI VISION & CHAT ENGINE
+// ==========================================================================
+
+async function callGeminiVision(base64Image, windowMetadata) {
+  if (!state.geminiApiKey || state.isAnalyzing) return;
+
+  state.isAnalyzing = true;
+  DOM.card.classList.add('analyzing');
+  DOM.cardConfidence.textContent = '✨ Analizando con Gemini Vision...';
+  DOM.cardVerdictText.textContent = 'Examinando píxeles y estructura visual del control...';
+
+  try {
+    const cleanBase64 = base64Image.replace(/^data:image\/\w+;base64,/, '');
+    const model = state.geminiModel || 'gemini-2.5-flash';
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(state.geminiApiKey)}`;
+
+    const promptText = `Eres TeachMe AI, un asistente visual neural de ultra-alta fidelidad para Windows 11.
+Analiza la captura de pantalla adjunta.
+Metadatos del proceso:
+- Título de ventana: "${windowMetadata.title || 'Desconocido'}"
+- Nombre de proceso: "${windowMetadata.process || 'explorer'}.exe"
+- PID: ${windowMetadata.pid || 0}
+- Coordenadas: (${windowMetadata.x}, ${windowMetadata.y}) tamaño ${windowMetadata.width}x${windowMetadata.height}px
+
+Proporciona un diagnóstico exhaustivo de accesibilidad, seguridad y educación técnica.
+Responde ÚNICAMENTE con un JSON válido con este esquema:
+{
+  "name": "Nombre conciso del control, botón, diálogo o ventana analizada",
+  "controlType": "Tipo de control UI (ej. UIA_Button, UIA_CheckBox, Diálogo de Error, Barra de Herramientas)",
+  "confidence": "99.8% Certeza Gemini Multimodal",
+  "ocrText": "Texto visible relevante detectado en la captura",
+  "verdictText": "Veredicto ejecutivo en 1 línea (ej. Seguro • Función Principal / Alerta • Desmarcar)",
+  "safetyTag": "Seguro | Alerta | Precaución | Crítico",
+  "actionTag": "Acción: Recomendado | Acción: Omitir | Acción: Inspeccionar",
+  "summary": "Explicación clara en 2-3 oraciones dirigida a cualquier usuario sobre qué es este elemento.",
+  "nature": "Explicación técnica de la función interna del control en el proceso.",
+  "impact": "Impacto en memoria, disco, red o sistema si se interactúa con él.",
+  "riskLevel": "Nivel de riesgo descriptivo",
+  "riskClass": "safe | warning | danger",
+  "consequences": "Qué ocurrirá exactamente en Windows si el usuario hace clic o lo activa.",
+  "vendor": "Desarrollador o empresa responsable",
+  "signStatus": "Válida (SHA256 Authenticode) o información de firma",
+  "exePath": "C:\\\\Windows\\\\System32\\\\... o ruta inferida",
+  "resources": "Consumo estimado de CPU / RAM",
+  "accessKey": "Atajo de teclado nativo recomendado (ej. Espacio, Enter, Alt + Letra)",
+  "cliSnippet": "# Comando de PowerShell equivalente para automatizar o auditar este proceso:\\nGet-Process..."
+}`;
+
+    const bodyPayload = {
+      contents: [
+        {
+          parts: [
+            { text: promptText },
+            {
+              inline_data: {
+                mime_type: "image/png",
+                data: cleanBase64
+              }
+            }
+          ]
+        }
+      ],
+      generationConfig: {
+        response_mime_type: "application/json",
+        temperature: 0.2
+      }
+    };
+
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(bodyPayload)
+    });
+
+    if (!res.ok) {
+      const errText = await res.text();
+      throw new Error(`HTTP ${res.status}: ${errText}`);
+    }
+
+    const json = await res.json();
+    const candidateText = json.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (candidateText) {
+      const parsed = JSON.parse(candidateText);
+      parsed.pid = windowMetadata.pid || parsed.pid;
+      parsed.processName = windowMetadata.process ? `${windowMetadata.process}.exe` : parsed.processName;
+      INSPECTION_DATABASE[state.currentTargetKey] = parsed;
+      populateCard(parsed);
+
+      const introMsg = document.createElement('div');
+      introMsg.className = 'msg bot';
+      introMsg.innerHTML = `✨ <b>Análisis de Gemini completado</b> sobre <i>${parsed.name}</i>.<br>¿Tienes dudas sobre las consecuencias de interactuar con este elemento?`;
+      DOM.chatHistory.appendChild(introMsg);
+      DOM.chatHistory.scrollTop = DOM.chatHistory.scrollHeight;
+    }
+  } catch (err) {
+    console.error("[TeachMe AI] Gemini Vision Error:", err);
+    DOM.cardConfidence.textContent = 'Aviso: API Gemini no disponible';
+    DOM.cardVerdictText.textContent = 'Error al conectar con Gemini: ' + err.message;
+  } finally {
+    state.isAnalyzing = false;
+    DOM.card.classList.remove('analyzing');
+  }
+}
+
+async function callGeminiChat(question) {
+  if (!state.geminiApiKey) {
+    return generateSmartAnswer(question, state.currentTargetKey);
+  }
+
+  try {
+    const model = state.geminiModel || 'gemini-2.5-flash';
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(state.geminiApiKey)}`;
+    const current = INSPECTION_DATABASE[state.currentTargetKey] || {};
+
+    const systemPrompt = `Eres TeachMe AI, un tutor cognitivo y de accesibilidad para Windows 11.
+Estás asesorando a un usuario sobre el elemento actual:
+- Nombre: "${current.name || 'Elemento de pantalla'}"
+- Proceso: "${current.processName || 'explorer.exe'}"
+- Resumen: "${current.summary || ''}"
+- Consecuencias: "${current.consequences || ''}"
+
+Responde de forma concisa, cordial, pedagógica y directa en español. Si el usuario pregunta si es seguro o si debe hacer clic, sé claro y da un consejo práctico.`;
+
+    const parts = [
+      { text: `${systemPrompt}\n\nPregunta del usuario: ${question}` }
+    ];
+
+    if (state.lastCapturedImage) {
+      const cleanBase64 = state.lastCapturedImage.replace(/^data:image\/\w+;base64,/, '');
+      parts.push({
+        inline_data: {
+          mime_type: "image/png",
+          data: cleanBase64
+        }
+      });
+    }
+
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents: [{ parts }] })
+    });
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const json = await res.json();
+    return json.candidates?.[0]?.content?.parts?.[0]?.text || generateSmartAnswer(question, state.currentTargetKey);
+  } catch (err) {
+    console.warn("[TeachMe AI] Fallback to local answering:", err);
+    return generateSmartAnswer(question, state.currentTargetKey);
   }
 }
 
@@ -1479,6 +1726,85 @@ Get-Process -Id ${data.pid} | Select-Object Id, ProcessName, Path, CPU, WorkingS
 function setupDesignStudio() {
   DOM.btnOpenStudio.addEventListener('click', () => DOM.drawer.classList.add('open'));
   DOM.btnCloseStudio.addEventListener('click', () => DOM.drawer.classList.remove('open'));
+
+  // Gemini AI Engine Configuration in Studio
+  if (DOM.inputApiKey) {
+    if (state.geminiApiKey) {
+      DOM.inputApiKey.value = state.geminiApiKey;
+      if (DOM.aiStatusPill) {
+        DOM.aiStatusPill.classList.add('connected');
+        DOM.aiStatusPill.textContent = 'Gemini Conectado ✨';
+      }
+    }
+
+    if (DOM.selectAiModel) {
+      DOM.selectAiModel.value = state.geminiModel;
+      DOM.selectAiModel.addEventListener('change', (e) => {
+        state.geminiModel = e.target.value;
+        localStorage.setItem('teachme_gemini_model', state.geminiModel);
+      });
+    }
+
+    if (DOM.btnToggleKeyVisibility) {
+      DOM.btnToggleKeyVisibility.addEventListener('click', () => {
+        DOM.inputApiKey.type = DOM.inputApiKey.type === 'password' ? 'text' : 'password';
+      });
+    }
+
+    if (DOM.btnSaveApiKey) {
+      DOM.btnSaveApiKey.addEventListener('click', () => {
+        const key = DOM.inputApiKey.value.trim();
+        state.geminiApiKey = key;
+        localStorage.setItem('teachme_gemini_api_key', key);
+        if (key) {
+          if (DOM.aiStatusPill) {
+            DOM.aiStatusPill.classList.add('connected');
+            DOM.aiStatusPill.textContent = 'Gemini Conectado ✨';
+          }
+          DOM.btnSaveApiKey.textContent = '✓ Guardada';
+          setTimeout(() => { DOM.btnSaveApiKey.textContent = 'Guardar Clave'; }, 1800);
+        } else {
+          if (DOM.aiStatusPill) {
+            DOM.aiStatusPill.classList.remove('connected');
+            DOM.aiStatusPill.textContent = 'Modo Simulado';
+          }
+        }
+      });
+    }
+
+    if (DOM.btnTestApiKey) {
+      DOM.btnTestApiKey.addEventListener('click', async () => {
+        const key = DOM.inputApiKey.value.trim();
+        if (!key) {
+          alert("Por favor ingresa primero tu clave de API de Gemini.");
+          return;
+        }
+        DOM.btnTestApiKey.textContent = '⏳ Probando...';
+        try {
+          const model = state.geminiModel || 'gemini-2.5-flash';
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(key)}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ contents: [{ parts: [{ text: "Responde únicamente: CONEXION_OK" }] }] })
+          });
+          if (!res.ok) {
+            const errBody = await res.text();
+            throw new Error(`HTTP ${res.status}: ${errBody}`);
+          }
+          DOM.btnTestApiKey.textContent = '✓ Conexión Exitosa';
+          if (DOM.aiStatusPill) {
+            DOM.aiStatusPill.classList.add('connected');
+            DOM.aiStatusPill.textContent = 'Gemini Conectado ✨';
+          }
+          setTimeout(() => { DOM.btnTestApiKey.textContent = 'Probar Conexión'; }, 2000);
+        } catch (err) {
+          alert("Error al conectar con la API de Gemini: " + err.message);
+          DOM.btnTestApiKey.textContent = '✗ Falló Conexión';
+          setTimeout(() => { DOM.btnTestApiKey.textContent = 'Probar Conexión'; }, 2000);
+        }
+      });
+    }
+  }
 
   // Acrylic Blur
   DOM.sliderBlur.addEventListener('input', (e) => {
