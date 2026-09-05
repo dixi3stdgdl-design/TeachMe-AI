@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TeachMe AI — Windows 11 Neural Screen Inspector (Raycast/VisionOS Grade)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-fluent-dark">
+  
+  <!-- Mouse Dwell / Neural Scanner Indicator (Micro-Interactive Wait Experience) -->
+  <div class="mouse-dwell-indicator" id="mouseDwellIndicator">
+    <div class="dwell-halo"></div>
+    <div class="dwell-scanner-ring">
+      <svg class="dwell-svg" width="46" height="46" viewBox="0 0 46 46">
+        <circle class="dwell-bg" cx="23" cy="23" r="19"></circle>
+        <circle class="dwell-progress" id="dwellProgressCircle" cx="23" cy="23" r="19"></circle>
+      </svg>
+      <div class="dwell-core-icon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg>
+      </div>
+    </div>
+    <div class="dwell-interactive-box" id="dwellInteractiveBox">
+      <div class="dwell-phase-row">
+        <span class="dwell-pulse-dot"></span>
+        <span class="dwell-status" id="dwellStatusPhase">Iniciando escaneo...</span>
+        <span class="dwell-time" id="dwellTimeText">3.0s</span>
+      </div>
+      <div class="dwell-skip-hint">
+        <span>O pulsa <kbd>Espacio</kbd> para abrir ya</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Subtle Grain Texture Layer for Photorealistic Acrylic -->
+  <div class="acrylic-noise-layer"></div>
+
+  <!-- SVG Connector Engine for Dynamic Holographic Guide Lines -->
+  <svg class="holographic-connector-svg" id="connectorSvg">
+    <defs>
+      <linearGradient id="beamGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="var(--accent-current)" stop-opacity="0.9" />
+        <stop offset="100%" stop-color="var(--accent-violet)" stop-opacity="0.2" />
+      </linearGradient>
+      <filter id="glowFilter" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="3" result="blur" />
+        <feMerge>
+          <feMergeNode in="blur" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+    </defs>
+    <path id="connectorPath" d="" stroke="url(#beamGradient)" stroke-width="1.8" stroke-dasharray="4 4" fill="none" filter="url(#glowFilter)" />
+    <circle id="connectorAnchorDot" cx="0" cy="0" r="3.5" fill="var(--accent-current)" filter="url(#glowFilter)" />
+    <circle id="connectorTargetDot" cx="0" cy="0" r="4.5" fill="#fff" stroke="var(--accent-current)" stroke-width="2" />
+  </svg>
+
+  <!-- Desktop Environment Simulation -->
+  <div class="desktop-container" id="desktopContainer">
+    
+    <!-- Top System Bar / TeachMe Header -->
+    <header class="top-nav-bar">
+      <div class="logo-group">
+        <div class="app-icon-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+            <circle cx="12" cy="12" r="4"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <div class="brand-title-wrap">
+            <span class="brand-title">TeachMe <span class="brand-accent">AI</span></span>
+            <span class="brand-edition-tag">PRO DESKTOP HUD</span>
+          </div>
+          <span class="brand-subtitle">Windows 11 Native Accessibility & Vision Intelligence Layer</span>
+        </div>
+      </div>
+
+      <!-- Quick Action Shortcuts -->
+      <div class="action-dock">
+        <button class="shortcut-pill highlight" id="btnTriggerSnipping" title="Lanzar selector de recorte (Shift + A)">
+          <span class="pulse-indicator"></span>
+          <kbd>Shift</kbd> + <kbd>A</kbd>
+          <span class="pill-label">Recortar & Analizar</span>
+        </button>
+        <button class="mode-toggle-btn active" id="btnModeHover" title="El panel aparece tras descansar el cursor 5 segundos sobre un elemento con información">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 9h6v6H9z"/></svg>
+          Hover (5s Descanso)
+        </button>
+        <button class="mode-toggle-btn" id="btnModeCursor" title="El panel sigue dinámicamente al cursor">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 3 7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/><path d="m13 13 6 6"/></svg>
+          Seguir Cursor
+        </button>
+        <button class="mode-toggle-btn" id="btnModePin" title="Anclar panel para interacción estática">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 17v5M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></svg>
+          Anclado
+        </button>
+      </div>
+
+      <!-- Live Tuning Drawer Button -->
+      <button class="btn-tune-studio" id="btnOpenStudio" title="Calibrar Estética Fluent, Acrílico, Rayos y Transiciones">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+        Estudio de Diseño
+      </button>
+    </header>
+
+    <!-- Interactive Simulated Windows Workstation Area -->
+    <main class="desktop-workspace" id="desktopWorkspace">
+      
+      <!-- Target 1: Tricky Software Installer -->
+      <div class="mock-window-card window-installer">
+        <div class="mock-win-header">
+          <div class="mock-win-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            Asistente de Instalación — MediaPro Ultra 2026
+          </div>
+          <div class="mock-win-controls">
+            <span>─</span><span>□</span><span class="close-win">✕</span>
+          </div>
+        </div>
+        <div class="mock-win-body">
+          <p class="mock-instruction">Selecciona los componentes adicionales antes de continuar:</p>
+          
+          <div class="inspectable-box" data-target-id="installer_main_checkbox">
+            <label class="custom-checkbox">
+              <input type="checkbox" checked disabled>
+              <span>Instalar MediaPro Codec Pack (Requerido)</span>
+            </label>
+            <span class="inspect-tag">UIA_CheckBox</span>
+          </div>
+
+          <div class="inspectable-box suspicious" data-target-id="installer_bloatware">
+            <label class="custom-checkbox">
+              <input type="checkbox" checked>
+              <span class="bold">Instalar Opera Browser y Barra de Búsqueda WebSearcher</span>
+            </label>
+            <span class="inspect-tag alert">Potencial PUA / Adware</span>
+          </div>
+
+          <div class="installer-nav-row">
+            <button class="mock-win-btn" data-target-id="btn_back">&lt; Atrás</button>
+            <div class="btn-group-right">
+              <button class="mock-win-btn inspectable-target" data-target-id="btn_custom_install">Instalación Avanzada...</button>
+              <button class="mock-win-btn primary-win-btn inspectable-target" data-target-id="btn_next">Siguiente &gt;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Target 2: Cryptic Windows Security & Kernel Error -->
+      <div class="mock-window-card window-error">
+        <div class="mock-win-header error-bar">
+          <div class="mock-win-title">
+            <span class="error-dot">●</span>
+            Windows Security & Kernel Error
+          </div>
+          <div class="mock-win-controls"><span>✕</span></div>
+        </div>
+        <div class="mock-win-body error-layout">
+          <div class="error-icon-shield">⚠️</div>
+          <div class="error-content">
+            <h4 class="inspectable-target" data-target-id="error_code_heading">Error 0x80070005: ERROR_ACCESS_DENIED</h4>
+            <p class="inspectable-target" data-target-id="error_file_operation">La llamada a <code>IFileOperation::PerformOperations()</code> ha fallado en el descriptor de seguridad del objeto.</p>
+            <div class="error-action-row">
+              <button class="mock-win-btn inspectable-target" data-target-id="btn_error_uac">Ejecutar como Administrador</button>
+              <button class="mock-win-btn inspectable-target" data-target-id="btn_error_logs">Ver Logs EventViewer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Target 3: Complex Pro 3D Toolbar (Blender / Unreal Engine) -->
+      <div class="mock-window-card window-tools">
+        <div class="mock-win-header">
+          <div class="mock-win-title inspectable-target" data-target-id="win_header_blender">Viewport Shading & Render Passes (3D Engine)</div>
+          <div class="mock-win-controls"><span class="inspectable-target" data-target-id="btn_win_minimize">─</span><span class="inspectable-target" data-target-id="btn_win_maximize">□</span><span class="inspectable-target" data-target-id="btn_win_close">✕</span></div>
+        </div>
+        <div class="mock-win-body tools-row">
+          <div class="tool-btn inspectable-target" data-target-id="tool_bake_ao" title="Bake Ambient Occlusion">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 10 10 0 0 0 0-20"/></svg>
+            <span>Bake AO</span>
+          </div>
+          <div class="tool-btn inspectable-target" data-target-id="tool_subsurface" title="Subsurface Scattering Multiplier">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+            <span>Subsurface</span>
+          </div>
+          <div class="tool-btn inspectable-target" data-target-id="tool_denoiser" title="OptiX / OpenImageDenoise AI">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            <span>AI Denoiser</span>
+          </div>
+          <div class="tool-btn inspectable-target" data-target-id="tool_lut" title="AgX OCIO Color Management">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            <span>AgX LUT</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Interactive Guide Banner -->
+      <div class="interaction-hints">
+        <span class="hint-badge">⚡ Atajo Global:</span> Pulsa <kbd>Shift</kbd> + <kbd>A</kbd> para activar el láser de recorte interactivo en cualquier parte de la pantalla.
+      </div>
+    </main>
+
+    <!-- Simulated Windows Taskbar -->
+    <footer class="mock-taskbar">
+      <div class="taskbar-start-group">
+        <div class="win-logo-btn inspectable-target" data-target-id="win_logo_btn" title="Inicio de Windows">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="#00adef"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+        </div>
+        <div class="taskbar-item active inspectable-target" data-target-id="taskbar_installer">MediaPro Installer</div>
+        <div class="taskbar-item inspectable-target" data-target-id="taskbar_security">Windows Security</div>
+        <div class="taskbar-item inspectable-target" data-target-id="taskbar_blender">Blender 4.2</div>
+      </div>
+      <div class="taskbar-tray">
+        <div class="tray-teachme-icon inspectable-target" data-target-id="tray_teachme" title="TeachMe AI Service — Engine Activo en user32.dll">
+          <span class="tray-pulse"></span>
+          TeachMe AI Active
+        </div>
+        <div class="tray-clock inspectable-target" id="trayClock" data-target-id="tray_clock">12:00 PM</div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- ACTIVE SNIPPING REGION TARGET HIGHLIGHTER                 -->
+  <!-- ======================================================== -->
+  <div class="active-crop-anchor" id="activeCropAnchor">
+    <div class="crop-corner top-left"></div>
+    <div class="crop-corner top-right"></div>
+    <div class="crop-corner bottom-left"></div>
+    <div class="crop-corner bottom-right"></div>
+    <div class="crop-scan-beam" id="cropScanBeam"></div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- TEACHME AI ULTRA-PROFESSIONAL ACRYLIC HUD OVERLAY CARD    -->
+  <!-- ======================================================== -->
+  <div class="teachme-overlay-card" id="teachmeOverlayCard" aria-live="polite">
+    
+    <!-- Dynamic Specular Highlight Border (Follows cursor angle) -->
+    <div class="specular-glow-border" id="specularGlow"></div>
+    
+    <!-- Ambient Holographic Glow Aura -->
+    <div class="card-ambient-aura"></div>
+
+    <!-- Header Section with Model Badge & Crop Snapshot Preview -->
+    <div class="panel-header">
+      <div class="header-left">
+        <!-- Visual Thumbnail Snapshot of Analyzed Area -->
+        <div class="crop-mini-thumbnail" id="cropMiniThumbnail" title="Área de pantalla analizada">
+          <div class="mini-grid"></div>
+          <span class="thumb-icon">🔍</span>
+          <span class="thumb-res" id="cropThumbRes">192x64</span>
+        </div>
+
+        <div class="target-identity">
+          <div class="target-title-row">
+            <h3 class="target-name" id="cardTargetName">Opera Browser & WebSearcher Bar</h3>
+            <span class="type-pill" id="cardControlType">UIA_CheckBox</span>
+            <span class="ai-confidence-pill" id="cardConfidence">99.4% Certeza</span>
+          </div>
+          <div class="process-breadcrumb">
+            <span class="process-exe" id="cardProcessName">Setup.exe</span>
+            <span class="sep">•</span>
+            <span class="process-pid" id="cardProcessPid">PID: 4982</span>
+            <span class="sep">•</span>
+            <span class="process-badge" id="cardSignatureBadge">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+              Authenticode
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="header-actions">
+        <button class="icon-btn" id="btnPinCard" title="Anclar posición">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 17v5M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></svg>
+        </button>
+        <button class="icon-btn close" id="btnCloseCard" title="Cerrar panel (Esc)">✕</button>
+      </div>
+    </div>
+
+    <!-- Quick Context Executive Pill (Maximum Context in Minimum Space) -->
+    <div class="quick-context-bar">
+      <div class="context-pill" id="cardVerdictPill">
+        <span class="context-indicator alert"></span>
+        <span class="context-text" id="cardVerdictText">Adware No Necesario • Desmarcar Recomendado</span>
+      </div>
+      <div class="context-meta-tags">
+        <span class="meta-tag" id="cardSafetyTag">Riesgo: Medio</span>
+        <span class="meta-tag" id="cardActionTag">Acción: Omitir</span>
+      </div>
+    </div>
+
+    <!-- Extracted OCR Text Banner (High Capability) -->
+    <div class="ocr-extracted-banner" id="ocrBanner">
+      <div class="ocr-left">
+        <span class="ocr-label">OCR Detectado:</span>
+        <span class="ocr-text" id="cardOcrText">"Instalar Opera Browser y Barra de Búsqueda WebSearcher"</span>
+      </div>
+      <button class="btn-copy-ocr" id="btnCopyOcr" title="Copiar texto reconocido">Copiar</button>
+    </div>
+
+    <!-- Fluid Tab Navigation Pills (Ultra-Compact) -->
+    <div class="panel-nav-tabs">
+      <button class="tab-pill active" data-tab="tabWhat" title="¿Qué es este control?">
+        <span class="tab-icon">🏷️</span> Qué es
+      </button>
+      <button class="tab-pill" data-tab="tabImpact" title="Función y consecuencias">
+        <span class="tab-icon">⚡</span> Función
+      </button>
+      <button class="tab-pill" data-tab="tabVendor" title="Proveedor y especificaciones">
+        <span class="tab-icon">🏢</span> Specs
+      </button>
+      <button class="tab-pill" data-tab="tabShortcuts" title="Atajos y comandos CLI">
+        <span class="tab-icon">⌨️</span> CLI
+      </button>
+      <button class="tab-pill tab-ai-chat" data-tab="tabChat" title="Preguntar a TeachMe AI">
+        <span class="tab-icon">✨</span> Chat
+      </button>
+    </div>
+
+    <!-- Tab Content Containers -->
+    <div class="panel-body">
+      
+      <!-- TAB 1: ¿QUÉ ES? -->
+      <div class="tab-view active" id="tabWhat">
+        <div class="summary-highlight" id="cardSummary">
+          Es una casilla de software patrocinado de terceros (PUA / Adware) incluida en el instalador principal. No es necesaria para que MediaPro funcione.
+        </div>
+        <div class="key-takeaways">
+          <div class="takeaway-item">
+            <span class="bullet-dot cyan"></span>
+            <div>
+              <strong>Naturaleza:</strong>
+              <span id="cardNature">Oferta promocional bundled. Modifica el motor de búsqueda predeterminado del sistema.</span>
+            </div>
+          </div>
+          <div class="takeaway-item">
+            <span class="bullet-dot violet"></span>
+            <div>
+              <strong>Impacto en Sistema:</strong>
+              <span id="cardSystemImpact">Agrega servicios en segundo plano al arranque de Windows e incrementa el consumo de memoria.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: ¿PARA QUÉ SIRVE & CONSECUENCIAS? -->
+      <div class="tab-view" id="tabImpact">
+        <div class="risk-card warning" id="cardRiskBox">
+          <div class="risk-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+            <span id="cardRiskLevel">Recomendación: Desmarcar</span>
+          </div>
+          <p id="cardConsequences">
+            Si dejas marcada esta casilla, se descargarán 140MB adicionales e instalarán extensiones de navegación que cambian tu página de inicio. Te recomendamos desmarcarla para mantener el sistema optimizado.
+          </p>
+        </div>
+        <div class="action-recommendation">
+          <div class="action-pill-title">Acciones Rápidas con IA:</div>
+          <div class="action-btn-row">
+            <button class="btn-preset-action" id="btnExplainAction">💡 Explicar en 1 minuto</button>
+            <button class="btn-preset-action safe" id="btnIsSafe">🛡️ ¿Es seguro para mi PC?</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: PROVEEDOR Y ESPECIFICACIONES TÉCNICAS -->
+      <div class="tab-view" id="tabVendor">
+        <div class="specs-grid">
+          <div class="spec-cell">
+            <span class="spec-label">Desarrollador / Vendor</span>
+            <span class="spec-value" id="cardVendor">Opera Software AS / Sponsor Network</span>
+          </div>
+          <div class="spec-cell">
+            <span class="spec-label">Firma Digital</span>
+            <span class="spec-value valid" id="cardSignStatus">Válida (SHA256 Authenticode)</span>
+          </div>
+          <div class="spec-cell">
+            <span class="spec-label">Ruta de Ejecutable</span>
+            <span class="spec-value mono" id="cardExePath">C:\Users\AppData\Local\Temp\is-44A.tmp</span>
+          </div>
+          <div class="spec-cell">
+            <span class="spec-label">Uso de Recursos</span>
+            <span class="spec-value" id="cardResourceFootprint">CPU: ~0.1% | RAM: ~18 MB</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: ATAJOS Y COMANDOS CLI EQUIVALENTES -->
+      <div class="tab-view" id="tabShortcuts">
+        <div class="cli-block">
+          <div class="cli-header">
+            <span>PowerShell / Win32 Automation Equivalent</span>
+            <button class="btn-copy" id="btnCopyCli" title="Copiar comando">Copiar</button>
+          </div>
+          <pre class="cli-code"><code id="cardCliSnippet"># Desactivar instalación silenciosa de bloatware:
+Start-Process "MediaProSetup.exe" -ArgumentList "/VERYSILENT /NOICONS /TASKS='!optout'"</code></pre>
+        </div>
+        <div class="shortcut-list">
+          <div class="sc-item">
+            <span class="sc-desc">Atajo Nativo del Control:</span>
+            <kbd id="cardAccessKey">Espacio (Toggle)</kbd>
+          </div>
+          <div class="sc-item">
+            <span class="sc-desc">Navegación Accesible:</span>
+            <kbd>Tab</kbd> / <kbd>Shift + Tab</kbd>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: PREGUNTAR A TEACHME AI (MINI CHAT SOCRÁTICO) -->
+      <div class="tab-view" id="tabChat">
+        <div class="chat-mini-history" id="chatMiniHistory">
+          <div class="msg bot">
+            ¡Hola! He analizado el recorte de pantalla. ¿Qué te gustaría saber sobre este control o cómo interactuar con él?
+          </div>
+        </div>
+        <form class="chat-input-bar" id="chatForm">
+          <input type="text" id="chatInput" placeholder="Haz una repregunta en lenguaje natural..." autocomplete="off">
+          <button type="submit" id="btnSendChat" title="Enviar consulta">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+          </button>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- Panel Footer Controls -->
+    <div class="panel-footer">
+      <div class="footer-meta">
+        <span class="hud-mode-indicator" id="hudModeIndicator">Modo: Conectado a Pantalla</span>
+        <span class="shortcut-legend"><kbd>Esc</kbd> cerrar</span>
+      </div>
+      <div class="footer-actions">
+        <button class="footer-btn" id="btnCopyJson" title="Copiar ficha técnica completa en JSON">📋 Exportar JSON</button>
+        <button class="footer-btn accent" id="btnDeeperLearn">✨ Tutor Socrático</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Snipping Tool Overlay Mask (Triggered with Shift + A) -->
+  <div class="snipping-screen-overlay" id="snippingOverlay">
+    <div class="snipping-instructions">
+      <div class="snip-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+      </div>
+      <span><strong>TeachMe AI Vision Sniper</strong> — Arrastra un recuadro sobre cualquier botón, error o texto</span>
+      <kbd>Esc para cancelar</kbd>
+    </div>
+    
+    <!-- Active Dragging Box -->
+    <div class="snip-selection-box" id="snipSelectionBox">
+      <div class="snip-coords" id="snipCoords">0 x 0</div>
+      <div class="snip-laser-line"></div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- LIVE DESIGN STUDIO DRAWER (TO POLISH DESIGN IN REAL-TIME)-->
+  <!-- ======================================================== -->
+  <aside class="design-studio-drawer" id="designStudioDrawer">
+    <div class="studio-header">
+      <div class="studio-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 2 4 4-14 14H4v-4L18 2z"/></svg>
+        Estudio de Diseño & Capacidad HUD
+      </div>
+      <button class="icon-btn" id="btnCloseStudio">✕</button>
+    </div>
+
+    <div class="studio-scrollable">
+      
+      <!-- Preset Color Schemes -->
+      <div class="tuning-section">
+        <label class="tuning-title">Paleta de Acentos de Neón</label>
+        <div class="palette-picker">
+          <button class="swatch-btn cyan active" data-accent="cyan" title="Cyan Neón"></button>
+          <button class="swatch-btn violet" data-accent="violet" title="Violeta Cyber"></button>
+          <button class="swatch-btn emerald" data-accent="emerald" title="Esmeralda Seguro"></button>
+          <button class="swatch-btn amber" data-accent="amber" title="Ámbar Alerta"></button>
+          <button class="swatch-btn rose" data-accent="rose" title="Rosa Plasma"></button>
+        </div>
+      </div>
+
+      <!-- Holographic Guide Ray & Laser Animation -->
+      <div class="tuning-section">
+        <label class="tuning-title">Transiciones & Rayo Holográfico</label>
+        <div class="toggle-row">
+          <span>Rayo Conector Dinámico (SVG Beam)</span>
+          <input type="checkbox" id="chkShowBeam">
+        </div>
+        <div class="toggle-row">
+          <span>Animación de Escaneo Láser al Recortar</span>
+          <input type="checkbox" id="chkScanLaser" checked>
+        </div>
+        <div class="toggle-row">
+          <span>Resplandor Especular Reactivo al Mouse</span>
+          <input type="checkbox" id="chkSpecular" checked>
+        </div>
+      </div>
+
+      <!-- Acrylic Glass Material Controls -->
+      <div class="tuning-section">
+        <label class="tuning-title">Material Acrílico Windows 11 (Mica Glass)</label>
+        
+        <div class="slider-control">
+          <div class="slider-label">
+            <span>Desenfoque (Backdrop Blur)</span>
+            <span class="slider-val" id="valBlur">32px</span>
+          </div>
+          <input type="range" id="sliderBlur" min="8" max="60" value="40">
+        </div>
+
+        <div class="slider-control">
+          <div class="slider-label">
+            <span>Opacidad de Fondo</span>
+            <span class="slider-val" id="valOpacity">60%</span>
+          </div>
+          <input type="range" id="sliderOpacity" min="30" max="98" value="60">
+        </div>
+
+        <div class="slider-control">
+          <div class="slider-label">
+            <span>Resplandor de Borde (Glow Power)</span>
+            <span class="slider-val" id="valGlow">75%</span>
+          </div>
+          <input type="range" id="sliderGlow" min="10" max="100" value="75">
+        </div>
+
+        <div class="slider-control">
+          <div class="slider-label">
+            <span>Radio de Esquinas</span>
+            <span class="slider-val" id="valRadius">18px</span>
+          </div>
+          <input type="range" id="sliderRadius" min="8" max="28" value="18">
+        </div>
+      </div>
+
+      <!-- Positioning Engine Config -->
+      <div class="tuning-section">
+        <label class="tuning-title">Posicionamiento & Offset del Cursor</label>
+        
+        <div class="slider-control">
+          <div class="slider-label">
+            <span>Distancia X al Cursor</span>
+            <span class="slider-val" id="valOffsetX">28px</span>
+          </div>
+          <input type="range" id="sliderOffsetX" min="0" max="80" value="28">
+        </div>
+
+        <div class="slider-control">
+          <div class="slider-label">
+            <span>Distancia Y al Cursor</span>
+            <span class="slider-val" id="valOffsetY">28px</span>
+          </div>
+          <input type="range" id="sliderOffsetY" min="0" max="80" value="28">
+        </div>
+
+        <div class="slider-control">
+          <div class="slider-label">
+            <span>Descanso del Mouse para Activar (Dwell)</span>
+            <span class="slider-val" id="valDwell">3.0s</span>
+          </div>
+          <input type="range" id="sliderDwell" min="0.5" max="8.0" step="0.5" value="3.0">
+        </div>
+
+        <div class="toggle-row">
+          <span>Evitar colisión de bordes (Smart Collision Engine)</span>
+          <input type="checkbox" id="chkSmartClamp" checked>
+        </div>
+        <div class="toggle-row">
+          <span>Inercia Suavizada (Spring Lerp)</span>
+          <input type="checkbox" id="chkLerp" checked>
+        </div>
+      </div>
+
+      <!-- Quick Preset Scenarios -->
+      <div class="tuning-section">
+        <label class="tuning-title">Cargar Escenarios de Prueba</label>
+        <div class="scenario-buttons">
+          <button class="btn-scenario" data-preset="adware">📦 Checkbox Adware Sospechoso</button>
+          <button class="btn-scenario" data-preset="error">⚠️ Error Crítico 0x80070005</button>
+          <button class="btn-scenario" data-preset="blender">🎨 Botón 3D Bake AO (GPU)</button>
+          <button class="btn-scenario" data-preset="uac">🛡️ Diálogo UAC Administrador</button>
+        </div>
+      </div>
+
+    </div>
+  </aside>
+
+  <script src="app.js"></script>
+</body>
+</html>

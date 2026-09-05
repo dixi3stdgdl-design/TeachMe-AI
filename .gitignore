@@ -1,0 +1,38 @@
+# Build and Binary Outputs
+[Bb]in/
+[Oo]bj/
+target/
+*.exe
+*.dll
+*.pdb
+*.msi
+*.so
+*.dylib
+
+# Visual Studio & VS Code
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+
+# WebView2 Temp Profiles & Logs
+*WebView2Profile*/
+*.log
+stdout.txt
+stderr.txt
+output.txt
+crash.log
+
+# Node & Frontend Build
+node_modules/
+dist/
+.env
+.env.local
+.DS_Store
+Thumbs.db
