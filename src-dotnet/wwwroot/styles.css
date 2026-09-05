@@ -80,8 +80,9 @@ body {
   background-color: var(--bg-desktop);
   color: var(--text-primary);
   min-height: 100vh;
-  overflow: hidden;
-  user-select: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+  user-select: auto;
   background-image: 
     radial-gradient(circle at 18% 25%, rgba(0, 240, 255, 0.09) 0%, transparent 45%),
     radial-gradient(circle at 82% 70%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
@@ -458,7 +459,8 @@ kbd {
   grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
   gap: 28px;
   align-items: start;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .mock-window-card {
@@ -2643,6 +2645,28 @@ kbd {
 
 .footer-link:hover {
   color: #fff;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (max-width: 900px) {
+  .nav-links {
+    display: none;
+  }
+  .hero-title {
+    font-size: 36px;
+  }
+  .desktop-container {
+    height: 520px;
+  }
+  .hero-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .benchmarks-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 

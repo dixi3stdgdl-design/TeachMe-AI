@@ -765,6 +765,28 @@ function init() {
 }
 
 function setupLandingPageFeatures() {
+  // Hero CTA Snip Button
+  const heroBtnSnip = document.getElementById('heroBtnSnip');
+  if (heroBtnSnip) {
+    heroBtnSnip.addEventListener('click', () => {
+      const lab = document.getElementById('lab');
+      if (lab) lab.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        triggerSnipping();
+      }, 500);
+    });
+  }
+
+  // Sound Toggle Button
+  const btnSoundToggle = document.getElementById('btnSoundToggle');
+  if (btnSoundToggle) {
+    btnSoundToggle.addEventListener('click', () => {
+      state.soundEnabled = state.soundEnabled === false ? true : false;
+      btnSoundToggle.classList.toggle('active', state.soundEnabled);
+      btnSoundToggle.textContent = state.soundEnabled ? '🔊' : '🔇';
+    });
+  }
+
   // Scenario Switcher Tabs
   const scenarioTabs = document.querySelectorAll('.scenario-tab-btn');
   scenarioTabs.forEach(btn => {
@@ -912,15 +934,16 @@ function setupEventListeners() {
       state.mouseStillTimer = null;
     }
 
-    // Verificar si el cursor está sobre la UI del HUD, cajón o dock superior
+    // Solo activar reposo/dwell si el cursor está sobre la estación de trabajo simulada (#desktopContainer)
     const targetEl = document.elementFromPoint(e.clientX, e.clientY);
-    const isOverUi = targetEl && (targetEl.closest('#teachmeOverlayCard') || targetEl.closest('#designStudioDrawer') || targetEl.closest('.top-nav-bar'));
+    const isInSimulator = targetEl && targetEl.closest('#desktopContainer');
+    const isOverUi = targetEl && (targetEl.closest('#teachmeOverlayCard') || targetEl.closest('#designStudioDrawer') || targetEl.closest('.top-nav-bar') || targetEl.closest('.site-header'));
 
-    // Detector Universal de Reposo: si el ratón se detiene durante 250ms fuera de la UI, arrancar Dwell
-    if (!state.isPinned && !isOverUi && !state.dwellAnimationFrame) {
+    // Detector de Reposo en Simulador: si el ratón descansa dentro de #desktopContainer, arrancar Dwell
+    if (isInSimulator && !state.isPinned && !isOverUi && !state.dwellAnimationFrame) {
       state.mouseStillTimer = setTimeout(() => {
         const el = document.elementFromPoint(e.clientX, e.clientY);
-        if (!el || el.closest('#teachmeOverlayCard') || el.closest('#designStudioDrawer') || el.closest('.top-nav-bar')) return;
+        if (!el || !el.closest('#desktopContainer') || el.closest('#teachmeOverlayCard') || el.closest('#designStudioDrawer') || el.closest('.top-nav-bar') || el.closest('.site-header')) return;
 
         let targetId = el.getAttribute('data-target-id') || el.closest('[data-target-id]')?.getAttribute('data-target-id');
         if (!targetId) {
@@ -929,7 +952,7 @@ function setupEventListeners() {
         state.currentTargetKey = targetId;
         state.activeTargetEl = el;
         startDwellCountdown(el, targetId);
-      }, 250);
+      }, 350);
     }
 
     // Actualizar coordenadas de resplandor especular
@@ -966,24 +989,20 @@ function setupEventListeners() {
     }
   });
 
-  // Universal Information Inspector: any control, text, button, tool, title or info block
+  // Universal Information Inspector for the Simulated Desktop Workstation (#desktopContainer)
   const universalSelector = [
-    '.inspectable-box',
-    '.inspectable-target',
-    '.tool-btn',
-    '.mock-win-btn',
-    '.taskbar-item',
-    '.win-logo-btn',
-    '.tray-teachme-icon',
-    '.tray-clock',
-    '.mock-win-controls span',
-    '[data-target-id]',
-    '[title]',
-    '.error-content p',
-    '.mock-instruction',
-    'code',
-    'h3',
-    'h4'
+    '#desktopContainer .inspectable-box',
+    '#desktopContainer .inspectable-target',
+    '#desktopContainer .tool-btn',
+    '#desktopContainer .mock-win-btn',
+    '#desktopContainer .taskbar-item',
+    '#desktopContainer .win-logo-btn',
+    '#desktopContainer .tray-teachme-icon',
+    '#desktopContainer .tray-clock',
+    '#desktopContainer .mock-win-controls span',
+    '#desktopContainer [data-target-id]',
+    '#desktopContainer .error-content p',
+    '#desktopContainer .mock-instruction'
   ].join(', ');
 
   const inspectables = document.querySelectorAll(universalSelector);
