@@ -10,7 +10,7 @@
         Width="180"
         Height="54"
         IsHitTestVisible="False">
-    <Border Background="#E60A0E19"
+    <Border Background="#880A0E19"
             BorderBrush="#00F5A0"
             BorderThickness="1"
             CornerRadius="10"

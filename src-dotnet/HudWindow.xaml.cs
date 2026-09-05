@@ -18,10 +18,11 @@ public partial class HudWindow : Window
     private InspectionData? _currentData;
     private byte[]? _currentImageBytes;
     private bool _isPinned = false;
+    private bool _isAiAnalyzing = false;
     private string _settingsPath;
 
     public string ApiKey { get; private set; } = string.Empty;
-    public string Model { get; private set; } = "gemini-2.5-flash";
+    public string Model { get; private set; } = "gemini-flash-latest";
     public string AnalysisMode { get; private set; } = "Maestro & Guía de Acciones";
     public double DwellSeconds { get; private set; } = 3.0;
 
@@ -50,6 +51,17 @@ public partial class HudWindow : Window
     {
         this.Show();
         SettingsDrawer.Visibility = Visibility.Visible;
+        if (ModelCombo != null)
+        {
+            foreach (ComboBoxItem item in ModelCombo.Items)
+            {
+                if (item.Content?.ToString() == Model)
+                {
+                    ModelCombo.SelectedItem = item;
+                    break;
+                }
+            }
+        }
         this.Activate();
     }
 
@@ -58,6 +70,18 @@ public partial class HudWindow : Window
         DwellSlider.Value = DwellSeconds;
         DwellValueLabel.Text = $"{DwellSeconds:0.0} seg";
         ApiKeyBox.Password = ApiKey;
+
+        if (ModelCombo != null)
+        {
+            foreach (ComboBoxItem item in ModelCombo.Items)
+            {
+                if (item.Content?.ToString() == Model)
+                {
+                    ModelCombo.SelectedItem = item;
+                    break;
+                }
+            }
+        }
 
         if (AnalysisModeCombo != null)
         {
@@ -72,7 +96,7 @@ public partial class HudWindow : Window
         }
     }
 
-    public void ShowInspection(InspectionData data, byte[]? imageBytes, int targetX, int targetY)
+    public void ShowInspection(InspectionData data, byte[]? imageBytes, int targetX, int targetY, bool triggerAiAnalysis = true)
     {
         _currentData = data;
         _currentImageBytes = imageBytes;
@@ -133,37 +157,36 @@ public partial class HudWindow : Window
             VerdictIndicatorDot.Background = new SolidColorBrush(Color.FromRgb(0x00, 0xF5, 0xA0)); // Green
         }
 
-        // Image thumbnail
-        if (imageBytes != null && imageBytes.Length > 0)
-        {
-            try
-            {
-                using var ms = new MemoryStream(imageBytes);
-                var bi = new BitmapImage();
-                bi.BeginInit();
-                bi.StreamSource = ms;
-                bi.CacheOption = BitmapCacheOption.OnLoad;
-                bi.EndInit();
-                bi.Freeze();
-                ThumbnailImage.Source = bi;
-            }
-            catch { }
-        }
-
         this.Show();
         this.Activate();
 
-        // If Gemini API Key is configured, trigger real multimodal vision in background!
-        if (!string.IsNullOrWhiteSpace(ApiKey) && imageBytes != null && imageBytes.Length > 0)
+        // If Gemini API Key is configured and this isn't already the AI result, trigger multimodal vision in background!
+        if (triggerAiAnalysis && !_isAiAnalyzing && !string.IsNullOrWhiteSpace(ApiKey) && imageBytes != null && imageBytes.Length > 0)
         {
+            _isAiAnalyzing = true;
             ConfidenceText.Text = " • ✨ Analizando con Gemini...";
             Task.Run(async () =>
             {
-                var aiData = await GeminiClient.AnalyzeImageAsync(ApiKey, Model, imageBytes, data.Name, data.ProcessName, data.ProcessId);
-                Dispatcher.Invoke(() =>
+                try
                 {
-                    ShowInspection(aiData, imageBytes, (int)this.Left, (int)this.Top);
-                });
+                    var aiData = await GeminiClient.AnalyzeImageAsync(ApiKey, Model, imageBytes, data.Name, data.ProcessName, data.ProcessId);
+                    Dispatcher.Invoke(() =>
+                    {
+                        ShowInspection(aiData, imageBytes, (int)this.Left, (int)this.Top, triggerAiAnalysis: false);
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        ConfidenceText.Text = " • ⚠️ Error Gemini";
+                        VerdictLabelText.Text = $"Error IA: {ex.Message}";
+                    });
+                }
+                finally
+                {
+                    _isAiAnalyzing = false;
+                }
             });
         }
     }
@@ -211,7 +234,7 @@ public partial class HudWindow : Window
         ApiKey = ApiKeyBox.Password.Trim();
         if (ModelCombo.SelectedItem is ComboBoxItem item)
         {
-            Model = item.Content.ToString() ?? "gemini-2.5-flash";
+            Model = GeminiClient.NormalizeModel(item.Content.ToString());
         }
         if (AnalysisModeCombo.SelectedItem is ComboBoxItem modeItem)
         {
@@ -333,7 +356,7 @@ public partial class HudWindow : Window
                 using var doc = JsonDocument.Parse(json);
                 var root = doc.RootElement;
                 if (root.TryGetProperty("ApiKey", out var k)) ApiKey = k.GetString() ?? "";
-                if (root.TryGetProperty("Model", out var m)) Model = m.GetString() ?? "gemini-2.5-flash";
+                if (root.TryGetProperty("Model", out var m)) Model = GeminiClient.NormalizeModel(m.GetString());
                 if (root.TryGetProperty("AnalysisMode", out var a)) AnalysisMode = a.GetString() ?? "Maestro & Guía de Acciones";
                 if (root.TryGetProperty("DwellSeconds", out var d)) DwellSeconds = d.GetDouble();
             }

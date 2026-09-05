@@ -1,16 +1,18 @@
 <div align="center">
 
+<img src="icon.png" width="128" height="128" alt="TeachMe AI Icon" style="border-radius: 24px; box-shadow: 0 8px 32px rgba(0,245,160,0.3); margin-bottom: 12px;"/>
+
 # 🧠 TeachMe AI
 ### Windows 11 Neural Screen Inspector & Cognitive HUD
 
+[![GitHub Pages](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-00F5A0?style=for-the-badge&logo=github&logoColor=black)](https://dixi3stdgdl-design.github.io/TeachMe-AI/)
 [![OS - Windows 11](https://img.shields.io/badge/OS-Windows%2011%20Fluent-0078D4?style=for-the-badge&logo=windows11&logoColor=white)](https://microsoft.com)
 [![Engine - Rust](https://img.shields.io/badge/Engine-Rust%202021%20C--ABI-DEA584?style=for-the-badge&logo=rust&logoColor=black)](https://www.rust-lang.org/)
-[![Runtime - .NET 10](https://img.shields.io/badge/.NET-10%20WPF%20Preview-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
-[![UI - WebView2 Acrylic](https://img.shields.io/badge/UI-WebView2%20%7C%20Acrylic%20HUD-00C7B7?style=for-the-badge&logo=microsoftedge&logoColor=white)](https://developer.microsoft.com/microsoft-edge/webview2/)
+[![Runtime - .NET 8](https://img.shields.io/badge/.NET-8.0%20WPF-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
 [![License - MIT](https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge)](LICENSE)
 
 <p align="center">
-  <b>Utilidad de escritorio de ultra-bajo consumo que analiza cualquier ventana, diálogo de error o interfaz en Windows 11 en tiempo real mediante hooks de bajo nivel y un HUD acrílico translúcido flotante.</b>
+  <b>Utilidad de escritorio de ultra-bajo consumo que analiza cualquier ventana, diálogo de error o interfaz en Windows 11 en tiempo real mediante IA didáctica, atajos limpios y un HUD acrílico translúcido flotante alojado en la barra de tareas.</b>
 </p>
 
 </div>
@@ -19,18 +21,18 @@
 
 ## 🌟 Características Principales
 
-- **⚡ Recorte Instantáneo Global (<kbd>Shift</kbd> + <kbd>A</kbd>):**
-  Interrupción mediante hook de sistema operativo (`WH_KEYBOARD_LL`) que congela la pantalla en cualquier aplicación (Chrome, Blender, juegos o asistentes de instalación) permitiendo seleccionar un área de interés con cruz milimétrica.
-- **🦀 Núcleo Nativo en Rust (`src-rust/`):**
-  Librería C-ABI (`teachme_core.dll`) con llamadas Win32 atómicas a `WindowFromPoint`, `GetWindowTextW`, y captura de memoria Direct GDI BitBlt sin copias redundantes en espacio de usuario.
-- **🔷 Host Robusto en .NET 10 (C# / WPF):**
-  Host en WPF con aceleración por hardware, soporte para múltiples monitores (`PerMonitorV2` High-DPI), y fallback dinámico P/Invoke para máxima compatibilidad sin dependencias externas obligatorias.
-- **🪟 HUD Acrílico Translúcido de 270px (VisionOS / Raycast Grade):**
-  Panel ultracompacto con 60% de opacidad, desenfoque de fondo dinámico, tipografía ergonómica de lectura confortable (`Plus Jakarta Sans` y `JetBrains Mono`) y conector holográfico libre de cables invasivos.
-- **⏳ Radar de Descanso de Ratón (3.0s Dwell):**
-  Temporizador radial no intrusivo con micro-animaciones en tiempo real para evitar estrés de espera. Al pausar sobre cualquier control, el HUD se activa automáticamente; pulsa <kbd>Espacio</kbd> para saltar la espera.
-- **🛡️ Auditoría Integral de Procesos:**
-  Identifica firmas digitales (Authenticode), binarios asociados, consumo estimado de recursos, claves de registro y códigos de error (ej. `0x80070005`).
+- **⚡ Recorte Instantáneo Global (<kbd>Ctrl</kbd> + <kbd>A</kbd>):**
+  Interrupción limpia mediante hook de sistema operativo (`WH_KEYBOARD_LL` y `RegisterHotKey`) que congela la pantalla en cualquier aplicación permitiendo seleccionar un área de interés milimétrica sin bloquear la escritura de mayúsculas.
+- **📸 Captura de Pantalla Completa & Portapapeles:**
+  Nuevas herramientas integradas para analizar la pantalla entera de un solo clic o examinar directamente imágenes y texto copiados al portapapeles.
+- **🔽 Integración en la Barra de Tareas (System Tray):**
+  TeachMe AI se aloja silenciosamente en la bandeja del sistema junto al reloj con un menú contextual completo y acceso rápido.
+- **📡 Radar Automático On/Off (<kbd>Ctrl</kbd> + <kbd>D</kbd>):**
+  Temporizador de descanso de ratón conmutables a voluntad para evitar sobrecarga o falsas ejecuciones en el escritorio.
+- **🤖 Tutor Didáctico con Google Gemini Oficial:**
+  Soporte para los últimos modelos `gemini-flash-latest` y `gemini-pro-latest` sin límites artificiales y con diagnóstico local de alta velocidad.
+- **🪟 HUD Acrílico Translúcido (VisionOS / Raycast Grade):**
+  Panel ultracompacto con opacidad calibrada, desenfoque dinámico y tipografía ergonómica de lectura confortable (`Plus Jakarta Sans` y `JetBrains Mono`).
 
 ---
 
@@ -40,7 +42,7 @@
 flowchart TD
     subgraph Windows 11 Environment
         Cursor[🖱️ Posición del Mouse / Interacción]
-        Kbd[⌨️ HotKey Shift + A]
+        Kbd[⌨️ HotKey Ctrl + A / Ctrl + D]
     end
 
     subgraph Native Kernel Layer

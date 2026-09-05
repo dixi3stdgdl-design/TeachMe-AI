@@ -7,6 +7,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" href="icon.png">
+  <link rel="apple-touch-icon" href="icon.png">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="theme-fluent-dark">
@@ -493,10 +496,11 @@ Start-Process "MediaProSetup.exe" -ArgumentList "/VERYSILENT /NOICONS /TASKS='!o
         <div class="select-group-row">
           <label for="selectAiModel">Modelo de IA:</label>
           <select id="selectAiModel" class="fluent-select">
-            <option value="gemini-2.5-flash">Gemini 2.5 Flash (Ultra-Rápido & Visión)</option>
-            <option value="gemini-2.0-flash">Gemini 2.0 Flash (Recomendado)</option>
-            <option value="gemini-1.5-flash">Gemini 1.5 Flash (Bajo Consumo)</option>
-            <option value="gemini-2.5-pro">Gemini 2.5 Pro (Máxima Precisión)</option>
+            <option value="gemini-flash-latest" selected>Gemini Flash (Recomendado • Visión &amp; Ultra-Rápido)</option>
+            <option value="gemini-3.8-flash">Gemini 3.8 Flash (Última Generación)</option>
+            <option value="gemini-3.6-flash">Gemini 3.6 Flash (Alta Velocidad)</option>
+            <option value="gemini-pro-latest">Gemini Pro (Máxima Precisión &amp; Razonamiento)</option>
+            <option value="gemini-3.1-pro-preview">Gemini 3.1 Pro (Razonamiento Profundo)</option>
           </select>
         </div>
 

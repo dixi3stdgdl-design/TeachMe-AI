@@ -26,7 +26,7 @@
             
             <!-- Dimension Tag -->
             <Border x:Name="DimensionTag"
-                    Background="#CC0A0E19"
+                    Background="#880A0E19"
                     BorderBrush="#00F5A0"
                     BorderThickness="1"
                     CornerRadius="4"
@@ -44,8 +44,8 @@
         <Border HorizontalAlignment="Center"
                 VerticalAlignment="Top"
                 Margin="0 24 0 0"
-                Background="#E60A0E19"
-                BorderBrush="#38BDF8"
+                Background="#880A0E19"
+                BorderBrush="#4038BDF8"
                 BorderThickness="1"
                 CornerRadius="18"
                 Padding="16 8">

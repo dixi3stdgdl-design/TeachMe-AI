@@ -14,6 +14,7 @@ public class GlobalHotKey : IDisposable
 {
     public event Action? OnSnipTriggered;
     public event Action? OnSettingsTriggered;
+    public event Action? OnToggleRadarTriggered;
     public event Action? OnUserKeyboardActivity;
 
     private IntPtr _windowHandle = IntPtr.Zero;
@@ -34,17 +35,21 @@ public class GlobalHotKey : IDisposable
 
     private const int VK_A = 0x41;
     private const int VK_C = 0x43;
+    private const int VK_D = 0x44;
     private const int VK_SHIFT = 0x10;
     private const int VK_CONTROL = 0x11;
     private const int VK_MENU = 0x12;
 
-    private const int HOTKEY_ID_SHIFT_A = 9001;
+    private const int HOTKEY_ID_CTRL_A = 9001;
     private const int HOTKEY_ID_CTRL_SHIFT_A = 9002;
     private const int HOTKEY_ID_ALT_A = 9003;
 
-    private const int HOTKEY_ID_SHIFT_C = 9004;
     private const int HOTKEY_ID_CTRL_SHIFT_C = 9005;
     private const int HOTKEY_ID_ALT_C = 9006;
+
+    private const int HOTKEY_ID_CTRL_D = 9008;
+    private const int HOTKEY_ID_CTRL_SHIFT_D = 9009;
+    private const int HOTKEY_ID_ALT_D = 9010;
 
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
     private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
@@ -55,9 +60,12 @@ public class GlobalHotKey : IDisposable
 
     private DateTime _lastTriggerTime = DateTime.MinValue;
     private DateTime _lastSettingsTime = DateTime.MinValue;
+    private DateTime _lastRadarTime = DateTime.MinValue;
 
     /// <summary>
     /// Binds Win32 RegisterHotKey and WH_KEYBOARD_LL to guarantee hotkey detection.
+    /// Eliminamos combinaciones de Shift solo con letras (Shift+A, Shift+C, Shift+D)
+    /// para que el usuario pueda escribir mayúsculas sin que la app interfiera.
     /// </summary>
     public void RegisterWindow(IntPtr hWnd)
     {
@@ -70,16 +78,21 @@ public class GlobalHotKey : IDisposable
         _hwndSource = HwndSource.FromHwnd(hWnd);
         _hwndSource?.AddHook(HwndHook);
 
-        // 1. Win32 RegisterHotKey: Shift+A (Snip), Shift+C (Settings)
-        bool ok1 = RegisterHotKey(_windowHandle, HOTKEY_ID_SHIFT_A, MOD_SHIFT, VK_A);
-        bool ok2 = RegisterHotKey(_windowHandle, HOTKEY_ID_CTRL_SHIFT_A, MOD_CONTROL | MOD_SHIFT, VK_A);
-        bool ok3 = RegisterHotKey(_windowHandle, HOTKEY_ID_ALT_A, MOD_ALT, VK_A);
+        // 1. Recorte: Ctrl+A, Ctrl+Shift+A, Alt+A (NO Shift+A solo para permitir mayúsculas)
+        RegisterHotKey(_windowHandle, HOTKEY_ID_CTRL_A, MOD_CONTROL, VK_A);
+        RegisterHotKey(_windowHandle, HOTKEY_ID_CTRL_SHIFT_A, MOD_CONTROL | MOD_SHIFT, VK_A);
+        RegisterHotKey(_windowHandle, HOTKEY_ID_ALT_A, MOD_ALT, VK_A);
 
-        bool ok4 = RegisterHotKey(_windowHandle, HOTKEY_ID_SHIFT_C, MOD_SHIFT, VK_C);
-        bool ok5 = RegisterHotKey(_windowHandle, HOTKEY_ID_CTRL_SHIFT_C, MOD_CONTROL | MOD_SHIFT, VK_C);
-        bool ok6 = RegisterHotKey(_windowHandle, HOTKEY_ID_ALT_C, MOD_ALT, VK_C);
+        // 2. Ajustes: Ctrl+Shift+C, Alt+C (NO Shift+C solo)
+        RegisterHotKey(_windowHandle, HOTKEY_ID_CTRL_SHIFT_C, MOD_CONTROL | MOD_SHIFT, VK_C);
+        RegisterHotKey(_windowHandle, HOTKEY_ID_ALT_C, MOD_ALT, VK_C);
 
-        try { System.IO.File.AppendAllText(logFile, $"[TeachMe AI] RegisterHotKey Shift+A: {ok1}, Shift+C: {ok4}\n"); } catch { }
+        // 3. Toggle Radar Automático: Ctrl+D, Ctrl+Shift+D, Alt+D (NO Shift+D solo)
+        RegisterHotKey(_windowHandle, HOTKEY_ID_CTRL_D, MOD_CONTROL, VK_D);
+        RegisterHotKey(_windowHandle, HOTKEY_ID_CTRL_SHIFT_D, MOD_CONTROL | MOD_SHIFT, VK_D);
+        RegisterHotKey(_windowHandle, HOTKEY_ID_ALT_D, MOD_ALT, VK_D);
+
+        try { System.IO.File.AppendAllText(logFile, "[TeachMe AI] Global hotkeys (Ctrl+A, Ctrl+D, Ctrl+Shift+C) registered. Shift-only letters freed for typing.\n"); } catch { }
 
         // 2. Install WH_KEYBOARD_LL hook for guaranteed interception
         try
@@ -125,19 +138,38 @@ public class GlobalHotKey : IDisposable
         OnSettingsTriggered?.Invoke();
     }
 
+    private void TriggerToggleRadarWithDebounce(string source)
+    {
+        if ((DateTime.UtcNow - _lastRadarTime).TotalMilliseconds < 600) return;
+        _lastRadarTime = DateTime.UtcNow;
+
+        string logFile = System.IO.Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), 
+            "TeachMeAI", 
+            "run.log");
+
+        try { System.IO.File.AppendAllText(logFile, $"[TeachMe AI] Toggle Radar HotKey (Shift+D) triggered via {source} at {DateTime.Now}\n"); } catch { }
+        OnToggleRadarTriggered?.Invoke();
+    }
+
     private IntPtr HwndHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
     {
         if (msg == WM_HOTKEY)
         {
             int id = wParam.ToInt32();
-            if (id == HOTKEY_ID_SHIFT_A || id == HOTKEY_ID_CTRL_SHIFT_A || id == HOTKEY_ID_ALT_A)
+            if (id == HOTKEY_ID_CTRL_A || id == HOTKEY_ID_CTRL_SHIFT_A || id == HOTKEY_ID_ALT_A)
             {
                 TriggerSnipWithDebounce($"WM_HOTKEY (ID: {id})");
                 handled = true;
             }
-            else if (id == HOTKEY_ID_SHIFT_C || id == HOTKEY_ID_CTRL_SHIFT_C || id == HOTKEY_ID_ALT_C)
+            else if (id == HOTKEY_ID_CTRL_SHIFT_C || id == HOTKEY_ID_ALT_C)
             {
                 TriggerSettingsWithDebounce($"WM_HOTKEY (ID: {id})");
+                handled = true;
+            }
+            else if (id == HOTKEY_ID_CTRL_D || id == HOTKEY_ID_CTRL_SHIFT_D || id == HOTKEY_ID_ALT_D)
+            {
+                TriggerToggleRadarWithDebounce($"WM_HOTKEY (ID: {id})");
                 handled = true;
             }
         }
@@ -159,16 +191,28 @@ public class GlobalHotKey : IDisposable
 
             if (vkCode == VK_A)
             {
-                if (shiftDown || (ctrlDown && shiftDown) || altDown)
+                // Trigger snip with Ctrl+A, Ctrl+Shift+A, or Alt+A.
+                // NUNCA disparar con Shift solo para permitir escribir mayúscula 'A' sin problemas.
+                if (ctrlDown || altDown)
                 {
                     TriggerSnipWithDebounce("LowLevelKeyboardHook");
                 }
             }
             else if (vkCode == VK_C)
             {
-                if (shiftDown || (ctrlDown && shiftDown) || altDown)
+                // NUNCA disparar con Shift solo para permitir escribir mayúscula 'C'.
+                if ((ctrlDown && shiftDown) || altDown)
                 {
                     TriggerSettingsWithDebounce("LowLevelKeyboardHook");
+                }
+            }
+            else if (vkCode == VK_D)
+            {
+                // Alternar radar con Ctrl+D, Ctrl+Shift+D o Alt+D.
+                // NUNCA disparar con Shift solo para permitir escribir mayúscula 'D'.
+                if (ctrlDown || altDown)
+                {
+                    TriggerToggleRadarWithDebounce("LowLevelKeyboardHook");
                 }
             }
         }
@@ -180,12 +224,14 @@ public class GlobalHotKey : IDisposable
     {
         if (_windowHandle != IntPtr.Zero)
         {
-            UnregisterHotKey(_windowHandle, HOTKEY_ID_SHIFT_A);
+            UnregisterHotKey(_windowHandle, HOTKEY_ID_CTRL_A);
             UnregisterHotKey(_windowHandle, HOTKEY_ID_CTRL_SHIFT_A);
             UnregisterHotKey(_windowHandle, HOTKEY_ID_ALT_A);
-            UnregisterHotKey(_windowHandle, HOTKEY_ID_SHIFT_C);
             UnregisterHotKey(_windowHandle, HOTKEY_ID_CTRL_SHIFT_C);
             UnregisterHotKey(_windowHandle, HOTKEY_ID_ALT_C);
+            UnregisterHotKey(_windowHandle, HOTKEY_ID_CTRL_D);
+            UnregisterHotKey(_windowHandle, HOTKEY_ID_CTRL_SHIFT_D);
+            UnregisterHotKey(_windowHandle, HOTKEY_ID_ALT_D);
             _windowHandle = IntPtr.Zero;
         }
 

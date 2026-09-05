@@ -632,7 +632,13 @@ const state = {
 
   // Motor Multimodal de Inteligencia Artificial (Google Gemini)
   geminiApiKey: localStorage.getItem('teachme_gemini_api_key') || '',
-  geminiModel: localStorage.getItem('teachme_gemini_model') || 'gemini-2.5-flash',
+  geminiModel: (function() {
+    const saved = localStorage.getItem('teachme_gemini_model');
+    if (!saved || saved.includes('2.5') || saved.includes('2.0') || saved.includes('1.5')) {
+      return saved && saved.includes('pro') ? 'gemini-pro-latest' : 'gemini-flash-latest';
+    }
+    return saved;
+  })(),
   lastCapturedImage: null,
   isAnalyzing: false
 };
@@ -1583,7 +1589,7 @@ async function callGeminiVision(base64Image, windowMetadata) {
 
   try {
     const cleanBase64 = base64Image.replace(/^data:image\/\w+;base64,/, '');
-    const model = state.geminiModel || 'gemini-2.5-flash';
+    const model = state.geminiModel || 'gemini-flash-latest';
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(state.geminiApiKey)}`;
 
     const promptText = `Eres TeachMe AI, un asistente visual neural de ultra-alta fidelidad para Windows 11.
@@ -1680,7 +1686,7 @@ async function callGeminiChat(question) {
   }
 
   try {
-    const model = state.geminiModel || 'gemini-2.5-flash';
+    const model = state.geminiModel || 'gemini-flash-latest';
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(state.geminiApiKey)}`;
     const current = INSPECTION_DATABASE[state.currentTargetKey] || {};
 
@@ -1781,7 +1787,7 @@ function setupDesignStudio() {
         }
         DOM.btnTestApiKey.textContent = '⏳ Probando...';
         try {
-          const model = state.geminiModel || 'gemini-2.5-flash';
+          const model = state.geminiModel || 'gemini-flash-latest';
           const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(key)}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

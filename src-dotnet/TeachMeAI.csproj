@@ -10,8 +10,16 @@
     <LangVersion>latest</LangVersion>
     <RootNamespace>TeachMeAI</RootNamespace>
     <AssemblyName>TeachMeAI</AssemblyName>
+    <ApplicationIcon>app.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="app.ico" />
+    <None Update="app.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Drawing.Common" Version="8.0.10" />

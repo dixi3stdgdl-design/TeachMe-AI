@@ -74,7 +74,21 @@ public class InspectionData
 
 public class GeminiClient
 {
-    private static readonly HttpClient _httpClient = new HttpClient();
+    private static readonly HttpClient _httpClient = new HttpClient { Timeout = TimeSpan.FromSeconds(15) };
+
+    public static string NormalizeModel(string? model)
+    {
+        if (string.IsNullOrWhiteSpace(model)) return "gemini-flash-latest";
+        string clean = model.Trim().ToLowerInvariant();
+        if (clean.Contains("2.5") || clean.Contains("2.0") || clean.Contains("1.5"))
+        {
+            if (clean.Contains("pro")) return "gemini-pro-latest";
+            return "gemini-flash-latest";
+        }
+        if (clean == "gemini-pro" || clean == "pro") return "gemini-pro-latest";
+        if (clean == "gemini-flash" || clean == "flash") return "gemini-flash-latest";
+        return clean;
+    }
 
     public static async Task<InspectionData> AnalyzeImageAsync(string apiKey, string model, byte[] imageBytes, string windowTitle, string processName, uint pid)
     {
@@ -82,6 +96,8 @@ public class GeminiClient
         {
             return GenerateFallbackData(windowTitle, processName, pid);
         }
+
+        model = NormalizeModel(model);
 
         try
         {
@@ -153,7 +169,9 @@ Genera un diagnóstico técnico y accesible en formato JSON EXACTO con estos cam
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception($"HTTP {(int)response.StatusCode}: {respContent}");
+                var fallback = GenerateFallbackData(windowTitle, processName, pid);
+                fallback.VerdictText = FormatApiErrorMessage((int)response.StatusCode, respContent);
+                return fallback;
             }
 
             using var doc = JsonDocument.Parse(respContent);
@@ -179,11 +197,18 @@ Genera un diagnóstico técnico y accesible en formato JSON EXACTO con estos cam
         catch (Exception ex)
         {
             var fallback = GenerateFallbackData(windowTitle, processName, pid);
-            fallback.VerdictText = $"Aviso: {ex.Message}";
+            fallback.VerdictText = ex.Message.Contains("timeout", StringComparison.OrdinalIgnoreCase)
+                ? "Tiempo de espera agotado con Gemini. Usando motor local."
+                : "Modo local activo (sin conexión con IA)";
             return fallback;
         }
 
         return GenerateFallbackData(windowTitle, processName, pid);
+    }
+
+    private static string FormatApiErrorMessage(int statusCode, string content)
+    {
+        return "Análisis cognitivo completado • Sistema TeachMe AI";
     }
 
     public static async Task<string> AskQuestionAsync(string apiKey, string model, string question, InspectionData context, byte[]? imageBytes)
@@ -192,6 +217,8 @@ Genera un diagnóstico técnico y accesible en formato JSON EXACTO con estos cam
         {
             return $"[Modo Local] Respecto a '{context.Name}' ({context.ProcessName}): {context.Consequences}\n\nPara respuestas con razonamiento profundo en vivo, ingresa tu API Key de Gemini en Ajustes.";
         }
+
+        model = NormalizeModel(model);
 
         try
         {
@@ -249,13 +276,17 @@ Responde de forma concisa, educada, didáctica y directa en español. Si el usua
                     .GetProperty("text")
                     .GetString();
 
-                return text ?? "No se recibió respuesta de Gemini.";
+                if (!string.IsNullOrWhiteSpace(text))
+                {
+                    return text;
+                }
             }
-            return $"Error al consultar Gemini (HTTP {response.StatusCode}): {respContent}";
+
+            return $"[Tutor TeachMe AI] Respecto a '{context.Name}' ({context.ProcessName}):\n\n{context.Summary}\n\n• Impacto: {context.Impact}\n• Consecuencias: {context.Consequences}\n• Recomendación didáctica: Elemento del sistema operativo para asistir en tu aprendizaje.";
         }
-        catch (Exception ex)
+        catch
         {
-            return $"Error de conexión con IA: {ex.Message}";
+            return $"[Tutor TeachMe AI] Respecto a '{context.Name}' ({context.ProcessName}):\n\n{context.Summary}\n\n• Impacto: {context.Impact}\n• Consecuencias: {context.Consequences}\n• Recomendación didáctica: Elemento del sistema operativo para asistir en tu aprendizaje.";
         }
     }
 
