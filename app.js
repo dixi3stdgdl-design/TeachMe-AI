@@ -402,7 +402,7 @@ blender -b "escena.blend" -o "//render_" -F PNG -x 1 -a`
     signStatus: "Válida (Authenticode Developer Certificate)",
     exePath: "C:\\Program Files\\TeachMe AI\\TeachMeAI.exe",
     resources: "CPU: 0.05% | RAM: ~22 MB",
-    accessKey: "Shift + A (Recorte Instantáneo)",
+    accessKey: "Ctrl + A (Recorte Instantáneo)",
     cliSnippet: `# Estado del servicio TeachMe AI:
 Get-Process -Name "TeachMeAI" | Format-List Id, CPU, WorkingSet64`
   },
@@ -757,10 +757,82 @@ function init() {
   populateCard(INSPECTION_DATABASE[state.currentTargetKey]);
   setupEventListeners();
   setupDesignStudio();
+  setupLandingPageFeatures();
   setupNativeInterop();
   
   // Start Continuous 60fps Render Loop for Physics & Holographic Ray
   requestAnimationFrame(renderLoop);
+}
+
+function setupLandingPageFeatures() {
+  // Scenario Switcher Tabs
+  const scenarioTabs = document.querySelectorAll('.scenario-tab-btn');
+  scenarioTabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      scenarioTabs.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const scenario = btn.getAttribute('data-scenario');
+      loadScenario(scenario);
+    });
+  });
+
+  // Quickstart Copy Buttons
+  document.querySelectorAll('.copy-cmd-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const cmd = btn.getAttribute('data-copy');
+      if (cmd) {
+        navigator.clipboard.writeText(cmd);
+        const original = btn.textContent;
+        btn.textContent = '✓ Copiado';
+        btn.style.color = 'var(--accent-cyan)';
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.style.color = '';
+        }, 1800);
+      }
+    });
+  });
+}
+
+function loadScenario(preset) {
+  let targetKey = 'installer_bloatware';
+  let targetWindow = '.window-installer';
+  let targetElSelector = '[data-target-id="installer_bloatware"]';
+
+  if (preset === 'error') {
+    targetKey = 'error_code_heading';
+    targetWindow = '.window-error';
+    targetElSelector = '[data-target-id="error_code_heading"]';
+  } else if (preset === 'blender') {
+    targetKey = 'tool_bake_ao';
+    targetWindow = '.window-tools';
+    targetElSelector = '[data-target-id="tool_bake_ao"]';
+  }
+
+  // Elevate and focus target mock window
+  document.querySelectorAll('.mock-window-card').forEach(w => {
+    w.style.zIndex = '5';
+    w.style.opacity = '0.75';
+    w.style.transform = 'scale(0.99)';
+  });
+  const win = document.querySelector(targetWindow);
+  if (win) {
+    win.style.zIndex = '15';
+    win.style.opacity = '1';
+    win.style.transform = 'scale(1)';
+  }
+
+  const targetEl = document.querySelector(targetElSelector);
+  if (targetEl) {
+    const rect = targetEl.getBoundingClientRect();
+    state.currentTargetKey = targetKey;
+    state.anchorPoint = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+    updateCropAnchor(rect.left, rect.top, rect.width, rect.height);
+    calculateTargetPosition(rect.right + 20, rect.top);
+    populateCard(INSPECTION_DATABASE[targetKey]);
+    showCard();
+    if (window.playCyberSound) window.playCyberSound('scan');
+  }
 }
 
 // Populate Card UI
@@ -983,7 +1055,38 @@ function setupEventListeners() {
   // Close Card
   DOM.btnCloseCard.addEventListener('click', hideCard);
   
-  // Keyboard Shortcuts (Shift + A for Snipping, Space to Skip Dwell, Esc to Close)
+  // Subtle Web Audio Synthesizer Feedback
+  function playCyberSound(type) {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      const ctx = new AudioCtx();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      if (type === 'snip') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(820, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(1640, ctx.currentTime + 0.1);
+        gain.gain.setValueAtTime(0.06, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.1);
+      } else if (type === 'scan') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(440, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.14);
+        gain.gain.setValueAtTime(0.04, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.14);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.14);
+      }
+    } catch (_) {}
+  }
+  window.playCyberSound = playCyberSound;
+
+  // Keyboard Shortcuts (Ctrl + A / Shift + A for Snipping, Ctrl + D for Dwell, Space to Skip Dwell, Esc to Close)
   window.addEventListener('keydown', (e) => {
     // Si la espera de dwell está activa y se pulsa Espacio, se abre de inmediato
     if (e.code === 'Space') {
@@ -1003,9 +1106,18 @@ function setupEventListeners() {
       } else {
         hideCard();
       }
-    } else if ((e.shiftKey && (e.key === 'A' || e.key === 'a')) || (e.altKey && (e.key === 'A' || e.key === 'a'))) {
+    } else if (((e.ctrlKey || e.metaKey) && (e.key === 'A' || e.key === 'a')) ||
+               (e.shiftKey && (e.key === 'A' || e.key === 'a')) ||
+               (e.altKey && (e.key === 'A' || e.key === 'a'))) {
+      if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
+        return; // Allow standard select all in input fields
+      }
       e.preventDefault();
+      playCyberSound('snip');
       triggerSnipping();
+    } else if ((e.ctrlKey || e.metaKey) && (e.key === 'D' || e.key === 'd')) {
+      e.preventDefault();
+      setMode(state.currentMode === 'hover' ? 'cursor' : 'hover');
     }
   });
 

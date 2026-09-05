@@ -103,17 +103,18 @@ public partial class SnippingWindow : Window
                 // Query window beneath center
                 int centerX = (int)(x + width / 2);
                 int centerY = (int)(y + height / 2);
-                var winInfo = RustNativeBridge.InspectWindowAtPoint(centerX, centerY);
+                var winInfo = NativeKernelEngine.InspectWindowAtPoint(centerX, centerY);
 
                 var data = new InspectionData
                 {
                     Name = winInfo.Title,
                     ProcessName = winInfo.ProcessName,
                     ProcessId = winInfo.ProcessId,
-                    OcrText = $"[HWND: 0x{winInfo.Hwnd.ToInt64():X}] {winInfo.Title}",
-                    VerdictText = $"Proceso: {winInfo.ProcessName}.exe • PID: {winInfo.ProcessId}",
-                    Summary = $"Ventana activa: '{winInfo.Title}' perteneciente al proceso {winInfo.ProcessName} (PID: {winInfo.ProcessId}).",
-                    ExePath = $"C:\\Windows\\System32\\{winInfo.ProcessName}.exe",
+                    ControlType = winInfo.ClassName,
+                    OcrText = $"[HWND: 0x{winInfo.Hwnd.ToInt64():X}] {winInfo.Title} | Clase: {winInfo.ClassName}",
+                    VerdictText = $"Proceso: {winInfo.ProcessName}.exe • Clase: {winInfo.ClassName}",
+                    Summary = $"Ventana activa: '{winInfo.Title}' perteneciente al proceso {winInfo.ProcessName} (PID: {winInfo.ProcessId}) usando el control nativo '{winInfo.ClassName}'.",
+                    ExePath = winInfo.ExePath,
                     CliSnippet = $"Get-Process -Id {winInfo.ProcessId} | Select-Object Id, ProcessName, Path, CPU, WorkingSet64"
                 };
 
