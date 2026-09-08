@@ -1,38 +1,70 @@
 <div align="center">
 
-<img src="icon.png" width="128" height="128" alt="TeachMe AI Icon" style="border-radius: 24px; box-shadow: 0 8px 32px rgba(0,245,160,0.3); margin-bottom: 12px;"/>
+<img src="icon.png" width="128" height="128" alt="Tooltip AI Icon" style="border-radius: 24px; box-shadow: 0 8px 32px rgba(0,245,160,0.3); margin-bottom: 12px;"/>
 
-# 🧠 TeachMe AI
+# 🧠 Tooltip AI
 ### Windows 11 Neural Screen Inspector & Cognitive HUD
 
-[![GitHub Pages](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-00F5A0?style=for-the-badge&logo=github&logoColor=black)](https://dixi3stdgdl-design.github.io/TeachMe-AI/)
-[![OS - Windows 11](https://img.shields.io/badge/OS-Windows%2011%20Fluent-0078D4?style=for-the-badge&logo=windows11&logoColor=white)](https://microsoft.com)
-[![Engine - Rust](https://img.shields.io/badge/Engine-Rust%202021%20C--ABI-DEA584?style=for-the-badge&logo=rust&logoColor=black)](https://www.rust-lang.org/)
-[![Runtime - .NET 8](https://img.shields.io/badge/.NET-8.0%20WPF-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
+[![GitHub Pages](https://img.shields.io/badge/Web%20Oficial-Landing%20Page-00F5A0?style=for-the-badge&logo=github&logoColor=black)](https://dixi3stdgdl-design.github.io/TeachMe-AI/)
+[![Microsoft Store](https://img.shields.io/badge/Microsoft%20Store-In%20Review-0078D4?style=for-the-badge&logo=windows11&logoColor=white)](https://dixi3stdgdl-design.github.io/TeachMe-AI/)
+[![Direct Download](https://img.shields.io/badge/Descarga%20Directa-v1.0.0.0%20(72%20MB)-10B981?style=for-the-badge&logo=windows&logoColor=white)](https://dixi3stdgdl-design.github.io/TeachMe-AI/downloads/TooltipAI.exe)
+[![Runtime - .NET 8](https://img.shields.io/badge/.NET-8.0%20WPF%20Standalone-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
 [![License - MIT](https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge)](LICENSE)
 
 <p align="center">
-  <b>Utilidad de escritorio de ultra-bajo consumo que analiza cualquier ventana, diálogo de error o interfaz en Windows 11 en tiempo real mediante IA didáctica, atajos limpios y un HUD acrílico translúcido flotante alojado en la barra de tareas.</b>
+  <b>Utilidad nativa ultraligera para Windows 11 que analiza cualquier ventana, botón o diálogo de error en tiempo real con IA didáctica multimodal (Google Gemini), recorte instantáneo global (<kbd>Ctrl</kbd> + <kbd>A</kbd>) y un HUD acrílico translúcido flotante.</b>
 </p>
 
 </div>
 
 ---
 
+## ⚡ Descarga e Instalación
+
+### 1. Descarga Directa (Binario Oficial Standalone)
+Puedes descargar la versión lista para usar sin necesidad de instalar .NET SDK ni runtimes adicionales:
+* 📥 **[Descargar Tooltip AI v1.0.0.0 para Windows 11 (.exe - 72.4 MB)](https://dixi3stdgdl-design.github.io/TeachMe-AI/downloads/TooltipAI.exe)**
+* *Características del binario:* Compilado en modo `win-x64 --self-contained` con compresión de archivo único. No requiere instalación, solo ejecuta y se aloja en tu barra de tareas.
+
+### 2. Microsoft Store (En Proceso de Certificación)
+* **Estado:** Enviada y en proceso de revisión oficial por el equipo de Microsoft (SLA: 3 días hábiles).
+* **Partner Center ID:** `2f19281b-3d22-4767-9246-e6fe7d6e2d8a`
+* En cuanto concluya la certificación, estará disponible en la aplicación oficial de Microsoft Store con actualizaciones automáticas.
+
+---
+
 ## 🌟 Características Principales
 
 - **⚡ Recorte Instantáneo Global (<kbd>Ctrl</kbd> + <kbd>A</kbd>):**
-  Interrupción limpia mediante hook de sistema operativo (`WH_KEYBOARD_LL` y `RegisterHotKey`) que congela la pantalla en cualquier aplicación permitiendo seleccionar un área de interés milimétrica sin bloquear la escritura de mayúsculas.
-- **📸 Captura de Pantalla Completa & Portapapeles:**
-  Nuevas herramientas integradas para analizar la pantalla entera de un solo clic o examinar directamente imágenes y texto copiados al portapapeles.
-- **🔽 Integración en la Barra de Tareas (System Tray):**
-  TeachMe AI se aloja silenciosamente en la bandeja del sistema junto al reloj con un menú contextual completo y acceso rápido.
-- **📡 Radar Automático On/Off (<kbd>Ctrl</kbd> + <kbd>D</kbd>):**
-  Temporizador de descanso de ratón conmutables a voluntad para evitar sobrecarga o falsas ejecuciones en el escritorio.
-- **🤖 Tutor Didáctico con Google Gemini Oficial:**
-  Soporte para los últimos modelos `gemini-flash-latest` y `gemini-pro-latest` sin límites artificiales y con diagnóstico local de alta velocidad.
+  Interrupción de bajísima latencia mediante Win32 API (`WH_KEYBOARD_LL` y `RegisterHotKey`) que congela la pantalla en cualquier aplicación permitiendo seleccionar un área de interés milimétrica sin interrumpir tu flujo de trabajo.
 - **🪟 HUD Acrílico Translúcido (VisionOS / Raycast Grade):**
-  Panel ultracompacto con opacidad calibrada, desenfoque dinámico y tipografía ergonómica de lectura confortable (`Plus Jakarta Sans` y `JetBrains Mono`).
+  Panel flotante con desenfoque acrílico, saturación reactiva y tipografía ergonómica (`Plus Jakarta Sans` y `JetBrains Mono`) con 5 pestañas didácticas:
+  1. **Veredicto y Riesgo:** Clasificación instantánea en *Seguro*, *Precaución* o *Crítico*.
+  2. **Explicación Didáctica:** Sin tecnicismos, pensado para entender qué hace ese botón o mensaje antes de hacer clic.
+  3. **Impacto en el Sistema:** Memoria, disco, registro y arranque.
+  4. **Diagnóstico Técnico:** Comandos PowerShell / Win32 listos para copiar.
+  5. **Chat IA Integrado:** Haz preguntas adicionales a la IA sobre la captura.
+- **🤖 Motor Multimodal con Google Gemini Oficial:**
+  Compatible de forma nativa con los modelos `gemini-2.5-flash` y `gemini-pro`.
+- **📸 Captura de Pantalla Completa & Portapapeles:**
+  Inspecciona toda la pantalla de un clic o analiza al instante imágenes y texto copiados al portapapeles.
+- **🔽 Alojado Silenciosamente en la Barra de Tareas (System Tray):**
+  Consume **menos de 40 MB de RAM** y 0.0% de CPU en reposo. Se aloja junto al reloj de Windows con menú contextual y arranque opcional.
+- **🔒 Privacidad Absoluta:**
+  Tus capturas se procesan de forma cifrada (HTTPS) directamente entre tu equipo y Google AI Studio. Sin servidores intermedios, sin telemetría ni recopilación de datos personales.
+
+---
+
+## ⌨️ Atajos de Teclado y Gestos
+
+| Atajo / Acción | Función | Comportamiento |
+| :--- | :--- | :--- |
+| <kbd>Ctrl</kbd> + <kbd>A</kbd> | **Recorte Instantáneo** | Congela la pantalla en cualquier aplicación y activa el cursor de selección milimétrico. |
+| <kbd>Ctrl</kbd> + <kbd>D</kbd> | **Radar Automático On/Off** | Activa o desactiva la detección por reposo de ratón (dwell de 3 segundos). |
+| <kbd>Espacio</kbd> | **Saltar Espera** | Abre el panel inmediatamente mientras el radar está en cuenta regresiva. |
+| <kbd>Esc</kbd> | **Cerrar / Cancelar** | Cancela el recorte o desvanece el panel HUD flotante. |
+| **Hover 3.0s** | **Dwell Activo** | Escanea automáticamente el control o botón bajo el puntero del ratón. |
+| **Icono 📌** | **Fijar Panel** | Ancla el HUD para lectura continua sin que se cierre al mover el cursor. |
 
 ---
 
@@ -42,117 +74,92 @@
 flowchart TD
     subgraph Windows 11 Environment
         Cursor[🖱️ Posición del Mouse / Interacción]
-        Kbd[⌨️ HotKey Ctrl + A / Ctrl + D]
+        Kbd[⌨️ HotKey Global Ctrl + A / Ctrl + D]
     end
 
-    subgraph Native Kernel Layer
-        Hook["⚡ Low-Level Hook (WH_KEYBOARD_LL / HotKey)"]
-        RustLib["🦀 Rust Core (teachme_core.dll C-ABI)"]
-        Win32API["🪟 Win32 API (user32 / kernel32 / gdi32)"]
-    end
-
-    subgraph .NET 10 Host
-        Bridge["🔷 RustNativeBridge.cs (P/Invoke + Fast-Path)"]
-        WPF["🖥️ TeachMe AI Host Window (MainWindow.xaml)"]
-        ScreenCap["📸 System.Drawing CopyFromScreen"]
+    subgraph Native Desktop Host
+        Hook["⚡ Win32 Low-Level Hook (user32.dll / RegisterHotKey)"]
+        WPF["🖥️ Tooltip AI Host (MainWindow.xaml.cs)"]
+        ScreenCap["📸 System.Drawing CopyFromScreen (PerMonitorV2 DPI)"]
+        Tray["🔽 SystemTrayManager (NotifyIcon en Barra de Tareas)"]
     end
 
     subgraph Holographic HUD UI
-        WV2["🌐 Microsoft WebView2 (Transparent Composition)"]
-        HUD["✨ 270px Acrylic Glass Card (5 Tab Views)"]
+        WV2["🌐 Microsoft WebView2 (Transparent Composition Layer)"]
+        HUD["✨ Acrylic Glass HUD (VisionOS / Raycast Grade)"]
     end
 
-    Cursor -->|3s Dwell| Hook
+    subgraph AI Engine
+        Gemini["🤖 Google Gemini 2.5 Flash / Pro (Direct HTTPS / TLS)"]
+    end
+
     Kbd --> Hook
     Hook --> WPF
-    WPF --> Bridge
-    Bridge --> RustLib
-    Bridge -.-> Win32API
     WPF --> ScreenCap
-    WPF <-->|WebMessage IPC| WV2
+    WPF --> Tray
+    WPF <-->|WebMessage IPC Bi-direccional| WV2
     WV2 --> HUD
+    HUD -->|Prompt Multimodal + Base64| Gemini
+    Gemini -->|Veredicto + Diagnóstico JSON| HUD
 ```
 
 ---
 
-## 📁 Estructura del Proyecto
+## 📁 Estructura del Repositorio
 
 ```text
 TeachMe AI/
-├── src-rust/                      # Núcleo de bajo nivel en Rust
-│   ├── Cargo.toml                 # Configuración cdylib + windows-rs
-│   └── src/
-│       └── lib.rs                 # Exports C-ABI (WindowFromPoint, BitBlt, PIDs)
-├── src-dotnet/                    # Aplicación Host en C# / .NET 10 WPF
-│   ├── TeachMeAI.csproj           # Configuración con System.Drawing 10.0.11 + WebView2
-│   ├── app.manifest               # DPI Awareness PerMonitorV2
-│   ├── MainWindow.xaml            # Ventana transparente de superposición
-│   ├── MainWindow.xaml.cs         # Inicialización, IPC y captura de pantalla
-│   ├── RustNativeBridge.cs        # Cargador dinámico de Rust con Win32 fallback
-│   ├── GlobalHotKey.cs            # Hook de teclado global (Shift+A / Alt+A)
-│   └── wwwroot/                   # Interfaz HUD distribuida con la app
-│       ├── index.html             # Estructura del HUD y visor de recorte
-│       ├── styles.css             # Estilos Fluent Acrylic y micro-animaciones
-│       └── app.js                 # Lógica de estados, radar dwell y comunicación IPC
-├── build.bat                      # Script de compilación automatizada Rust + .NET
-├── run.bat                        # Lanzador directo en Windows
-├── .gitignore                     # Filtros de exclusión para Git
-└── README.md                      # Documentación del proyecto
+├── src-dotnet/                          # Aplicación de escritorio C# / .NET 8 WPF
+│   ├── TeachMeAI.csproj                 # Configuración del proyecto WPF standalone
+│   ├── MainWindow.xaml                  # Ventana acrílica de superposición
+│   ├── MainWindow.xaml.cs               # Lógica de captura, hotkeys y WebView2 IPC
+│   ├── GlobalHotKey.cs                  # Registrador de atajos de sistema Win32
+│   ├── SystemTrayManager.cs             # Gestor de bandeja de sistema (System Tray)
+│   ├── StartupManager.cs                # Administrador de arranque opcional en Windows
+│   └── wwwroot/                         # Interfaz gráfica Fluent/VisionOS del HUD
+├── MicrosoftStore_Submission/           # Kit Oficial para Microsoft Partner Center
+│   ├── Package/
+│   │   ├── TooltipAI.exe                # Ejecutable standalone de 72.4 MB
+│   │   └── TooltipAI_1.0.0.0_x64.msix   # Paquete MSIX firmado
+│   ├── Store_Assets/                    # Logos exactos (1080x1080, 2160x2160) y Screenshots
+│   └── METADATOS_FICHA_TIENDA.md        # Textos y descripciones oficiales
+├── downloads/
+│   └── TooltipAI.exe                    # Binario servido directamente por CDN Fastly
+├── index.html                           # Landing Page interactiva con simulador en vivo
+├── privacy.html                         # Política de Privacidad oficial
+├── LICENSE                              # Licencia MIT
+└── README.md                            # Documentación del proyecto
 ```
 
 ---
 
-## ⌨️ Atajos de Teclado y Gestos
+## 🛠️ Compilación desde el Código Fuente
 
-| Atajo / Gesto | Función | Comportamiento |
-| :--- | :--- | :--- |
-| <kbd>Shift</kbd> + <kbd>A</kbd> | **Recorte Instantáneo** | Congela la pantalla en cualquier aplicación y activa el cursor de precisión. |
-| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>A</kbd> | **Recorte Alternativo** | Atajo compatible con editores de código y suites 3D. |
-| <kbd>Espacio</kbd> | **Saltar Espera** | Abre el panel inmediatamente mientras el radar de 3s está activo. |
-| <kbd>Esc</kbd> | **Cancelar / Cerrar** | Cancela el recorte en curso o desvanece el panel HUD. |
-| **Hover 3.0s** | **Dwell Activo** | Inicia el escaneo automático del elemento bajo el cursor. |
-| **Icono 📌** | **Fijar Panel** | Ancla el HUD para lectura continua sin que desaparezca al mover el ratón. |
+Si deseas compilar la aplicación tú mismo:
 
----
+### Requisitos
+- Windows 10 (1809+) o Windows 11.
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) instalado.
 
-## 🚀 Requisitos y Compilación
-
-### Requisitos Previos
-- **Sistema Operativo:** Windows 10 (1809+) o Windows 11 (Recomendado).
-- **.NET SDK:** .NET 8.0 o superior (compatible con paquetes .NET 10 Preview).
-- **WebView2 Runtime:** Incluido de forma nativa en Windows 11.
-- **Rust Toolchain (Opcional):** Si deseas recompilar `teachme_core.dll` con `cargo`. Si no está instalado, la app ejecuta su Fast-Path Win32 nativo integrado automáticamente.
-
-### Compilación Rápida (Scripts Incluidos)
-
-1. **Compilar todo el proyecto (Rust + .NET):**
-   ```cmd
-   build.bat
-   ```
-
-2. **Ejecutar la aplicación:**
-   ```cmd
-   run.bat
-   ```
-
-### Compilación Manual vía CLI
-
+### Comandos de Compilación
 ```powershell
-# 1. (Opcional) Compilar Crate de Rust
-cd src-rust
-cargo build --release
-cd ..
+# 1. Clonar el repositorio
+git clone https://github.com/dixi3stdgdl-design/TeachMe-AI.git
+cd TeachMe-AI
 
-# 2. Compilar y Ejecutar Host en .NET
-dotnet run --project "src-dotnet\TeachMeAI.csproj"
+# 2. Compilar binario autónomo de archivo único (Self-contained)
+dotnet publish src-dotnet/TeachMeAI.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o ./dist
+
+# 3. Ejecutar
+.\dist\TooltipAI.exe
 ```
 
 ---
 
-## 📜 Licencia
+## 📜 Licencia y Privacidad
 
-Distribuido bajo la Licencia **MIT**. Consulta el archivo `LICENSE` para más información.
+Distribuido bajo la Licencia **MIT**. Consulta el archivo [LICENSE](LICENSE) y nuestra [Política de Privacidad](privacy.html) para más detalles.
 
 <div align="center">
-  <sub>Desarrollado con ❤️ para la comunidad de ingeniería de software y diseño en Windows 11.</sub>
+  <sub>Desarrollado con ❤️ para los usuarios y entusiastas de Windows 11.</sub>
 </div>

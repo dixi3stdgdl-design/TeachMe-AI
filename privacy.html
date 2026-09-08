@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Política de Privacidad — Tooltip AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .privacy-container {
+      max-width: 860px;
+      margin: 120px auto 80px auto;
+      padding: 40px;
+      background: rgba(18, 22, 34, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      backdrop-filter: blur(24px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+    .privacy-container h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .privacy-container .effective-date {
+      color: var(--accent-emerald, #00F5A0);
+      font-size: 14px;
+      margin-bottom: 30px;
+      display: inline-block;
+      font-weight: 500;
+    }
+    .privacy-container h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
+      color: #E2E8F0;
+      margin-top: 28px;
+      margin-bottom: 12px;
+      border-left: 3px solid var(--accent-emerald, #00F5A0);
+      padding-left: 12px;
+    }
+    .privacy-container p, .privacy-container li {
+      color: #94A3B8;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .privacy-container ul {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+    .privacy-container li {
+      margin-bottom: 8px;
+    }
+    .back-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #00F5A0;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      transition: opacity 0.2s;
+    }
+    .back-home:hover {
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body class="theme-fluent-dark">
+  <div class="acrylic-noise-layer"></div>
+
+  <header class="site-header">
+    <nav class="site-nav">
+      <a href="index.html" class="brand-badge">
+        <img src="icon.png" alt="Tooltip AI" class="brand-logo-img">
+        <span class="brand-name">Tooltip <span>AI</span></span>
+      </a>
+      <div class="nav-actions">
+        <a href="index.html" class="nav-btn-github">Volver al Inicio</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="privacy-container">
+    <a href="index.html" class="back-home">← Volver a Tooltip AI</a>
+    <h1>Política de Privacidad</h1>
+    <span class="effective-date">Última actualización: Septiembre de 2026 • Versión 1.0</span>
+
+    <p>
+      En <strong>Tooltip AI</strong> respetamos y protegemos la privacidad de nuestros usuarios. Esta Política de Privacidad describe cómo se gestiona la información al utilizar nuestra aplicación de escritorio para Windows 11 y nuestro sitio web.
+    </p>
+
+    <h2>1. Principio Fundamental: Privacidad por Diseño</h2>
+    <p>
+      Tooltip AI es una utilidad de escritorio nativa diseñada bajo el principio de <em>Zero Tracking</em> (cero rastreo). No recopilamos, no almacenamos en servidores propios y no comercializamos ninguna información personal, identificadores de dispositivo, direcciones IP ni datos de navegación.
+    </p>
+
+    <h2>2. Datos de Captura y Pantalla</h2>
+    <ul>
+      <li><strong>Ejecución Local:</strong> Los recortes de pantalla (mediante <code>Ctrl + A</code>) se procesan en la memoria RAM volátil de tu equipo y nunca se guardan en tu disco duro a menos que lo solicites explícitamente.</li>
+      <li><strong>Transmisión Segura:</strong> Cuando solicitas el análisis con IA, la imagen seleccionada se transmite de forma cifrada mediante protocolo HTTPS/TLS directamente desde tu aplicación hacia los servidores oficiales de la API de Google (Google AI Studio).</li>
+      <li><strong>Sin Almacenamiento Intermedio:</strong> Ningún intermediario ni servidor proxy tiene acceso a tus capturas de pantalla ni a los textos analizados.</li>
+    </ul>
+
+    <h2>3. Gestión de Claves de API</h2>
+    <p>
+      Si introduces tu clave privada de Google Gemini API, esta se almacena únicamente en tu equipo local dentro de tu perfil de usuario de Windows (<code>%APPDATA%\TeachMeAI\config.json</code>). Tu clave nunca sale de tu equipo excepto para autenticarte directamente ante los servidores de Google.
+    </p>
+
+    <h2>4. Telemetría y Anuncios</h2>
+    <p>
+      Tooltip AI <strong>NO contiene anuncios</strong> ni bibliotecas de análisis publicitario o telemetría invasiva de terceros.
+    </p>
+
+    <h2>5. Permisos de Windows Requeridos</h2>
+    <ul>
+      <li><strong>Captura de Pantalla:</strong> Necesario para congelar la pantalla y permitir el recorte didáctico de ventanas o textos con <code>Ctrl + A</code>.</li>
+      <li><strong>Bandeja del Sistema (System Tray):</strong> Para mantener la aplicación disponible discretamente junto al reloj de Windows sin consumir recursos en segundo plano.</li>
+      <li><strong>Acceso a Internet:</strong> Exclusivamente para comunicarse con las APIs oficiales de IA para generar los diagnósticos solicitados por el usuario.</li>
+    </ul>
+
+    <h2>6. Contacto y Soporte</h2>
+    <p>
+      Si tienes preguntas o inquietudes sobre esta política o el funcionamiento de Tooltip AI, puedes comunicarte a través de nuestro repositorio oficial en GitHub: <a href="https://github.com/dixi3stdgdl-design/TeachMe-AI/issues" target="_blank" rel="noopener" style="color: #00F5A0;">github.com/dixi3stdgdl-design/TeachMe-AI</a>.
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <img src="icon.png" width="22" height="22" style="border-radius: 5px;">
+        <span><strong>Tooltip AI</strong> — Inspección Cognitiva de Pantalla para Windows 11</span>
+      </div>
+      <div style="color: var(--text-muted); font-size: 11px;">
+        Licencia MIT • Privacidad Garantizada
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

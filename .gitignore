@@ -6,6 +6,7 @@ target/
 *.dll
 *.pdb
 *.msi
+*.msix
 *.so
 *.dylib
 
@@ -36,3 +37,4 @@ dist/
 .env.local
 .DS_Store
 Thumbs.db
+.package_layout/
