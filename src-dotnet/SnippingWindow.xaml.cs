@@ -122,7 +122,7 @@ public partial class SnippingWindow : Window
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al capturar pantalla: {ex.Message}", "TeachMe AI", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show($"Error al capturar pantalla: {ex.Message}", "Tooltip AI", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

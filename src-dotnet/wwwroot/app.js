@@ -1,5 +1,5 @@
 /**
- * TeachMe AI — Windows 11 Neural Screen Inspector (Raycast/VisionOS Grade)
+ * Tooltip AI — Windows 11 Neural Screen Inspector (Raycast/VisionOS Grade)
  * Advanced Dynamic Positioning, SVG Holographic Guide Ray, Laser Sweep & Socratic Q&A
  */
 
@@ -382,13 +382,13 @@ Get-MpComputerStatus | Select-Object RealTimeProtectionEnabled, AntivirusSignatu
 blender -b "escena.blend" -o "//render_" -F PNG -x 1 -a`
   },
   tray_teachme: {
-    name: "Servicio TeachMe AI (Kernel Accessibility Hook)",
+    name: "Servicio Tooltip AI (Kernel Accessibility Hook)",
     controlType: "UIA_NotificationTrayIcon / Daemon",
     confidence: "100.0% Exacto",
-    processName: "TeachMeAI.exe",
+    processName: "TooltipAI.exe",
     pid: 1120,
-    signature: "TeachMe AI Cognitive Engine",
-    ocrText: '"TeachMe AI Service — Engine Activo en user32.dll"',
+    signature: "Tooltip AI Cognitive Engine",
+    ocrText: '"Tooltip AI Service — Engine Activo en user32.dll"',
     verdictText: "Motor Cognitivo Activo • Hook Win32 UIA",
     safetyTag: "Asistente Activo",
     actionTag: "Acción: Configurar",
@@ -398,13 +398,13 @@ blender -b "escena.blend" -o "//render_" -F PNG -x 1 -a`
     riskLevel: "Totalmente seguro: Asistente pedagógico local",
     riskClass: "safe",
     consequences: "Proporciona contexto educativo instantáneo sin requerir abrir el navegador web ni manuales de texto.",
-    vendor: "TeachMe AI Inc.",
+    vendor: "Tooltip AI Inc.",
     signStatus: "Válida (Authenticode Developer Certificate)",
-    exePath: "C:\\Program Files\\TeachMe AI\\TeachMeAI.exe",
+    exePath: "C:\\Program Files\\Tooltip AI\\TooltipAI.exe",
     resources: "CPU: 0.05% | RAM: ~22 MB",
     accessKey: "Ctrl + A (Recorte Instantáneo)",
-    cliSnippet: `# Estado del servicio TeachMe AI:
-Get-Process -Name "TeachMeAI" | Format-List Id, CPU, WorkingSet64`
+    cliSnippet: `# Estado del servicio Tooltip AI:
+Get-Process -Name "TooltipAI" | Format-List Id, CPU, WorkingSet64`
   },
   tray_clock: {
     name: "Reloj y Notificaciones de Windows",
@@ -582,7 +582,7 @@ function generateDynamicInspection(el) {
     verdictText: "Elemento de Interfaz Detectado",
     safetyTag: "Inspección AI",
     actionTag: "Acción: Contextual",
-    summary: `TeachMe AI ha extraído este control activo ("${cleanName}") dentro del proceso ${processName}. Proporciona información interactiva para el usuario.`,
+    summary: `Tooltip AI ha extraído este control activo ("${cleanName}") dentro del proceso ${processName}. Proporciona información interactiva para el usuario.`,
     nature: `Control nativo de interfaz gestionado por el subsistema de ventanas de ${processName}.`,
     impact: `Interactuar con este elemento actualiza el estado de la vista o dispara la acción vinculada.`,
     riskLevel: "Seguro (Componente legítimo de interfaz)",
@@ -1224,7 +1224,7 @@ async function sendUserQuestion(question) {
   thinkingMsg.className = 'msg bot thinking';
   thinkingMsg.innerHTML = state.geminiApiKey 
     ? '✨ <i>Analizando con Gemini Multimodal...</i>' 
-    : '🧠 <i>Consultando TeachMe AI...</i>';
+    : '🧠 <i>Consultando Tooltip AI...</i>';
   DOM.chatHistory.appendChild(thinkingMsg);
   DOM.chatHistory.scrollTop = DOM.chatHistory.scrollHeight;
 
@@ -1277,7 +1277,7 @@ const SCAN_PHASES = [
   { threshold: 0.25, text: "🔍 Fijando HWND & Coordenadas..." },
   { threshold: 0.55, text: "🧠 Extrayendo OCR & Árbol UIA..." },
   { threshold: 0.80, text: "🛡️ Verificando Firma Authenticode..." },
-  { threshold: 1.00, text: "✨ Sintetizando con TeachMe AI..." }
+  { threshold: 1.00, text: "✨ Sintetizando con Tooltip AI..." }
 ];
 
 function startDwellCountdown(targetEl, targetId) {
@@ -1647,7 +1647,7 @@ function setupNativeInterop() {
       }
     });
 
-    console.log("[TeachMe AI] Conectado al Host Nativo .NET 10 & Rust Kernel via WebView2");
+    console.log("[Tooltip AI] Conectado al Host Nativo .NET 10 & Rust Kernel via WebView2");
   }
 }
 
@@ -1673,7 +1673,7 @@ function applyRealDesktopData(data) {
     riskLevel: "Proceso del Sistema / Usuario Verificado",
     riskClass: "safe",
     consequences: `La interacción con este elemento transmitirá eventos de ratón y teclado al proceso '${data.process}'.`,
-    vendor: data.isRustEngine ? "TeachMe AI Native Rust Engine" : "Microsoft Windows Shell / App",
+    vendor: data.isRustEngine ? "Tooltip AI Native Rust Engine" : "Microsoft Windows Shell / App",
     signStatus: "Verificado en tiempo real",
     exePath: `C:\\Windows\\System32\\${data.process}.exe`,
     resources: `PID: ${data.pid} | Manejador HWND: 0x${(data.hwnd || 0).toString(16).toUpperCase()}`,
@@ -1723,7 +1723,7 @@ async function callGeminiVision(base64Image, windowMetadata) {
     const model = state.geminiModel || 'gemini-flash-latest';
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(state.geminiApiKey)}`;
 
-    const promptText = `Eres TeachMe AI, un asistente visual neural de ultra-alta fidelidad para Windows 11.
+    const promptText = `Eres Tooltip AI, un asistente visual neural de ultra-alta fidelidad para Windows 11.
 Analiza la captura de pantalla adjunta.
 Metadatos del proceso:
 - Título de ventana: "${windowMetadata.title || 'Desconocido'}"
@@ -1802,7 +1802,7 @@ Responde ÚNICAMENTE con un JSON válido con este esquema:
       DOM.chatHistory.scrollTop = DOM.chatHistory.scrollHeight;
     }
   } catch (err) {
-    console.error("[TeachMe AI] Gemini Vision Error:", err);
+    console.error("[Tooltip AI] Gemini Vision Error:", err);
     DOM.cardConfidence.textContent = 'Aviso: API Gemini no disponible';
     DOM.cardVerdictText.textContent = 'Error al conectar con Gemini: ' + err.message;
   } finally {
@@ -1821,7 +1821,7 @@ async function callGeminiChat(question) {
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(state.geminiApiKey)}`;
     const current = INSPECTION_DATABASE[state.currentTargetKey] || {};
 
-    const systemPrompt = `Eres TeachMe AI, un tutor cognitivo y de accesibilidad para Windows 11.
+    const systemPrompt = `Eres Tooltip AI, un tutor cognitivo y de accesibilidad para Windows 11.
 Estás asesorando a un usuario sobre el elemento actual:
 - Nombre: "${current.name || 'Elemento de pantalla'}"
 - Proceso: "${current.processName || 'explorer.exe'}"
@@ -1854,7 +1854,7 @@ Responde de forma concisa, cordial, pedagógica y directa en español. Si el usu
     const json = await res.json();
     return json.candidates?.[0]?.content?.parts?.[0]?.text || generateSmartAnswer(question, state.currentTargetKey);
   } catch (err) {
-    console.warn("[TeachMe AI] Fallback to local answering:", err);
+    console.warn("[Tooltip AI] Fallback to local answering:", err);
     return generateSmartAnswer(question, state.currentTargetKey);
   }
 }

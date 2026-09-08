@@ -121,7 +121,7 @@ public class SystemTrayManager : IDisposable
                 uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP,
                 uCallbackMessage = WM_TRAYICON,
                 hIcon = hIcon,
-                szTip = "TeachMe AI - Activo (Ctrl+A)"
+                szTip = "Tooltip AI - Activo (Ctrl+A)"
             };
 
             _isAdded = Shell_NotifyIcon(NIM_ADD, ref nid);
@@ -185,7 +185,7 @@ public class SystemTrayManager : IDisposable
         // Header
         var headerItem = new MenuItem
         {
-            Header = "TeachMe AI • Menú Rápido",
+            Header = "Tooltip AI • Menú Rápido",
             IsEnabled = false,
             FontWeight = FontWeights.Bold,
             Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0x00, 0xF5, 0xA0))
@@ -255,7 +255,7 @@ public class SystemTrayManager : IDisposable
         // 7. Salir
         var exitItem = new MenuItem
         {
-            Header = "❌ Salir de TeachMe AI",
+            Header = "❌ Salir de Tooltip AI",
             Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0xF4, 0x3F, 0x5E))
         };
         exitItem.Click += (s, e) => OnExitRequested?.Invoke();
