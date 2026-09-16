@@ -24,6 +24,8 @@ if %ERRORLEVEL% equ 0 (
 
 echo.
 echo [2/2] Compilando aplicacion .NET 10 WPF (TeachMe AI HUD)...
+taskkill /f /im TeachMeAI.exe >nul 2>&1
+timeout /t 1 /nobreak >nul 2>&1
 dotnet build "src-dotnet\TeachMeAI.csproj" -c Release
 if %ERRORLEVEL% neq 0 (
     echo [ERROR] Fallo la compilacion de .NET.

@@ -1,15 +1,14 @@
-# Script de empaquetado oficial MSIX para TeachMe AI
 param (
-    [string]$Version = "1.0.0.0",
-    [string]$PackageName = "TeachMeAI",
-    [string]$Publisher = "CN=TeachMeAI-Dev",
-    [string]$PublisherDisplayName = "TeachMe AI",
-    [string]$DisplayName = "TeachMe AI"
+    [string]$Version = "1.0.4.0",
+    [string]$PackageName = "Dixi3Lqbs.ToolTipAIAssistant",
+    [string]$Publisher = "CN=5A4F9620-3DD9-4496-B7BF-3252D9BF4477",
+    [string]$PublisherDisplayName = "Dixi3 Lqbs",
+    [string]$DisplayName = "ToolTip AI"
 )
 
 $ErrorActionPreference = "Stop"
 
-$rootDir = "d:\TeachMe AI"
+$rootDir = "D:\ToolTip AI"
 $toolsDir = Join-Path $rootDir ".tools\bin\x64"
 $makeappx = Join-Path $toolsDir "makeappx.exe"
 $signtool = Join-Path $toolsDir "signtool.exe"
@@ -63,7 +62,7 @@ $manifestXml = @"
     <DisplayName>$DisplayName</DisplayName>
     <PublisherDisplayName>$PublisherDisplayName</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
-    <Description>TeachMe AI - Inspector de Pantalla con IA Didactica y HUD Cognitivo para Windows 11</Description>
+    <Description>ToolTip AI — Inspector de pantalla con IA didactica y HUD flotante para Windows 11</Description>
   </Properties>
 
   <Dependencies>
@@ -77,19 +76,19 @@ $manifestXml = @"
   </Resources>
 
   <Applications>
-    <Application Id="TeachMeAI"
+    <Application Id="ToolTipAI"
       Executable="TeachMeAI.exe"
       EntryPoint="Windows.FullTrustApplication">
       <uap:VisualElements
         DisplayName="$DisplayName"
-        Description="TeachMe AI - Inspector de Pantalla con IA Didactica"
+        Description="ToolTip AI — Inspector de pantalla con IA didactica y HUD flotante para Windows 11"
         BackgroundColor="#080D1A"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png">
         <uap:DefaultTile
           Wide310x150Logo="Assets\Wide310x150Logo.png"
           Square310x310Logo="Assets\Square310x310Logo.png"
-          ShortName="TeachMe AI">
+          ShortName="ToolTip AI">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo"/>
             <uap:ShowOn Tile="wide310x150Logo"/>
@@ -113,7 +112,7 @@ $manifestPath = Join-Path $layoutDir "AppxManifest.xml"
 Copy-Item $manifestPath (Join-Path $packageOutDir "AppxManifest.xml") -Force
 
 Write-Host "[4/6] Creando paquete MSIX con makeappx.exe..."
-$msixFile = Join-Path $packageOutDir "TeachMeAI_${Version}_x64.msix"
+$msixFile = Join-Path $packageOutDir "ToolTipAIAssistant_${Version}_x64.msix"
 if (Test-Path $msixFile) { Remove-Item $msixFile -Force }
 
 & $makeappx pack /d $layoutDir /p $msixFile /o

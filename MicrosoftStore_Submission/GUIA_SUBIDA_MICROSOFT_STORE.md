@@ -111,7 +111,7 @@ Sigue el orden de secciones en la página de envío:
   - **Descripción corta**
   - **Descripción completa**
   - **Características del producto**
-  - **Palabras clave de búsqueda** (TeachMe AI, Inteligencia Artificial, Gemini, etc.)
+  - **Palabras clave de búsqueda** (Tooltip AI, Inteligencia Artificial, Asistente virtual, etc.)
 * **Imágenes y Capturas de Pantalla:**
   - Sube las 3 imágenes ubicadas en `MicrosoftStore_Submission/Store_Assets/Screenshots/`.
   - Sube `StoreListing_Icon_1024.png` como icono de la aplicación.

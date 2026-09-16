@@ -14,7 +14,10 @@ public class DwellEngine
     private readonly DispatcherTimer _timer;
     private readonly DwellIndicatorWindow _indicator;
     private POINT _lastPos;
+    private POINT _lastTriggeredPos;
+    private bool _hasActivePanel = false;
     private DateTime _restStartTime;
+    private DateTime _typingCooldownUntil = DateTime.MinValue;
     private bool _isDwelling = false;
 
     public bool IsEnabled { get; set; } = true;
@@ -42,6 +45,7 @@ public class DwellEngine
         _timer.Stop();
         _indicator.Hide();
         _isDwelling = false;
+        _hasActivePanel = false;
     }
 
     public void TriggerImmediate()
@@ -54,11 +58,32 @@ public class DwellEngine
 
     public void NotifyUserActivity()
     {
+        // Se detectó pulsación de tecla: otorgar 2.0 segundos de gracia y silencio al radar
+        _typingCooldownUntil = DateTime.UtcNow.AddSeconds(2.0);
         _restStartTime = DateTime.UtcNow;
+
         if (_isDwelling)
         {
             _indicator.Hide();
             _isDwelling = false;
+        }
+
+        // Si el usuario empieza a escribir en una app externa (IDE, chat, documento, etc.):
+        // Desvanecer el panel activo inmediatamente para que no tape lo que está escribiendo
+        if (_hasActivePanel)
+        {
+            bool isTypingInHud = false;
+            try
+            {
+                isTypingInHud = HudWindow.Instance.Dispatcher.Invoke(() => HudWindow.Instance.IsInteractingWithHud());
+            }
+            catch { }
+
+            if (!isTypingInHud)
+            {
+                HudWindow.Instance.FadeOutAndHide(150);
+                _hasActivePanel = false;
+            }
         }
     }
 
@@ -66,9 +91,33 @@ public class DwellEngine
     {
         if (!IsEnabled) return;
 
+        // 0. Si el usuario está escribiendo o recién terminó de escribir, mantener el radar en reposo
+        if (DateTime.UtcNow < _typingCooldownUntil)
+        {
+            _restStartTime = DateTime.UtcNow;
+            if (_isDwelling)
+            {
+                _indicator.Hide();
+                _isDwelling = false;
+            }
+            return;
+        }
+
         GetCursorPos(out POINT currentPos);
 
-        // Check if cursor is over TeachMe AI itself (so typing or clicking in app is never interrupted)
+        // 1. Si el cursor está sobre la ventana HUD de TeachMe AI (usuario interactuando con las pestañas o chat)
+        if (HudWindow.Instance.IsMouseOverHud(currentPos.X, currentPos.Y))
+        {
+            _restStartTime = DateTime.UtcNow;
+            if (_isDwelling)
+            {
+                _indicator.Hide();
+                _isDwelling = false;
+            }
+            return;
+        }
+
+        // 2. Si el cursor está sobre la ventana principal de TeachMe AI
         try
         {
             IntPtr hwndAtCursor = RustNativeBridge.WindowFromPoint(new RustNativeBridge.POINT { X = currentPos.X, Y = currentPos.Y });
@@ -89,9 +138,11 @@ public class DwellEngine
         int dx = Math.Abs(currentPos.X - _lastPos.X);
         int dy = Math.Abs(currentPos.Y - _lastPos.Y);
 
-        if (dx > 12 || dy > 12)
+        // Se requiere un desplazamiento real (> 10px) para no reaccionar al micro-temblor de mano
+        bool hasMovedSignificantly = dx > 10 || dy > 10;
+
+        if (hasMovedSignificantly)
         {
-            // Cursor moved
             _lastPos = currentPos;
             _restStartTime = DateTime.UtcNow;
             if (_isDwelling)
@@ -99,13 +150,36 @@ public class DwellEngine
                 _indicator.Hide();
                 _isDwelling = false;
             }
+
+            // Si hay un panel activo y el usuario alejó el cursor del elemento inspeccionado (> 32px)
+            if (_hasActivePanel)
+            {
+                int distFromTriggered = Math.Max(Math.Abs(currentPos.X - _lastTriggeredPos.X), Math.Abs(currentPos.Y - _lastTriggeredPos.Y));
+                if (distFromTriggered > 32)
+                {
+                    // Desvanecer el panel suavemente
+                    HudWindow.Instance.FadeOutAndHide();
+                    _hasActivePanel = false;
+                }
+            }
         }
         else
         {
-            // Cursor is resting
+            // El cursor está en reposo
+            // REGLA CRÍTICA: Si ya se generó el panel en este mismo control y el ratón no se ha movido, NO recargar
+            if (_hasActivePanel)
+            {
+                int distFromTriggered = Math.Max(Math.Abs(currentPos.X - _lastTriggeredPos.X), Math.Abs(currentPos.Y - _lastTriggeredPos.Y));
+                if (distFromTriggered <= 32)
+                {
+                    // El usuario sigue en el mismo control; no volver a cargar
+                    return;
+                }
+            }
+
             var elapsed = (DateTime.UtcNow - _restStartTime).TotalSeconds;
 
-            // Start showing indicator after 0.6s of rest
+            // Iniciar indicador después de 0.6s de reposo
             if (elapsed >= 0.6)
             {
                 _isDwelling = true;
@@ -136,11 +210,13 @@ public class DwellEngine
     {
         _indicator.Hide();
         _isDwelling = false;
-        _restStartTime = DateTime.UtcNow.AddSeconds(5); // Cooldown to avoid re-triggering immediately
+        _lastTriggeredPos = new POINT { X = x, Y = y };
+        _hasActivePanel = true;
 
         try
         {
             var winInfo = RustNativeBridge.InspectWindowAtPoint(x, y);
+            var nativeInfo = UiAutomationInspector.InspectElementAt(x, y);
 
             // Capture 160x100 area around cursor
             int capW = 160;
@@ -158,17 +234,9 @@ public class DwellEngine
                 imageBytes = ms.ToArray();
             }
 
-            var data = new InspectionData
-            {
-                Name = winInfo.Title,
-                ProcessName = winInfo.ProcessName,
-                ProcessId = winInfo.ProcessId,
-                OcrText = $"[HWND: 0x{winInfo.Hwnd.ToInt64():X}] {winInfo.Title}",
-                VerdictText = $"Proceso: {winInfo.ProcessName}.exe • PID: {winInfo.ProcessId}",
-                Summary = $"Elemento detectado bajo reposo de cursor en la ventana '{winInfo.Title}' ({winInfo.ProcessName}).",
-                ExePath = $"C:\\Windows\\System32\\{winInfo.ProcessName}.exe",
-                CliSnippet = $"Get-Process -Id {winInfo.ProcessId} | Select-Object Id, ProcessName, Path, CPU, WorkingSet64"
-            };
+            var data = GeminiClient.GenerateFallbackData(winInfo.Title, winInfo.ProcessName, winInfo.ProcessId, nativeInfo);
+            data.ExePath = $"C:\\Windows\\System32\\{winInfo.ProcessName}.exe";
+            data.CliSnippet = $"Get-Process -Id {winInfo.ProcessId} | Select-Object Id, ProcessName, Path, CPU, WorkingSet64";
 
             OnDwellTriggered?.Invoke(data, imageBytes, x + 24, y - 24);
         }

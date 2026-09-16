@@ -4,16 +4,19 @@
 
 param (
     [Parameter(Mandatory=$false)]
-    [string]$PackageName = "TeachMeAI",
+    [string]$PackageName = "Dixi3Lqbs.ToolTipAIAssistant",
 
     [Parameter(Mandatory=$false)]
-    [string]$Publisher = "CN=TeachMeAI-Dev",
+    [string]$Publisher = "CN=5A4F9620-3DD9-4496-B7BF-3252D9BF4477",
 
     [Parameter(Mandatory=$false)]
-    [string]$PublisherDisplayName = "TeachMe AI",
+    [string]$PublisherDisplayName = "Dixi3 Lqbs",
 
     [Parameter(Mandatory=$false)]
-    [string]$Version = "1.0.0.0"
+    [string]$DisplayName = "ToolTip AI",
+
+    [Parameter(Mandatory=$false)]
+    [string]$Version = "1.0.3.0"
 )
 
 $rootDir = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
@@ -23,24 +26,13 @@ Write-Host "=========================================================="
 Write-Host "  Sincronizador de Identidad & Empaquetador MSIX"
 Write-Host "=========================================================="
 Write-Host ""
-Write-Host "Parametros actuales:"
+Write-Host "Parametros oficiales configurados:"
 Write-Host " - Package Name:          $PackageName"
 Write-Host " - Publisher (CN):        $Publisher"
 Write-Host " - Publisher DisplayName: $PublisherDisplayName"
+Write-Host " - Display Name:          $DisplayName"
 Write-Host " - Version:               $Version"
 Write-Host ""
-
-if ($PackageName -eq "TeachMeAI" -and $Publisher -eq "CN=TeachMeAI-Dev") {
-    Write-Host "NOTA: Si ya reservaste el nombre en Partner Center, ingresa tus datos oficiales." -ForegroundColor Yellow
-    $inputName = Read-Host "Ingresa el 'Nombre del paquete' de Partner Center (presiona Enter para mantener '$PackageName')"
-    if (![string]::IsNullOrWhiteSpace($inputName)) { $PackageName = $inputName.Trim() }
-
-    $inputPub = Read-Host "Ingresa el 'Id. de publicador (CN)' de Partner Center (presiona Enter para mantener '$Publisher')"
-    if (![string]::IsNullOrWhiteSpace($inputPub)) { $Publisher = $inputPub.Trim() }
-
-    $inputPubDisp = Read-Host "Ingresa el 'Nombre para mostrar del publicador' (presiona Enter para mantener '$PublisherDisplayName')"
-    if (![string]::IsNullOrWhiteSpace($inputPubDisp)) { $PublisherDisplayName = $inputPubDisp.Trim() }
-}
 
 Write-Host ""
 Write-Host "Ejecutando empaquetado con Identity configurada..." -ForegroundColor Cyan
@@ -49,7 +41,8 @@ Write-Host "Ejecutando empaquetado con Identity configurada..." -ForegroundColor
     -Version $Version `
     -PackageName $PackageName `
     -Publisher $Publisher `
-    -PublisherDisplayName $PublisherDisplayName
+    -PublisherDisplayName $PublisherDisplayName `
+    -DisplayName $DisplayName
 
 Write-Host ""
 Write-Host "Proceso completado. Tu archivo MSIX esta listo en la carpeta Package/" -ForegroundColor Green

@@ -1,65 +1,23 @@
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Interop;
-using System.Windows.Media;
+using System.Windows.Forms;
+using ContextMenu = System.Windows.Controls.ContextMenu;
+using MenuItem = System.Windows.Controls.MenuItem;
 
 namespace TeachMeAI;
 
 public class SystemTrayManager : IDisposable
 {
-    private const uint WM_USER = 0x0400;
-    public const uint WM_TRAYICON = WM_USER + 101;
+    private static readonly string LogFile = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), 
+        "TeachMeAI", 
+        "run.log");
 
-    private const uint NIM_ADD = 0x00000000;
-    private const uint NIM_MODIFY = 0x00000001;
-    private const uint NIM_DELETE = 0x00000002;
-
-    private const uint NIF_MESSAGE = 0x00000001;
-    private const uint NIF_ICON = 0x00000002;
-    private const uint NIF_TIP = 0x00000004;
-    private const uint NIF_INFO = 0x00000010;
-
-    private const uint NIIF_INFO = 0x00000001;
-
-    private const int WM_LBUTTONUP = 0x0202;
-    private const int WM_LBUTTONDBLCLK = 0x0203;
-    private const int WM_RBUTTONUP = 0x0205;
-    private const int NIN_BALLOONUSERCLICK = 0x0405;
-
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-    private struct NOTIFYICONDATA
-    {
-        public uint cbSize;
-        public IntPtr hWnd;
-        public uint uID;
-        public uint uFlags;
-        public uint uCallbackMessage;
-        public IntPtr hIcon;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-        public string szTip;
-        public uint dwState;
-        public uint dwStateMask;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-        public string szInfo;
-        public uint uTimeoutOrVersion;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
-        public string szInfoTitle;
-        public uint dwInfoFlags;
-        public Guid guidItem;
-        public IntPtr hBalloonIcon;
-    }
-
-    [DllImport("shell32.dll", CharSet = CharSet.Auto)]
-    private static extern bool Shell_NotifyIcon(uint dwMessage, ref NOTIFYICONDATA lpdata);
-
-    private IntPtr _hwnd;
-    private bool _isAdded = false;
+    private NotifyIcon? _notifyIcon;
     private ContextMenu? _trayContextMenu;
 
     public event Action? OnRestoreRequested;
@@ -72,112 +30,108 @@ public class SystemTrayManager : IDisposable
 
     public void Initialize(Window window)
     {
-        var helper = new WindowInteropHelper(window);
-        _hwnd = helper.Handle;
-
-        var source = HwndSource.FromHwnd(_hwnd);
-        source?.AddHook(HwndHook);
-
-        AddTrayIcon();
         BuildContextMenu();
+        CreateNotifyIcon();
     }
 
-    private void AddTrayIcon()
+    private void CreateNotifyIcon()
     {
         try
         {
-            IntPtr hIcon = IntPtr.Zero;
-            try
+            _notifyIcon = new NotifyIcon();
+
+            // Cargar icono oficial de la aplicación
+            Icon? icon = null;
+            string icoPath = Path.Combine(AppContext.BaseDirectory, "app.ico");
+            if (File.Exists(icoPath))
             {
-                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-                string icoPath = Path.Combine(baseDir, "app.ico");
-                if (File.Exists(icoPath))
+                try
                 {
-                    using var fileIcon = new System.Drawing.Icon(icoPath);
-                    hIcon = fileIcon.Handle;
+                    icon = new Icon(icoPath, 32, 32);
+                    File.AppendAllText(LogFile, $"[SystemTrayManager] Icono cargado desde {icoPath}\n");
                 }
-                else
+                catch { }
+            }
+
+            if (icon == null)
+            {
+                try
                 {
                     string? exePath = Environment.ProcessPath;
-                    if (!string.IsNullOrEmpty(exePath))
+                    if (!string.IsNullOrEmpty(exePath) && File.Exists(exePath))
                     {
-                        using var sysIcon = System.Drawing.Icon.ExtractAssociatedIcon(exePath);
-                        if (sysIcon != null) hIcon = sysIcon.Handle;
+                        icon = Icon.ExtractAssociatedIcon(exePath);
+                        File.AppendAllText(LogFile, $"[SystemTrayManager] Icono extraído de {exePath}\n");
                     }
                 }
-            }
-            catch { }
-
-            if (hIcon == IntPtr.Zero)
-            {
-                hIcon = SystemIcons.Application.Handle;
+                catch { }
             }
 
-            var nid = new NOTIFYICONDATA
+            _notifyIcon.Icon = icon ?? SystemIcons.Application;
+            _notifyIcon.Text = "ToolTip AI • Menú rápido (Ctrl+Shift+A)";
+            _notifyIcon.Visible = true;
+
+            // Manejo de clicks en el icono de la bandeja
+            _notifyIcon.MouseClick += (s, e) =>
             {
-                cbSize = (uint)Marshal.SizeOf<NOTIFYICONDATA>(),
-                hWnd = _hwnd,
-                uID = 1001,
-                uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP,
-                uCallbackMessage = WM_TRAYICON,
-                hIcon = hIcon,
-                szTip = "Tooltip AI - Activo (Ctrl+A)"
+                if (e.Button == MouseButtons.Left)
+                {
+                    Application.Current?.Dispatcher?.Invoke(() =>
+                    {
+                        OnRestoreRequested?.Invoke();
+                    });
+                }
+                else if (e.Button == MouseButtons.Right)
+                {
+                    Application.Current?.Dispatcher?.Invoke(() =>
+                    {
+                        ShowContextMenu();
+                    });
+                }
             };
 
-            _isAdded = Shell_NotifyIcon(NIM_ADD, ref nid);
+            _notifyIcon.DoubleClick += (s, e) =>
+            {
+                Application.Current?.Dispatcher?.Invoke(() =>
+                {
+                    OnRestoreRequested?.Invoke();
+                });
+            };
+
+            _notifyIcon.BalloonTipClicked += (s, e) =>
+            {
+                Application.Current?.Dispatcher?.Invoke(() =>
+                {
+                    OnRestoreRequested?.Invoke();
+                });
+            };
+
+            File.AppendAllText(LogFile, $"[SystemTrayManager] NotifyIcon inicializado con éxito. Visible: {_notifyIcon.Visible}\n");
         }
-        catch { }
+        catch (Exception ex)
+        {
+            try { File.AppendAllText(LogFile, $"[SystemTrayManager] Error creando NotifyIcon: {ex.Message}\n"); } catch { }
+        }
     }
 
     public void ShowNotification(string title, string message)
     {
-        if (!_isAdded) return;
         try
         {
-            var nid = new NOTIFYICONDATA
+            if (_notifyIcon != null && _notifyIcon.Visible)
             {
-                cbSize = (uint)Marshal.SizeOf<NOTIFYICONDATA>(),
-                hWnd = _hwnd,
-                uID = 1001,
-                uFlags = NIF_INFO,
-                szInfoTitle = title,
-                szInfo = message,
-                dwInfoFlags = NIIF_INFO
-            };
-            Shell_NotifyIcon(NIM_MODIFY, ref nid);
-        }
-        catch { }
-    }
-
-    private IntPtr HwndHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-    {
-        if (msg == WM_TRAYICON)
-        {
-            int eventId = lParam.ToInt32();
-            switch (eventId)
-            {
-                case WM_LBUTTONUP:
-                case WM_LBUTTONDBLCLK:
-                case NIN_BALLOONUSERCLICK:
-                    OnRestoreRequested?.Invoke();
-                    handled = true;
-                    break;
-
-                case WM_RBUTTONUP:
-                    ShowContextMenu();
-                    handled = true;
-                    break;
+                _notifyIcon.ShowBalloonTip(3000, title, message, ToolTipIcon.Info);
             }
         }
-        return IntPtr.Zero;
+        catch { }
     }
 
     private void BuildContextMenu()
     {
         _trayContextMenu = new ContextMenu
         {
-            Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0x0A, 0x0E, 0x18)),
-            BorderBrush = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0x1C, 0x26, 0x38)),
+            Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0x0A, 0x0E, 0x18)),
+            BorderBrush = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0x1C, 0x26, 0x38)),
             BorderThickness = new Thickness(1),
             Placement = PlacementMode.MousePoint
         };
@@ -185,10 +139,10 @@ public class SystemTrayManager : IDisposable
         // Header
         var headerItem = new MenuItem
         {
-            Header = "Tooltip AI • Menú Rápido",
+            Header = "ToolTip AI • Menú rápido",
             IsEnabled = false,
             FontWeight = FontWeights.Bold,
-            Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0x00, 0xF5, 0xA0))
+            Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0x00, 0xF5, 0xA0))
         };
         _trayContextMenu.Items.Add(headerItem);
         _trayContextMenu.Items.Add(new Separator());
@@ -196,8 +150,8 @@ public class SystemTrayManager : IDisposable
         // 1. Recortar
         var snipItem = new MenuItem
         {
-            Header = "⚡ Recortar Área (Ctrl + A)",
-            Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0xFF, 0xFF, 0xFF))
+            Header = "⚡ Recortar Área (Ctrl+Shift+A)",
+            Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0xFF, 0xFF, 0xFF))
         };
         snipItem.Click += (s, e) => OnSnipRequested?.Invoke();
         _trayContextMenu.Items.Add(snipItem);
@@ -206,7 +160,7 @@ public class SystemTrayManager : IDisposable
         var fullScreenItem = new MenuItem
         {
             Header = "📸 Capturar Pantalla Completa",
-            Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0x38, 0xBD, 0xF8))
+            Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0x38, 0xBD, 0xF8))
         };
         fullScreenItem.Click += (s, e) => OnFullScreenCaptureRequested?.Invoke();
         _trayContextMenu.Items.Add(fullScreenItem);
@@ -215,7 +169,7 @@ public class SystemTrayManager : IDisposable
         var clipItem = new MenuItem
         {
             Header = "📋 Analizar Portapapeles",
-            Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0xCB, 0xD5, 0xE1))
+            Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0xCB, 0xD5, 0xE1))
         };
         clipItem.Click += (s, e) => OnClipboardAnalyzeRequested?.Invoke();
         _trayContextMenu.Items.Add(clipItem);
@@ -223,8 +177,8 @@ public class SystemTrayManager : IDisposable
         // 4. Radar Toggle
         var radarItem = new MenuItem
         {
-            Header = "📡 Alternar Radar Automático (Ctrl + D)",
-            Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0x94, 0xA3, 0xB8))
+            Header = "📡 Alternar Radar Automático (Ctrl+Shift+D)",
+            Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0x94, 0xA3, 0xB8))
         };
         radarItem.Click += (s, e) => OnToggleRadarRequested?.Invoke();
         _trayContextMenu.Items.Add(radarItem);
@@ -236,7 +190,7 @@ public class SystemTrayManager : IDisposable
         {
             Header = "🪟 Abrir Panel Principal",
             FontWeight = FontWeights.SemiBold,
-            Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0xFF, 0xFF, 0xFF))
+            Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0xFF, 0xFF, 0xFF))
         };
         openItem.Click += (s, e) => OnRestoreRequested?.Invoke();
         _trayContextMenu.Items.Add(openItem);
@@ -245,7 +199,7 @@ public class SystemTrayManager : IDisposable
         var settingsItem = new MenuItem
         {
             Header = "⚙️ Ajustes & Modelos (Ctrl + Shift + C)",
-            Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0x94, 0xA3, 0xB8))
+            Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0x94, 0xA3, 0xB8))
         };
         settingsItem.Click += (s, e) => OnSettingsRequested?.Invoke();
         _trayContextMenu.Items.Add(settingsItem);
@@ -255,8 +209,8 @@ public class SystemTrayManager : IDisposable
         // 7. Salir
         var exitItem = new MenuItem
         {
-            Header = "❌ Salir de Tooltip AI",
-            Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0xF4, 0x3F, 0x5E))
+            Header = "❌ Salir de ToolTip AI",
+            Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0xF4, 0x3F, 0x5E))
         };
         exitItem.Click += (s, e) => OnExitRequested?.Invoke();
         _trayContextMenu.Items.Add(exitItem);
@@ -272,16 +226,11 @@ public class SystemTrayManager : IDisposable
 
     public void Dispose()
     {
-        if (_isAdded && _hwnd != IntPtr.Zero)
+        if (_notifyIcon != null)
         {
-            var nid = new NOTIFYICONDATA
-            {
-                cbSize = (uint)Marshal.SizeOf<NOTIFYICONDATA>(),
-                hWnd = _hwnd,
-                uID = 1001
-            };
-            Shell_NotifyIcon(NIM_DELETE, ref nid);
-            _isAdded = false;
+            _notifyIcon.Visible = false;
+            _notifyIcon.Dispose();
+            _notifyIcon = null;
         }
     }
 }

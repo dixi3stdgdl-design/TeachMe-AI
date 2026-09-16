@@ -1,16 +1,15 @@
-# ✅ Checklist Previo a la Publicación en Microsoft Store
-
-Antes de hacer clic en **"Enviar a la tienda"** en Microsoft Partner Center, repasa esta lista de verificación rápida:
+# Checklist de certificación — ToolTip AI 1.0.2
 
 | Estado | Elemento | Verificación |
 | :---: | :--- | :--- |
-| [x] | **Paquete MSIX generado** | `TeachMeAI_1.0.0.0_x64.msix` existe y contiene binarios autónomos (self-contained win-x64). |
-| [x] | **Capacidad FullTrust** | El manifiesto incluye `<rescap:Capability Name="runFullTrust" />` para permitir hooks globales y Win32. |
-| [x] | **Sin autoarranque forzado** | La app no escribe en el registro de inicio sin consentimiento (cumplimiento estricto de certificación). |
-| [x] | **Assets visuales completos** | `StoreLogo` (50x50), `Square44x44`, `Square150x150`, `Wide310x150`, `Square310x310` y `SplashScreen` generados e incluidos. |
-| [x] | **Capturas de pantalla listas** | 3 capturas promocionales en 1920x1080 listas en `Store_Assets/Screenshots/`. |
-| [x] | **Ficha de tienda redactada** | Título, subtítulo, descripción corta, descripción completa y palabras clave listos en `METADATOS_FICHA_TIENDA.md`. |
-| [x] | **Cuestionario IARC preparado** | Respuestas de cero violencia, sin drogas ni apuestas listas para clasificación PEGI 3 / ESRB Everyone. |
-| [x] | **Política de privacidad disponible** | URL pública vinculada a la página oficial / repositorio del proyecto. |
-| [ ] | **Sincronización de Identidad** | Si Partner Center asigna un `Package Name` o `Publisher CN` personalizado, ejecutar `Scripts/Actualizar-Identidad-Y-Compilar.ps1`. |
-| [ ] | **Carga en Partner Center** | Paquete subido y formularios completados en partner.microsoft.com. |
+| [x] | **Nombre comercial unificado** | DisplayName, ShortName, UI y tray usan **ToolTip AI**. |
+| [x] | **Atajos no conflictivos** | Snip `Ctrl+Shift+A`, Radar `Ctrl+Shift+D`, Ajustes `Ctrl+Shift+C`. Sin `Ctrl+A` / `Ctrl+D`. |
+| [x] | **Hook LL preciso** | Solo fallback de las combinaciones exactas del producto. |
+| [x] | **Bóveda DPAPI** | API key solo vía `ProtectedData`; migración plaintext re-cifra al cargar. Landing no persiste claves. |
+| [x] | **Modelos reales** | `gemini-2.0-flash`, `gemini-2.5-flash`, `gemini-2.5-pro`. |
+| [x] | **Privacidad alineada** | `privacy.html` describe DPAPI, BYOK y envío a Google sin “privacidad absoluta”. |
+| [x] | **Ficha honesta** | Sin claims de &lt;40 MB / enterprise / neural sin base. |
+| [x] | **Versión 1.0.2.0** | csproj + AppxManifest alineados. |
+| [ ] | **Paquete MSIX 1.0.2 firmado y subido** | Generar y firmar en Partner Center. |
+| [ ] | **Cancelación del submission #1 (1.0.1)** | Hacerlo en Partner Center antes de reenviar. |
+| [ ] | **Textos de ficha actualizados** | Pegar desde `METADATOS_FICHA_TIENDA.md`. |

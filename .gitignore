@@ -35,6 +35,13 @@ node_modules/
 dist/
 .env
 .env.local
-.DS_Store
-Thumbs.db
 .package_layout/
+.staging_publish/
+downloads/
+
+# Media & Recordings
+*.mp4
+*.webm
+*.avi
+*.mkv
+*.mov

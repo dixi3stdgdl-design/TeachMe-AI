@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
@@ -16,7 +16,7 @@
     <DisplayName>ToolTip AI</DisplayName>
     <PublisherDisplayName>Dixi3 Lqbs</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
-    <Description>ToolTip AI — Inspector de pantalla con IA didactica y HUD flotante para Windows 11</Description>
+    <Description>ToolTip AI — Inspector de pantalla con IA didáctica y HUD flotante para Windows 11</Description>
   </Properties>
 
   <Dependencies>
@@ -35,7 +35,7 @@
       EntryPoint="Windows.FullTrustApplication">
       <uap:VisualElements
         DisplayName="ToolTip AI"
-        Description="ToolTip AI — Inspector de pantalla con IA didactica y HUD flotante para Windows 11"
+        Description="Inspector de pantalla con IA didáctica y HUD flotante para Windows 11"
         BackgroundColor="#080D1A"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png">

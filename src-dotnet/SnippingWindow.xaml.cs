@@ -104,25 +104,17 @@ public partial class SnippingWindow : Window
                 int centerX = (int)(x + width / 2);
                 int centerY = (int)(y + height / 2);
                 var winInfo = NativeKernelEngine.InspectWindowAtPoint(centerX, centerY);
+                var nativeInfo = UiAutomationInspector.InspectElementAt(centerX, centerY);
 
-                var data = new InspectionData
-                {
-                    Name = winInfo.Title,
-                    ProcessName = winInfo.ProcessName,
-                    ProcessId = winInfo.ProcessId,
-                    ControlType = winInfo.ClassName,
-                    OcrText = $"[HWND: 0x{winInfo.Hwnd.ToInt64():X}] {winInfo.Title} | Clase: {winInfo.ClassName}",
-                    VerdictText = $"Proceso: {winInfo.ProcessName}.exe • Clase: {winInfo.ClassName}",
-                    Summary = $"Ventana activa: '{winInfo.Title}' perteneciente al proceso {winInfo.ProcessName} (PID: {winInfo.ProcessId}) usando el control nativo '{winInfo.ClassName}'.",
-                    ExePath = winInfo.ExePath,
-                    CliSnippet = $"Get-Process -Id {winInfo.ProcessId} | Select-Object Id, ProcessName, Path, CPU, WorkingSet64"
-                };
+                var data = GeminiClient.GenerateFallbackData(winInfo.Title, winInfo.ProcessName, winInfo.ProcessId, nativeInfo);
+                data.ExePath = winInfo.ExePath;
+                data.CliSnippet = $"Get-Process -Id {winInfo.ProcessId} | Select-Object Id, ProcessName, Path, CPU, WorkingSet64";
 
                 OnSnipCompleted?.Invoke(imageBytes, data, (int)(x + width + 14), (int)y);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al capturar pantalla: {ex.Message}", "Tooltip AI", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show($"Error al capturar pantalla: {ex.Message}", "ToolTip AI", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

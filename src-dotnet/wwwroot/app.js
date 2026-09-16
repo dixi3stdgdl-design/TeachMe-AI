@@ -631,14 +631,9 @@ const state = {
   hoverLeaveTimeout: null,
 
   // Motor Multimodal de Inteligencia Artificial (Google Gemini)
-  geminiApiKey: localStorage.getItem('teachme_gemini_api_key') || '',
-  geminiModel: (function() {
-    const saved = localStorage.getItem('teachme_gemini_model');
-    if (!saved || saved.includes('2.5') || saved.includes('2.0') || saved.includes('1.5')) {
-      return saved && saved.includes('pro') ? 'gemini-pro-latest' : 'gemini-flash-latest';
-    }
-    return saved;
-  })(),
+  // Demo only: key lives in memory for the session — never persisted in the browser.
+  geminiApiKey: '',
+  geminiModel: 'gemini-2.0-flash',
   lastCapturedImage: null,
   isAnalyzing: false
 };
@@ -1720,7 +1715,7 @@ async function callGeminiVision(base64Image, windowMetadata) {
 
   try {
     const cleanBase64 = base64Image.replace(/^data:image\/\w+;base64,/, '');
-    const model = state.geminiModel || 'gemini-flash-latest';
+    const model = state.geminiModel || 'gemini-2.0-flash';
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(state.geminiApiKey)}`;
 
     const promptText = `Eres Tooltip AI, un asistente visual neural de ultra-alta fidelidad para Windows 11.
@@ -1817,7 +1812,7 @@ async function callGeminiChat(question) {
   }
 
   try {
-    const model = state.geminiModel || 'gemini-flash-latest';
+    const model = state.geminiModel || 'gemini-2.0-flash';
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(state.geminiApiKey)}`;
     const current = INSPECTION_DATABASE[state.currentTargetKey] || {};
 
@@ -1878,7 +1873,6 @@ function setupDesignStudio() {
       DOM.selectAiModel.value = state.geminiModel;
       DOM.selectAiModel.addEventListener('change', (e) => {
         state.geminiModel = e.target.value;
-        localStorage.setItem('teachme_gemini_model', state.geminiModel);
       });
     }
 
@@ -1892,14 +1886,15 @@ function setupDesignStudio() {
       DOM.btnSaveApiKey.addEventListener('click', () => {
         const key = DOM.inputApiKey.value.trim();
         state.geminiApiKey = key;
-        localStorage.setItem('teachme_gemini_api_key', key);
+        // Do not write API keys to localStorage — session memory only.
+        try { localStorage.removeItem('teachme_gemini_api_key'); } catch (_) {}
         if (key) {
           if (DOM.aiStatusPill) {
             DOM.aiStatusPill.classList.add('connected');
-            DOM.aiStatusPill.textContent = 'Gemini Conectado ✨';
+            DOM.aiStatusPill.textContent = 'Gemini listo (solo esta sesión)';
           }
-          DOM.btnSaveApiKey.textContent = '✓ Guardada';
-          setTimeout(() => { DOM.btnSaveApiKey.textContent = 'Guardar Clave'; }, 1800);
+          DOM.btnSaveApiKey.textContent = '✓ En memoria';
+          setTimeout(() => { DOM.btnSaveApiKey.textContent = 'Usar clave'; }, 1800);
         } else {
           if (DOM.aiStatusPill) {
             DOM.aiStatusPill.classList.remove('connected');
@@ -1918,7 +1913,7 @@ function setupDesignStudio() {
         }
         DOM.btnTestApiKey.textContent = '⏳ Probando...';
         try {
-          const model = state.geminiModel || 'gemini-flash-latest';
+          const model = state.geminiModel || 'gemini-2.0-flash';
           const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(key)}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
