@@ -2,17 +2,17 @@
 
 <img src="icon.png" width="128" height="128" alt="Tooltip AI Icon" style="border-radius: 24px; box-shadow: 0 8px 32px rgba(0,245,160,0.3); margin-bottom: 12px;"/>
 
-# 🧠 Tooltip AI
-### Windows 11 Neural Screen Inspector & Cognitive HUD
+# 🧠 ToolTip AI
+### Inspector de pantalla con IA didáctica para Windows 11
 
 [![GitHub Pages](https://img.shields.io/badge/Web%20Oficial-Landing%20Page-00F5A0?style=for-the-badge&logo=github&logoColor=black)](https://dixi3stdgdl-design.github.io/TeachMe-AI/)
-[![Microsoft Store](https://img.shields.io/badge/Microsoft%20Store-In%20Review-0078D4?style=for-the-badge&logo=windows11&logoColor=white)](https://dixi3stdgdl-design.github.io/TeachMe-AI/)
-[![Direct Download](https://img.shields.io/badge/Descarga%20Directa-v1.0.0.0%20(72%20MB)-10B981?style=for-the-badge&logo=windows&logoColor=white)](https://dixi3stdgdl-design.github.io/TeachMe-AI/downloads/TooltipAI.exe)
+[![Microsoft Store](https://img.shields.io/badge/Microsoft%20Store-v1.0.2-0078D4?style=for-the-badge&logo=windows11&logoColor=white)](https://dixi3stdgdl-design.github.io/TeachMe-AI/)
+[![Direct Download](https://img.shields.io/badge/Descarga%20Directa-v1.0.2.0-10B981?style=for-the-badge&logo=windows&logoColor=white)](https://dixi3stdgdl-design.github.io/TeachMe-AI/downloads/TooltipAI.exe)
 [![Runtime - .NET 8](https://img.shields.io/badge/.NET-8.0%20WPF%20Standalone-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
 [![License - MIT](https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge)](LICENSE)
 
 <p align="center">
-  <b>Utilidad nativa ultraligera para Windows 11 que analiza cualquier ventana, botón o diálogo de error en tiempo real con IA didáctica multimodal (Google Gemini), recorte instantáneo global (<kbd>Ctrl</kbd> + <kbd>A</kbd>) y un HUD acrílico translúcido flotante.</b>
+  <b>Utilidad de escritorio para Windows 11 que explica botones, diálogos y errores con IA didáctica (Google Gemini, tu propia clave). Recorte global con <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd>, HUD flotante y bandeja del sistema.</b>
 </p>
 
 </div>
@@ -21,50 +21,36 @@
 
 ## ⚡ Descarga e Instalación
 
-### 1. Descarga Directa (Binario Oficial Standalone)
-Puedes descargar la versión lista para usar sin necesidad de instalar .NET SDK ni runtimes adicionales:
-* 📥 **[Descargar Tooltip AI v1.0.0.0 para Windows 11 (.exe - 72.4 MB)](https://dixi3stdgdl-design.github.io/TeachMe-AI/downloads/TooltipAI.exe)**
-* *Características del binario:* Compilado en modo `win-x64 --self-contained` con compresión de archivo único. No requiere instalación, solo ejecuta y se aloja en tu barra de tareas.
+### 1. Descarga Directa (Binario Standalone)
+* 📥 **[Descargar ToolTip AI v1.0.2.0 para Windows 11 (.exe)](https://dixi3stdgdl-design.github.io/TeachMe-AI/downloads/TooltipAI.exe)**
+* Compilado `win-x64 --self-contained`. Ejecuta y se aloja en la bandeja del sistema.
 
-### 2. Microsoft Store (En Proceso de Certificación)
-* **Estado:** Enviada y en proceso de revisión oficial por el equipo de Microsoft (SLA: 3 días hábiles).
+### 2. Microsoft Store
 * **Partner Center ID:** `2f19281b-3d22-4767-9246-e6fe7d6e2d8a`
-* En cuanto concluya la certificación, estará disponible en la aplicación oficial de Microsoft Store con actualizaciones automáticas.
+* Versión de reenvío limpia: **1.0.2.0** (atajos no conflictivos, branding unificado, vault DPAPI).
 
 ---
 
 ## 🌟 Características Principales
 
-- **⚡ Recorte Instantáneo Global (<kbd>Ctrl</kbd> + <kbd>A</kbd>):**
-  Interrupción de bajísima latencia mediante Win32 API (`WH_KEYBOARD_LL` y `RegisterHotKey`) que congela la pantalla en cualquier aplicación permitiendo seleccionar un área de interés milimétrica sin interrumpir tu flujo de trabajo.
-- **🪟 HUD Acrílico Translúcido (VisionOS / Raycast Grade):**
-  Panel flotante con desenfoque acrílico, saturación reactiva y tipografía ergonómica (`Plus Jakarta Sans` y `JetBrains Mono`) con 5 pestañas didácticas:
-  1. **Veredicto y Riesgo:** Clasificación instantánea en *Seguro*, *Precaución* o *Crítico*.
-  2. **Explicación Didáctica:** Sin tecnicismos, pensado para entender qué hace ese botón o mensaje antes de hacer clic.
-  3. **Impacto en el Sistema:** Memoria, disco, registro y arranque.
-  4. **Diagnóstico Técnico:** Comandos PowerShell / Win32 listos para copiar.
-  5. **Chat IA Integrado:** Haz preguntas adicionales a la IA sobre la captura.
-- **🤖 Motor Multimodal con Google Gemini Oficial:**
-  Compatible de forma nativa con los modelos `gemini-2.5-flash` y `gemini-pro`.
-- **📸 Captura de Pantalla Completa & Portapapeles:**
-  Inspecciona toda la pantalla de un clic o analiza al instante imágenes y texto copiados al portapapeles.
-- **🔽 Alojado Silenciosamente en la Barra de Tareas (System Tray):**
-  Consume **menos de 40 MB de RAM** y 0.0% de CPU en reposo. Se aloja junto al reloj de Windows con menú contextual y arranque opcional.
-- **🔒 Privacidad Absoluta:**
-  Tus capturas se procesan de forma cifrada (HTTPS) directamente entre tu equipo y Google AI Studio. Sin servidores intermedios, sin telemetría ni recopilación de datos personales.
+- **⚡ Recorte global (`Ctrl+Shift+A`):** congela la pantalla y permite seleccionar un área sin robar `Ctrl+A` (Seleccionar todo).
+- **🪟 HUD flotante:** panel con veredicto, explicación en lenguaje llano, impacto y chat de seguimiento.
+- **🤖 IA con Google Gemini (BYOK):** modelos `gemini-2.0-flash`, `gemini-2.5-flash` y `gemini-2.5-pro`. Tú aportas la clave.
+- **📸 Pantalla completa y portapapeles:** analiza capturas o texto copiado.
+- **🔽 Bandeja del sistema:** presencia discreta; sin autoarranque forzado.
+- **🔒 Clave cifrada localmente:** DPAPI de Windows (`ProtectedData`). Sin backend intermedio de capturas de Dixi3 Lqbs. El análisis va a la API de Google que configures.
 
 ---
 
-## ⌨️ Atajos de Teclado y Gestos
+## ⌨️ Atajos de Teclado
 
-| Atajo / Acción | Función | Comportamiento |
-| :--- | :--- | :--- |
-| <kbd>Ctrl</kbd> + <kbd>A</kbd> | **Recorte Instantáneo** | Congela la pantalla en cualquier aplicación y activa el cursor de selección milimétrico. |
-| <kbd>Ctrl</kbd> + <kbd>D</kbd> | **Radar Automático On/Off** | Activa o desactiva la detección por reposo de ratón (dwell de 3 segundos). |
-| <kbd>Espacio</kbd> | **Saltar Espera** | Abre el panel inmediatamente mientras el radar está en cuenta regresiva. |
-| <kbd>Esc</kbd> | **Cerrar / Cancelar** | Cancela el recorte o desvanece el panel HUD flotante. |
-| **Hover 3.0s** | **Dwell Activo** | Escanea automáticamente el control o botón bajo el puntero del ratón. |
-| **Icono 📌** | **Fijar Panel** | Ancla el HUD para lectura continua sin que se cierre al mover el cursor. |
+| Atajo | Función |
+| :--- | :--- |
+| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd> | Recorte y análisis |
+| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd> | Radar dwell On/Off (off por defecto) |
+| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd> | Ajustes |
+| <kbd>Esc</kbd> | Cerrar / cancelar |
+| **Hover (si radar activo)** | Análisis al reposar el cursor |
 
 ---
 

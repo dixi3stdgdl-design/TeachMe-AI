@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Política de Privacidad — Tooltip AI</title>
+  <title>Política de Privacidad — ToolTip AI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -77,8 +77,8 @@
   <header class="site-header">
     <nav class="site-nav">
       <a href="index.html" class="brand-badge">
-        <img src="icon.png" alt="Tooltip AI" class="brand-logo-img">
-        <span class="brand-name">Tooltip <span>AI</span></span>
+        <img src="icon.png" alt="ToolTip AI" class="brand-logo-img">
+        <span class="brand-name">ToolTip <span>AI</span></span>
       </a>
       <div class="nav-actions">
         <a href="index.html" class="nav-btn-github">Volver al Inicio</a>
@@ -87,46 +87,68 @@
   </header>
 
   <main class="privacy-container">
-    <a href="index.html" class="back-home">← Volver a Tooltip AI</a>
+    <a href="index.html" class="back-home">← Volver a ToolTip AI</a>
     <h1>Política de Privacidad</h1>
-    <span class="effective-date">Última actualización: Septiembre de 2026 • Versión 1.0</span>
+    <span class="effective-date">Última actualización: 10 de septiembre de 2026 • Versión 1.1</span>
 
     <p>
-      En <strong>Tooltip AI</strong> respetamos y protegemos la privacidad de nuestros usuarios. Esta Política de Privacidad describe cómo se gestiona la información al utilizar nuestra aplicación de escritorio para Windows 11 y nuestro sitio web.
+      En <strong>ToolTip AI</strong> (Dixi3 Lqbs) respetamos tu privacidad. Esta política describe qué datos
+      toca la aplicación de escritorio para Windows 11 y la landing/demo web.
     </p>
 
-    <h2>1. Principio Fundamental: Privacidad por Diseño</h2>
+    <h2>1. Principio</h2>
     <p>
-      Tooltip AI es una utilidad de escritorio nativa diseñada bajo el principio de <em>Zero Tracking</em> (cero rastreo). No recopilamos, no almacenamos en servidores propios y no comercializamos ninguna información personal, identificadores de dispositivo, direcciones IP ni datos de navegación.
+      No operamos un backend intermedio de capturas ni vendemos datos personales.
+      El análisis con IA ocurre solo cuando tú lo pides, contra la API de Google Gemini
+      que configuras con tu propia clave (Bring Your Own Key).
     </p>
 
-    <h2>2. Datos de Captura y Pantalla</h2>
+    <h2>2. Capturas de pantalla</h2>
     <ul>
-      <li><strong>Ejecución Local:</strong> Los recortes de pantalla (mediante <code>Ctrl + A</code>) se procesan en la memoria RAM volátil de tu equipo y nunca se guardan en tu disco duro a menos que lo solicites explícitamente.</li>
-      <li><strong>Transmisión Segura:</strong> Cuando solicitas el análisis con IA, la imagen seleccionada se transmite de forma cifrada mediante protocolo HTTPS/TLS directamente desde tu aplicación hacia los servidores oficiales de la API de Google (Google AI Studio).</li>
-      <li><strong>Sin Almacenamiento Intermedio:</strong> Ningún intermediario ni servidor proxy tiene acceso a tus capturas de pantalla ni a los textos analizados.</li>
+      <li><strong>Local:</strong> el recorte vive en memoria RAM; no se escribe en disco salvo petición explícita del usuario.</li>
+      <li><strong>API de IA:</strong> al analizar, la imagen y el contexto se envían cifrados (HTTPS/TLS) a los servidores oficiales de Google (Generative Language API). Google aplica sus propias políticas de datos.</li>
+      <li><strong>Sin servidor propio de capturas:</strong> Dixi3 Lqbs no recibe ni almacena tus capturas.</li>
     </ul>
 
-    <h2>3. Gestión de Claves de API</h2>
+    <h2>3. Clave de API</h2>
     <p>
-      Si introduces tu clave privada de Google Gemini API, esta se almacena únicamente en tu equipo local dentro de tu perfil de usuario de Windows (<code>%APPDATA%\TeachMeAI\config.json</code>). Tu clave nunca sale de tu equipo excepto para autenticarte directamente ante los servidores de Google.
+      En la app de escritorio (Microsoft Store / MSIX), la clave se cifra con
+      <strong>Windows DPAPI</strong> (<code>ProtectedData</code>, ámbito de usuario) y se guarda cifrada en
+      <code>%APPDATA%\TeachMeAI\config.json</code>. No se envía a Dixi3 Lqbs; solo autentica llamadas a Google.
+    </p>
+    <p>
+      En la landing/demo web, si pegas una clave, se usa solo en memoria de la sesión y
+      <strong>no se persiste</strong> en <code>localStorage</code>.
     </p>
 
-    <h2>4. Telemetría y Anuncios</h2>
+    <h2>4. Telemetría y anuncios</h2>
     <p>
-      Tooltip AI <strong>NO contiene anuncios</strong> ni bibliotecas de análisis publicitario o telemetría invasiva de terceros.
+      La versión actual no incluye publicidad, SDKs de analítica de terceros ni telemetría de uso hacia Dixi3 Lqbs.
     </p>
 
-    <h2>5. Permisos de Windows Requeridos</h2>
+    <h2>5. Permisos y atajos</h2>
     <ul>
-      <li><strong>Captura de Pantalla:</strong> Necesario para congelar la pantalla y permitir el recorte didáctico de ventanas o textos con <code>Ctrl + A</code>.</li>
-      <li><strong>Bandeja del Sistema (System Tray):</strong> Para mantener la aplicación disponible discretamente junto al reloj de Windows sin consumir recursos en segundo plano.</li>
-      <li><strong>Acceso a Internet:</strong> Exclusivamente para comunicarse con las APIs oficiales de IA para generar los diagnósticos solicitados por el usuario.</li>
+      <li><strong>Captura de pantalla:</strong> para recortar el área a analizar.</li>
+      <li><strong>Atajos globales:</strong> <code>Ctrl+Shift+A</code> (recorte), <code>Ctrl+Shift+D</code> (radar), <code>Ctrl+Shift+C</code> (ajustes). El hook de teclado de bajo nivel solo es respaldo de esas combinaciones exactas.</li>
+      <li><strong>Bandeja del sistema:</strong> para estar disponible sin interrumpir.</li>
+      <li><strong>Internet:</strong> solo para la API de IA que configures.</li>
     </ul>
 
-    <h2>6. Contacto y Soporte</h2>
+    <h2>6. Módulo y Aplicación ToolTip AI Translate</h2>
     <p>
-      Si tienes preguntas o inquietudes sobre esta política o el funcionamiento de Tooltip AI, puedes comunicarte a través de nuestro repositorio oficial en GitHub: <a href="https://github.com/dixi3stdgdl-design/TeachMe-AI/issues" target="_blank" rel="noopener" style="color: #00F5A0;">github.com/dixi3stdgdl-design/TeachMe-AI</a>.
+      Para la aplicación complementaria <strong>ToolTip AI Translate</strong>, se aplican idénticos principios de soberanía y privacidad:
+    </p>
+    <ul>
+      <li><strong>Texto traducido:</strong> Se envía mediante TLS/HTTPS directamente a la API oficial configurada (Microsoft Azure Translator o Google Gemini). Dixi3 Lqbs no opera servidores intermedios ni almacena tus palabras.</li>
+      <li><strong>Protección estricta de contraseñas:</strong> El extractor comprueba la propiedad nativa <code>IsPassword</code>. Si el cursor se sitúa sobre un campo de contraseña, la lectura se cancela de inmediato y se bloquea la captura OCR.</li>
+      <li><strong>Reconocimiento óptico local (OCR):</strong> El motor <code>Windows.Media.Ocr</code> opera de forma 100% local en tu dispositivo; las imágenes no se transmiten a la nube.</li>
+      <li><strong>Claves cifradas:</strong> Las credenciales de traducción se almacenan cifradas con Windows DPAPI en <code>%APPDATA%\ToolTipAITranslate\settings.json</code>.</li>
+    </ul>
+
+    <h2>7. Contacto y Soporte</h2>
+    <p>
+      Dudas sobre privacidad o reporte de incidentes:
+      <a href="https://github.com/dixi3stdgdl-design/TeachMe-AI/issues" target="_blank" rel="noopener" style="color: #00F5A0;">github.com/dixi3stdgdl-design/TeachMe-AI/issues</a>
     </p>
   </main>
 
@@ -134,10 +156,10 @@
     <div class="footer-inner">
       <div style="display: flex; align-items: center; gap: 10px;">
         <img src="icon.png" width="22" height="22" style="border-radius: 5px;">
-        <span><strong>Tooltip AI</strong> — Inspección Cognitiva de Pantalla para Windows 11</span>
+        <span><strong>ToolTip AI</strong> — Inspector de pantalla con IA didáctica para Windows 11</span>
       </div>
       <div style="color: var(--text-muted); font-size: 11px;">
-        Licencia MIT • Privacidad Garantizada
+        Licencia MIT
       </div>
     </div>
   </footer>
