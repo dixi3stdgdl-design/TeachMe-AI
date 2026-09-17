@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tooltip-ai Voice — Síntesis Auditiva Neuronal HD para Windows 11 (tooltip-ai.com/voice)</title>
+  <title>Tooltip-ai Voice — Canal Acústico Neuronal HD y Comunicación Bidireccional (tooltip-ai.com/voice)</title>
 
-  <meta name="description" content="Tooltip-ai Voice: Síntesis auditiva en tiempo real. Escucha dictámenes de seguridad y traducciones sin apartar la vista de tu juego ni soltar tus periféricos.">
+  <meta name="description" content="Tooltip-ai Voice: Síntesis auditiva neuronal de 48kHz para Windows 11. Escucha dictámenes de seguridad, logs de código y traducciones sin apartar la vista ni tocar el teclado.">
   <meta property="og:title" content="Tooltip-ai Voice — Síntesis Auditiva Neuronal HD">
   <meta property="og:url" content="https://tooltip-ai.com/voice">
 
@@ -88,128 +88,108 @@
   </header>
 
   <!-- ======================================================== -->
-  <!-- HERO SECTION                                             -->
+  <!-- HERO SECTION: VOICE ACOUSTIC CHANNEL                     -->
   <!-- ======================================================== -->
   <section class="hero-stage">
     
     <div class="hero-code-stream-banner" id="heroCodeBanner">
       <div class="pulse-emerald-dot"></div>
-      <span class="code-stream-label">Flujo de Inferencia Activo:</span>
-      <span class="code-stream-file" id="activeFileName">VoiceSynthesizer.cs (Windows.Media.SpeechSynthesis Native HD Audio)</span>
-      <span class="code-stream-hint">Audio Neuronal de Alta Fidelidad</span>
+      <span class="code-stream-label">Canal Acústico Neuronal:</span>
+      <span class="code-stream-file" id="activeFileName">VoiceSynthesizer.cs (Windows WASAPI Exclusive • 48kHz HD Local)</span>
+      <span class="code-stream-hint">Audio Ducking Automático a Nivel Kernel</span>
     </div>
 
     <h1 class="hero-main-title">
-      La Pantalla Te Habla: <br>
-      <span class="gradient-neon">Síntesis Neuronal HD Manos Libres</span>
+      La Voz y el Oído de Tooltip-ai: <br>
+      <span class="gradient-neon">Síntesis Neuronal HD y Computación Manos Libres</span>
     </h1>
 
     <p class="hero-description">
-      ¿Estás en un momento crítico de tu partida o depurando código sin querer desviar la mirada? Tooltip-ai Voice sintetiza diagnósticos de seguridad, avisos técnicos y traducciones al instante en <strong>audio neuronal HD de 48kHz en español</strong> sin interrumpir tus periféricos.
+      ¿Estás en pleno combate en tu videojuego o depurando código sin querer desviar la mirada? <strong>Tooltip-ai Voice es el canal acústico de alta fidelidad</strong>: sintetiza diagnósticos de seguridad, avisos técnicos y traducciones al instante en <strong>audio neuronal HD de 48kHz en español</strong>, atenuando de forma automática el volumen de tu juego o música para que nunca pierdas el ritmo.
     </p>
 
-    <!-- KEY COMMAND DOCK -->
+    <!-- VOICE MODES DOCK -->
     <div class="keyboard-dock-bar">
-      <div class="key-pill tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="🎙️ Atajo Síntesis de Voz (Ctrl + V)" data-tooltip-body="Presiona Ctrl + V para escuchar la explicación de lo que tu cursor está señalando en voz alta." data-spec-file="VoiceSynthesizer.cs">
-        <kbd>Ctrl</kbd> + <kbd>V</kbd>
-        <span>Lectura por Voz</span>
+      <div class="key-pill tooltip-trigger active" id="modeGamer" data-code-spec="voice_tts" data-tooltip-title="🎮 Modo Gamer Ultracompacto" data-tooltip-body="Dictámenes de 2 segundos: veredictos concisos sin rodeos para tomar decisiones tácticas en fracciones de segundo." data-spec-file="VoiceSynthesizer.cs">
+        <span>🎮 Modo Gamer</span>
       </div>
-      <div class="key-pill tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="🎧 Frecuencia de Muestreo: 48 kHz" data-tooltip-body="Motor de renderizado de audio local de alta definición con ecualización de inteligibilidad vocal." data-spec-file="VoiceSynthesizer.cs">
-        <kbd>48 kHz</kbd>
-        <span>Audio HD Cristalino</span>
+      <div class="key-pill tooltip-trigger" id="modeTutor" data-code-spec="voice_tts" data-tooltip-title="📚 Modo Tutor Didáctico" data-tooltip-body="Explicación paso a paso con entonación amigable y pausas respiratorias para comprender a fondo cualquier función." data-spec-file="VoiceSynthesizer.cs">
+        <span>📚 Modo Tutor</span>
       </div>
-      <div class="key-pill tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="👐 Trabajo 100% Hands-Free" data-tooltip-body="Escucha el dictamen de seguridad o traducción mientras mantienes tus dedos en el teclado y ratón." data-spec-file="VoiceSynthesizer.cs">
-        <kbd>Hands-Free</kbd>
-        <span>Cero Distracciones</span>
+      <div class="key-pill tooltip-trigger" id="modeCode" data-code-spec="voice_tts" data-tooltip-title="💻 Modo Auditor de Código" data-tooltip-body="Tokenizador fonético especializado: pronuncia variables en camelCase, rutas de archivo y excepciones de memoria con naturalidad." data-spec-file="VoiceSynthesizer.cs">
+        <span>💻 Modo Código</span>
       </div>
-      <div class="key-pill tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="🔇 Audio Ducking Automático" data-tooltip-body="Atenúa temporalmente la música de fondo o el sonido del juego mientras la voz habla." data-spec-file="VoiceSynthesizer.cs">
-        <kbd>Ducking</kbd>
-        <span>Atenuación Inteligente</span>
+      <div class="key-pill tooltip-trigger" id="modeDucking" data-code-spec="voice_tts" data-tooltip-title="🎧 Audio Ducking WASAPI (-18dB)" data-tooltip-body="Atenúa de forma inteligente la música de Spotify o el sonido del juego mientras habla y restaura el volumen al terminar." data-spec-file="VoiceSynthesizer.cs">
+        <span>🎧 Audio Ducking</span>
       </div>
     </div>
 
-    <!-- HERO CTAS -->
+    <!-- PRIMARY CTAS -->
     <div class="hero-actions-row">
       <a href="../downloads/TooltipAI.exe" download class="btn-hero-primary">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         <span>Descargar Tooltip-ai Voice (72.4 MB)</span>
       </a>
-      <a href="#simulator" class="btn-hero-secondary">
-        <span>🎧 Probar Reproductor de Audio en Vivo</span>
+      <a href="#voiceStudio" class="btn-hero-secondary">
+        <span>🎙️ Probar Estudio de Audio en Vivo</span>
       </a>
     </div>
 
-    <!-- TELEMETRY -->
+    <!-- VALUE-DRIVEN TELEMETRY METRICS -->
     <div class="hero-telemetry-grid">
-      <div class="telemetry-card tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="⚡ Latencia de Inicio: < 10 ms" data-tooltip-body="Enrutamiento directo al pipeline de audio WASAPI de Windows sin buffering en la nube." data-spec-file="VoiceSynthesizer.cs">
+      <div class="telemetry-card tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Latencia de Inicio: < 10 ms" data-tooltip-body="Enrutamiento directo al pipeline de audio WASAPI de Windows sin buffering en la nube." data-spec-file="VoiceSynthesizer.cs">
         <div class="telemetry-val emerald">&lt; 10 ms</div>
-        <div class="telemetry-label">Latencia Invocación</div>
+        <div class="telemetry-label">Latencia de Invocación</div>
         <div class="telemetry-sub">Buffer local WASAPI</div>
       </div>
 
-      <div class="telemetry-card tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="🎙️ Fidelidad Neuronal HD" data-tooltip-body="Voces neuronales integradas de Windows 11 afinadas para pronunciación técnica en español." data-spec-file="VoiceSynthesizer.cs">
+      <div class="telemetry-card tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Calidad de Muestreo: 48 kHz HD" data-tooltip-body="Audio neuronal sin compresión con pérdidas, afinado para pronunciación técnica en español." data-spec-file="VoiceSynthesizer.cs">
         <div class="telemetry-val cyan">48 kHz</div>
-        <div class="telemetry-label">Calidad de Muestreo</div>
-        <div class="telemetry-sub">Audio sin compresión con pérdidas</div>
+        <div class="telemetry-label">Muestreo de Audio</div>
+        <div class="telemetry-sub">Fidelidad cristalina</div>
       </div>
 
-      <div class="telemetry-card tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="🔒 Privacidad 100% Offline" data-tooltip-body="El texto jamás se envía a servidores de voz externos. El audio se sintetiza íntegramente en tu CPU." data-spec-file="VoiceSynthesizer.cs">
+      <div class="telemetry-card tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Privacidad: 100% Offline" data-tooltip-body="Tus textos nunca salen de tu ordenador. El audio se computa íntegramente en tu CPU local." data-spec-file="VoiceSynthesizer.cs">
         <div class="telemetry-val violet">100%</div>
         <div class="telemetry-label">Privacidad Local</div>
         <div class="telemetry-sub">Cero envío de audio a la red</div>
       </div>
 
-      <div class="telemetry-card tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="🧠 Consumo de CPU: 0.1%" data-tooltip-body="Procesamiento en hilos secundarios asíncronos para no reducir tus FPS en videojuegos." data-spec-file="VoiceSynthesizer.cs">
-        <div class="telemetry-val amber">0.1%</div>
-        <div class="telemetry-label">Carga de CPU</div>
-        <div class="telemetry-sub">Optimizado para gaming</div>
+      <div class="telemetry-card tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Costo por Palabra: $0.00" data-tooltip-body="Sin suscripciones mensuales de ElevenLabs ni OpenAI. Ilimitado y gratuito para siempre." data-spec-file="VoiceSynthesizer.cs">
+        <div class="telemetry-val amber">$0.00</div>
+        <div class="telemetry-label">Costo por Uso</div>
+        <div class="telemetry-sub">Totalmente libre y sin cuotas</div>
       </div>
     </div>
 
   </section>
 
   <!-- ======================================================== -->
-  <!-- INTERACTIVE WORKSTATION SIMULATOR                        -->
+  <!-- EXCLUSIVE INTERACTIVE STUDIO: AUDIO SPECTRUM & DUCKING   -->
   <!-- ======================================================== -->
-  <section class="simulator-stage" id="simulator">
+  <section class="simulator-stage" id="voiceStudio">
     <div class="stage-header">
-      <span class="stage-tag">ESTUDIO DE AUDICIÓN EN TIEMPO REAL</span>
-      <h2 class="stage-title">Experimenta la Voz Neuronal en Vivo</h2>
+      <span class="stage-tag">ESTUDIO DE AUDICIÓN NEURONAL EN TIEMPO REAL</span>
+      <h2 class="stage-title">Experimenta la Inflexión Vocal y el Audio Ducking</h2>
       <p class="stage-subtitle">
-        Selecciona un caso de uso a continuación y pulsa reproducir para escuchar cómo Tooltip-ai Voice dictamina en tu navegador:
+        Selecciona un caso de uso para escuchar a Tooltip-ai Voice modular la velocidad y tono en tu navegador mientras observas la atenuación de fondo:
       </p>
     </div>
 
-    <!-- Scenario Switcher -->
-    <div class="scenario-buttons-row">
-      <button class="scenario-pill-btn active" id="btnVoiceSecurity">
-        <span>🛡️</span> Alerta de Seguridad en Instalador
-      </button>
-      <button class="scenario-pill-btn" id="btnVoiceCode">
-        <span>💻</span> Explicación de Error en C++
-      </button>
-      <button class="scenario-pill-btn" id="btnVoiceTranslate">
-        <span>🌐</span> Traducción Fluida de Videojuego
-      </button>
-      <button class="scenario-pill-btn" id="btnVoiceQuery">
-        <span>⚡</span> Optimización de Consulta SQL
-      </button>
-    </div>
-
-    <!-- SIMULATED WORKSTATION -->
+    <!-- Voice Studio Deck Frame -->
     <div class="simulated-workspace-frame">
       
-      <!-- Box 1: Audio Visualizer & Player -->
+      <!-- Left: Equalizer & Real Speech Synthesizer -->
       <div class="sim-card">
         <div class="sim-card-header">
           <div class="sim-card-title">
-            <span>🔊</span> Reproductor de Dictamen Neuronal
+            <span>🔊</span> Sintetizador Neuronal HD (Demostración en Vivo)
           </div>
           <span id="voiceStatusBadge" style="color: #38bdf8; font-family: var(--font-mono); font-size: 11px; font-weight: 700;">ESTADO: LISTO</span>
         </div>
         <div class="sim-card-body">
           
-          <!-- Equalizer Frequency Visualizer -->
+          <!-- Equalizer Frequency Visualizer Bars -->
           <div class="audio-visualizer-bars" id="audioEqualizer">
             <div class="audio-bar"></div>
             <div class="audio-bar"></div>
@@ -221,6 +201,7 @@
             <div class="audio-bar"></div>
           </div>
 
+          <!-- Dynamic Text Display -->
           <div style="background: rgba(16, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 18px; margin: 18px 0;">
             <div style="font-size: 11px; text-transform: uppercase; color: #38bdf8; font-weight: 800; letter-spacing: 0.5px; margin-bottom: 8px;">
               Texto a Sintetizar:
@@ -230,75 +211,86 @@
             </p>
           </div>
 
+          <!-- Controls: Play, Stop & Speed -->
           <div class="sim-btn-row">
             <button class="btn-hero-primary" id="btnPlayVoice" style="cursor: pointer; font-size: 14px; padding: 12px 24px;">
               <span style="font-size: 18px;">▶</span>
-              <span>Reproducir Explicación por Voz</span>
+              <span>Reproducir Dictamen en Vivo</span>
             </button>
             <button class="sim-btn" id="btnStopVoice" style="cursor: pointer; font-size: 13px;">
               <span>⏹ Detener</span>
             </button>
           </div>
 
+          <!-- Audio Ducking Real-time Meter -->
+          <div class="audio-ducking-graph">
+            <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">Volumen de Fondo (Juego / Música):</span>
+            <div class="ducking-track">
+              <div class="ducking-indicator" id="duckingIndicator"></div>
+            </div>
+            <span id="duckingLevelText" style="font-family: var(--font-mono); font-size: 12px; color: #00f5a0; font-weight: 700;">100%</span>
+          </div>
+
         </div>
       </div>
 
-      <!-- Box 2: Voice Routing & Audio Ducking Engine -->
+      <!-- Right: Tokenizer & Sound Architecture -->
       <div class="sim-card" style="border-color: rgba(56, 189, 248, 0.4); box-shadow: 0 0 30px rgba(56, 189, 248, 0.15);">
         <div class="sim-card-header" style="background: rgba(56, 189, 248, 0.08);">
           <div class="sim-card-title">
-            <span>⚙️</span> Parámetros del Pipeline de Audio
+            <span>⚙️</span> Tokenizador Fonético y Pipeline WASAPI
           </div>
-          <span style="color: #00f5a0; font-family: var(--font-mono); font-size: 11px; font-weight: 700;">WASAPI EXCLUSIVE: ACTIVO</span>
+          <span style="color: #00f5a0; font-family: var(--font-mono); font-size: 11px; font-weight: 700;">LATENCIA: 8.4ms</span>
         </div>
         <div class="sim-card-body">
           
-          <div class="sim-inspectable-row safe tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Atenuación Audio Ducking (-18dB)" data-tooltip-body="Reduce el volumen del juego un 60% durante la lectura de la explicación técnica." data-spec-file="VoiceSynthesizer.cs">
-            <label><span>🎧 Audio Ducking Inteligente</span></label>
-            <span class="status-pill safe">Atenuación: -18dB</span>
+          <div class="sim-inspectable-row safe tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Tokenizador Fonético de Código" data-tooltip-body="Interpreta nombres de variables en camelCase y llamadas de sistema como un ingeniero humano." data-spec-file="VoiceSynthesizer.cs">
+            <label><span>💻 Pronunciación de Sintaxis</span></label>
+            <span class="status-pill safe">Filtro Antirrobótico Activo</span>
           </div>
 
-          <div class="sim-inspectable-row safe tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Paquete de Idioma: Español Neutro" data-tooltip-body="Voz neuronal de Windows 11 seleccionada automáticamente por compatibilidad de acento." data-spec-file="VoiceSynthesizer.cs">
-            <label><span>🗣️ Paquete de Voz</span></label>
-            <span class="status-pill safe">Español Neuronal HD</span>
+          <div class="sim-inspectable-row safe tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Audio Ducking a Nivel Kernel (-18dB)" data-tooltip-body="Atenúa temporalmente el volumen de los demás programas para garantizar inteligibilidad vocal." data-spec-file="VoiceSynthesizer.cs">
+            <label><span>🎧 Atenuación Dinámica</span></label>
+            <span class="status-pill safe">-18 dB de Reducción</span>
           </div>
 
-          <div class="sim-inspectable-row safe tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Velocidad de Lectura: 1.1x Adaptativa" data-tooltip-body="Optimizado para gamers: oraciones concisas y cadencia rápida para no retrasar decisiones." data-spec-file="VoiceSynthesizer.cs">
-            <label><span>⚡ Velocidad de Dicción</span></label>
-            <span class="status-pill safe">1.1x Gaming Mode</span>
+          <div class="sim-inspectable-row safe tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Paquete de Voz Neuronal en Español" data-tooltip-body="Voces HD de Windows 11 afinadas para respetar acentuaciones graves, llanas y esdrújulas." data-spec-file="VoiceSynthesizer.cs">
+            <label><span>🗣️ Modelo Neuronal</span></label>
+            <span class="status-pill safe">Español Natural 48kHz</span>
           </div>
 
-          <div class="sim-inspectable-row safe tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Enrutamiento WASAPI Local" data-tooltip-body="Conexión directa al endpoint de altavoces o auriculares sin crear dispositivos virtuales molestos." data-spec-file="VoiceSynthesizer.cs">
-            <label><span>🔌 Dispositivo de Salida</span></label>
-            <span class="status-pill safe">Default Endpoint</span>
+          <div class="sim-inspectable-row safe tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Procesamiento en CPU Local" data-tooltip-body="Cero consumo de ancho de banda. No añade ping ni lag a tus partidas multijugador." data-spec-file="VoiceSynthesizer.cs">
+            <label><span>⚡ Impacto en Ping / FPS</span></label>
+            <span class="status-pill safe">0 ms de Retardo en Red</span>
           </div>
 
         </div>
       </div>
 
-      <!-- Live C# Code Inspection Drawer -->
+      <!-- Live C# Code Drawer -->
       <div class="code-drawer-card">
         <div class="code-drawer-header">
           <div class="code-drawer-file">
-            <span>⚡</span> VoiceSynthesizer.cs (C# .NET 8 / System.Speech Native)
+            <span>⚡</span> VoiceSynthesizer.cs (C# .NET 8 / System.Speech & WASAPI Routing)
           </div>
           <div class="code-drawer-status">
             <div class="pulse-emerald-dot"></div>
-            <span>AUDIO RUNTIME: SAPI NATIVE WASAPI OK</span>
+            <span>WASAPI AUDIO STREAM: 48kHz / 16-BIT PCM ACTIVE</span>
           </div>
         </div>
-        <pre class="code-drawer-content"><code>// Tooltip-ai Voice: Síntesis de voz directa sin buffering ni consumo de tokens cloud
-public void SpeakVerdictAsync(string explanation) {
+        <pre class="code-drawer-content"><code>// Tooltip-ai Voice: Síntesis auditiva con Audio Ducking a nivel kernel sin latencia cloud
+public void SpeakVerdictAsync(string technicalExplanation, VoiceCadence cadence) {
     using (var synth = new SpeechSynthesizer()) {
-        // 1. Configurar voz neural en español de alta inteligibilidad
+        // 1. Configurar voz neural en español con entonación adaptada
         synth.SelectVoiceByHints(VoiceGender.Female, VoiceAge.Adult, 0, new CultureInfo("es-ES"));
-        synth.Rate = 1; // Velocidad calibrada para gaming
+        synth.Rate = (cadence == VoiceCadence.Gamer) ? 2 : 1;
         
-        // 2. Activar Audio Ducking en el mezclador de Windows
-        AudioSessionController.ApplyDucking(level: 0.4f);
+        // 2. Aplicar Audio Ducking en el mezclador de Windows para atenuar fondo
+        AudioSessionController.ApplyDucking(level: 0.40f);
         
-        // 3. Reproducir de forma asíncrona sin bloquear la interfaz
-        synth.SpeakAsync(explanation);
+        // 3. Reproducción asíncrona sin bloquear el hilo de entrada
+        synth.SpeakCompleted += (s, e) => AudioSessionController.RestoreVolume();
+        synth.SpeakAsync(technicalExplanation);
     }
 }</code></pre>
       </div>
@@ -307,139 +299,67 @@ public void SpeakVerdictAsync(string explanation) {
   </section>
 
   <!-- ======================================================== -->
-  <!-- BENCHMARKS & ARCHITECTURE COMPARISON                     -->
-  <!-- ======================================================== -->
-  <section class="benchmarks-stage">
-    <div class="stage-header">
-      <span class="stage-tag">SÍNTESIS NATIVA VS APIS EN LA NUBE</span>
-      <h2 class="stage-title">Tooltip-ai Voice vs Servicios TTS en la Nube</h2>
-      <p class="stage-subtitle">
-        ¿Por qué pagar suscripciones mensuales y sufrir retardos cuando Windows 11 tiene voces HD locales?
-      </p>
-    </div>
-
-    <div class="bench-comparison-grid">
-      
-      <!-- Tooltip-ai Voice -->
-      <div class="bench-card winner tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Síntesis Local Nativa Tooltip-ai" data-tooltip-body="Cero costo por caracter. Invocación inmediata en menos de 10ms." data-spec-file="VoiceSynthesizer.cs">
-        <span class="bench-badge">⚡ Tooltip-ai Voice (Nativo Win32)</span>
-        <h3 class="bench-title">Inmediato &amp; Ilimitado</h3>
-
-        <div class="bench-metric-row">
-          <span>Latencia de Inicio de Audio</span>
-          <strong class="emerald">&lt; 10 ms (WASAPI Local)</strong>
-        </div>
-        <div class="metric-bar"><div class="fill emerald" style="width: 99%;"></div></div>
-
-        <div class="bench-metric-row">
-          <span>Costo por Palabra / Suscripción</span>
-          <strong class="emerald">$0.00 (Totalmente Gratis &amp; Offline)</strong>
-        </div>
-        <div class="metric-bar"><div class="fill emerald" style="width: 100%;"></div></div>
-
-        <div class="bench-metric-row">
-          <span>Privacidad de Contenido Técnico</span>
-          <strong class="emerald">100% Local (El audio jamás viaja a la nube)</strong>
-        </div>
-        <div class="metric-bar"><div class="fill emerald" style="width: 100%;"></div></div>
-
-        <div class="bench-metric-row">
-          <span>Funcionamiento Sin Conexión</span>
-          <strong class="emerald">100% Operativo en Aviones y Sin Internet</strong>
-        </div>
-        <div class="metric-bar"><div class="fill emerald" style="width: 100%;"></div></div>
-      </div>
-
-      <!-- Cloud TTS Services -->
-      <div class="bench-card">
-        <span class="bench-badge" style="color: #f43f5e;">⚠️ APIs Cloud (ElevenLabs / OpenAI TTS)</span>
-        <h3 class="bench-title">Retardo &amp; Suscripción</h3>
-
-        <div class="bench-metric-row">
-          <span>Latencia de Inicio de Audio</span>
-          <strong class="rose">800 ms - 1,500 ms (Buffering HTTP)</strong>
-        </div>
-        <div class="metric-bar"><div class="fill rose" style="width: 25%;"></div></div>
-
-        <div class="bench-metric-row">
-          <span>Costo por Palabra / Suscripción</span>
-          <strong class="rose">$22 - $99 / mes por cuota de caracteres</strong>
-        </div>
-        <div class="metric-bar"><div class="fill rose" style="width: 15%;"></div></div>
-
-        <div class="bench-metric-row">
-          <span>Privacidad de Contenido Técnico</span>
-          <strong class="rose">El texto se envía a servidores de terceros</strong>
-        </div>
-        <div class="metric-bar"><div class="fill rose" style="width: 30%;"></div></div>
-
-        <div class="bench-metric-row">
-          <span>Funcionamiento Sin Conexión</span>
-          <strong class="rose">Inoperante (Requiere conexión continua)</strong>
-        </div>
-        <div class="metric-bar"><div class="fill rose" style="width: 5%;"></div></div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ======================================================== -->
-  <!-- CAPABILITIES SHOWCASE                                    -->
+  <!-- HIGH-VALUE CONCEPT: THE ACOUSTIC TRIFECTA                -->
   <!-- ======================================================== -->
   <section class="ecosystem-stage">
     <div class="stage-header">
-      <span class="stage-tag">CARACTERÍSTICAS ESPECIALIZADAS</span>
-      <h2 class="stage-title">Diseñado para la Máxima Claridad Vocal</h2>
-      <p class="stage-subtitle">Tecnología de sonido diseñada para concentrarte en tus tareas sin fatiga auditiva:</p>
+      <span class="stage-tag">EL CONCEPTO DE LA COMUNICACIÓN VOCAL INTELIGENTE</span>
+      <h2 class="stage-title">Por Qué los Motores TTS Comunes Fracasan con Código</h2>
+      <p class="stage-subtitle">
+        La mayoría de sintetizadores de voz están hechos para audiolibros o GPS. Voice está diseñado para ingenieros y gamers:
+      </p>
     </div>
 
     <div class="ecosystem-cards-grid">
       
-      <div class="eco-module-card tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Atenuación Dinámica Audio Ducking" data-tooltip-body="Baja el volumen del juego o música temporalmente para escuchar el aviso técnico." data-spec-file="VoiceSynthesizer.cs">
+      <!-- Feature 1: Code Tokenizer -->
+      <div class="eco-module-card tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Tokenizador Fonético de Código" data-tooltip-body="Interpreta nombres de métodos, tipos genéricos y excepciones de memoria con naturalidad." data-spec-file="VoiceSynthesizer.cs">
         <div class="eco-card-top">
-          <div class="eco-icon-chip" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8;">🎚️</div>
-          <span class="eco-tag" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);">Ducking</span>
+          <div class="eco-icon-chip" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8;">🔡</div>
+          <span class="eco-tag" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);">Tokenizador</span>
         </div>
-        <h3 class="eco-title">Atenuación de Fondo</h3>
+        <h3 class="eco-title">Lectura Fonética Inteligente</h3>
         <p class="eco-desc">
-          No necesitas pausar tu música ni apagar el volumen del juego. Tooltip-ai Voice reduce automáticamente el fondo mientras dura el dictamen.
+          Un sintetizador convencional lee <code>NullReferenceException</code> como un trabalenguas incomprensible. Voice preprocesa el texto con un parser fonético que lo pronuncia de forma limpia y didáctica.
         </p>
         <ul class="eco-bullets">
-          <li>Transiciones de volumen suaves sin cortes bruscos</li>
-          <li>Restauración automática al terminar la frase</li>
-          <li>Calibración de volumen personalizada</li>
+          <li>Descompone nombres en camelCase y snake_case</li>
+          <li>Lee direcciones de memoria hexadecimales con brevedad</li>
+          <li>Omite símbolos sintácticos irrelevantes para no fatigar</li>
         </ul>
       </div>
 
-      <div class="eco-module-card tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Voces Neuronales en Español" data-tooltip-body="Entonación natural, pausas respiratorias y pronunciación exacta de términos técnicos." data-spec-file="VoiceSynthesizer.cs">
+      <!-- Feature 2: Kernel Audio Ducking -->
+      <div class="eco-module-card tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Audio Ducking a Nivel Kernel" data-tooltip-body="Interacción nativa con el mezclador de Windows para atenuar Spotify o Discord." data-spec-file="VoiceSynthesizer.cs">
         <div class="eco-card-top">
-          <div class="eco-icon-chip" style="background: rgba(0, 245, 160, 0.15); color: #00f5a0;">🎙️</div>
-          <span class="eco-tag" style="color: #00f5a0; border-color: rgba(0, 245, 160, 0.3);">HD Audio</span>
+          <div class="eco-icon-chip" style="background: rgba(0, 245, 160, 0.15); color: #00f5a0;">🎚️</div>
+          <span class="eco-tag" style="color: #00f5a0; border-color: rgba(0, 245, 160, 0.3);">Ducking</span>
         </div>
-        <h3 class="eco-title">Entonación Natural HD</h3>
+        <h3 class="eco-title">Atenuación Automática de Fondo</h3>
         <p class="eco-desc">
-          Olvídate de las voces robóticas de los años 90. Windows 11 incluye síntesis neuronal con modulación natural y acento limpio en español.
+          No tienes que pausar tu música de Spotify ni apagar los altavoces de tu juego. Voice envía una señal al bus WASAPI de Windows para atenuar suavemente el fondo mientras dura el dictamen.
         </p>
         <ul class="eco-bullets">
-          <li>Pronunciación precisa de código y comandos</li>
-          <li>Inflexión interrogativa y de alerta realista</li>
-          <li>Aceleración por hardware en chip de audio</li>
+          <li>Transición de volumen suave sin chasquidos</li>
+          <li>Restauración inmediata al terminar la oración</li>
+          <li>Compatible con auriculares, altavoces y sistemas 7.1</li>
         </ul>
       </div>
 
-      <div class="eco-module-card tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Modo Resumen Ejecutivo Gaming" data-tooltip-body="Condensa diagnósticos complejos en una frase de 3 segundos para decisiones instantáneas." data-spec-file="VoiceSynthesizer.cs">
+      <!-- Feature 3: Offline Zero-Latency -->
+      <div class="eco-module-card tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Cero Nube y Cero Facturación" data-tooltip-body="Sin suscripciones de ElevenLabs ni OpenAI: funciona en aviones y sin internet." data-spec-file="VoiceSynthesizer.cs">
         <div class="eco-card-top">
-          <div class="eco-icon-chip" style="background: rgba(129, 140, 248, 0.15); color: #818cf8;">⚡</div>
-          <span class="eco-tag" style="color: #818cf8; border-color: rgba(129, 140, 248, 0.3);">Gaming</span>
+          <div class="eco-icon-chip" style="background: rgba(129, 140, 248, 0.15); color: #818cf8;">✈️</div>
+          <span class="eco-tag" style="color: #818cf8; border-color: rgba(129, 140, 248, 0.3);">Sin Conexión</span>
         </div>
-        <h3 class="eco-title">Resumen Ultracompacto</h3>
+        <h3 class="eco-title">Soberanía de Datos y Disponibilidad</h3>
         <p class="eco-desc">
-          Si estás jugando en modo competitivo, la voz te dará solo el veredicto en 2 palabras: "Instalador sospechoso" o "Permisos insuficientes".
+          Tus conversaciones y el código confidencial de tu empresa jamás salen de tu memoria RAM. La síntesis ocurre de forma local en los núcleos eficientes de tu procesador.
         </p>
         <ul class="eco-bullets">
-          <li>Modo conciso de 1 segundo</li>
-          <li>Activación por atajo <kbd>Ctrl + V</kbd></li>
-          <li>Zero retraso visual en pantalla</li>
+          <li>Latencia de inicio instantánea de menos de 10ms</li>
+          <li>Sin tarifas mensuales ni límites de caracteres</li>
+          <li>Funciona al 100% en modo avión y sin conexión a la red</li>
         </ul>
       </div>
 
@@ -451,14 +371,14 @@ public void SpeakVerdictAsync(string explanation) {
   <!-- ======================================================== -->
   <section class="cta-banner-stage">
     <div class="cta-banner-box">
-      <h2 class="cta-banner-title">Escucha Tu Pantalla Sin Desviar Tu Atención</h2>
+      <h2 class="cta-banner-title">Escucha Tu Pantalla en Alta Definición</h2>
       <p class="cta-banner-desc">
-        Descarga Tooltip-ai Voice para Windows 11. Síntesis neuronal de 48kHz totalmente gratis, ilimitada y sin conexión a internet.
+        Descarga Tooltip-ai Voice para Windows 11. Computación manos libres, audio ducking inteligente y síntesis neuronal ilimitada sin costo.
       </p>
       <div class="cta-banner-actions">
         <a href="../downloads/TooltipAI.exe" download class="btn-hero-primary">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          <span>Descargar Tooltip-ai Standalone (72.4 MB)</span>
+          <span>Descargar Tooltip-ai Voice (72.4 MB)</span>
         </a>
         <a href="../" class="btn-hero-secondary">
           <span>← Volver al Hub Principal</span>
@@ -496,7 +416,7 @@ public void SpeakVerdict(string diagnosis) { ... }</code></pre>
           <span class="brand-title">Tooltip<span class="brand-accent">-ai</span></span>
         </div>
         <p class="footer-tagline">
-          Síntesis auditiva neuronal para Windows 11 sin conexión y en alta fidelidad. Dominio oficial: <strong>tooltip-ai.com/voice</strong>.
+          Canal acústico neuronal y síntesis auditiva en tiempo real para Windows 11. Dominio oficial: <strong>tooltip-ai.com/voice</strong>.
         </p>
       </div>
 
@@ -523,50 +443,56 @@ public void SpeakVerdict(string diagnosis) { ... }</code></pre>
 
   <script src="../app.js"></script>
   <script>
-    // Interactive Voice Synthesizer Playground
-    const btnSec = document.getElementById('btnVoiceSecurity');
-    const btnCode = document.getElementById('btnVoiceCode');
-    const btnTrans = document.getElementById('btnVoiceTranslate');
-    const btnQuery = document.getElementById('btnVoiceQuery');
+    // Voice Mode Selector
+    const modeGamer = document.getElementById('modeGamer');
+    const modeTutor = document.getElementById('modeTutor');
+    const modeCode = document.getElementById('modeCode');
+    const modeDucking = document.getElementById('modeDucking');
 
     const speechText = document.getElementById('voiceSpeechText');
     const statusBadge = document.getElementById('voiceStatusBadge');
+    const duckingIndicator = document.getElementById('duckingIndicator');
+    const duckingLevelText = document.getElementById('duckingLevelText');
+
     const btnPlay = document.getElementById('btnPlayVoice');
     const btnStop = document.getElementById('btnStopVoice');
     const bars = document.querySelectorAll('.audio-bar');
 
-    const VOICE_SCENARIOS = {
-      sec: {
-        title: "Alerta de Seguridad",
-        text: "Atención: El botón seleccionado iniciará la instalación de software publicitario adicional. Se recomienda desmarcar la casilla para proteger la memoria de tu sistema y conservar tu motor de búsqueda predeterminado."
+    const CADENCES = {
+      gamer: {
+        text: "Peligro: El botón seleccionado descargará software publicitario que secuestrará tu navegador. Te sugiero pulsar Cancelar.",
+        rate: 1.15
+      },
+      tutor: {
+        text: "En esta pantalla encontramos un asistente de instalación. Observa que la casilla inferior viene premarcada con una oferta publicitaria. Si la desmarcas, tu sistema permanecerá limpio y optimizado.",
+        rate: 0.95
       },
       code: {
-        title: "Explicación de Error C++",
-        text: "Error de referencia nula: La variable del buffer de vértices no ha sido inicializada en memoria antes de la llamada de renderizado. Asigna memoria en la línea cuarenta y dos para solucionar la excepción."
+        text: "Excepción de puntero nulo en la clase Direct3DRenderer. El objeto SwapChain no fue inicializado antes de la llamada de presentación. Asigna memoria en la línea cuarenta y dos.",
+        rate: 1.05
       },
-      trans: {
-        title: "Traducción de Videojuego",
-        text: "El anciano del templo te advierte: Las puertas del abismo solo se abrirán cuando reúnas las tres gemas de obsidiana en la cumbre del monte helado."
-      },
-      query: {
-        title: "Optimización SQL",
-        text: "Aviso de rendimiento: La consulta actual realiza un escaneo completo de tabla en más de dos millones de filas. Se aconseja crear un índice B-Tree en la columna de usuario."
+      ducking: {
+        text: "Audio Ducking en acción: Observa cómo el volumen de tu música baja al cuarenta por ciento mientras hablo, y vuelve automáticamente al cien por ciento en cuanto termine.",
+        rate: 1.0
       }
     };
 
-    function setVoiceScenario(key, activeBtn) {
-      [btnSec, btnCode, btnTrans, btnQuery].forEach(b => b && b.classList.remove('active'));
+    let currentRate = 1.05;
+
+    function setCadence(key, activeBtn) {
+      [modeGamer, modeTutor, modeCode, modeDucking].forEach(b => b && b.classList.remove('active'));
       if (activeBtn) activeBtn.classList.add('active');
-      const data = VOICE_SCENARIOS[key];
-      if (!data) return;
-      if (speechText) speechText.textContent = `"${data.text}"`;
+      const d = CADENCES[key];
+      if (!d) return;
+      if (speechText) speechText.textContent = `"${d.text}"`;
+      currentRate = d.rate;
       stopSpeech();
     }
 
-    if (btnSec) btnSec.addEventListener('click', () => setVoiceScenario('sec', btnSec));
-    if (btnCode) btnCode.addEventListener('click', () => setVoiceScenario('code', btnCode));
-    if (btnTrans) btnTrans.addEventListener('click', () => setVoiceScenario('trans', btnTrans));
-    if (btnQuery) btnQuery.addEventListener('click', () => setVoiceScenario('query', btnQuery));
+    if (modeGamer) modeGamer.addEventListener('click', () => setCadence('gamer', modeGamer));
+    if (modeTutor) modeTutor.addEventListener('click', () => setCadence('tutor', modeTutor));
+    if (modeCode) modeCode.addEventListener('click', () => setCadence('code', modeCode));
+    if (modeDucking) modeDucking.addEventListener('click', () => setCadence('ducking', modeDucking));
 
     function startSpeech() {
       const text = speechText ? speechText.innerText.replace(/"/g, '') : "";
@@ -574,12 +500,17 @@ public void SpeakVerdict(string diagnosis) { ... }</code></pre>
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'es-ES';
-        utterance.rate = 1.05;
+        utterance.rate = currentRate;
 
         utterance.onstart = () => {
           if (statusBadge) {
-            statusBadge.textContent = "ESTADO: REPRODUCIENDO (48kHz)";
+            statusBadge.textContent = "ESTADO: SINTETIZANDO WASAPI (48kHz)";
             statusBadge.style.color = "#00f5a0";
+          }
+          if (duckingIndicator) duckingIndicator.style.width = "40%";
+          if (duckingLevelText) {
+            duckingLevelText.textContent = "40% (-18dB Ducking)";
+            duckingLevelText.style.color = "#f59e0b";
           }
           bars.forEach(bar => bar.classList.add('playing'));
         };
@@ -603,6 +534,11 @@ public void SpeakVerdict(string diagnosis) { ... }</code></pre>
       if (statusBadge) {
         statusBadge.textContent = "ESTADO: LISTO";
         statusBadge.style.color = "#38bdf8";
+      }
+      if (duckingIndicator) duckingIndicator.style.width = "100%";
+      if (duckingLevelText) {
+        duckingLevelText.textContent = "100% (Restaurado)";
+        duckingLevelText.style.color = "#00f5a0";
       }
       bars.forEach(bar => bar.classList.remove('playing'));
     }
