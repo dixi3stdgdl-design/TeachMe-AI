@@ -17,6 +17,17 @@ Decisión de usuario (2026-09-17): **núcleo gratis + módulos de pago premium**
 
 ## PayPal / payout (Partner Center)
 
+| Qué | Valor actual |
+|---|---|
+| **Enlace de cobro profesional (USD, importe libre)** | `https://www.paypal.com/ncp/payment/HPDSLDCAGVHFL` — «Apoyo a Tooltip-ai» |
+| **PayPal.me** | `https://paypal.me/DixLqb` |
+| **Payout Partner Center** | Email de la cuenta PayPal (no el enlace paypal.me) |
+
+- El botón Donar de las landings usa el enlace NCP (Business, USD, tarjeta/Apple Pay).
+- `paypal.me` se deja como alternativa corta.
+
+## PayPal / payout (Partner Center) — nota Store
+
 | Qué | ¿Necesario? | Detalle |
 |---|---|---|
 | **Cuenta PayPal (email)** | Sí, si eliges PayPal como método de payout | Se configura en Partner Center → **Payout account / Payment and tax info**. Es el **correo de tu cuenta PayPal**, no un enlace. |
@@ -42,7 +53,7 @@ Mientras HTTPS no esté forzado, puedes dejar la de Pages:
 | DNS `A @` | 185.199.108–111.153 (GitHub) ✅ |
 | `http://tooltip-ai.com` | HTTP 200, landing real Tooltip-ai ✅ |
 | GitHub Pages `cname` | `tooltip-ai.com` ✅ |
-| `CNAME www` | Pendiente de propagar cache (parking aún en algunos resolvers) ⏳ |
+| `CNAME www` | ✅ `dixi3stdgdl-design.github.io` (verificado 8.8.8.8) |
 | HTTPS / Enforce | Certificado GitHub aún no emitido (`certificate does not exist yet`) ⏳ |
 
 ## Acciones manuales que solo tú puedes hacer
