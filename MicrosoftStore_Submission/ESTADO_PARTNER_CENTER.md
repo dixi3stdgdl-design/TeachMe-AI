@@ -1,4 +1,36 @@
-# Estado Partner Center — ToolTip AI (17/09/2026 · verificado en vivo)
+# Estado Partner Center — ToolTip AI (17/09/2026 · 12:00 UTC)
+
+## Suite en certificación
+
+| Producto | ID | Estado |
+|---|---|---|
+| **ToolTip AI** (Assistant) | `9N3D02KXKD3D` | **En proceso de certificación** (reenvío 17/09) |
+| **ToolTip AI Aura** | `9P33P1P5Z8DC` | **En proceso de certificación** (reenvío 17/09) |
+| **ToolTip AI Translate** | `9NQN3RZ2Z655` | **En proceso de certificación** (reenvío 17/09) |
+| Tooltip AI Win32 | `2f19281b-…` | Se necesita atención (canal EXE, no bloquea MSIX) |
+| ToolTip AI Voice | — | No reservado en Store aún |
+
+Paquetes en envío: Assistant `1.0.4.0` · Translate `1.0.1.0` (Validated).  
+`runFullTrust` justificado en Options (EN). Privacy URL: `https://dixi3stdgdl-design.github.io/TeachMe-AI/privacy/`.
+
+## i18n producto (Release builds locales)
+
+- Base **en-US**; es-ES / de-DE según SO. Compilan: Assistant, Aura, Voice, Translate.
+- Landings: `/` ES · `/en/` · `/de/` (hreflang).
+- **Los MSIX de Store aún son los binarios anteriores al i18n completo** — siguiente envío post-aprobación.
+
+## Web
+
+- `http://tooltip-ai.com` live. HTTPS: cert GitHub aún no emitido (`certificate does not exist yet`). Alternativa: Cloudflare (cambiar NS a Cloudflare y proxy → SSL universal).
+
+## Pendientes post-cert
+
+1. Voice: reserva de nombre + MSIX + listing.
+2. Listings **en-US** y **de-DE** en las 3 submissions.
+3. Precios: Assistant Free; módulos 9.99 (revisar en Pricing).
+4. Subir MSIX con i18n cuando aprueben.
+5. HTTPS Cloudflare o esperar Let’s Encrypt de GitHub.
+
 
 **Cuenta:** Partner Center logueada · verificado con Playwright/CDP
 
