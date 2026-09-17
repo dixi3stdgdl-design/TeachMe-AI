@@ -998,6 +998,105 @@ body.theme-obsidian {
 }
 
 /* ======================================================== */
+/* ENTERPRISE PACKAGES                                      */
+/* ======================================================== */
+.enterprise-stage {
+  position: relative;
+  z-index: 2;
+  padding: 48px 24px 24px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.enterprise-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 28px;
+}
+
+@media (max-width: 900px) {
+  .enterprise-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ent-card {
+  padding: 26px 22px;
+  border-radius: 18px;
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ent-card.ent-featured {
+  border-color: rgba(56, 189, 248, 0.45);
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.12), 0 20px 50px rgba(56, 189, 248, 0.08);
+}
+
+.ent-card h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.ent-price {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--accent-primary);
+  margin: 0;
+}
+
+.ent-price span {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #94a3b8;
+  margin-top: 4px;
+}
+
+.ent-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 16px;
+  flex: 1;
+}
+
+.ent-card li {
+  font-size: 13px;
+  color: #94a3b8;
+  line-height: 1.5;
+  padding: 6px 0 6px 16px;
+  position: relative;
+}
+
+.ent-card li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+}
+
+.enterprise-note {
+  margin-top: 22px;
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.55;
+  text-align: center;
+}
+
+.enterprise-note a {
+  color: #94a3b8;
+}
+
+/* ======================================================== */
 /* SUPPORT / DONATE + ACCREDITATION                         */
 /* ======================================================== */
 .support-stage {
