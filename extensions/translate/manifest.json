@@ -1,0 +1,22 @@
+﻿{
+  "manifest_version": 3,
+  "name": "ToolTip AI Translate",
+  "version": "1.0.1",
+  "description": "Traducción contextual instantánea con lentes flotantes HUD para cualquier página web.",
+  "icons": {
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon48.png"
+  },
+  "permissions": ["activeTab", "storage"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+﻿.tooltip-voice-float-btn {
+  position: absolute;
+  z-index: 999999;
+  background: #0f172a;
+  border: 1px solid #38bdf8;
+  color: #38bdf8;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 229, 255, 0.3);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  animation: ttFadeIn 0.15s ease-out;
+}
+.tooltip-voice-float-btn:hover {
+  background: #0284c7;
+  color: #ffffff;
+  border-color: #00e5ff;
+}

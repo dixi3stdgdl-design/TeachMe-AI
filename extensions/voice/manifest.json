@@ -1,0 +1,22 @@
+﻿{
+  "manifest_version": 3,
+  "name": "ToolTip AI Voice",
+  "version": "1.0.0",
+  "description": "Canal acústico neural y sintetizador de voz con lectura flotante para páginas web.",
+  "icons": {
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon48.png"
+  },
+  "permissions": ["activeTab", "storage"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"]
+    }
+  ]
+}
