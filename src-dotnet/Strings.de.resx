@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="AppName" xml:space="preserve"><value>ToolTip AI</value></data>
+  <data name="AnalysisModeDefault" xml:space="preserve"><value>Meister &amp; Aktionsleitfaden</value></data>
+  <data name="GetKeyOpenAI" xml:space="preserve"><value>Schlüssel auf OpenAI Platform ↗</value></data>
+  <data name="GetKeyAzure" xml:space="preserve"><value>Azure-OpenAI-Ressource erstellen ↗</value></data>
+  <data name="GetKeyOpenRouter" xml:space="preserve"><value>Schlüssel auf OpenRouter ↗</value></data>
+  <data name="GetKeyClaude" xml:space="preserve"><value>Schlüssel in Anthropic Console ↗</value></data>
+  <data name="GetKeyGemini" xml:space="preserve"><value>Kostenlosen Schlüssel in Google AI Studio ↗</value></data>
+  <data name="AiErrorPrefix" xml:space="preserve"><value>KI-Fehler: {0}</value></data>
+  <data name="SettingsSaved" xml:space="preserve"><value>Einstellungen gespeichert ({0} · {1}). Schlüssel mit DPAPI verschlüsselt.</value></data>
+  <data name="AiMaster" xml:space="preserve"><value>KI-Meister</value></data>
+  <data name="TrayShow" xml:space="preserve"><value>HUD anzeigen</value></data>
+  <data name="TraySettings" xml:space="preserve"><value>Einstellungen</value></data>
+  <data name="TrayExit" xml:space="preserve"><value>Beenden</value></data>
+  <data name="Verdict" xml:space="preserve"><value>Urteil</value></data>
+  <data name="Explanation" xml:space="preserve"><value>Erklärung</value></data>
+  <data name="Impact" xml:space="preserve"><value>Auswirkung</value></data>
+  <data name="AskPlaceholder" xml:space="preserve"><value>Nachfrage stellen…</value></data>
+  <data name="LocalModeNote" xml:space="preserve"><value>[Lokaler Modus] KI-Schlüssel in den Einstellungen konfigurieren (Strg+Umschalt+C).</value></data>
+</root>
