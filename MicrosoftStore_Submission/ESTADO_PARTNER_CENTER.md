@@ -1,6 +1,14 @@
-# Estado Partner Center — ToolTip AI (14/09/2026)
+# Estado Partner Center — ToolTip AI (17/09/2026)
 
 **Producto:** 9N3D02KXKD3D · Submission 1 (borrador)
+
+## Web de soporte (lista para la ficha)
+
+| URL | Uso en Store |
+|---|---|
+| `http://tooltip-ai.com/` | Website / soporte (candado HTTPS cuando GitHub emita cert) |
+| `https://dixi3stdgdl-design.github.io/TeachMe-AI/privacy/` | **Privacy policy URL** (válida ya; pasar a `https://tooltip-ai.com/privacy` tras HTTPS) |
+| `https://www.paypal.com/ncp/payment/HPDSLDCAGVHFL` | Donaciones (no va en la ficha Store; landings) |
 
 ## Completado en Partner Center
 
