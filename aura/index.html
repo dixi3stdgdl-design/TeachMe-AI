@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tooltip-ai Aura — Radar Cognitivo de Pantalla y Reposo Dwell (tooltip-ai.com/aura)</title>
+
+  <meta name="description" content="Tooltip-ai Aura: Inteligencia ambiental en tu cursor. Diagnóstico preventivo en 4 cuadrantes con nivel de riesgo operativo sin dar un solo clic.">
+  <meta property="og:title" content="Tooltip-ai Aura — Radar Cognitivo de Pantalla">
+  <meta property="og:url" content="https://tooltip-ai.com/aura">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" href="../icon.png">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="theme-obsidian">
+
+  <!-- BACKGROUND: Dynamic Horizontal Internet Creation Code Stream -->
+  <canvas id="codeRainCanvas"></canvas>
+  <div class="background-grid-overlay"></div>
+  <div class="radial-ambient-glow"></div>
+
+  <!-- SVG LASER BEAM CONNECTOR -->
+  <svg class="holographic-connector-svg" id="connectorSvg">
+    <defs>
+      <linearGradient id="beamGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.9" />
+        <stop offset="100%" stop-color="#818cf8" stop-opacity="0.3" />
+      </linearGradient>
+      <filter id="laserGlow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="3" result="blur" />
+        <feMerge>
+          <feMergeNode in="blur" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+    </defs>
+    <path id="connectorPath" d="" stroke="url(#beamGradient)" stroke-width="2" stroke-dasharray="6 4" fill="none" filter="url(#laserGlow)" />
+    <circle id="connectorAnchorDot" cx="0" cy="0" r="4" fill="#38bdf8" filter="url(#laserGlow)" />
+    <circle id="connectorTargetDot" cx="0" cy="0" r="5" fill="#fff" stroke="#38bdf8" stroke-width="2" />
+  </svg>
+
+  <!-- NAVBAR -->
+  <header class="app-navbar">
+    <div class="nav-inner">
+      <a href="../" class="brand-link">
+        <div class="brand-icon-wrapper">
+          <img src="../icon.png" alt="Tooltip-ai" class="brand-logo">
+          <span class="brand-pulse-ring"></span>
+        </div>
+        <div class="brand-text-col">
+          <span class="brand-title">Tooltip<span class="brand-accent">-ai</span></span>
+          <span class="brand-domain-pill">tooltip-ai.com/aura</span>
+        </div>
+      </a>
+
+      <nav class="nav-center-menu">
+        <a href="../" class="nav-item">🏠 Inicio</a>
+        <a href="../translate" class="nav-item badge-link">
+          <span>🌐 Translate</span>
+          <span class="tiny-chip">OCR</span>
+        </a>
+        <a href="#" class="nav-item badge-link active">
+          <span>👁️ Aura</span>
+          <span class="tiny-chip">ACTIVO</span>
+        </a>
+        <a href="../voice" class="nav-item badge-link">
+          <span>🎙️ Voice</span>
+          <span class="tiny-chip">TTS</span>
+        </a>
+        <a href="../privacy" class="nav-item">🛡️ Privacidad</a>
+      </nav>
+
+      <div class="nav-right-actions">
+        <button class="sound-switch-btn" id="btnSoundToggle" title="Sonido Háptico">
+          <span class="sound-icon">🔊</span>
+          <span class="sound-label">Audio</span>
+        </button>
+        <a href="../downloads/TooltipAI.exe" download class="nav-cta-download">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Descargar v1.0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======================================================== -->
+  <!-- HERO SECTION                                             -->
+  <!-- ======================================================== -->
+  <section class="hero-stage">
+    
+    <div class="hero-code-stream-banner" id="heroCodeBanner">
+      <div class="pulse-emerald-dot"></div>
+      <span class="code-stream-label">Flujo de Inferencia Activo:</span>
+      <span class="code-stream-file" id="activeFileName">DwellRadarEngine.cs (Win32 Automation & Mica HUD Overlay)</span>
+      <span class="code-stream-hint">Inspección de Reposo Zero-Click</span>
+    </div>
+
+    <h1 class="hero-main-title">
+      Inteligencia Ambiental que <br>
+      <span class="gradient-neon">Se Desliza al Posar Tu Cursor</span>
+    </h1>
+
+    <p class="hero-description">
+      Tooltip-ai Aura analiza la superficie visual de tu escritorio en tiempo real sin obligarte a hacer clic. Descansa el puntero sobre cualquier opción confusa o botón de instalador sospechoso y obtén un <strong>diagnóstico en 4 cuadrantes</strong> de riesgo operativo antes de que ocurra cualquier daño.
+    </p>
+
+    <!-- KEY COMMAND DOCK -->
+    <div class="keyboard-dock-bar">
+      <div class="key-pill tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="👁️ Atajo Radar Dwell (Ctrl + D)" data-tooltip-body="Activa o desactiva la activación automática por reposo del mouse. Calibrable entre 0.5s y 5.0s." data-spec-file="DwellRadarEngine.cs">
+        <kbd>Ctrl</kbd> + <kbd>D</kbd>
+        <span>Toggle Radar Dwell</span>
+      </div>
+      <div class="key-pill tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="⚡ Matriz Didáctica en 4 Cuadrantes" data-tooltip-body="Estructura la información en: Nivel de Riesgo, Explicación Accesible, Impacto en Sistema Operativo y Script PowerShell." data-spec-file="DwellRadarEngine.cs">
+        <kbd>4x</kbd>
+        <span>Matriz Didáctica</span>
+      </div>
+      <div class="key-pill tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="🖱️ Zero-Click Cognitive Inspection" data-tooltip-body="Conoce las consecuencias técnicas antes de hacer clic para evitar instalar adware o corromper el registro." data-spec-file="DwellRadarEngine.cs">
+        <kbd>Zero-Click</kbd>
+        <span>Inspección Anticipada</span>
+      </div>
+      <div class="key-pill tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="🪟 Efecto Mica Windows 11" data-tooltip-body="HUD acrílico nativo acelerado por DWM que no bloquea la visión de tu ventana activa." data-spec-file="DwellRadarEngine.cs">
+        <kbd>Win11 Mica</kbd>
+        <span>Acelerado por GPU</span>
+      </div>
+    </div>
+
+    <!-- HERO CTAS -->
+    <div class="hero-actions-row">
+      <a href="../downloads/TooltipAI.exe" download class="btn-hero-primary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span>Descargar Tooltip-ai Aura (72.4 MB)</span>
+      </a>
+      <a href="#simulator" class="btn-hero-secondary">
+        <span>🎮 Probar Radar de Reposo en Vivo</span>
+      </a>
+    </div>
+
+    <!-- TELEMETRY -->
+    <div class="hero-telemetry-grid">
+      <div class="telemetry-card tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="⚡ Detección de Reposo: < 1 ms" data-tooltip-body="Usa GetCursorPos y WindowFromPoint de user32.dll sin polling ni saturación de CPU." data-spec-file="DwellRadarEngine.cs">
+        <div class="telemetry-val emerald">&lt; 1 ms</div>
+        <div class="telemetry-label">Detección Dwell</div>
+        <div class="telemetry-sub">Hook Win32 User32.dll</div>
+      </div>
+
+      <div class="telemetry-card tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="🛡️ Clasificación de Riesgo Operativo" data-tooltip-body="Determina automáticamente si una acción es Inocua, Requiere Precaución o es Crítica para el sistema." data-spec-file="DwellRadarEngine.cs">
+        <div class="telemetry-val cyan">3 Niveles</div>
+        <div class="telemetry-label">Evaluación de Riesgo</div>
+        <div class="telemetry-sub">Crítico • Precaución • Seguro</div>
+      </div>
+
+      <div class="telemetry-card tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="🔒 Privacidad Cero-Tracking" data-tooltip-body="Tus coordenadas de mouse jamás se transmiten a internet. La inferencia ocurre localmente en el binario C#." data-spec-file="DwellRadarEngine.cs">
+        <div class="telemetry-val violet">100%</div>
+        <div class="telemetry-label">Privacidad Local</div>
+        <div class="telemetry-sub">Cero telemetría de cursor</div>
+      </div>
+
+      <div class="telemetry-card tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="💤 Consumo en Reposo: 18 MB" data-tooltip-body="Permanece latente en el System Tray consumiendo 0.02% de CPU hasta que el cursor se detiene sobre un elemento." data-spec-file="DwellRadarEngine.cs">
+        <div class="telemetry-val amber">18 MB</div>
+        <div class="telemetry-label">Memoria en Reposo</div>
+        <div class="telemetry-sub">Zero Garbage Collector</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- INTERACTIVE WORKSTATION SIMULATOR                        -->
+  <!-- ======================================================== -->
+  <section class="simulator-stage" id="simulator">
+    <div class="stage-header">
+      <span class="stage-tag">ESTUDIO DE DEMOSTRACIÓN DE RADAR AMBIENTAL</span>
+      <h2 class="stage-title">Experimenta la Inspección por Reposo (Dwell)</h2>
+      <p class="stage-subtitle">
+        Posa el cursor durante 1 segundo sobre cualquiera de los controles simulados a la izquierda para ver el anillo Dwell completarse y desplegar el diagnóstico en 4 cuadrantes:
+      </p>
+    </div>
+
+    <!-- SIMULATED WORKSTATION -->
+    <div class="simulated-workspace-frame">
+      
+      <!-- Box 1: Interactive Desktop Controls to Hover -->
+      <div class="sim-card">
+        <div class="sim-card-header">
+          <div class="sim-card-title">
+            <span>🖱️</span> Ventana de Sistema Simulada (Posa tu cursor para probar)
+          </div>
+          <span style="color: #38bdf8; font-family: var(--font-mono); font-size: 11px; font-weight: 700;">DWELL TIMER: 1.0s</span>
+        </div>
+        <div class="sim-card-body">
+          <p class="sim-text">
+            Descansa el mouse sobre cualquier botón para activar el radar de seguridad:
+          </p>
+
+          <!-- Dwell Target 1: Suspicious Installer -->
+          <div class="dwell-radar-target tooltip-trigger" id="dwellTargetAdware" data-code-spec="aura_dwell" data-tooltip-title="⚠️ Dwell Target: Instalador Patrocinado" data-tooltip-body="Botón de instalador que oculta bloatware. Aura lo clasifica inmediatamente como Crítico." data-spec-file="DwellRadarEngine.cs">
+            <svg class="dwell-ring-svg" viewBox="0 0 36 36">
+              <path class="dwell-ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <path class="dwell-ring-progress" id="ringAdware" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" style="stroke: #f43f5e;" />
+            </svg>
+            <div>
+              <div style="font-size: 13px; font-weight: 700; color: #fca5a5;">Descargar Instalador Express (Recomendado)</div>
+              <div style="font-size: 11px; color: #94a3b8;">Incluye navegador secundario y barra publicitaria no deseada</div>
+            </div>
+          </div>
+
+          <div style="height: 12px;"></div>
+
+          <!-- Dwell Target 2: Registry Cleaner -->
+          <div class="dwell-radar-target tooltip-trigger" id="dwellTargetReg" data-code-spec="aura_dwell" data-tooltip-title="⚡ Dwell Target: Modificación de Registro" data-tooltip-body="Limpiador de registro no oficial. Aura advierte riesgo de precaución moderado." data-spec-file="DwellRadarEngine.cs">
+            <svg class="dwell-ring-svg" viewBox="0 0 36 36">
+              <path class="dwell-ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <path class="dwell-ring-progress" id="ringReg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" style="stroke: #f59e0b;" />
+            </svg>
+            <div>
+              <div style="font-size: 13px; font-weight: 700; color: #fcd34d;">Limpieza Automática de Claves COM Obsoletas</div>
+              <div style="font-size: 11px; color: #94a3b8;">Modifica HKEY_LOCAL_MACHINE sin crear punto de restauración</div>
+            </div>
+          </div>
+
+          <div style="height: 12px;"></div>
+
+          <!-- Dwell Target 3: Safe Custom Install -->
+          <div class="dwell-radar-target tooltip-trigger" id="dwellTargetSafe" data-code-spec="aura_dwell" data-tooltip-title="✅ Dwell Target: Instalación Limpia" data-tooltip-body="Componente oficial firmado con Authenticode. Riesgo Inocuo." data-spec-file="DwellRadarEngine.cs">
+            <svg class="dwell-ring-svg" viewBox="0 0 36 36">
+              <path class="dwell-ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <path class="dwell-ring-progress" id="ringSafe" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" style="stroke: #00f5a0;" />
+            </svg>
+            <div>
+              <div style="font-size: 13px; font-weight: 700; color: #86efac;">Instalación Avanzada Personalizada (Limpia)</div>
+              <div style="font-size: 11px; color: #94a3b8;">Instala exclusivamente el software principal sin ofertas</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Box 2: 4-Quadrant Cognitive Radar HUD -->
+      <div class="sim-card" style="border-color: rgba(56, 189, 248, 0.4); box-shadow: 0 0 30px rgba(56, 189, 248, 0.15);">
+        <div class="sim-card-header" style="background: rgba(56, 189, 248, 0.08);">
+          <div class="sim-card-title">
+            <span>✨</span> Matriz Didáctica en 4 Cuadrantes (Aura HUD)
+          </div>
+          <span id="hudRiskBadge" style="color: #f43f5e; font-family: var(--font-mono); font-size: 11px; font-weight: 700;">RIESGO: CRÍTICO</span>
+        </div>
+        <div class="sim-card-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          
+          <!-- Quadrant 1: Risk Level -->
+          <div style="background: rgba(244, 63, 94, 0.08); border: 1px solid rgba(244, 63, 94, 0.25); border-radius: 10px; padding: 14px;">
+            <div style="font-size: 11px; font-weight: 800; color: #fca5a5; text-transform: uppercase; margin-bottom: 6px;">
+              Q1: Nivel de Riesgo
+            </div>
+            <div id="q1Text" style="font-size: 13px; color: #fff; font-weight: 700; line-height: 1.4;">
+              CRÍTICO (Instalador con Adware Bundling)
+            </div>
+          </div>
+
+          <!-- Quadrant 2: Accessible Explanation -->
+          <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 10px; padding: 14px;">
+            <div style="font-size: 11px; font-weight: 800; color: #38bdf8; text-transform: uppercase; margin-bottom: 6px;">
+              Q2: Explicación Didáctica
+            </div>
+            <div id="q2Text" style="font-size: 12px; color: #cbd5e1; line-height: 1.5;">
+              Instalará un motor de búsqueda patrocinado y cambiará tu página de inicio por defecto sin consentimiento explícito.
+            </div>
+          </div>
+
+          <!-- Quadrant 3: Technical OS Impact -->
+          <div style="background: rgba(129, 140, 248, 0.08); border: 1px solid rgba(129, 140, 248, 0.25); border-radius: 10px; padding: 14px;">
+            <div style="font-size: 11px; font-weight: 800; color: #a5b4fc; text-transform: uppercase; margin-bottom: 6px;">
+              Q3: Impacto en Sistema
+            </div>
+            <div id="q3Text" style="font-size: 12px; color: #cbd5e1; line-height: 1.5;">
+              Crea 2 tareas programadas en System32, consume ~140MB de RAM persistente y modifica la clave Run del Registro.
+            </div>
+          </div>
+
+          <!-- Quadrant 4: Remediation Script -->
+          <div style="background: rgba(0, 245, 160, 0.08); border: 1px solid rgba(0, 245, 160, 0.25); border-radius: 10px; padding: 14px;">
+            <div style="font-size: 11px; font-weight: 800; color: #00f5a0; text-transform: uppercase; margin-bottom: 6px;">
+              Q4: Remedio PowerShell
+            </div>
+            <div id="q4Text" style="font-family: var(--font-mono); font-size: 11px; color: #86efac; line-height: 1.4;">
+              Stop-Process -Name "WebSearcher*" -Force; Unregister-ScheduledTask "AdUpdate"
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Live C# Code Inspection Drawer -->
+      <div class="code-drawer-card">
+        <div class="code-drawer-header">
+          <div class="code-drawer-file">
+            <span>⚡</span> DwellRadarEngine.cs (C# .NET 8 / Low-Level Mouse Hook)
+          </div>
+          <div class="code-drawer-status">
+            <div class="pulse-emerald-dot"></div>
+            <span>DWELL RADAR HOOK: USER32.DLL ACTIVE</span>
+          </div>
+        </div>
+        <pre class="code-drawer-content"><code>// Tooltip-ai Aura: Detección anticipada de descanso de mouse sin eventos de clic
+public void OnMouseDwellCompleted(Point cursorPosition) {
+    // 1. Obtener identificador de ventana bajo el cursor en 0.2ms
+    IntPtr hWnd = NativeMethods.WindowFromPoint(cursorPosition);
+    AutomationElement target = AutomationElement.FromHandle(hWnd);
+    
+    // 2. Evaluar árbol de accesibilidad y telemetría de riesgo
+    RiskAssessment risk = CognitiveEvaluator.EvaluateOperationalSafety(target);
+    
+    // 3. Proyectar HUD translúcido con efecto Mica de Windows 11
+    AcrylicHudWindow.ShowOverlay(target, risk, backdrop: BackdropType.Mica);
+}</code></pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- BENCHMARKS & ARCHITECTURE COMPARISON                     -->
+  <!-- ======================================================== -->
+  <section class="benchmarks-stage">
+    <div class="stage-header">
+      <span class="stage-tag">PREVENCIÓN COGNITIVA VS PROTECCIÓN REACTIVA</span>
+      <h2 class="stage-title">Tooltip-ai Aura vs Antivirus Tradicional</h2>
+      <p class="stage-subtitle">
+        ¿Por qué limpiar malware después de la infección cuando puedes evitar el clic peligroso en primer lugar?
+      </p>
+    </div>
+
+    <div class="bench-comparison-grid">
+      
+      <!-- Tooltip-ai Aura -->
+      <div class="bench-card winner tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="Detección Preventiva Pre-Clic" data-tooltip-body="Aura actúa en la fase de decisión cognitiva del usuario, evitando errores humanos de instalación." data-spec-file="DwellRadarEngine.cs">
+        <span class="bench-badge">⚡ Tooltip-ai Aura (Zero-Click Cognitive)</span>
+        <h3 class="bench-title">Prevención Pre-Clic</h3>
+
+        <div class="bench-metric-row">
+          <span>Momento de Protección</span>
+          <strong class="emerald">Antes de Hacer Clic (Preventivo)</strong>
+        </div>
+        <div class="metric-bar"><div class="fill emerald" style="width: 100%;"></div></div>
+
+        <div class="bench-metric-row">
+          <span>Detección de Adware Oculto</span>
+          <strong class="emerald">100% (Inspección de Casillas Trampa)</strong>
+        </div>
+        <div class="metric-bar"><div class="fill emerald" style="width: 98%;"></div></div>
+
+        <div class="bench-metric-row">
+          <span>Consumo de CPU en Segundo Plano</span>
+          <strong class="emerald">0.02% CPU (Hook Pasivo User32)</strong>
+        </div>
+        <div class="metric-bar"><div class="fill emerald" style="width: 99%;"></div></div>
+
+        <div class="bench-metric-row">
+          <span>Didáctica y Formación del Usuario</span>
+          <strong class="emerald">Matriz de 4 Cuadrantes Explicada</strong>
+        </div>
+        <div class="metric-bar"><div class="fill emerald" style="width: 95%;"></div></div>
+      </div>
+
+      <!-- Traditional Antivirus -->
+      <div class="bench-card">
+        <span class="bench-badge" style="color: #f43f5e;">⚠️ Antivirus Tradicional Reactivo</span>
+        <h3 class="bench-title">Respuesta Post-Infección</h3>
+
+        <div class="bench-metric-row">
+          <span>Momento de Protección</span>
+          <strong class="rose">Después del Clic (Reactivo)</strong>
+        </div>
+        <div class="metric-bar"><div class="fill rose" style="width: 30%;"></div></div>
+
+        <div class="bench-metric-row">
+          <span>Detección de Adware Oculto</span>
+          <strong class="rose">Baja (Ignora instaladores 'legítimos')</strong>
+        </div>
+        <div class="metric-bar"><div class="fill rose" style="width: 25%;"></div></div>
+
+        <div class="bench-metric-row">
+          <span>Consumo de CPU en Segundo Plano</span>
+          <strong class="rose">12% - 25% CPU (Escaneo continuo de disco)</strong>
+        </div>
+        <div class="metric-bar"><div class="fill rose" style="width: 20%;"></div></div>
+
+        <div class="bench-metric-row">
+          <span>Didáctica y Formación del Usuario</span>
+          <strong class="rose">Cero (Solo alertas genéricas de bloqueo)</strong>
+        </div>
+        <div class="metric-bar"><div class="fill rose" style="width: 15%;"></div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- 4-QUADRANT DEEP DIVE                                     -->
+  <!-- ======================================================== -->
+  <section class="ecosystem-stage">
+    <div class="stage-header">
+      <span class="stage-tag">ARQUITECTURA DE LA MATRIZ DIDÁCTICA</span>
+      <h2 class="stage-title">Cómo Aura Descompone Cada Control de Pantalla</h2>
+      <p class="stage-subtitle">Cuatro dimensiones que transforman la incertidumbre en confianza absoluta:</p>
+    </div>
+
+    <div class="ecosystem-cards-grid" style="grid-template-columns: repeat(2, 1fr);">
+      
+      <div class="eco-module-card tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="Cuadrante 1: Riesgo Operativo" data-tooltip-body="Semáforo de seguridad inmediato para saber si el botón instalará servicios en segundo plano." data-spec-file="DwellRadarEngine.cs">
+        <div class="eco-card-top">
+          <div class="eco-icon-chip" style="background: rgba(244, 63, 94, 0.15); color: #f43f5e;">⚠️</div>
+          <span class="eco-tag" style="color: #f43f5e; border-color: rgba(244, 63, 94, 0.3);">Cuadrante 1</span>
+        </div>
+        <h3 class="eco-title">Nivel de Riesgo Operativo</h3>
+        <p class="eco-desc">
+          Clasifica el control visual en tres estados: Inocuo (Verde), Precaución (Amarillo) o Crítico (Rojo), detectando trampas de diseño y casillas premarcadas.
+        </p>
+      </div>
+
+      <div class="eco-module-card tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="Cuadrante 2: Explicación Didáctica" data-tooltip-body="Traducción a lenguaje simple sin jerga confusa de lo que sucederá en tu equipo." data-spec-file="DwellRadarEngine.cs">
+        <div class="eco-card-top">
+          <div class="eco-icon-chip" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8;">💡</div>
+          <span class="eco-tag" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);">Cuadrante 2</span>
+        </div>
+        <h3 class="eco-title">Explicación Didáctica Accesible</h3>
+        <p class="eco-desc">
+          Describe exactamente qué hará la acción en lenguaje humano, ayudando tanto a usuarios primerizos como a técnicos a tomar decisiones con total certeza.
+        </p>
+      </div>
+
+      <div class="eco-module-card tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="Cuadrante 3: Impacto en Sistema Operativo" data-tooltip-body="Mapeo detallado de procesos creados, consumo de RAM y claves del Registro tocadas." data-spec-file="DwellRadarEngine.cs">
+        <div class="eco-card-top">
+          <div class="eco-icon-chip" style="background: rgba(129, 140, 248, 0.15); color: #818cf8;">⚙️</div>
+          <span class="eco-tag" style="color: #818cf8; border-color: rgba(129, 140, 248, 0.3);">Cuadrante 3</span>
+        </div>
+        <h3 class="eco-title">Impacto Técnico Subyacente</h3>
+        <p class="eco-desc">
+          Auditoría de bajo nivel en Windows: identifica puertos de red solicitados, dlls inyectadas en memoria y cambios en la configuración de arranque.
+        </p>
+      </div>
+
+      <div class="eco-module-card tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="Cuadrante 4: Remedio PowerShell" data-tooltip-body="Comandos CLI listos para copiar y pegar en la consola para revertir cambios o desinstalar adware." data-spec-file="DwellRadarEngine.cs">
+        <div class="eco-card-top">
+          <div class="eco-icon-chip" style="background: rgba(0, 245, 160, 0.15); color: #00f5a0;">💻</div>
+          <span class="eco-tag" style="color: #00f5a0; border-color: rgba(0, 245, 160, 0.3);">Cuadrante 4</span>
+        </div>
+        <h3 class="eco-title">Remedio Técnico &amp; Comandos CLI</h3>
+        <p class="eco-desc">
+          Scripts de automatización en PowerShell listos para copiar que te permiten eliminar servicios parásitos, reparar permisos y restaurar tu navegador en 1 segundo.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- PRE-FOOTER CTA BANNER                                    -->
+  <!-- ======================================================== -->
+  <section class="cta-banner-stage">
+    <div class="cta-banner-box">
+      <h2 class="cta-banner-title">Activa la Protección Cognitiva en Tu Cursor</h2>
+      <p class="cta-banner-desc">
+        Descarga Tooltip-ai Aura para Windows 11. Protección ambiental inteligente sin ralentizar tus juegos ni saturar tu memoria.
+      </p>
+      <div class="cta-banner-actions">
+        <a href="../downloads/TooltipAI.exe" download class="btn-hero-primary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Descargar Tooltip-ai Standalone (72.4 MB)</span>
+        </a>
+        <a href="../" class="btn-hero-secondary">
+          <span>← Volver al Hub Principal</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- DYNAMIC FLOATING TOOLTIP                                 -->
+  <!-- ======================================================== -->
+  <div class="dynamic-floating-tooltip" id="dynamicTooltip">
+    <div class="tooltip-header">
+      <div class="tooltip-status-dot"></div>
+      <span class="tooltip-header-title" id="tooltipHeaderTitle">Especificación Técnica</span>
+      <span class="tooltip-spec-tag" id="tooltipSpecTag">DwellRadarEngine.cs</span>
+    </div>
+    <div class="tooltip-body-text" id="tooltipBodyText">
+      Pasa el cursor sobre los elementos para inspeccionar detalles y activar el flujo de código.
+    </div>
+    <div class="tooltip-code-preview" id="tooltipCodePreview">
+      <pre><code id="tooltipCodeSnippet">// Dwell Cursor Radar & 4-Quadrant Risk Matrix:
+public void OnMouseDwellCompleted(Point cursorPosition) { ... }</code></pre>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- FOOTER                                                   -->
+  <!-- ======================================================== -->
+  <footer class="app-footer">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <div class="brand-link">
+          <img src="../icon.png" alt="Tooltip-ai" class="brand-logo" width="24" height="24">
+          <span class="brand-title">Tooltip<span class="brand-accent">-ai</span></span>
+        </div>
+        <p class="footer-tagline">
+          Radar cognitivo de escritorio para Windows 11 con matriz didáctica en 4 cuadrantes. Dominio oficial: <strong>tooltip-ai.com/aura</strong>.
+        </p>
+      </div>
+
+      <div class="footer-links-col">
+        <h4>Ecosistema</h4>
+        <a href="../">Hub Principal</a>
+        <a href="../translate">Tooltip-ai Translate</a>
+        <a href="../voice">Tooltip-ai Voice</a>
+        <a href="../privacy">Política de Privacidad</a>
+      </div>
+
+      <div class="footer-links-col">
+        <h4>Desarrollo</h4>
+        <a href="https://github.com/dixi3stdgdl-design/TeachMe-AI" target="_blank" rel="noopener">Repositorio GitHub</a>
+        <a href="../downloads/TooltipAI.exe" download>Descarga Standalone</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+      <span>© 2026 Dixi3 Labs • Licencia MIT • Win32 Hook Native</span>
+      <span style="color: #38bdf8;">tooltip-ai.com/aura</span>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+  <script>
+    // Interactive Dwell Radar Simulator Engine
+    const targetAdware = document.getElementById('dwellTargetAdware');
+    const targetReg = document.getElementById('dwellTargetReg');
+    const targetSafe = document.getElementById('dwellTargetSafe');
+
+    const badge = document.getElementById('hudRiskBadge');
+    const q1 = document.getElementById('q1Text');
+    const q2 = document.getElementById('q2Text');
+    const q3 = document.getElementById('q3Text');
+    const q4 = document.getElementById('q4Text');
+
+    const DWELL_DATA = {
+      adware: {
+        badge: "RIESGO: CRÍTICO",
+        color: "#f43f5e",
+        q1: "CRÍTICO (Instalador con Adware Bundling)",
+        q2: "Instalará una barra de búsqueda publicitaria y cambiará el motor predeterminado de tu navegador.",
+        q3: "Crea 2 tareas programadas en System32, consume ~140MB de RAM persistente y modifica la clave Run del Registro.",
+        q4: 'Stop-Process -Name "WebSearcher*" -Force; Unregister-ScheduledTask "AdUpdate"'
+      },
+      reg: {
+        badge: "RIESGO: PRECAUCIÓN",
+        color: "#f59e0b",
+        q1: "PRECAUCIÓN (Modificación Directa de Claves COM)",
+        q2: "Intentará eliminar entradas de registro antiguas que pueden ser requeridas por software heredado de 32 bits.",
+        q3: "Modifica HKEY_LOCAL_MACHINE\\Software\\Classes sin generar un punto de restauración automático de Windows.",
+        q4: 'Checkpoint-Computer -Description "RespaldoPreAura" -RestorePointType "APPLICATION_UNINSTALL"'
+      },
+      safe: {
+        badge: "RIESGO: INOCUO (VERIFICADO)",
+        color: "#00f5a0",
+        q1: "INOCUO (Componente Oficial Verificado)",
+        q2: "Instalación limpia que copia los archivos del programa en Archivos de Programa sin software de terceros.",
+        q3: "Firma digital Authenticode válida. Cero procesos ocultos ni llamadas a servidores desconocidos.",
+        q4: 'Get-AuthenticodeSignature .\\setup.exe | Format-List Status, SignerCertificate'
+      }
+    };
+
+    function updateHud(key) {
+      const d = DWELL_DATA[key];
+      if (!d) return;
+      if (badge) {
+        badge.textContent = d.badge;
+        badge.style.color = d.color;
+      }
+      if (q1) q1.textContent = d.q1;
+      if (q2) q2.textContent = d.q2;
+      if (q3) q3.textContent = d.q3;
+      if (q4) q4.textContent = d.q4;
+    }
+
+    if (targetAdware) targetAdware.addEventListener('mouseenter', () => updateHud('adware'));
+    if (targetReg) targetReg.addEventListener('mouseenter', () => updateHud('reg'));
+    if (targetSafe) targetSafe.addEventListener('mouseenter', () => updateHud('safe'));
+  </script>
+</body>
+</html>

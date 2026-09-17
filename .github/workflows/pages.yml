@@ -35,9 +35,15 @@ jobs:
           cp favicon.ico _site/
           cp app.ico _site/
           cp icon.png _site/
+          cp CNAME _site/
           cp .nojekyll _site/
           cp README.md _site/
           cp LICENSE _site/
+          cp -r privacy _site/ 2>/dev/null || true
+          cp -r translate _site/ 2>/dev/null || true
+          cp -r aura _site/ 2>/dev/null || true
+          cp -r voice _site/ 2>/dev/null || true
+          cp -r downloads _site/ 2>/dev/null || true
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

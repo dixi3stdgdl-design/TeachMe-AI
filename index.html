@@ -3,52 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tooltip AI — Windows 11 Neural Screen Inspector & Cognitive HUD</title>
+  <title>Tooltip-ai — Windows 11 Neural Screen Inspector & Cognitive HUD (tooltip-ai.com)</title>
+
+  <!-- Meta tags -->
+  <meta name="description" content="Tooltip-ai: El primer inspector neural de pantalla para Windows 11. Información interactiva encapsulada en Tooltips y lluvia de código C# en tiempo real.">
+  <meta property="og:title" content="Tooltip-ai — Windows 11 Neural Screen Inspector">
+  <meta property="og:description" content="Traduce interfaces, explica errores y analiza riesgos en tiempo real directamente sobre tu pantalla.">
+  <meta property="og:url" content="https://tooltip-ai.com/">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="icon" type="image/png" href="icon.png">
   <link rel="apple-touch-icon" href="icon.png">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="theme-fluent-dark">
-  
-  <!-- Mouse Dwell / Neural Scanner Indicator (Micro-Interactive Wait Experience) -->
-  <div class="mouse-dwell-indicator" id="mouseDwellIndicator">
-    <div class="dwell-halo"></div>
-    <div class="dwell-scanner-ring">
-      <svg class="dwell-svg" width="46" height="46" viewBox="0 0 46 46">
-        <circle class="dwell-bg" cx="23" cy="23" r="19"></circle>
-        <circle class="dwell-progress" id="dwellProgressCircle" cx="23" cy="23" r="19"></circle>
-      </svg>
-      <div class="dwell-core-icon">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg>
-      </div>
-    </div>
-    <div class="dwell-interactive-box" id="dwellInteractiveBox">
-      <div class="dwell-phase-row">
-        <span class="dwell-pulse-dot"></span>
-        <span class="dwell-status" id="dwellStatusPhase">Iniciando escaneo...</span>
-        <span class="dwell-time" id="dwellTimeText">3.0s</span>
-      </div>
-      <div class="dwell-skip-hint">
-        <span>O pulsa <kbd>Espacio</kbd> para abrir ya</span>
-      </div>
-    </div>
-  </div>
+<body class="theme-obsidian">
 
-  <!-- Subtle Grain Texture Layer for Photorealistic Acrylic -->
-  <div class="acrylic-noise-layer"></div>
+  <!-- BACKGROUND: Dynamic Cyber Matrix Code Rain Canvas -->
+  <canvas id="codeRainCanvas"></canvas>
+  <div class="background-grid-overlay"></div>
+  <div class="radial-ambient-glow"></div>
 
-  <!-- SVG Connector Engine for Dynamic Holographic Guide Lines -->
+  <!-- SVG CONNECTOR BEAM ENGINE -->
   <svg class="holographic-connector-svg" id="connectorSvg">
     <defs>
       <linearGradient id="beamGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="var(--accent-current)" stop-opacity="0.9" />
-        <stop offset="100%" stop-color="var(--accent-violet)" stop-opacity="0.2" />
+        <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.9" />
+        <stop offset="100%" stop-color="#818cf8" stop-opacity="0.3" />
       </linearGradient>
-      <filter id="glowFilter" x="-20%" y="-20%" width="140%" height="140%">
+      <filter id="laserGlow" x="-20%" y="-20%" width="140%" height="140%">
         <feGaussianBlur stdDeviation="3" result="blur" />
         <feMerge>
           <feMergeNode in="blur" />
@@ -56,819 +43,209 @@
         </feMerge>
       </filter>
     </defs>
-    <path id="connectorPath" d="" stroke="url(#beamGradient)" stroke-width="1.8" stroke-dasharray="4 4" fill="none" filter="url(#glowFilter)" />
-    <circle id="connectorAnchorDot" cx="0" cy="0" r="3.5" fill="var(--accent-current)" filter="url(#glowFilter)" />
-    <circle id="connectorTargetDot" cx="0" cy="0" r="4.5" fill="#fff" stroke="var(--accent-current)" stroke-width="2" />
+    <path id="connectorPath" d="" stroke="url(#beamGradient)" stroke-width="2" stroke-dasharray="6 4" fill="none" filter="url(#laserGlow)" />
+    <circle id="connectorAnchorDot" cx="0" cy="0" r="4" fill="#38bdf8" filter="url(#laserGlow)" />
+    <circle id="connectorTargetDot" cx="0" cy="0" r="5" fill="#fff" stroke="#38bdf8" stroke-width="2" />
   </svg>
 
-  <!-- Global Sticky Site Header -->
-  <header class="site-header">
-    <nav class="site-nav">
-      <a href="#" class="brand-badge">
-        <img src="icon.png" alt="Tooltip AI" class="brand-logo-img">
-        <span class="brand-name">Tooltip <span>AI</span></span>
+  <!-- ======================================================== -->
+  <!-- HEADER / NAVBAR                                          -->
+  <!-- ======================================================== -->
+  <header class="app-navbar">
+    <div class="nav-inner">
+      <a href="#" class="brand-link">
+        <div class="brand-icon-wrapper">
+          <img src="icon.png" alt="Tooltip-ai" class="brand-logo">
+          <span class="brand-pulse-ring"></span>
+        </div>
+        <div class="brand-text-col">
+          <span class="brand-title">Tooltip<span class="brand-accent">-ai</span></span>
+          <span class="brand-domain-pill">tooltip-ai.com</span>
+        </div>
       </a>
 
-      <ul class="nav-links">
-        <li><a href="#lab" class="nav-link">🧪 Simulador en Vivo</a></li>
-        <li><a href="#benchmarks" class="nav-link">📊 Benchmarks &amp; Zero-GC</a></li>
-        <li><a href="#features" class="nav-link">⚡ Atajos &amp; Radar</a></li>
-        <li><a href="#quickstart" class="nav-link">🚀 Instalación</a></li>
-      </ul>
+      <nav class="nav-center-menu">
+        <a href="#simulator" class="nav-item">🧪 Simulador</a>
+        <a href="#ecosystem" class="nav-item">🚀 Ecosistema</a>
+        <a href="translate" class="nav-item badge-link">
+          <span>🌐 Translate</span>
+          <span class="tiny-chip">OCR</span>
+        </a>
+        <a href="aura" class="nav-item badge-link">
+          <span>👁️ Aura</span>
+          <span class="tiny-chip">Radar</span>
+        </a>
+        <a href="voice" class="nav-item badge-link">
+          <span>🎙️ Voice</span>
+          <span class="tiny-chip">TTS</span>
+        </a>
+        <a href="#benchmarks" class="nav-item">📊 Benchmarks</a>
+        <a href="privacy" class="nav-item">🛡️ Privacidad</a>
+      </nav>
 
-      <div class="nav-actions">
-        <button class="sound-toggle-btn active" id="btnSoundToggle" title="Activar/Desactivar Efectos de Audio Hápticos">
-          🔊
+      <div class="nav-right-actions">
+        <button class="sound-switch-btn" id="btnSoundToggle" title="Sonido Háptico">
+          <span class="sound-icon">🔊</span>
+          <span class="sound-label">Audio</span>
         </button>
-        <a href="https://github.com/dixi3stdgdl-design/TeachMe-AI" target="_blank" rel="noopener" class="nav-btn-github">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          GitHub
+        <a href="downloads/TooltipAI.exe" download class="nav-cta-download">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Descargar v1.0</span>
         </a>
       </div>
-    </nav>
+    </div>
   </header>
 
-  <!-- High-Octane Hero Section -->
-  <section class="hero-section">
-    <div class="hero-aura-glow"></div>
-    <div class="hero-pill-badge">
-      <span>✨ NATIVO WINDOWS 11 • EN CERTIFICACIÓN EN MICROSOFT STORE • GOOGLE GEMINI OFICIAL</span>
+  <!-- ======================================================== -->
+  <!-- HERO SECTION: THE INTERACTIVE TOOLTIP STAGE              -->
+  <!-- ======================================================== -->
+  <section class="hero-stage">
+    
+    <!-- Active Code Stream Live Pill -->
+    <div class="hero-code-stream-banner" id="heroCodeBanner">
+      <div class="pulse-emerald-dot"></div>
+      <span class="code-stream-label">Flujo de Código en Vivo:</span>
+      <span class="code-stream-file" id="activeFileName">Códigos Fundacionales de Internet (ARPANET • TCP/IP • CERN WWW)</span>
+      <span class="code-stream-hint">Pasa el cursor por cualquier Tooltip para inspeccionar</span>
     </div>
-    <h1 class="hero-title">
-      Tu Pantalla Traducida a <span class="gradient-text">Conocimiento en Tiempo Real</span>
+
+    <h1 class="hero-main-title">
+      La Interfaz Donde la Información <br>
+      Vive Dentro de <span class="gradient-neon">Tooltips Holográficos</span>
     </h1>
-    <p class="hero-subtitle">
-      El inspector neural de pantalla más rápido para Windows 11. Explica errores crípticos, interfaces confusas y comandos complejos en menos de 2 milisegundos sin saturar tu memoria ni bloquear tus teclas.
+
+    <p class="hero-description">
+      Olvídate de buscar soluciones en navegadores externos. Tooltip-ai analiza tu pantalla en menos de <strong>1.2 milisegundos</strong> mediante llamadas directas al kernel Win32. Toca o posa el cursor en cualquier elemento interactivo para activar la lluvia de código C# real.
     </p>
 
-    <div class="hero-cta-group">
-      <a href="downloads/TooltipAI.exe" download class="cta-primary-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Descargar Tooltip AI (v1.0.0.0 Standalone)
-      </a>
-      <button class="cta-secondary-btn" id="heroBtnSnip">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
-        Probar Simulador Interactivo (Ctrl + A)
-      </button>
-    </div>
-    <div style="margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap;">
-      <span style="background: rgba(0, 245, 160, 0.12); color: #00F5A0; border: 1px solid rgba(0, 245, 160, 0.3); padding: 5px 14px; border-radius: 999px; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
-        <span>🛍️</span> En proceso de revisión oficial en Microsoft Store (SLA: 3 días)
-      </span>
-      <span style="color: var(--text-muted); font-size: 12px;">
-        ⚡ 72.4 MB • Zero-GC • C# .NET 8 Unsafe • Sin dependencias
-      </span>
+    <!-- KEY COMMAND SHORTCUT DOCK -->
+    <div class="keyboard-dock-bar">
+      <div class="key-pill tooltip-trigger" data-code-spec="core_unsafe" data-tooltip-title="⚡ Recorte Sniper (Ctrl + A)" data-tooltip-body="Congela la pantalla en 0ms y dibuja un bounding box milimétrico sobre cualquier ventana para inferencia visual." data-spec-file="src-dotnet/SnippingWindow.xaml.cs">
+        <kbd>Ctrl</kbd> + <kbd>A</kbd>
+        <span>Recortar &amp; Analizar</span>
+      </div>
+      <div class="key-pill tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="👁️ Radar Dwell (Ctrl + D)" data-tooltip-body="Modo de descanso de mouse: al posar el cursor sobre botones sospechosos despliega un HUD de 4 cuadrantes con nivel de riesgo." data-spec-file="src-dotnet/DwellRadarEngine.cs">
+        <kbd>Ctrl</kbd> + <kbd>D</kbd>
+        <span>Radar de Reposo</span>
+      </div>
+      <div class="key-pill tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="🌐 Traductor OCR (Ctrl + T)" data-tooltip-body="Traduce en tiempo real texto no seleccionable en videojuegos y software extranjero con Windows.Media.Ocr local." data-spec-file="src-dotnet/TranslateEngine.cs">
+        <kbd>Ctrl</kbd> + <kbd>T</kbd>
+        <span>Traducción en Vivo</span>
+      </div>
+      <div class="key-pill tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="🎙️ Lectura por Voz (Ctrl + V)" data-tooltip-body="Sintetiza la explicación técnica en audio neuronal HD de alta fidelidad sin interrumpir tu vista ni bloquear tus teclas." data-spec-file="src-dotnet/VoiceSynthesizer.cs">
+        <kbd>Ctrl</kbd> + <kbd>V</kbd>
+        <span>Síntesis de Voz</span>
+      </div>
     </div>
 
-    <!-- Live Engineering Metrics -->
-    <div class="hero-metrics-grid">
-      <div class="metric-card">
-        <div class="metric-val emerald">&lt; 2 ms</div>
-        <div class="metric-label">Latencia de Escaneo</div>
-        <div class="metric-sub">Llamadas directas al kernel Win32</div>
+    <!-- PRIMARY CTAs -->
+    <div class="hero-actions-row">
+      <a href="downloads/TooltipAI.exe" download class="btn-hero-primary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span>Descargar Tooltip-ai Standalone (72.4 MB)</span>
+      </a>
+      <a href="#simulator" class="btn-hero-secondary">
+        <span>🎮 Probar Simulador en Pantalla</span>
+      </a>
+    </div>
+
+    <!-- Telemetry Badges Grid -->
+    <div class="hero-telemetry-grid">
+      <div class="telemetry-card tooltip-trigger" data-code-spec="core_unsafe" data-tooltip-title="⚡ Latencia de Escaneo: < 1.2 ms" data-tooltip-body="BitBlt directo sobre memoria GDI Win32 sin pasar por capas intermedias de Node.js o Chromium." data-spec-file="NativeKernelEngine.cs">
+        <div class="telemetry-val emerald">&lt; 1.2 ms</div>
+        <div class="telemetry-label">Latencia Invocación</div>
+        <div class="telemetry-sub">Directo al kernel User32</div>
       </div>
-      <div class="metric-card">
-        <div class="metric-val cyan">0 Bytes</div>
-        <div class="metric-label">Asignaciones en GC Heap</div>
-        <div class="metric-sub">Memoria stackalloc en CPU L1/L2</div>
+
+      <div class="telemetry-card tooltip-trigger" data-code-spec="core_unsafe" data-tooltip-title="🛡️ Asignaciones de Memoria: 0 Bytes" data-tooltip-body="Todo el buffer de captura y nombres de ventana se gestionan con stackalloc char[512] en CPU L1/L2 sin pausas de Garbage Collector." data-spec-file="NativeKernelEngine.cs">
+        <div class="telemetry-val cyan">0 Bytes</div>
+        <div class="telemetry-label">Heap GC Overhead</div>
+        <div class="telemetry-sub">Zero Garbage Collection</div>
       </div>
-      <div class="metric-card">
-        <div class="metric-val">0.0%</div>
-        <div class="metric-label">CPU en Reposo</div>
-        <div class="metric-sub">Alojado en la bandeja del sistema</div>
+
+      <div class="telemetry-card tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="💤 Consumo en Reposo: 0.05% CPU" data-tooltip-body="Hook de bajo nivel en suspensión silenciosa en el System Tray de Windows hasta presionar el atajo." data-spec-file="DwellRadarEngine.cs">
+        <div class="telemetry-val violet">~18 MB</div>
+        <div class="telemetry-label">Memoria RAM</div>
+        <div class="telemetry-sub">Frente a 600MB de Electron</div>
       </div>
-      <div class="metric-card">
-        <div class="metric-val amber">Ilimitado</div>
-        <div class="metric-label">Tutor Didáctico</div>
-        <div class="metric-sub">Gemini Flash &amp; Pro con visión multimodal</div>
+
+      <div class="telemetry-card tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="🧠 IA Multimodal: Gemini 2.5 Flash" data-tooltip-body="Soporta visión multimodal oficial de Google AI Studio con modelo BYOK (Bring Your Own Key) para privacidad absoluta." data-spec-file="GeminiClient.cs">
+        <div class="telemetry-val amber">Gemini 2.5</div>
+        <div class="telemetry-label">Motor Cognitivo</div>
+        <div class="telemetry-sub">Inferencia multimodal directa</div>
       </div>
     </div>
+
   </section>
 
-  <!-- Interactive Lab / Bench Section -->
-  <section class="lab-section" id="lab">
-    <div class="section-badge-row">
-      <span class="section-pill">Laboratorio Interactivo en Vivo</span>
-      <h2 class="section-heading">Experimenta la Inspección Neural</h2>
-      <p class="section-lead">Pasa el cursor sobre los elementos de las ventanas simuladas, pulsa <kbd>Ctrl + A</kbd> o elige un escenario de prueba:</p>
-    </div>
-
-    <!-- Scenario Switcher Bar -->
-    <div class="scenario-selector-bar">
-      <button class="scenario-tab-btn active" data-scenario="error">
-        <span>🚨</span> Error Crítico 0x80070005
-      </button>
-      <button class="scenario-tab-btn" data-scenario="bloatware">
-        <span>📦</span> Instalador con Adware
-      </button>
-      <button class="scenario-tab-btn" data-scenario="blender">
-        <span>🎨</span> Control 3D GPU (DirectX/Vulkan)
-      </button>
-    </div>
-
-    <!-- Desktop Environment Simulation Frame -->
-    <div class="desktop-container" id="desktopContainer">
-      
-      <!-- Top System Bar / Tooltip Header -->
-      <header class="top-nav-bar">
-        <div class="logo-group">
-          <div class="app-icon-badge">
-            <img src="icon.png" width="22" height="22" style="border-radius: 5px;">
-          </div>
-          <div class="logo-text">
-            <div class="brand-title-wrap">
-              <span class="brand-title">Tooltip <span class="brand-accent">AI</span></span>
-              <span class="brand-edition-tag">V2.5 PRO</span>
-            </div>
-            <span class="brand-subtitle">Simulador del Entorno de Inspección Windows 11</span>
-          </div>
-        </div>
-
-        <!-- Quick Action Shortcuts -->
-        <div class="action-dock">
-          <button class="shortcut-pill highlight" id="btnTriggerSnipping" title="Lanzar selector de recorte (Ctrl + A)">
-            <span class="pulse-indicator"></span>
-            <kbd>Ctrl</kbd> + <kbd>A</kbd>
-            <span class="pill-label">Recortar &amp; Analizar</span>
-          </button>
-          <button class="mode-toggle-btn active" id="btnModeHover" title="El panel aparece tras descansar el cursor sobre un elemento">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 9h6v6H9z"/></svg>
-            Radar Dwell (Ctrl+D)
-          </button>
-          <button class="mode-toggle-btn" id="btnModePin" title="Anclar panel para interacción">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 17v5M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></svg>
-            Fijar HUD
-          </button>
-        </div>
-
-        <!-- Live Tuning Drawer Button -->
-        <button class="btn-tune-studio" id="btnOpenStudio" title="Calibrar Estética Fluent, Acrílico y Clave de Gemini">
-          ⚙️ Ajustes &amp; IA
-        </button>
-      </header>
-
-    <!-- Interactive Simulated Windows Workstation Area -->
-    <main class="desktop-workspace" id="desktopWorkspace">
-      
-      <!-- Target 1: Tricky Software Installer -->
-      <div class="mock-window-card window-installer">
-        <div class="mock-win-header">
-          <div class="mock-win-title">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-            Asistente de Instalación — MediaPro Ultra 2026
-          </div>
-          <div class="mock-win-controls">
-            <span>─</span><span>□</span><span class="close-win">✕</span>
-          </div>
-        </div>
-        <div class="mock-win-body">
-          <p class="mock-instruction">Selecciona los componentes adicionales antes de continuar:</p>
-          
-          <div class="inspectable-box" data-target-id="installer_main_checkbox">
-            <label class="custom-checkbox">
-              <input type="checkbox" checked disabled>
-              <span>Instalar MediaPro Codec Pack (Requerido)</span>
-            </label>
-            <span class="inspect-tag">UIA_CheckBox</span>
-          </div>
-
-          <div class="inspectable-box suspicious" data-target-id="installer_bloatware">
-            <label class="custom-checkbox">
-              <input type="checkbox" checked>
-              <span class="bold">Instalar Opera Browser y Barra de Búsqueda WebSearcher</span>
-            </label>
-            <span class="inspect-tag alert">Potencial PUA / Adware</span>
-          </div>
-
-          <div class="installer-nav-row">
-            <button class="mock-win-btn" data-target-id="btn_back">&lt; Atrás</button>
-            <div class="btn-group-right">
-              <button class="mock-win-btn inspectable-target" data-target-id="btn_custom_install">Instalación Avanzada...</button>
-              <button class="mock-win-btn primary-win-btn inspectable-target" data-target-id="btn_next">Siguiente &gt;</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Target 2: Cryptic Windows Security & Kernel Error -->
-      <div class="mock-window-card window-error">
-        <div class="mock-win-header error-bar">
-          <div class="mock-win-title">
-            <span class="error-dot">●</span>
-            Windows Security & Kernel Error
-          </div>
-          <div class="mock-win-controls"><span>✕</span></div>
-        </div>
-        <div class="mock-win-body error-layout">
-          <div class="error-icon-shield">⚠️</div>
-          <div class="error-content">
-            <h4 class="inspectable-target" data-target-id="error_code_heading">Error 0x80070005: ERROR_ACCESS_DENIED</h4>
-            <p class="inspectable-target" data-target-id="error_file_operation">La llamada a <code>IFileOperation::PerformOperations()</code> ha fallado en el descriptor de seguridad del objeto.</p>
-            <div class="error-action-row">
-              <button class="mock-win-btn inspectable-target" data-target-id="btn_error_uac">Ejecutar como Administrador</button>
-              <button class="mock-win-btn inspectable-target" data-target-id="btn_error_logs">Ver Logs EventViewer</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Target 3: Complex Pro 3D Toolbar (Blender / Unreal Engine) -->
-      <div class="mock-window-card window-tools">
-        <div class="mock-win-header">
-          <div class="mock-win-title inspectable-target" data-target-id="win_header_blender">Viewport Shading & Render Passes (3D Engine)</div>
-          <div class="mock-win-controls"><span class="inspectable-target" data-target-id="btn_win_minimize">─</span><span class="inspectable-target" data-target-id="btn_win_maximize">□</span><span class="inspectable-target" data-target-id="btn_win_close">✕</span></div>
-        </div>
-        <div class="mock-win-body tools-row">
-          <div class="tool-btn inspectable-target" data-target-id="tool_bake_ao" title="Bake Ambient Occlusion">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 10 10 0 0 0 0-20"/></svg>
-            <span>Bake AO</span>
-          </div>
-          <div class="tool-btn inspectable-target" data-target-id="tool_subsurface" title="Subsurface Scattering Multiplier">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-            <span>Subsurface</span>
-          </div>
-          <div class="tool-btn inspectable-target" data-target-id="tool_denoiser" title="OptiX / OpenImageDenoise AI">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-            <span>AI Denoiser</span>
-          </div>
-          <div class="tool-btn inspectable-target" data-target-id="tool_lut" title="AgX OCIO Color Management">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            <span>AgX LUT</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Quick Interactive Guide Banner -->
-      <div class="interaction-hints">
-        <span class="hint-badge">⚡ Atajo Global:</span> Pulsa <kbd>Ctrl</kbd> + <kbd>A</kbd> para activar el láser de recorte interactivo, o <kbd>Ctrl</kbd> + <kbd>D</kbd> para radar dwell.
-      </div>
-    </main>
-
-    <!-- Simulated Windows Taskbar -->
-    <footer class="mock-taskbar">
-      <div class="taskbar-start-group">
-        <div class="win-logo-btn inspectable-target" data-target-id="win_logo_btn" title="Inicio de Windows">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="#00adef"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
-        </div>
-        <div class="taskbar-item active inspectable-target" data-target-id="taskbar_installer">MediaPro Installer</div>
-        <div class="taskbar-item inspectable-target" data-target-id="taskbar_security">Windows Security</div>
-        <div class="taskbar-item inspectable-target" data-target-id="taskbar_blender">Blender 4.2</div>
-      </div>
-      <div class="taskbar-tray">
-        <div class="tray-tooltip-icon inspectable-target" data-target-id="tray_teachme" title="TeachMe AI Service — Engine Activo en user32.dll">
-          <span class="tray-pulse"></span>
-          Tooltip AI Active
-        </div>
-        <div class="tray-clock inspectable-target" id="trayClock" data-target-id="tray_clock">12:00 PM</div>
-      </div>
-    </footer>
-  </div>
-
   <!-- ======================================================== -->
-  <!-- ACTIVE SNIPPING REGION TARGET HIGHLIGHTER                 -->
+  <!-- INTERACTIVE SIMULATOR STAGE                              -->
   <!-- ======================================================== -->
-  <div class="active-crop-anchor" id="activeCropAnchor">
-    <div class="crop-corner top-left"></div>
-    <div class="crop-corner top-right"></div>
-    <div class="crop-corner bottom-left"></div>
-    <div class="crop-corner bottom-right"></div>
-    <div class="crop-scan-beam" id="cropScanBeam"></div>
-  </div>
-
-  <!-- ======================================================== -->
-  <!-- TEACHME AI ULTRA-PROFESSIONAL ACRYLIC HUD OVERLAY CARD    -->
-  <!-- ======================================================== -->
-  <div class="teachme-overlay-card" id="teachmeOverlayCard" aria-live="polite">
-    
-    <!-- Dynamic Specular Highlight Border (Follows cursor angle) -->
-    <div class="specular-glow-border" id="specularGlow"></div>
-    
-    <!-- Ambient Holographic Glow Aura -->
-    <div class="card-ambient-aura"></div>
-
-    <!-- Neural Analyzing Shimmer Overlay -->
-    <div class="card-analyzing-shimmer"></div>
-
-    <!-- Header Section with Model Badge & Crop Snapshot Preview -->
-    <div class="panel-header">
-      <div class="header-left">
-        <!-- Visual Thumbnail Snapshot of Analyzed Area -->
-        <div class="crop-mini-thumbnail" id="cropMiniThumbnail" title="Área de pantalla analizada">
-          <div class="mini-grid"></div>
-          <span class="thumb-icon">🔍</span>
-          <span class="thumb-res" id="cropThumbRes">192x64</span>
-        </div>
-
-        <div class="target-identity">
-          <div class="target-title-row">
-            <h3 class="target-name" id="cardTargetName">Opera Browser & WebSearcher Bar</h3>
-            <span class="type-pill" id="cardControlType">UIA_CheckBox</span>
-            <span class="ai-confidence-pill" id="cardConfidence">99.4% Certeza</span>
-          </div>
-          <div class="process-breadcrumb">
-            <span class="process-exe" id="cardProcessName">Setup.exe</span>
-            <span class="sep">•</span>
-            <span class="process-pid" id="cardProcessPid">PID: 4982</span>
-            <span class="sep">•</span>
-            <span class="process-badge" id="cardSignatureBadge">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-              Authenticode
-            </span>
-          </div>
-        </div>
-      </div>
-      
-      <div class="header-actions">
-        <button class="icon-btn" id="btnPinCard" title="Anclar posición">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 17v5M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></svg>
-        </button>
-        <button class="icon-btn close" id="btnCloseCard" title="Cerrar panel (Esc)">✕</button>
-      </div>
-    </div>
-
-    <!-- Quick Context Executive Pill (Maximum Context in Minimum Space) -->
-    <div class="quick-context-bar">
-      <div class="context-pill" id="cardVerdictPill">
-        <span class="context-indicator alert"></span>
-        <span class="context-text" id="cardVerdictText">Adware No Necesario • Desmarcar Recomendado</span>
-      </div>
-      <div class="context-meta-tags">
-        <span class="meta-tag" id="cardSafetyTag">Riesgo: Medio</span>
-        <span class="meta-tag" id="cardActionTag">Acción: Omitir</span>
-      </div>
-    </div>
-
-    <!-- Extracted OCR Text Banner (High Capability) -->
-    <div class="ocr-extracted-banner" id="ocrBanner">
-      <div class="ocr-left">
-        <span class="ocr-label">OCR Detectado:</span>
-        <span class="ocr-text" id="cardOcrText">"Instalar Opera Browser y Barra de Búsqueda WebSearcher"</span>
-      </div>
-      <button class="btn-copy-ocr" id="btnCopyOcr" title="Copiar texto reconocido">Copiar</button>
-    </div>
-
-    <!-- Fluid Tab Navigation Pills (Ultra-Compact) -->
-    <div class="panel-nav-tabs">
-      <button class="tab-pill active" data-tab="tabWhat" title="¿Qué es este control?">
-        <span class="tab-icon">🏷️</span> Qué es
-      </button>
-      <button class="tab-pill" data-tab="tabImpact" title="Función y consecuencias">
-        <span class="tab-icon">⚡</span> Función
-      </button>
-      <button class="tab-pill" data-tab="tabVendor" title="Proveedor y especificaciones">
-        <span class="tab-icon">🏢</span> Specs
-      </button>
-      <button class="tab-pill" data-tab="tabShortcuts" title="Atajos y comandos CLI">
-        <span class="tab-icon">⌨️</span> CLI
-      </button>
-      <button class="tab-pill tab-ai-chat" data-tab="tabChat" title="Preguntar a Tooltip AI">
-        <span class="tab-icon">✨</span> Chat
-      </button>
-    </div>
-
-    <!-- Tab Content Containers -->
-    <div class="panel-body">
-      
-      <!-- TAB 1: ¿QUÉ ES? -->
-      <div class="tab-view active" id="tabWhat">
-        <div class="summary-highlight" id="cardSummary">
-          Es una casilla de software patrocinado de terceros (PUA / Adware) incluida en el instalador principal. No es necesaria para que MediaPro funcione.
-        </div>
-        <div class="key-takeaways">
-          <div class="takeaway-item">
-            <span class="bullet-dot cyan"></span>
-            <div>
-              <strong>Naturaleza:</strong>
-              <span id="cardNature">Oferta promocional bundled. Modifica el motor de búsqueda predeterminado del sistema.</span>
-            </div>
-          </div>
-          <div class="takeaway-item">
-            <span class="bullet-dot violet"></span>
-            <div>
-              <strong>Impacto en Sistema:</strong>
-              <span id="cardSystemImpact">Agrega servicios en segundo plano al arranque de Windows e incrementa el consumo de memoria.</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB 2: ¿PARA QUÉ SIRVE & CONSECUENCIAS? -->
-      <div class="tab-view" id="tabImpact">
-        <div class="risk-card warning" id="cardRiskBox">
-          <div class="risk-badge">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
-            <span id="cardRiskLevel">Recomendación: Desmarcar</span>
-          </div>
-          <p id="cardConsequences">
-            Si dejas marcada esta casilla, se descargarán 140MB adicionales e instalarán extensiones de navegación que cambian tu página de inicio. Te recomendamos desmarcarla para mantener el sistema optimizado.
-          </p>
-        </div>
-        <div class="action-recommendation">
-          <div class="action-pill-title">Acciones Rápidas con IA:</div>
-          <div class="action-btn-row">
-            <button class="btn-preset-action" id="btnExplainAction">💡 Explicar en 1 minuto</button>
-            <button class="btn-preset-action safe" id="btnIsSafe">🛡️ ¿Es seguro para mi PC?</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB 3: PROVEEDOR Y ESPECIFICACIONES TÉCNICAS -->
-      <div class="tab-view" id="tabVendor">
-        <div class="specs-grid">
-          <div class="spec-cell">
-            <span class="spec-label">Desarrollador / Vendor</span>
-            <span class="spec-value" id="cardVendor">Opera Software AS / Sponsor Network</span>
-          </div>
-          <div class="spec-cell">
-            <span class="spec-label">Firma Digital</span>
-            <span class="spec-value valid" id="cardSignStatus">Válida (SHA256 Authenticode)</span>
-          </div>
-          <div class="spec-cell">
-            <span class="spec-label">Ruta de Ejecutable</span>
-            <span class="spec-value mono" id="cardExePath">C:\Users\AppData\Local\Temp\is-44A.tmp</span>
-          </div>
-          <div class="spec-cell">
-            <span class="spec-label">Uso de Recursos</span>
-            <span class="spec-value" id="cardResourceFootprint">CPU: ~0.1% | RAM: ~18 MB</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB 4: ATAJOS Y COMANDOS CLI EQUIVALENTES -->
-      <div class="tab-view" id="tabShortcuts">
-        <div class="cli-block">
-          <div class="cli-header">
-            <span>PowerShell / Win32 Automation Equivalent</span>
-            <button class="btn-copy" id="btnCopyCli" title="Copiar comando">Copiar</button>
-          </div>
-          <pre class="cli-code"><code id="cardCliSnippet"># Desactivar instalación silenciosa de bloatware:
-Start-Process "MediaProSetup.exe" -ArgumentList "/VERYSILENT /NOICONS /TASKS='!optout'"</code></pre>
-        </div>
-        <div class="shortcut-list">
-          <div class="sc-item">
-            <span class="sc-desc">Atajo Nativo del Control:</span>
-            <kbd id="cardAccessKey">Espacio (Toggle)</kbd>
-          </div>
-          <div class="sc-item">
-            <span class="sc-desc">Navegación Accesible:</span>
-            <kbd>Tab</kbd> / <kbd>Shift + Tab</kbd>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB 5: PREGUNTAR A TEACHME AI (MINI CHAT SOCRÁTICO) -->
-      <div class="tab-view" id="tabChat">
-        <div class="chat-mini-history" id="chatMiniHistory">
-          <div class="msg bot">
-            ¡Hola! He analizado el recorte de pantalla. ¿Qué te gustaría saber sobre este control o cómo interactuar con él?
-          </div>
-        </div>
-        <form class="chat-input-bar" id="chatForm">
-          <input type="text" id="chatInput" placeholder="Haz una repregunta en lenguaje natural..." autocomplete="off">
-          <button type="submit" id="btnSendChat" title="Enviar consulta">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
-          </button>
-        </form>
-      </div>
-
-    </div>
-
-    <!-- Panel Footer Controls -->
-    <div class="panel-footer">
-      <div class="footer-meta">
-        <span class="hud-mode-indicator" id="hudModeIndicator">Modo: Conectado a Pantalla</span>
-        <span class="shortcut-legend"><kbd>Esc</kbd> cerrar</span>
-      </div>
-      <div class="footer-actions">
-        <button class="footer-btn" id="btnCopyJson" title="Copiar ficha técnica completa en JSON">📋 Exportar JSON</button>
-        <button class="footer-btn accent" id="btnDeeperLearn">✨ Tutor Socrático</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Snipping Tool Overlay Mask (Triggered with Shift + A) -->
-  <div class="snipping-screen-overlay" id="snippingOverlay">
-    <div class="snipping-instructions">
-      <div class="snip-icon">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
-      </div>
-      <span><strong>Tooltip AI Vision Sniper</strong> — Arrastra un recuadro sobre cualquier botón, error o texto</span>
-      <kbd>Esc para cancelar</kbd>
-    </div>
-    
-    <!-- Active Dragging Box -->
-    <div class="snip-selection-box" id="snipSelectionBox">
-      <div class="snip-coords" id="snipCoords">0 x 0</div>
-      <div class="snip-laser-line"></div>
-    </div>
-  </div>
-  </section> <!-- End .lab-section -->
-
-  <!-- ======================================================== -->
-  <!-- LIVE DESIGN STUDIO DRAWER (TO POLISH DESIGN IN REAL-TIME)-->
-  <!-- ======================================================== -->
-  <aside class="design-studio-drawer" id="designStudioDrawer">
-    <div class="studio-header">
-      <div class="studio-title">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 2 4 4-14 14H4v-4L18 2z"/></svg>
-        Estudio de Diseño & Capacidad HUD
-      </div>
-      <button class="icon-btn" id="btnCloseStudio">✕</button>
-    </div>
-
-    <div class="studio-scrollable">
-      
-      <!-- Gemini AI API Configuration Section -->
-      <div class="ai-config-section">
-        <div class="section-badge-header">
-          <label class="tuning-title">🧠 Motor de IA (Gemini Vision)</label>
-          <span class="ai-status-pill" id="aiStatusPill">Modo Simulado</span>
-        </div>
-        <p class="tuning-desc">Conecta tu API Key de Google Gemini para habilitar visión multimodal real en recortes de pantalla y respuestas socráticas.</p>
-        
-        <div class="input-group-row">
-          <input type="password" id="inputApiKey" class="fluent-input" placeholder="Pega tu clave AIzaSy... de Gemini" autocomplete="off">
-          <button type="button" class="btn-toggle-reveal" id="btnToggleKeyVisibility" title="Mostrar/ocultar clave">👁️</button>
-        </div>
-
-        <div class="select-group-row">
-          <label for="selectAiModel">Modelo de IA:</label>
-          <select id="selectAiModel" class="fluent-select">
-            <option value="gemini-flash-latest" selected>Gemini Flash (Recomendado • Visión &amp; Ultra-Rápido)</option>
-            <option value="gemini-3.8-flash">Gemini 3.8 Flash (Última Generación)</option>
-            <option value="gemini-3.6-flash">Gemini 3.6 Flash (Alta Velocidad)</option>
-            <option value="gemini-pro-latest">Gemini Pro (Máxima Precisión &amp; Razonamiento)</option>
-            <option value="gemini-3.1-pro-preview">Gemini 3.1 Pro (Razonamiento Profundo)</option>
-          </select>
-        </div>
-
-        <div class="button-row">
-          <button type="button" class="primary-accent-btn" id="btnSaveApiKey">Guardar Clave</button>
-          <button type="button" class="secondary-btn" id="btnTestApiKey">Probar Conexión</button>
-        </div>
-      </div>
-
-      <!-- Preset Color Schemes -->
-      <div class="tuning-section">
-        <label class="tuning-title">Paleta de Acentos de Neón</label>
-        <div class="palette-picker">
-          <button class="swatch-btn cyan active" data-accent="cyan" title="Cyan Neón"></button>
-          <button class="swatch-btn violet" data-accent="violet" title="Violeta Cyber"></button>
-          <button class="swatch-btn emerald" data-accent="emerald" title="Esmeralda Seguro"></button>
-          <button class="swatch-btn amber" data-accent="amber" title="Ámbar Alerta"></button>
-          <button class="swatch-btn rose" data-accent="rose" title="Rosa Plasma"></button>
-        </div>
-      </div>
-
-      <!-- Holographic Guide Ray & Laser Animation -->
-      <div class="tuning-section">
-        <label class="tuning-title">Transiciones & Rayo Holográfico</label>
-        <div class="toggle-row">
-          <span>Rayo Conector Dinámico (SVG Beam)</span>
-          <input type="checkbox" id="chkShowBeam">
-        </div>
-        <div class="toggle-row">
-          <span>Animación de Escaneo Láser al Recortar</span>
-          <input type="checkbox" id="chkScanLaser" checked>
-        </div>
-        <div class="toggle-row">
-          <span>Resplandor Especular Reactivo al Mouse</span>
-          <input type="checkbox" id="chkSpecular" checked>
-        </div>
-      </div>
-
-      <!-- Acrylic Glass Material Controls -->
-      <div class="tuning-section">
-        <label class="tuning-title">Material Acrílico Windows 11 (Mica Glass)</label>
-        
-        <div class="slider-control">
-          <div class="slider-label">
-            <span>Desenfoque (Backdrop Blur)</span>
-            <span class="slider-val" id="valBlur">32px</span>
-          </div>
-          <input type="range" id="sliderBlur" min="8" max="60" value="40">
-        </div>
-
-        <div class="slider-control">
-          <div class="slider-label">
-            <span>Opacidad de Fondo</span>
-            <span class="slider-val" id="valOpacity">60%</span>
-          </div>
-          <input type="range" id="sliderOpacity" min="30" max="98" value="60">
-        </div>
-
-        <div class="slider-control">
-          <div class="slider-label">
-            <span>Resplandor de Borde (Glow Power)</span>
-            <span class="slider-val" id="valGlow">75%</span>
-          </div>
-          <input type="range" id="sliderGlow" min="10" max="100" value="75">
-        </div>
-
-        <div class="slider-control">
-          <div class="slider-label">
-            <span>Radio de Esquinas</span>
-            <span class="slider-val" id="valRadius">18px</span>
-          </div>
-          <input type="range" id="sliderRadius" min="8" max="28" value="18">
-        </div>
-      </div>
-
-      <!-- Positioning Engine Config -->
-      <div class="tuning-section">
-        <label class="tuning-title">Posicionamiento & Offset del Cursor</label>
-        
-        <div class="slider-control">
-          <div class="slider-label">
-            <span>Distancia X al Cursor</span>
-            <span class="slider-val" id="valOffsetX">28px</span>
-          </div>
-          <input type="range" id="sliderOffsetX" min="0" max="80" value="28">
-        </div>
-
-        <div class="slider-control">
-          <div class="slider-label">
-            <span>Distancia Y al Cursor</span>
-            <span class="slider-val" id="valOffsetY">28px</span>
-          </div>
-          <input type="range" id="sliderOffsetY" min="0" max="80" value="28">
-        </div>
-
-        <div class="slider-control">
-          <div class="slider-label">
-            <span>Descanso del Mouse para Activar (Dwell)</span>
-            <span class="slider-val" id="valDwell">3.0s</span>
-          </div>
-          <input type="range" id="sliderDwell" min="0.5" max="8.0" step="0.5" value="3.0">
-        </div>
-
-        <div class="toggle-row">
-          <span>Evitar colisión de bordes (Smart Collision Engine)</span>
-          <input type="checkbox" id="chkSmartClamp" checked>
-        </div>
-        <div class="toggle-row">
-          <span>Inercia Suavizada (Spring Lerp)</span>
-          <input type="checkbox" id="chkLerp" checked>
-        </div>
-      </div>
-
-      <!-- Quick Preset Scenarios -->
-      <div class="tuning-section">
-        <label class="tuning-title">Cargar Escenarios de Prueba</label>
-        <div class="scenario-buttons">
-          <button class="btn-scenario" data-preset="adware">📦 Checkbox Adware Sospechoso</button>
-          <button class="btn-scenario" data-preset="error">⚠️ Error Crítico 0x80070005</button>
-          <button class="btn-scenario" data-preset="blender">🎨 Botón 3D Bake AO (GPU)</button>
-          <button class="btn-scenario" data-preset="uac">🛡️ Diálogo UAC Administrador</button>
-        </div>
-      </div>
-
-    </div>
-  </aside>
-
-  <!-- ======================================================== -->
-  <!-- HIGH-PERFORMANCE ARCHITECTURE & BENCHMARKS SECTION       -->
-  <!-- ======================================================== -->
-  <section class="arch-section" id="benchmarks">
-    <div class="section-badge-row">
-      <span class="section-pill">Rendimiento Monolítico Nativo</span>
-      <h2 class="section-heading">C# .NET 8 Unsafe: Cero Sobrecarga, Cero Fricción</h2>
-      <p class="section-lead">
-        Eliminamos las pausas del recolector de basura (GC) mediante memoria fija en el stack (<code>stackalloc</code>) y llamadas directas Win32 P/Invoke. Un solo ejecutable portátil sin librerías externas.
+  <section class="simulator-stage" id="simulator">
+    <div class="stage-header">
+      <span class="stage-tag">ESTUDIO DE DEMOSTRACIÓN INTERACTIVO</span>
+      <h2 class="stage-title">Experimenta los Tooltips Inteligentes en Vivo</h2>
+      <p class="stage-subtitle">
+        Pasa el cursor sobre cualquiera de los controles simulados a continuación para ver el HUD acrílico y la lluvia de código C# activarse instantáneamente.
       </p>
     </div>
 
-    <div class="benchmarks-grid">
+    <!-- Scenario Switcher -->
+    <div class="scenario-buttons-row">
+      <button class="scenario-pill-btn active" data-scenario="bloatware">
+        <span>📦</span> Instalador con Adware Oculto
+      </button>
+      <button class="scenario-pill-btn" data-scenario="error">
+        <span>🚨</span> Error de Kernel 0x80070005
+      </button>
+      <button class="scenario-pill-btn" data-scenario="blender">
+        <span>🎨</span> Control 3D Shader GPU
+      </button>
+    </div>
+
+    <!-- SIMULATED WINDOWS WORKSPACE -->
+    <div class="simulated-workspace-frame" id="simulatedWorkspace">
       
-      <!-- Card 1: TeachMe AI Engine (Winner) -->
-      <div class="benchmark-card winner">
-        <span class="benchmark-badge">👑 Rendimiento Óptimo</span>
-        <h3 class="benchmark-title">Tooltip AI (C# Unsafe Engine)</h3>
-        <p class="benchmark-desc">Arquitectura moderna .NET 8 Unsafe compilada a un binario único autocontenido con compresión y cero asignaciones en el Heap.</p>
-
-        <div class="benchmark-stat-row">
-          <div class="stat-label-wrap">
-            <span>Latencia de Inspección UI</span>
-            <strong style="color: var(--accent-cyan);">&lt; 1.2 ms</strong>
+      <!-- Target 1: Tricky Installer -->
+      <div class="sim-card sim-installer" id="targetInstaller">
+        <div class="sim-card-header">
+          <div class="sim-card-title">
+            <span>🛡️</span> Asistente de Instalación — MediaPro Studio 2026
           </div>
-          <div class="stat-bar-track">
-            <div class="stat-bar-fill green" style="width: 98%;"></div>
-          </div>
+          <div class="sim-card-controls"><span>─</span><span>□</span><span>✕</span></div>
         </div>
+        <div class="sim-card-body">
+          <p class="sim-text">Componentes adicionales listos para instalar en el sistema:</p>
 
-        <div class="benchmark-stat-row">
-          <div class="stat-label-wrap">
-            <span>Consumo de RAM en Reposo</span>
-            <strong style="color: var(--accent-cyan);">~18 MB</strong>
+          <div class="sim-inspectable-row safe tooltip-trigger" data-code-spec="core_unsafe" data-tooltip-title="MediaPro Codec Engine (Seguro)" data-tooltip-body="Componente del programa principal. Decodificador nativo AV1 y HEVC. Firma Authenticode verificada." data-spec-file="NativeKernelEngine.cs">
+            <label><input type="checkbox" checked disabled> <span>MediaPro Core Engine (Requerido)</span></label>
+            <span class="status-pill safe">Verificado</span>
           </div>
-          <div class="stat-bar-track">
-            <div class="stat-bar-fill green" style="width: 95%;"></div>
-          </div>
-        </div>
 
-        <div class="benchmark-stat-row">
-          <div class="stat-label-wrap">
-            <span>Pausas por Garbage Collection</span>
-            <strong style="color: var(--accent-cyan);">0.00 ms (Zero GC)</strong>
+          <div class="sim-inspectable-row alert tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="⚠️ Adware Detectado: Barra WebSearcher" data-tooltip-body="ADVERTENCIA: Esta casilla instala software publicitario no requerido que cambia tu motor de búsqueda y consume 140MB adicionales. Te recomendamos desmarcarla." data-spec-file="DwellRadarEngine.cs">
+            <label><input type="checkbox" checked> <span class="bold">Instalar Barra de Búsqueda WebSearcher & Opera Browser</span></label>
+            <span class="status-pill alert">Desmarcar Recomendado</span>
           </div>
-          <div class="stat-bar-track">
-            <div class="stat-bar-fill green" style="width: 100%;"></div>
-          </div>
-        </div>
 
-        <div class="code-compare-box">
-<span class="cm">// P/Invoke directo con stackalloc sin presionar el GC:</span>
-<span class="type">Span</span>&lt;<span class="type">char</span>&gt; buffer = <span class="kw">stackalloc char</span>[<span class="fn">512</span>];
-<span class="kw">fixed</span> (<span class="type">char</span>* pBuf = buffer) {
-    <span class="type">int</span> len = NativeMethods.<span class="fn">GetClassNameW</span>(hWnd, pBuf, <span class="fn">512</span>);
-    <span class="kw">return</span> len &gt; <span class="fn">0</span> ? <span class="kw">new string</span>(pBuf, <span class="fn">0</span>, len) : <span class="type">string</span>.Empty;
-}
+          <div class="sim-btn-row">
+            <button class="sim-btn tooltip-trigger" data-code-spec="core_unsafe" data-tooltip-title="Botón 'Instalación Avanzada'" data-tooltip-body="Permite configurar rutas personalizadas y desmarcar telemetría de terceros." data-spec-file="NativeKernelEngine.cs">Opciones Avanzadas...</button>
+            <button class="sim-btn primary tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="Botón 'Siguiente >'" data-tooltip-body="Al hacer clic iniciará la copia de archivos. Asegúrate de desmarcar el adware antes de pulsar aquí." data-spec-file="DwellRadarEngine.cs">Siguiente &gt;</button>
+          </div>
         </div>
       </div>
 
-      <!-- Card 2: Electron / Web View Wrappers -->
-      <div class="benchmark-card">
-        <h3 class="benchmark-title">Electron / Chromium Wrappers</h3>
-        <p class="benchmark-desc">Arquitectura estándar basada en navegador incrustado y Node.js de fondo.</p>
-
-        <div class="benchmark-stat-row">
-          <div class="stat-label-wrap">
-            <span>Latencia de Inspección UI</span>
-            <strong style="color: #f43f5e;">85 - 140 ms</strong>
-          </div>
-          <div class="stat-bar-track">
-            <div class="stat-bar-fill red" style="width: 25%;"></div>
-          </div>
+      <!-- Target 2: Cryptic Kernel Error -->
+      <div class="sim-card sim-error" id="targetError">
+        <div class="sim-card-header error-bar">
+          <div class="sim-card-title"><span>⚠️</span> Windows Security &amp; Kernel Subsystem</div>
+          <div class="sim-card-controls"><span>✕</span></div>
         </div>
-
-        <div class="benchmark-stat-row">
-          <div class="stat-label-wrap">
-            <span>Consumo de RAM en Reposo</span>
-            <strong style="color: #f43f5e;">350 - 620 MB</strong>
+        <div class="sim-card-body">
+          <h4 class="sim-error-heading tooltip-trigger" data-code-spec="core_unsafe" data-tooltip-title="Error 0x80070005: ERROR_ACCESS_DENIED" data-tooltip-body="El proceso actual carece del token de seguridad SeSecurityPrivilege para escribir en el archivo de sistema." data-spec-file="NativeKernelEngine.cs">Error 0x80070005: ERROR_ACCESS_DENIED</h4>
+          <p class="sim-text tooltip-trigger" data-code-spec="core_unsafe" data-tooltip-title="Descriptor de Seguridad IFileOperation" data-tooltip-body="Fallo en la llamada COM de bajo nivel al descriptor ACL del archivo de destino." data-spec-file="NativeKernelEngine.cs">Fallo al ejecutar <code>IFileOperation::PerformOperations()</code>.</p>
+          <div class="sim-btn-row">
+            <button class="sim-btn primary tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="Remediación: Ejecutar como Administrador" data-tooltip-body="Eleva el proceso con privilegios UAC para otorgar permisos de escritura." data-spec-file="DwellRadarEngine.cs">Ejecutar como Administrador</button>
           </div>
-          <div class="stat-bar-track">
-            <div class="stat-bar-fill red" style="width: 18%;"></div>
-          </div>
-        </div>
-
-        <div class="benchmark-stat-row">
-          <div class="stat-label-wrap">
-            <span>Pausas por Garbage Collection</span>
-            <strong style="color: #f43f5e;">Frecuentes (V8 Engine)</strong>
-          </div>
-          <div class="stat-bar-track">
-            <div class="stat-bar-fill red" style="width: 20%;"></div>
-          </div>
-        </div>
-
-        <div class="code-compare-box" style="opacity: 0.7;">
-<span class="cm">// Sobrecarga de IPC con múltiples procesos Chromium:</span>
-<span class="kw">const</span> { ipcRenderer } = <span class="fn">require</span>(<span class="type">'electron'</span>);
-ipcRenderer.<span class="fn">invoke</span>(<span class="type">'inspect-element'</span>, { coords })
-  .<span class="fn">then</span>(data =&gt; renderHtml(data)); <span class="cm">// ~120ms latencia</span>
-        </div>
-      </div>
-
-      <!-- Card 3: Managed Reflection Legacy -->
-      <div class="benchmark-card">
-        <h3 class="benchmark-title">WPF Clásico / Managed UIA</h3>
-        <p class="benchmark-desc">Implementaciones estándar con serialización COM y asignación masiva de objetos en memoria heap.</p>
-
-        <div class="benchmark-stat-row">
-          <div class="stat-label-wrap">
-            <span>Latencia de Inspección UI</span>
-            <strong style="color: #f59e0b;">18 - 35 ms</strong>
-          </div>
-          <div class="stat-bar-track">
-            <div class="stat-bar-fill yellow" style="width: 65%;"></div>
-          </div>
-        </div>
-
-        <div class="benchmark-stat-row">
-          <div class="stat-label-wrap">
-            <span>Consumo de RAM en Reposo</span>
-            <strong style="color: #f59e0b;">80 - 130 MB</strong>
-          </div>
-          <div class="stat-bar-track">
-            <div class="stat-bar-fill yellow" style="width: 58%;"></div>
-          </div>
-        </div>
-
-        <div class="benchmark-stat-row">
-          <div class="stat-label-wrap">
-            <span>Pausas por Garbage Collection</span>
-            <strong style="color: #f59e0b;">Periódicas Gen0 / Gen1</strong>
-          </div>
-          <div class="stat-bar-track">
-            <div class="stat-bar-fill yellow" style="width: 60%;"></div>
-          </div>
-        </div>
-
-        <div class="code-compare-box" style="opacity: 0.7;">
-<span class="cm">// Múltiples allocations por cada movimiento de mouse:</span>
-<span class="type">var</span> element = <span class="type">AutomationElement</span>.<span class="fn">FromPoint</span>(p);
-<span class="type">string</span> name = (<span class="type">string</span>)element.<span class="fn">GetCurrentPropertyValue</span>(
-    <span class="type">AutomationElement</span>.NameProperty);
         </div>
       </div>
 
@@ -876,142 +253,188 @@ ipcRenderer.<span class="fn">invoke</span>(<span class="type">'inspect-element'<
   </section>
 
   <!-- ======================================================== -->
-  <!-- FEATURES BENTO GRID                                      -->
+  <!-- PRODUCT ECOSYSTEM: THREE CORE MODULES                    -->
   <!-- ======================================================== -->
-  <section class="features-section" id="features">
-    <div class="section-badge-row">
-      <span class="section-pill">Capacidades del Sistema</span>
-      <h2 class="section-heading">Potencia de Grado Profesional para tu Escritorio</h2>
-      <p class="section-lead">Diseñado para ser invisible cuando trabajas y omnisciente cuando lo necesitas.</p>
+  <section class="ecosystem-stage" id="ecosystem">
+    <div class="stage-header">
+      <span class="stage-tag">ECOSISTEMA DE MÓDULOS DE TOOLTIP-AI</span>
+      <h2 class="stage-title">Tres Extensiones. Una Arquitectura de Cero Fricción.</h2>
+      <p class="stage-subtitle">Descubre las landing pages especializadas para cada módulo de la suite:</p>
     </div>
 
-    <div class="features-bento-grid">
+    <div class="ecosystem-cards-grid">
       
-      <div class="feature-bento-card">
-        <div class="feature-icon-bubble emerald">✂️</div>
-        <h3 class="feature-bento-title">Recorte Rápido con Ctrl + A</h3>
-        <p class="feature-bento-text">
-          Dibuja un recuadro sobre cualquier zona de la pantalla. Tooltip AI captura la imagen, procesa el texto con OCR local o multimodal y te despliega una ficha técnica instantánea.
+      <!-- Module 1: Translate -->
+      <div class="eco-module-card eco-translate tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="Tooltip-ai Translate: OCR Local en 5ms" data-tooltip-body="Traduce cualquier texto en pantalla sin abrir el navegador. Compatible con más de 50 idiomas y protección automática de contraseñas." data-spec-file="TranslateEngine.cs">
+        <div class="eco-card-top">
+          <div class="eco-icon-chip" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8;">🌐</div>
+          <span class="eco-tag" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);">Ruta: /translate</span>
+        </div>
+        <h3 class="eco-title">Tooltip-ai Translate</h3>
+        <p class="eco-desc">
+          Traducción de texto no seleccionable en videojuegos, PDFs protegidos y software extranjero en tiempo real con OCR nativo local y visión por IA.
         </p>
+        <ul class="eco-bullets">
+          <li>Extracción OCR local sin subir imágenes a servidores</li>
+          <li>Máscara automática para campos IsPassword</li>
+          <li>Atajo global dedicado: <kbd>Ctrl + T</kbd></li>
+        </ul>
+        <a href="translate" class="eco-action-link" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);">
+          Abrir Landing de Translate ↗
+        </a>
       </div>
 
-      <div class="feature-bento-card">
-        <div class="feature-icon-bubble">🎯</div>
-        <h3 class="feature-bento-title">Radar Dwell con Ctrl + D</h3>
-        <p class="feature-bento-text">
-          Activa el modo radar y descansa el cursor sobre cualquier botón o menú. Tras un breve dwell personalizable, el HUD se desliza suavemente mostrando su función y riesgo.
+      <!-- Module 2: Aura -->
+      <div class="eco-module-card eco-aura tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="Tooltip-ai Aura: Radar de Reposo Dwell" data-tooltip-body="Activa el escaneo por descanso de mouse. Explica controles y alerta de instaladores maliciosos sin dar clics." data-spec-file="DwellRadarEngine.cs">
+        <div class="eco-card-top">
+          <div class="eco-icon-chip" style="background: rgba(0, 245, 160, 0.15); color: #00f5a0;">👁️</div>
+          <span class="eco-tag" style="color: #00f5a0; border-color: rgba(0, 245, 160, 0.3);">Ruta: /aura</span>
+        </div>
+        <h3 class="eco-title">Tooltip-ai Aura</h3>
+        <p class="eco-desc">
+          Inteligencia ambiental y radar de reposo que analiza la interfaz con solo posar el mouse. Clasifica riesgos en 4 cuadrantes didácticos con comandos PowerShell.
         </p>
+        <ul class="eco-bullets">
+          <li>Activación por reposo de cursor personalizable (Dwell)</li>
+          <li>Matriz didáctica con clasificación de impacto</li>
+          <li>Atajo global dedicado: <kbd>Ctrl + D</kbd></li>
+        </ul>
+        <a href="aura" class="eco-action-link" style="color: #00f5a0; border-color: rgba(0, 245, 160, 0.3);">
+          Abrir Landing de Aura ↗
+        </a>
       </div>
 
-      <div class="feature-bento-card">
-        <div class="feature-icon-bubble emerald">🧠</div>
-        <h3 class="feature-bento-title">Google Gemini Flash &amp; Pro</h3>
-        <p class="feature-bento-text">
-          Conéctate directamente a la API oficial de Google AI Studio. Analiza diagramas complejos, fórmulas, menús de diseño 3D o códigos de error en tiempo real.
+      <!-- Module 3: Voice -->
+      <div class="eco-module-card eco-voice tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Tooltip-ai Voice: Síntesis Neuronal HD" data-tooltip-body="Transforma cualquier recorte de pantalla en audio fluido. Diseñado para accesibilidad visual y trabajo manos libres." data-spec-file="VoiceSynthesizer.cs">
+        <div class="eco-card-top">
+          <div class="eco-icon-chip" style="background: rgba(192, 132, 252, 0.15); color: #c084fc;">🎙️</div>
+          <span class="eco-tag" style="color: #c084fc; border-color: rgba(192, 132, 252, 0.3);">Ruta: /voice</span>
+        </div>
+        <h3 class="eco-title">Tooltip-ai Voice</h3>
+        <p class="eco-desc">
+          Sintetizador de voz neuronal que dicta en tiempo real los diagnósticos de pantalla, traducciones y advertencias de seguridad para accesibilidad universal.
         </p>
-      </div>
-
-      <div class="feature-bento-card">
-        <div class="feature-icon-bubble">🪟</div>
-        <h3 class="feature-bento-title">Acrílico Fluent Windows 11</h3>
-        <p class="feature-bento-text">
-          Material visual de cristal translúcido con saturación adaptativa, brillo especular reactivo al ángulo del mouse y bordes de neón inspirados en la estética Cyber Titanium.
-        </p>
-      </div>
-
-      <div class="feature-bento-card">
-        <div class="feature-icon-bubble emerald">⚡</div>
-        <h3 class="feature-bento-title">C# .NET 8 Unsafe Monolítico</h3>
-        <p class="feature-bento-text">
-          Sin dependencias de librerías externas ni instaladores pesados. Un único ejecutable optimizado que consume menos del 0.05% de CPU cuando estás jugando o trabajando.
-        </p>
-      </div>
-
-      <div class="feature-bento-card">
-        <div class="feature-icon-bubble">🛡️</div>
-        <h3 class="feature-bento-title">No Invasivo &amp; Privado</h3>
-        <p class="feature-bento-text">
-          Sin inicio automático forzado en Windows. Se aloja limpiamente en la bandeja del sistema (System Tray) y solo interactúa cuando tú pulsas sus combinaciones de teclas.
-        </p>
+        <ul class="eco-bullets">
+          <li>Voces humanas neuronales nativas de Windows 11</li>
+          <li>Lectura instantánea de recortes con atajo háptico</li>
+          <li>Atajo global dedicado: <kbd>Ctrl + V</kbd></li>
+        </ul>
+        <a href="voice" class="eco-action-link" style="color: #c084fc; border-color: rgba(192, 132, 252, 0.3);">
+          Abrir Landing de Voice ↗
+        </a>
       </div>
 
     </div>
   </section>
 
   <!-- ======================================================== -->
-  <!-- QUICKSTART & INSTALLATION GUIDE                          -->
+  <!-- BENCHMARKS & HIGH PERFORMANCE COMPARISON                 -->
   <!-- ======================================================== -->
-  <section class="quickstart-section" id="quickstart">
-    <span class="section-pill">Despliegue Rápido</span>
-    <h2 class="section-heading">Listo para Ejecutar en Segundos</h2>
-    <p class="section-lead">Requiere únicamente Windows 10/11 y .NET 8 SDK instalado en el equipo.</p>
-
-    <div class="quickstart-steps">
-      
-      <div class="step-card">
-        <div class="step-num">Paso 01</div>
-        <div class="step-title">Clonar el Repositorio</div>
-        <div class="cmd-box">
-          <code>git clone https://github.com/dixi3stdgdl-design/TeachMe-AI.git</code>
-          <button class="copy-cmd-btn" data-copy="git clone https://github.com/dixi3stdgdl-design/TeachMe-AI.git" title="Copiar comando">📋</button>
-        </div>
-      </div>
-
-      <div class="step-card">
-        <div class="step-num">Paso 02</div>
-        <div class="step-title">Compilar el Ejecutable Único</div>
-        <div class="cmd-box">
-          <code>dotnet publish -c Release -r win-x64 --self-contained</code>
-          <button class="copy-cmd-btn" data-copy="dotnet publish -c Release -r win-x64 --self-contained" title="Copiar comando">📋</button>
-        </div>
-      </div>
-
-      <div class="step-card">
-        <div class="step-num">Paso 03</div>
-        <div class="step-title">Ejecutar la Aplicación</div>
-        <div class="cmd-box">
-          <code>.\run.bat</code>
-          <button class="copy-cmd-btn" data-copy=".\run.bat" title="Copiar comando">📋</button>
-        </div>
-      </div>
-
+  <section class="benchmarks-stage" id="benchmarks">
+    <div class="stage-header">
+      <span class="stage-tag">INGENIERÍA NATIVA C# .NET 8 UNSAFE</span>
+      <h2 class="stage-title">Construido para Jugadores y Desarrolladores</h2>
+      <p class="stage-subtitle">Zero Garbage Collection. Cero navegadores embebidos. Cero saturación de memoria.</p>
     </div>
 
-    <div style="margin-top: 24px; display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;">
-      <a href="downloads/TooltipAI.exe" download class="cta-primary-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Descarga Directa EXE (72.4 MB)
-      </a>
-      <a href="https://github.com/dixi3stdgdl-design/TeachMe-AI" target="_blank" rel="noopener" class="cta-secondary-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-        Ver Repositorio en GitHub
-      </a>
-      <a href="privacy.html" class="cta-secondary-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
-        🛡️ Política de Privacidad
-      </a>
+    <div class="bench-comparison-grid">
+      <div class="bench-card winner tooltip-trigger" data-code-spec="core_unsafe" data-tooltip-title="Tooltip-ai: Arquitectura Monolítica Unsafe" data-tooltip-body="Pointers directos en stackalloc sin recolector de basura. Consume menos del 0.05% de CPU." data-spec-file="NativeKernelEngine.cs">
+        <div class="bench-badge">👑 Rendimiento Ganador</div>
+        <h3 class="bench-title">Tooltip-ai (C# Unsafe Engine)</h3>
+        <div class="bench-metric-row">
+          <span>Latencia de Inspección</span>
+          <strong class="emerald">&lt; 1.2 ms</strong>
+        </div>
+        <div class="metric-bar"><div class="fill emerald" style="width: 98%;"></div></div>
+
+        <div class="bench-metric-row">
+          <span>Consumo de RAM en Reposo</span>
+          <strong class="emerald">~18 MB</strong>
+        </div>
+        <div class="metric-bar"><div class="fill emerald" style="width: 95%;"></div></div>
+
+        <div class="bench-metric-row">
+          <span>Pausas por GC (Garbage Collector)</span>
+          <strong class="emerald">0.00 ms (Zero-GC)</strong>
+        </div>
+        <div class="metric-bar"><div class="fill emerald" style="width: 100%;"></div></div>
+      </div>
+
+      <div class="bench-card">
+        <h3 class="bench-title">Electron / Chromium Wrappers</h3>
+        <div class="bench-metric-row">
+          <span>Latencia de Inspección</span>
+          <strong class="rose">85 - 140 ms</strong>
+        </div>
+        <div class="metric-bar"><div class="fill rose" style="width: 25%;"></div></div>
+
+        <div class="bench-metric-row">
+          <span>Consumo de RAM en Reposo</span>
+          <strong class="rose">350 - 620 MB</strong>
+        </div>
+        <div class="metric-bar"><div class="fill rose" style="width: 18%;"></div></div>
+
+        <div class="bench-metric-row">
+          <span>Pausas por GC</span>
+          <strong class="rose">Frecuentes (V8 Heap)</strong>
+        </div>
+        <div class="metric-bar"><div class="fill rose" style="width: 20%;"></div></div>
+      </div>
     </div>
   </section>
 
   <!-- ======================================================== -->
-  <!-- SITE FOOTER                                              -->
+  <!-- DYNAMIC FLOATING TOOLTIP CARD (ATTACHED TO MOUSE/BEAM)   -->
   <!-- ======================================================== -->
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <img src="icon.png" width="22" height="22" style="border-radius: 5px;">
-        <span><strong>Tooltip AI</strong> — Inspección Cognitiva de Pantalla para Windows 11</span>
+  <div class="dynamic-floating-tooltip" id="dynamicTooltip">
+    <div class="tooltip-header">
+      <div class="tooltip-status-dot"></div>
+      <span class="tooltip-header-title" id="tooltipHeaderTitle">Especificación Técnica</span>
+      <span class="tooltip-spec-tag" id="tooltipSpecTag">NativeKernelEngine.cs</span>
+    </div>
+    <div class="tooltip-body-text" id="tooltipBodyText">
+      Pasa el cursor sobre los elementos para inspeccionar detalles y activar la lluvia de código.
+    </div>
+    <div class="tooltip-code-preview" id="tooltipCodePreview">
+      <pre><code id="tooltipCodeSnippet">// C# .NET 8 Unsafe P/Invoke:
+Span<char> buffer = stackalloc char[512];</code></pre>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- FOOTER                                                   -->
+  <!-- ======================================================== -->
+  <footer class="app-footer">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <div class="brand-link">
+          <img src="icon.png" alt="Tooltip-ai" class="brand-logo" width="24" height="24">
+          <span class="brand-title">Tooltip<span class="brand-accent">-ai</span></span>
+        </div>
+        <p class="footer-tagline">
+          El inspector neural de pantalla e inteligencia ambiental para Windows 11. Dominio oficial: <strong>tooltip-ai.com</strong>.
+        </p>
       </div>
-      <div class="footer-links">
-        <a href="#lab" class="footer-link">Simulador</a>
-        <a href="#benchmarks" class="footer-link">Arquitectura</a>
-        <a href="#features" class="footer-link">Características</a>
-        <a href="#quickstart" class="footer-link">Descarga</a>
-        <a href="privacy.html" class="footer-link">Privacidad</a>
-        <a href="https://github.com/dixi3stdgdl-design/TeachMe-AI" target="_blank" rel="noopener" class="footer-link">GitHub</a>
+
+      <div class="footer-links-col">
+        <h4>Ecosistema</h4>
+        <a href="translate">Tooltip-ai Translate</a>
+        <a href="aura">Tooltip-ai Aura</a>
+        <a href="voice">Tooltip-ai Voice</a>
+        <a href="privacy">Política de Privacidad</a>
       </div>
-      <div style="color: var(--text-muted); font-size: 11px;">
-        Licencia MIT • Desarrollado con C# .NET 8 Unsafe
+
+      <div class="footer-links-col">
+        <h4>Desarrollo</h4>
+        <a href="https://github.com/dixi3stdgdl-design/TeachMe-AI" target="_blank" rel="noopener">Repositorio GitHub</a>
+        <a href="downloads/TooltipAI.exe" download>Descarga EXE Directa</a>
+        <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Google AI Studio (BYOK)</a>
       </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+      <span>© 2026 Dixi3 Labs • Licencia MIT • C# .NET 8 Unsafe Native</span>
+      <span style="color: #00f5a0;">tooltip-ai.com</span>
     </div>
   </footer>
 
