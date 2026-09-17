@@ -169,10 +169,10 @@
         <div class="telemetry-sub">Frente a 600MB de Electron</div>
       </div>
 
-      <div class="telemetry-card tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="🧠 IA Multimodal: Gemini 2.5 Flash" data-tooltip-body="Soporta visión multimodal oficial de Google AI Studio con modelo BYOK (Bring Your Own Key) para privacidad absoluta." data-spec-file="GeminiClient.cs">
-        <div class="telemetry-val amber">Gemini 2.5</div>
+      <div class="telemetry-card tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="🧠 IA Multimodal Multi-proveedor (BYOK)" data-tooltip-body="Elige tu motor: Gemini, OpenAI, Azure OpenAI, OpenRouter o Claude. Tu clave, tu proveedor, sin backend intermedio de capturas." data-spec-file="AiProviderCatalog.cs">
+        <div class="telemetry-val amber">Multi-IA</div>
         <div class="telemetry-label">Motor Cognitivo</div>
-        <div class="telemetry-sub">Inferencia multimodal directa</div>
+        <div class="telemetry-sub">Gemini · OpenAI · Azure · Claude</div>
       </div>
     </div>
 
@@ -384,6 +384,43 @@
   </section>
 
   <!-- ======================================================== -->
+  <!-- SUPPORT / DONATE + ACCREDITATION                         -->
+  <!-- ======================================================== -->
+  <section class="support-stage" id="apoyar">
+    <div class="support-card">
+      <div class="support-copy">
+        <span class="stage-tag">PROYECTO ABIERTO · LICENCIA MIT</span>
+        <h2 class="stage-title">Tooltip-ai es gratis. Si te sirve, apóyalo.</h2>
+        <p class="stage-subtitle">
+          El núcleo del inspector se mantiene libre para todo el mundo. Los módulos Aura, Voice y Translate se financian por sí solos en Store.
+          Si tu equipo o empresa gana tiempo con esta herramienta, una donación ayuda a mantener dominio, builds y la siguiente beta.
+        </p>
+        <div class="support-actions">
+          <!-- PayPal.me oficial del proyecto -->
+          <a class="btn-donate" href="https://paypal.me/DixLqb" target="_blank" rel="noopener noreferrer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            Donar con PayPal
+          </a>
+          <a class="btn-support-secondary" href="downloads/TooltipAI.exe" download>Descargar gratis (EXE)</a>
+        </div>
+      </div>
+      <div class="support-accreditation">
+        <h3>Acreditación</h3>
+        <p>
+          Suite <strong>Tooltip-ai</strong> incubada y construida en colaboración operativa con
+          <strong>Xiaomi MiMo Desktop</strong> (sesión beta experimental) y
+          <strong>Google Gemini</strong> / APIs multimodales de proveedores de IA del usuario.
+        </p>
+        <p class="accreditation-disclaimer">
+          Disclaimer: Xiaomi MiMo Desktop y Google Gemini son marcas de sus respectivos titulares.
+          Su mención indica el entorno de desarrollo y los motores de inferencia soportados; no implica
+          afiliación, patrocinio ni respaldo oficial de Xiaomi ni de Google a este producto.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
   <!-- DYNAMIC FLOATING TOOLTIP CARD (ATTACHED TO MOUSE/BEAM)   -->
   <!-- ======================================================== -->
   <div class="dynamic-floating-tooltip" id="dynamicTooltip">
@@ -428,7 +465,10 @@ Span<char> buffer = stackalloc char[512];</code></pre>
         <h4>Desarrollo</h4>
         <a href="https://github.com/dixi3stdgdl-design/TeachMe-AI" target="_blank" rel="noopener">Repositorio GitHub</a>
         <a href="downloads/TooltipAI.exe" download>Descarga EXE Directa</a>
-        <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Google AI Studio (BYOK)</a>
+        <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Google AI Studio (Gemini)</a>
+        <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">OpenAI Platform</a>
+        <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">Anthropic Console</a>
+        <a href="#apoyar">Apoyar el proyecto</a>
       </div>
     </div>
 

@@ -35,7 +35,7 @@
 
 - **⚡ Recorte global (`Ctrl+Shift+A`):** congela la pantalla y permite seleccionar un área sin robar `Ctrl+A` (Seleccionar todo).
 - **🪟 HUD flotante:** panel con veredicto, explicación en lenguaje llano, impacto y chat de seguimiento.
-- **🤖 IA con Google Gemini (BYOK):** modelos `gemini-2.0-flash`, `gemini-2.5-flash` y `gemini-2.5-pro`. Tú aportas la clave.
+- **🤖 IA multi-proveedor (BYOK):** Gemini, OpenAI, Azure OpenAI, OpenRouter o Claude. Tú aportas la clave; se cifra con DPAPI local.
 - **📸 Pantalla completa y portapapeles:** analiza capturas o texto copiado.
 - **🔽 Bandeja del sistema:** presencia discreta; sin autoarranque forzado.
 - **🔒 Clave cifrada localmente:** DPAPI de Windows (`ProtectedData`). Sin backend intermedio de capturas de Dixi3 Lqbs. El análisis va a la API de Google que configures.

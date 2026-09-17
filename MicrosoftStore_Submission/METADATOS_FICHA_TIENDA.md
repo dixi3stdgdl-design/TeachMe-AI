@@ -10,7 +10,7 @@ Textos honestos listos para pegar en Partner Center. Sin claims imposibles de ve
 ## Descripción corta (máx. 270)
 
 ```text
-Analiza botones, diálogos y errores de Windows con IA didáctica (Gemini, tu propia clave). Recorte con Ctrl+Shift+A, HUD flotante y bandeja del sistema. Clave cifrada con DPAPI; sin backend intermedio de capturas.
+Analiza botones, diálogos y errores de Windows con IA didáctica multi-proveedor BYOK (Gemini, OpenAI, Azure, OpenRouter o Claude — tu propia clave). Recorte con Ctrl+Shift+A, HUD flotante y bandeja del sistema. Clave cifrada con DPAPI; sin backend intermedio de capturas.
 ```
 
 ## Descripción completa
@@ -30,7 +30,7 @@ FUNCIONES
 • HUD flotante con veredicto, explicación, impacto y chat de seguimiento.
 • Radar opcional con Ctrl+Shift+D (análisis al reposar el cursor; apagado por defecto).
 • Captura de pantalla completa y análisis de portapapeles.
-• Modelos Gemini 2.0 Flash / 2.5 Flash / 2.5 Pro (Bring Your Own Key).
+• Proveedores de IA a tu elección (BYOK): Gemini, OpenAI, Azure OpenAI, OpenRouter o Claude.
 
 PRIVACIDAD
 • Tu clave de API se cifra en el equipo con Windows DPAPI; no se envía a nuestros servidores.
@@ -39,7 +39,7 @@ PRIVACIDAD
 
 REQUISITOS
 • Windows 10 (1809+) o Windows 11, x64.
-• Conexión a Internet y clave de Google Gemini para el análisis con IA.
+• Conexión a Internet y una clave de API del proveedor de IA que elijas (p. ej. Google Gemini u OpenAI).
 ```
 
 ## Características (máx. 120 c/u)
