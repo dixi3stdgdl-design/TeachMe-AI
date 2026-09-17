@@ -41,6 +41,6 @@ Chrome Web Store; código WPF de módulos; renombrar repo `TeachMe-AI`; activar 
 - [x] T4: `http://tooltip-ai.com` HTTP 200 + landing Tooltip-ai (covers: S2)
 - [x] T5: Landings multi-proveedor + Donar NCP + acreditación MiMo (covers: S2)
 - [x] T6: Docs precios/payout Store (covers: S2)
-- [ ] T7: Enforce HTTPS cuando GitHub emita cert — acceptance: `https://tooltip-ai.com` 200 (covers: S2; depends: T3)
+- [x] T7: Enforce HTTPS — acceptance: `https://tooltip-ai.com` 200 (covers: S2) — certificado Let's Encrypt CN=tooltip-ai.com emitido tras reset de CNAME (2026-09-17)
 - [ ] T8: Reenvío certificación Assistant (listing ES) — acceptance: estado Certification (covers: S2)
 - [ ] T9: 2FA Porkbun con app — acceptance: switch on (covers: S2)
