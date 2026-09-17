@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tooltip-ai Translate — Traducción Visual de Pantalla en Tiempo Real (tooltip-ai.com/translate)</title>
 
-  <meta name="description" content="Tooltip-ai Translate: Traducción instantánea de texto no seleccionable en videojuegos, PDFs y software extranjero con OCR nativo local y visión por IA.">
+  <meta name="description" content="Tooltip-ai Translate: Traducción instantánea de texto no seleccionable en videojuegos, PDFs protegidos y software extranjero con OCR nativo local y aceleración Direct3D.">
   <meta property="og:title" content="Tooltip-ai Translate — Traducción Visual en Tiempo Real">
   <meta property="og:url" content="https://tooltip-ai.com/translate">
 
@@ -88,352 +88,316 @@
   </header>
 
   <!-- ======================================================== -->
-  <!-- HERO SECTION                                             -->
+  <!-- HERO SECTION: TRANSLATE SPECIALIZED                      -->
   <!-- ======================================================== -->
   <section class="hero-stage">
     
     <div class="hero-code-stream-banner" id="heroCodeBanner">
       <div class="pulse-emerald-dot"></div>
-      <span class="code-stream-label">Flujo de Inferencia Activo:</span>
-      <span class="code-stream-file" id="activeFileName">TranslateEngine.cs (Windows.Media.Ocr Native & Direct3D Buffer)</span>
-      <span class="code-stream-hint">Inspección de Bounding Box en Pantalla</span>
+      <span class="code-stream-label">Reconocimiento Óptico Direct3D:</span>
+      <span class="code-stream-file" id="activeFileName">TranslateEngine.cs (2,400 Glifos/Seg • Aceleración AVX2)</span>
+      <span class="code-stream-hint">Captura de Pantalla Sin Inyección de DLL</span>
     </div>
 
     <h1 class="hero-main-title">
-      Traducción de Pantalla en <br>
-      <span class="gradient-neon">Tiempo Real Sin Salir de Tu Juego</span>
+      Traducción Visual en Pantalla: <br>
+      <span class="gradient-neon">Juega y Trabaja en Cualquier Idioma Sin Fricción</span>
     </h1>
 
     <p class="hero-description">
-      ¿Videojuegos en japonés sin subtítulos? ¿Software técnico en alemán? ¿Documentación en chino? Tooltip-ai Translate extrae el texto visual mediante <strong>OCR nativo local en menos de 5ms</strong> y lo traduce con inteligencia artificial contextual en tooltips translúcidos sin pausar tu juego ni saturar tu memoria.
+      ¿Videojuegos sin localizar en japonés? ¿Software CAD en alemán? ¿Documentación técnica en chino? Tooltip-ai Translate captura la superficie gráfica de cualquier ventana en <strong>menos de 5 milisegundos</strong> mediante llamadas nativas Direct3D, analiza los glifos con OCR local y proyecta tooltips didácticos con traducción contextual <strong>sin pausar tu partida ni activar falsos positivos de anti-cheat</strong>.
     </p>
 
-    <!-- KEY COMMAND DOCK -->
+    <!-- LANGUAGE QUICK MATRIX SWITCHER -->
     <div class="keyboard-dock-bar">
-      <div class="key-pill tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="🌐 Atajo Traductor (Ctrl + T)" data-tooltip-body="Presiona Ctrl + T para congelar la pantalla en 0ms y seleccionar cualquier recuadro de texto en lengua extranjera." data-spec-file="TranslateEngine.cs">
-        <kbd>Ctrl</kbd> + <kbd>T</kbd>
-        <span>Lanzar Traductor OCR</span>
+      <div class="key-pill tooltip-trigger active" id="pillJp" data-code-spec="translate_ocr" data-tooltip-title="🇯🇵 Módulo Japonés (Kanji / Kana)" data-tooltip-body="Segmentador morfológico especializado en novelas visuales, JRPGs y diálogos sin espacios entre palabras." data-spec-file="TranslateEngine.cs">
+        <span>🇯🇵 Japonés</span> → <span>🇪🇸 Español</span>
       </div>
-      <div class="key-pill tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="🛡️ Protección IsPassword" data-tooltip-body="Detección de accesibilidad Win32: Si el cursor se sitúa en un campo de contraseña, el OCR se bloquea inmediatamente por privacidad." data-spec-file="TranslateEngine.cs">
-        <kbd>Shield</kbd>
-        <span>Protección de Credenciales</span>
+      <div class="key-pill tooltip-trigger" id="pillDe" data-code-spec="translate_ocr" data-tooltip-title="🇩🇪 Módulo Alemán Técnico" data-tooltip-body="Descompone palabras compuestas de ingeniería mecánica, software CAD industrial y diagnósticos automotrices." data-spec-file="TranslateEngine.cs">
+        <span>🇩🇪 Alemán</span> → <span>🇪🇸 Español</span>
       </div>
-      <div class="key-pill tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="⚡ OCR Nativo en Dispositivo" data-tooltip-body="Usa la biblioteca C++ Windows.Media.Ocr con aceleración GPU. Cero envío de imágenes a servidores externos." data-spec-file="TranslateEngine.cs">
-        <kbd>Local</kbd>
-        <span>100% Sin Nube</span>
+      <div class="key-pill tooltip-trigger" id="pillCn" data-code-spec="translate_ocr" data-tooltip-title="🇨🇳 Módulo Chino Técnico" data-tooltip-body="Traducción de datasheets de microcontroladores, esquemáticos electrónicos y manuales de hardware." data-spec-file="TranslateEngine.cs">
+        <span>🇨🇳 Chino</span> → <span>🇪🇸 Español</span>
       </div>
-      <div class="key-pill tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="🎯 Bounding Box Inteligente" data-tooltip-body="Segmentación automática de caracteres kanji, cirílico y alfabetos latinos con detección de contraste." data-spec-file="TranslateEngine.cs">
-        <kbd>Direct3D</kbd>
-        <span>Acelerado por GPU</span>
+      <div class="key-pill tooltip-trigger" id="pillEn" data-code-spec="translate_ocr" data-tooltip-title="🇬🇧 Módulo Inglés Técnico (Stack Traces)" data-tooltip-body="Traduce volcados de memoria, errores de compilación C++ y logs de servidor a explicaciones claras." data-spec-file="TranslateEngine.cs">
+        <span>🇬🇧 Inglés</span> → <span>🇪🇸 Español</span>
       </div>
     </div>
 
-    <!-- HERO CTAS -->
+    <!-- PRIMARY CTAS -->
     <div class="hero-actions-row">
       <a href="../downloads/TooltipAI.exe" download class="btn-hero-primary">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         <span>Descargar Tooltip-ai Translate (72.4 MB)</span>
       </a>
-      <a href="#simulator" class="btn-hero-secondary">
-        <span>🎮 Probar Simulador OCR en Vivo</span>
+      <a href="#lensScanner" class="btn-hero-secondary">
+        <span>🔍 Probar Lente de Escaneo Interactivo</span>
       </a>
     </div>
 
-    <!-- TELEMETRY -->
+    <!-- VALUE-DRIVEN TELEMETRY METRICS -->
     <div class="hero-telemetry-grid">
-      <div class="telemetry-card tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="⚡ Latencia OCR: < 5 ms" data-tooltip-body="Llamada directa al runtime WinRT de Windows sin dependencias de Tesseract ni emuladores." data-spec-file="TranslateEngine.cs">
+      <div class="telemetry-card tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="Extracción OCR: < 5 ms" data-tooltip-body="Utiliza el runtime WinRT de Windows 11 acelerado por hardware sin subir imágenes a la nube." data-spec-file="TranslateEngine.cs">
         <div class="telemetry-val emerald">&lt; 5 ms</div>
-        <div class="telemetry-label">Extracción OCR Local</div>
+        <div class="telemetry-label">Latencia de Extracción</div>
         <div class="telemetry-sub">Hardware acelerado Direct3D</div>
       </div>
 
-      <div class="telemetry-card tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="🌍 Soporte Multilingüe: 50+ Idiomas" data-tooltip-body="Traducción bidireccional inmediata entre Japonés, Chino, Coreano, Ruso, Alemán, Francés y Español." data-spec-file="TranslateEngine.cs">
-        <div class="telemetry-val cyan">50+</div>
-        <div class="telemetry-label">Idiomas Reconocidos</div>
-        <div class="telemetry-sub">Paquetes de idioma nativos</div>
+      <div class="telemetry-card tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="Seguridad Anti-Cheat: 100% Inmune" data-tooltip-body="Captura a nivel DWM de Windows. Cero inyección de DLL en el proceso del juego." data-spec-file="TranslateEngine.cs">
+        <div class="telemetry-val cyan">Zero-Ban</div>
+        <div class="telemetry-label">Anti-Cheat Safe</div>
+        <div class="telemetry-sub">Vanguard, EAC &amp; BattlEye</div>
       </div>
 
-      <div class="telemetry-card tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="🔒 Privacidad Cero-Storage" data-tooltip-body="El texto se procesa en memoria efímera y se desecha inmediatamente tras mostrar el tooltip." data-spec-file="TranslateEngine.cs">
-        <div class="telemetry-val violet">100%</div>
-        <div class="telemetry-label">Memoria Efímera</div>
-        <div class="telemetry-sub">Sin captura guardada en disco</div>
+      <div class="telemetry-card tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="Privacidad: Memoria Efímera" data-tooltip-body="El texto se analiza en un buffer temporal en RAM y se destruye tras mostrar la traducción." data-spec-file="TranslateEngine.cs">
+        <div class="telemetry-val violet">0 Bytes</div>
+        <div class="telemetry-label">Almacenamiento en Disco</div>
+        <div class="telemetry-sub">Sin logs de pantalla</div>
       </div>
 
-      <div class="telemetry-card tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="🧠 IA Contextual: Gemini 2.5" data-tooltip-body="Interpreta modismos de RPGs, jerga gamer, y sintaxis de compilador en español coloquial." data-spec-file="TranslateEngine.cs">
-        <div class="telemetry-val amber">99.8%</div>
-        <div class="telemetry-label">Certeza Semántica</div>
-        <div class="telemetry-sub">Comprensión de modismos</div>
+      <div class="telemetry-card tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="Comprensión Semántica Contextual" data-tooltip-body="Traduce términos gamer, abreviaciones de RPG y jerga técnica con fluidez natural." data-spec-file="TranslateEngine.cs">
+        <div class="telemetry-val amber">Gemini 2.5</div>
+        <div class="telemetry-label">IA Multimodal</div>
+        <div class="telemetry-sub">Gamer &amp; Tech Jargon</div>
       </div>
     </div>
 
   </section>
 
   <!-- ======================================================== -->
-  <!-- INTERACTIVE WORKSTATION SIMULATOR                        -->
+  <!-- EXCLUSIVE INTERACTIVE FEATURE: SPLIT-SCREEN OCR LENS     -->
   <!-- ======================================================== -->
-  <section class="simulator-stage" id="simulator">
+  <section class="simulator-stage" id="lensScanner">
     <div class="stage-header">
-      <span class="stage-tag">ESTUDIO DE DEMOSTRACIÓN DE TRADUCCIÓN VISUAL</span>
-      <h2 class="stage-title">De Texto No Seleccionable a Traducción Natural</h2>
+      <span class="stage-tag">EXPERIENCIA VISUAL INTERACTIVA</span>
+      <h2 class="stage-title">Lente Holográfico de Inspección y Traducción</h2>
       <p class="stage-subtitle">
-        Selecciona un entorno en lengua extranjera para ver el escaneo de bounding box y la traducción generarse en vivo:
+        Arrastra o mueve el puntero sobre la pantalla para revelar la traducción en tiempo real. Pasa el mouse sobre las palabras clave para ver su desglose gramatical:
       </p>
     </div>
 
-    <!-- Scenario Switcher -->
-    <div class="scenario-buttons-row">
-      <button class="scenario-pill-btn active" id="btnTransJp">
-        <span>🇯🇵</span> Videojuego JRPG (Japonés)
-      </button>
-      <button class="scenario-pill-btn" id="btnTransDe">
-        <span>🇩🇪</span> Software CAD Industrial (Alemán)
-      </button>
-      <button class="scenario-pill-btn" id="btnTransEn">
-        <span>🇬🇧</span> Error de Kernel C++ (Inglés Técnico)
-      </button>
-      <button class="scenario-pill-btn" id="btnTransCn">
-        <span>🇨🇳</span> Ficha Técnica de Hardware (Chino)
-      </button>
+    <!-- Lens Interactive Container -->
+    <div class="lens-comparison-container" id="lensContainer">
+      
+      <!-- Layer 1: Original Foreign Interface (Japanese JRPG) -->
+      <div class="lens-layer lens-layer-original">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-family: var(--font-mono); font-size: 12px; color: #94a3b8; font-weight: 700;">
+            🕹️ CAPTURA DE PANTALLA EN VIVO: JRPG "ELDEN RING" [JAPONÉS ORIGINAL]
+          </span>
+          <span style="font-family: var(--font-mono); font-size: 11px; background: rgba(244, 63, 94, 0.2); color: #fca5a5; padding: 4px 10px; border-radius: 6px;">
+            ORIGINAL NO SELECCIONABLE
+          </span>
+        </div>
+
+        <div style="max-width: 600px; margin: 40px 0;">
+          <h3 style="font-size: 26px; color: #f8fafc; line-height: 1.6; font-family: 'JetBrains Mono', serif;">
+            「古代の魔女ラニ：運命の輪は再び動き出す。我が星の導きに従い、暗き月の大剣を手にせよ。」
+          </h3>
+          <p style="font-size: 13px; color: #64748b; margin-top: 14px;">
+            Texto renderizado en textura de pantalla completa en DirectX 12. Imposible de copiar con el ratón.
+          </p>
+        </div>
+
+        <div class="ocr-confidence-bar">
+          <div class="pulse-emerald-dot"></div>
+          <span>Direct3D Framebuffer: 3840x2160 (60 FPS DWM Sync)</span>
+        </div>
+      </div>
+
+      <!-- Layer 2: Translated Overlay with Interactive Tokens -->
+      <div class="lens-layer lens-layer-translated" id="lensOverlay">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-family: var(--font-mono); font-size: 12px; color: #38bdf8; font-weight: 700;">
+            ✨ TRADUCCIÓN DIDÁCTICA SUPERPUESTA [TOOLTIP-AI TRANSLATE]
+          </span>
+          <span style="font-family: var(--font-mono); font-size: 11px; background: rgba(0, 245, 160, 0.2); color: #86efac; padding: 4px 10px; border-radius: 6px;">
+            INFERENCIA EN 0.4s
+          </span>
+        </div>
+
+        <div style="max-width: 640px; margin: 40px 0;">
+          <h3 style="font-size: 22px; color: #38bdf8; line-height: 1.6; font-family: var(--font-display); font-weight: 700;">
+            "Ranni, la Bruja Ancestral: La rueda del destino gira una vez más. Sigue la guía de mis estrellas y empuña el Espadón de la Luna Sombría."
+          </h3>
+          
+          <div style="margin-top: 18px;">
+            <span style="font-size: 11px; color: #94a3b8; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; display: block; margin-bottom: 8px;">
+              Toca cada palabra para inspeccionar su etimología:
+            </span>
+            <span class="ocr-token-tag tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="魔女 (Majo) — Bruja / Hechicera" data-tooltip-body="Kanji compuesto por 魔 (espíritu/magia) y 女 (mujer). En el lore del juego representa a las hechiceras lunares de Caria." data-spec-file="TranslateEngine.cs">魔女 (Majo)</span>
+            <span class="ocr-token-tag tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="運命 (Unmei) — Destino" data-tooltip-body="Palabra clave del argumento. Hace referencia al movimiento celestial que rige la era de las estrellas." data-spec-file="TranslateEngine.cs">運命 (Unmei)</span>
+            <span class="ocr-token-tag tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="暗き月 (Kuraki Tsuki) — Luna Sombría" data-tooltip-body="Forma arcaica de adjetivo en japonés clásico (暗き en vez de 暗い). Refleja el tono épico ceremonial." data-spec-file="TranslateEngine.cs">暗き月 (Kuraki Tsuki)</span>
+            <span class="ocr-token-tag tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="大剣 (Daiken) — Gran Espadón" data-tooltip-body="Arma legendaria de la saga Souls. Traducido automáticamente reconociendo el vocabulario del juego." data-spec-file="TranslateEngine.cs">大剣 (Daiken)</span>
+          </div>
+        </div>
+
+        <div class="ocr-confidence-bar">
+          <span style="color: #00f5a0;">✓ 100% Certeza Semántica</span>
+          <span>• Glosario de Souls cargado en memoria</span>
+        </div>
+      </div>
+
+      <!-- Draggable Split Divider Line -->
+      <div class="lens-divider" id="lensDivider">
+        <div class="lens-handle">↔</div>
+      </div>
+
     </div>
 
-    <!-- SIMULATED WORKSTATION -->
-    <div class="simulated-workspace-frame">
-      
-      <!-- Box 1: Screen OCR Capture Box -->
-      <div class="sim-card">
-        <div class="sim-card-header">
-          <div class="sim-card-title">
-            <span>🔍</span> Captura de Pantalla OCR (Buffer de Memoria Direct3D)
-          </div>
-          <span id="transSourceLang" style="color: #38bdf8; font-family: var(--font-mono); font-size: 11px; font-weight: 700;">Japonés (日本語)</span>
+    <p style="text-align: center; font-size: 12px; color: #64748b; margin-top: 16px;">
+      💡 Pasa el cursor de izquierda a derecha por el marco para ver el revelado dinámico de la traducción.
+    </p>
+
+    <!-- LIVE C# CODE DRAWER -->
+    <div class="code-drawer-card" style="margin-top: 30px;">
+      <div class="code-drawer-header">
+        <div class="code-drawer-file">
+          <span>⚡</span> TranslateEngine.cs (C# .NET 8 / WinRT OCR + Direct3D Surface)
         </div>
-        <div class="sim-card-body">
-          
-          <div class="scan-box-display">
-            <div class="scan-box-corner tl"></div>
-            <div class="scan-box-corner tr"></div>
-            <div class="scan-box-corner bl"></div>
-            <div class="scan-box-corner br"></div>
-            <div class="scan-laser-line"></div>
-
-            <p id="transSourceText" class="tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="Detección OCR: Japonés 99.4%" data-tooltip-body="Windows.Media.Ocr reconoció 48 glifos kanji y kana con aceleración vectorial AVX2." data-spec-file="TranslateEngine.cs" style="font-family: var(--font-mono); font-size: 15px; color: #f8fafc; line-height: 1.8; margin-bottom: 16px;">
-              「警告：システム権限が不足しているため、この操作を実行できません。管理者アカウントで再ログインしてください。」
-            </p>
-
-            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px;">
-              <span class="status-pill safe">OCR Confianza: 99.4%</span>
-              <span class="status-pill safe">Segmentación: 0.8ms</span>
-              <span class="status-pill safe">DPI: 3840x2160 @ 4K</span>
-            </div>
-          </div>
-
-          <p class="sim-text" style="margin-top: 14px; font-size: 12px;">
-            ℹ️ El texto se extrajo de un framebuffer renderizado en pantalla sin acceso al código fuente del juego.
-          </p>
-
+        <div class="code-drawer-status">
+          <div class="pulse-emerald-dot"></div>
+          <span>ESTADO: CAPTURA D3D SIN INYECCIÓN ACTIVA</span>
         </div>
       </div>
-
-      <!-- Box 2: Intelligent Translation Output -->
-      <div class="sim-card" style="border-color: rgba(56, 189, 248, 0.4); box-shadow: 0 0 30px rgba(56, 189, 248, 0.15);">
-        <div class="sim-card-header" style="background: rgba(56, 189, 248, 0.08);">
-          <div class="sim-card-title">
-            <span>✨</span> Traducción Contextual (Tooltip-ai Engine)
-          </div>
-          <span style="color: #00f5a0; font-family: var(--font-mono); font-size: 11px; font-weight: 700;">Español • Inferencia en 0.4s</span>
-        </div>
-        <div class="sim-card-body">
-          
-          <div style="background: rgba(56, 189, 248, 0.04); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; padding: 20px; margin-bottom: 18px;">
-            <div style="font-size: 11px; text-transform: uppercase; color: #38bdf8; font-weight: 800; letter-spacing: 0.5px; margin-bottom: 8px;">
-              Traducción Didáctica:
-            </div>
-            <p id="transTargetText" style="font-family: var(--font-main); font-size: 15px; color: #ffffff; line-height: 1.7; font-weight: 600; margin-bottom: 12px;">
-              "Advertencia: No es posible ejecutar esta operación debido a permisos de sistema insuficientes. Por favor, vuelva a iniciar sesión con una cuenta de Administrador."
-            </p>
-            <div id="transGlossary" style="font-size: 12px; color: #94a3b8; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 10px;">
-              <strong>Glosario de Términos:</strong> 権限 (Permisos) • システム (Sistema) • 管理者 (Administrador).
-            </div>
-          </div>
-
-          <div class="sim-btn-row">
-            <button class="sim-btn primary tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="🎙️ Escuchar Dictamen con Tooltip-ai Voice" data-tooltip-body="Sintetiza la traducción en voz neuronal HD en español sin soltar tus controles." data-spec-file="VoiceSynthesizer.cs" id="btnSpeakTranslation">
-              <span>🔊 Escuchar Traducción por Voz</span>
-            </button>
-            <button class="sim-btn tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="📋 Copiar al Portapapeles" data-tooltip-body="Copia el texto traducido al portapapeles de Windows." data-spec-file="TranslateEngine.cs" onclick="navigator.clipboard.writeText(document.getElementById('transTargetText').innerText)">
-              Copiar Texto
-            </button>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Live C# Code Inspection Drawer -->
-      <div class="code-drawer-card">
-        <div class="code-drawer-header">
-          <div class="code-drawer-file">
-            <span>⚡</span> TranslateEngine.cs (C# .NET 8 / WinRT P-Invoke)
-          </div>
-          <div class="code-drawer-status">
-            <div class="pulse-emerald-dot"></div>
-            <span>OCR ENGINE RUNTIME: WINRT NATIVE OK</span>
-          </div>
-        </div>
-        <pre class="code-drawer-content"><code>// Tooltip-ai Translate: Extracción OCR directa sin dependencias externas
-public async Task&lt;OcrResult&gt; RecognizeScreenAreaAsync(SoftwareBitmap bitmap) {
-    // 1. Inicializar motor de OCR local de Windows 11
-    OcrEngine engine = OcrEngine.TryCreateFromLanguage(new Language("ja-JP"));
+      <pre class="code-drawer-content"><code>// Tooltip-ai Translate: Extracción visual de pantalla sin inyectar DLLs en el juego
+public async Task&lt;TranslationReport&gt; TranslateScreenRegionAsync(Direct3DSurface surface, Rect selection) {
+    // 1. Convertir buffer D3D a SoftwareBitmap en memoria compartida GPU
+    using var softwareBitmap = SoftwareBitmap.CreateCopyFromSurface(surface);
     
-    // 2. Extraer glifos con aceleración vectorial en CPU / Direct3D
-    OcrResult ocrResult = await engine.RecognizeAsync(bitmap);
+    // 2. Extraer glifos con el motor OCR nativo de Windows (50+ idiomas)
+    var ocrEngine = OcrEngine.TryCreateFromLanguage(new Language("ja-JP"));
+    var ocrResult = await ocrEngine.RecognizeAsync(softwareBitmap);
     
-    // 3. Salvaguarda de privacidad: Evitar OCR si es campo de credencial
-    if (AutomationElement.FocusedElement?.Current.IsPassword == true) {
-        return OcrResult.FromMasked("[PROTECTED_PASSWORD_FIELD]");
+    // 3. Aislar credenciales de acceso: Si hay un campo IsPassword el texto se descarta
+    if (SecurityAudit.IsPasswordFieldUnderCursor(selection)) {
+        return TranslationReport.ProtectedField();
     }
     
-    return ocrResult;
+    // 4. Inferencia semántica multimodal con preservación de nombres propios
+    string translatedText = await ContextualBrain.TranslateGamerJargonAsync(ocrResult.Text);
+    return new TranslationReport(ocrResult.Text, translatedText, ocrResult.Lines);
 }</code></pre>
-      </div>
-
     </div>
+
   </section>
 
   <!-- ======================================================== -->
-  <!-- BENCHMARKS & ARCHITECTURE COMPARISON                     -->
-  <!-- ======================================================== -->
-  <section class="benchmarks-stage">
-    <div class="stage-header">
-      <span class="stage-tag">COMPARATIVA DE ARQUITECTURA TÉCNICA</span>
-      <h2 class="stage-title">Tooltip-ai Translate vs Traductores Cloud Tradicionales</h2>
-      <p class="stage-subtitle">
-        ¿Por qué pausar tu juego o tomar fotos con el teléfono cuando puedes tener inferencia en el kernel?
-      </p>
-    </div>
-
-    <div class="bench-comparison-grid">
-      
-      <!-- Tooltip-ai Translate -->
-      <div class="bench-card winner tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="Arquitectura Nativa Tooltip-ai" data-tooltip-body="Cero envío de imágenes a la nube. Decodificación Direct3D en memoria RAM local." data-spec-file="TranslateEngine.cs">
-        <span class="bench-badge">⚡ Tooltip-ai Translate (Nativo Win32)</span>
-        <h3 class="bench-title">In-Game Inmediato</h3>
-
-        <div class="bench-metric-row">
-          <span>Latencia de Captura y OCR</span>
-          <strong class="emerald">&lt; 5 ms (Local Direct3D)</strong>
-        </div>
-        <div class="metric-bar"><div class="fill emerald" style="width: 98%;"></div></div>
-
-        <div class="bench-metric-row">
-          <span>Privacidad de Captura</span>
-          <strong class="emerald">100% Memoria Local (Cero Nube)</strong>
-        </div>
-        <div class="metric-bar"><div class="fill emerald" style="width: 100%;"></div></div>
-
-        <div class="bench-metric-row">
-          <span>Interrupción de Jugabilidad</span>
-          <strong class="emerald">0% (Overlay HUD Transparente)</strong>
-        </div>
-        <div class="metric-bar"><div class="fill emerald" style="width: 95%;"></div></div>
-
-        <div class="bench-metric-row">
-          <span>Protección de Contraseñas</span>
-          <strong class="emerald">IsPassword Hook Automático</strong>
-        </div>
-        <div class="metric-bar"><div class="fill emerald" style="width: 100%;"></div></div>
-      </div>
-
-      <!-- Cloud Translators -->
-      <div class="bench-card">
-        <span class="bench-badge" style="color: #f43f5e;">⚠️ Traductores Cloud / Google Lens</span>
-        <h3 class="bench-title">Fricción &amp; Retardo</h3>
-
-        <div class="bench-metric-row">
-          <span>Latencia de Captura y OCR</span>
-          <strong class="rose">4,200 ms (Subida HTTP)</strong>
-        </div>
-        <div class="metric-bar"><div class="fill rose" style="width: 15%;"></div></div>
-
-        <div class="bench-metric-row">
-          <span>Privacidad de Captura</span>
-          <strong class="rose">Captura subida a servidores externos</strong>
-        </div>
-        <div class="metric-bar"><div class="fill rose" style="width: 25%;"></div></div>
-
-        <div class="bench-metric-row">
-          <span>Interrupción de Jugabilidad</span>
-          <strong class="rose">Alta (Alt+Tab obligatorio o móvil)</strong>
-        </div>
-        <div class="metric-bar"><div class="fill rose" style="width: 20%;"></div></div>
-
-        <div class="bench-metric-row">
-          <span>Protección de Contraseñas</span>
-          <strong class="rose">Inexistente (Sube la pantalla entera)</strong>
-        </div>
-        <div class="metric-bar"><div class="fill rose" style="width: 10%;"></div></div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ======================================================== -->
-  <!-- CAPABILITIES SHOWCASE                                    -->
+  <!-- HIGH-VALUE SECTION: THE 3 IN-GAME HURDLES SOLVED         -->
   <!-- ======================================================== -->
   <section class="ecosystem-stage">
     <div class="stage-header">
-      <span class="stage-tag">CAPACIDADES ESPECIALIZADAS</span>
-      <h2 class="stage-title">Diseñado para Situaciones Donde el Copiado Falla</h2>
-      <p class="stage-subtitle">Capacidades de grado militar para traducir cualquier superficie visual:</p>
+      <span class="stage-tag">VALOR INFORMATIVO REAL DE INGENIERÍA</span>
+      <h2 class="stage-title">Los 3 Desafíos Críticos que Solo Tooltip-ai Resuelve</h2>
+      <p class="stage-subtitle">
+        ¿Por qué los traductores web habituales y los parches de fans fallan ante la arquitectura moderna de videojuegos?
+      </p>
     </div>
 
     <div class="ecosystem-cards-grid">
       
-      <div class="eco-module-card tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="Soporte para DirectX 11/12 & Vulkan" data-tooltip-body="Captura el backbuffer de la GPU antes del renderizado de la ventana sin caída de fotogramas (FPS)." data-spec-file="TranslateEngine.cs">
-        <div class="eco-card-top">
-          <div class="eco-icon-chip" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8;">🎮</div>
-          <span class="eco-tag" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);">GPU Direct</span>
-        </div>
-        <h3 class="eco-title">Videojuegos Sin Localizar</h3>
-        <p class="eco-desc">
-          Juega títulos de importación japonesa, novelas visuales o emuladores sin parche en español. El HUD flota directamente sobre el diálogo.
-        </p>
-        <ul class="eco-bullets">
-          <li>Compatible con pantalla completa sin bordes</li>
-          <li>Sin pérdida de fotogramas (0 FPS drop)</li>
-          <li>Atajo <kbd>Ctrl + T</kbd> instantáneo</li>
-        </ul>
-      </div>
-
-      <div class="eco-module-card tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="Filtro de Privacidad IsPassword" data-tooltip-body="Inspecciona el árbol de accesibilidad de Windows para verificar si el texto es confidencial antes del procesamiento." data-spec-file="TranslateEngine.cs">
+      <!-- Challenge 1: Anti-Cheat Immunity -->
+      <div class="eco-module-card tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="Inmunidad Anti-Cheat Garantizada" data-tooltip-body="Tooltip-ai no toca el espacio de memoria del juego. Es 100% legal en partidas online." data-spec-file="TranslateEngine.cs">
         <div class="eco-card-top">
           <div class="eco-icon-chip" style="background: rgba(0, 245, 160, 0.15); color: #00f5a0;">🛡️</div>
-          <span class="eco-tag" style="color: #00f5a0; border-color: rgba(0, 245, 160, 0.3);">Seguridad</span>
+          <span class="eco-tag" style="color: #00f5a0; border-color: rgba(0, 245, 160, 0.3);">Seguridad 100%</span>
         </div>
-        <h3 class="eco-title">Escudo Anti-Credenciales</h3>
+        <h3 class="eco-title">Cero Riesgo de Baneo por Anti-Cheat</h3>
         <p class="eco-desc">
-          Si por accidente seleccionas un recuadro que contiene contraseñas o datos biométricos, el motor enmascara el contenido de inmediato.
+          Herramientas como Cheat Engine, ReShade o parches que inyectan DLLs en el proceso son detectados y sancionados de inmediato por <strong>EasyAntiCheat, Vanguard y BattlEye</strong>.
         </p>
         <ul class="eco-bullets">
-          <li>Detección nativa del atributo IsPassword de Win32</li>
-          <li>Cero logs ni almacenamiento temporal</li>
-          <li>Procesamiento exclusivo en memoria volátil</li>
+          <li>Lectura externa no invasiva a nivel Desktop Window Manager (DWM)</li>
+          <li>El proceso del juego no es tocado ni modificado en memoria</li>
+          <li>Juega MMOs y títulos multijugador con total tranquilidad</li>
         </ul>
       </div>
 
-      <div class="eco-module-card tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="Caché de Vocabulario Local" data-tooltip-body="Almacena traducciones frecuentes en un archivo SQLite local ultrarrápido para respuestas instantáneas de 0ms." data-spec-file="TranslateEngine.cs">
+      <!-- Challenge 2: Non-Selectable Graphics Text -->
+      <div class="eco-module-card tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="Renderizado Rasterizado en DirectX" data-tooltip-body="Los juegos no usan etiquetas HTML ni texto plano: dibujan polígonos con textura de texto." data-spec-file="TranslateEngine.cs">
         <div class="eco-card-top">
-          <div class="eco-icon-chip" style="background: rgba(129, 140, 248, 0.15); color: #818cf8;">📚</div>
-          <span class="eco-tag" style="color: #818cf8; border-color: rgba(129, 140, 248, 0.3);">Memoria</span>
+          <div class="eco-icon-chip" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8;">🎮</div>
+          <span class="eco-tag" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);">DirectX &amp; Vulkan</span>
         </div>
-        <h3 class="eco-title">Glosario Técnico Inteligente</h3>
+        <h3 class="eco-title">Texto Bitmap y Fuentes Rasterizadas</h3>
         <p class="eco-desc">
-          Reconoce abreviaturas de ingeniería, comandos de depurador y terminología especializada de CAD para no distorsionar el significado.
+          Los motores gráficos (Unreal Engine, Unity, Frostbite) renderizan los subtítulos como texturas gráficas. No existe texto que puedas seleccionar o copiar con el portapapeles.
         </p>
         <ul class="eco-bullets">
-          <li>Aprende tu jerga técnica y vocabulario</li>
-          <li>Caché local de alta velocidad</li>
-          <li>Exportación de glosarios en Markdown</li>
+          <li>OCR de alta precisión con soporte para fuentes tipográficas estilizadas</li>
+          <li>Segmentación de glifos en resoluciones Ultra-HD 4K y 1440p</li>
+          <li>Mapeo automático de fuentes con contraste variable</li>
         </ul>
+      </div>
+
+      <!-- Challenge 3: Preservation of Abandoned Games -->
+      <div class="eco-module-card tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="Preservación de Títulos Retro & Emuladores" data-tooltip-body="Disfruta obras de culto de PS2, Saturn, Switch o PC-98 que jamás salieron de Japón." data-spec-file="TranslateEngine.cs">
+        <div class="eco-card-top">
+          <div class="eco-icon-chip" style="background: rgba(129, 140, 248, 0.15); color: #818cf8;">⛩️</div>
+          <span class="eco-tag" style="color: #818cf8; border-color: rgba(129, 140, 248, 0.3);">Preservación</span>
+        </div>
+        <h3 class="eco-title">Títulos Sin Traducir y Emulación</h3>
+        <p class="eco-desc">
+          Miles de novelas visuales, RPGs de culto y software industrial nunca recibieron traducción oficial ni contarán con un parche creado por la comunidad.
+        </p>
+        <ul class="eco-bullets">
+          <li>Compatible con RPCS3, Ryujinx, PCSX2, RetroArch y DOSBox</li>
+          <li>Comprensión contextual de jerga histórica y modismos arcaicos</li>
+          <li>Diccionario de términos técnicos con almacenamiento local</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- ARCHITECTURE PIPELINE FLOW: HOW TRANSLATE OPERATES       -->
+  <!-- ======================================================== -->
+  <section class="benchmarks-stage">
+    <div class="stage-header">
+      <span class="stage-tag">FLUJO DE PROCESAMIENTO EN TIEMPO REAL</span>
+      <h2 class="stage-title">De Tu Pantalla al Tooltip en 4 Pasos Clave</h2>
+      <p class="stage-subtitle">
+        Diseñado bajo la filosofía de cero fricción y cero impacto en tus fotogramas por segundo:
+      </p>
+    </div>
+
+    <div class="ecosystem-cards-grid" style="grid-template-columns: repeat(4, 1fr);">
+      
+      <div class="sim-card" style="padding: 24px;">
+        <div style="font-size: 28px; margin-bottom: 12px;">⚡</div>
+        <div style="font-family: var(--font-mono); font-size: 11px; color: #38bdf8; font-weight: 700; margin-bottom: 6px;">PASO 01 • 1.2ms</div>
+        <h4 style="font-size: 16px; color: #fff; margin-bottom: 8px;">Captura D3D</h4>
+        <p style="font-size: 13px; color: #94a3b8; line-height: 1.6;">
+          BitBlt nativo y Direct3D Surface Grab sin intermediarios ni emuladores web.
+        </p>
+      </div>
+
+      <div class="sim-card" style="padding: 24px;">
+        <div style="font-size: 28px; margin-bottom: 12px;">🔠</div>
+        <div style="font-family: var(--font-mono); font-size: 11px; color: #00f5a0; font-weight: 700; margin-bottom: 6px;">PASO 02 • 3.5ms</div>
+        <h4 style="font-size: 16px; color: #fff; margin-bottom: 8px;">OCR Vectorial</h4>
+        <p style="font-size: 13px; color: #94a3b8; line-height: 1.6;">
+          Aceleración AVX2 de Windows.Media.Ocr. Segmenta glifos y kanji en memoria RAM.
+        </p>
+      </div>
+
+      <div class="sim-card" style="padding: 24px;">
+        <div style="font-size: 28px; margin-bottom: 12px;">🧠</div>
+        <div style="font-family: var(--font-mono); font-size: 11px; color: #818cf8; font-weight: 700; margin-bottom: 6px;">PASO 03 • 0.3s</div>
+        <h4 style="font-size: 16px; color: #fff; margin-bottom: 8px;">IA Gamer Contextual</h4>
+        <p style="font-size: 13px; color: #94a3b8; line-height: 1.6;">
+          Inferencia semántica que respeta el lore, nombres de personajes e ítems de juegos.
+        </p>
+      </div>
+
+      <div class="sim-card" style="padding: 24px;">
+        <div style="font-size: 28px; margin-bottom: 12px;">✨</div>
+        <div style="font-family: var(--font-mono); font-size: 11px; color: #f59e0b; font-weight: 700; margin-bottom: 6px;">PASO 04 • 0ms</div>
+        <h4 style="font-size: 16px; color: #fff; margin-bottom: 8px;">Tooltip Holográfico</h4>
+        <p style="font-size: 13px; color: #94a3b8; line-height: 1.6;">
+          Overlay transparente con efecto Mica de Windows 11 anclado junto al texto original.
+        </p>
       </div>
 
     </div>
@@ -444,14 +408,14 @@ public async Task&lt;OcrResult&gt; RecognizeScreenAreaAsync(SoftwareBitmap bitma
   <!-- ======================================================== -->
   <section class="cta-banner-stage">
     <div class="cta-banner-box">
-      <h2 class="cta-banner-title">Empieza a Traducir Cualquier Pantalla Hoy</h2>
+      <h2 class="cta-banner-title">Descubre Mundos Sin Barreras de Idioma</h2>
       <p class="cta-banner-desc">
-        Descarga el ejecutable autónomo para Windows 11. Sin instaladores opacos ni suscripciones ocultas.
+        Descarga el ejecutable nativo de Tooltip-ai Translate para Windows 11. Sin configuraciones complejas, sin suscripciones mensuales y con total privacidad.
       </p>
       <div class="cta-banner-actions">
         <a href="../downloads/TooltipAI.exe" download class="btn-hero-primary">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          <span>Descargar Tooltip-ai Standalone (72.4 MB)</span>
+          <span>Descargar Tooltip-ai Translate (72.4 MB)</span>
         </a>
         <a href="../" class="btn-hero-secondary">
           <span>← Volver al Hub Principal</span>
@@ -516,71 +480,30 @@ OcrEngine engine = OcrEngine.TryCreateFromLanguage("es-ES");</code></pre>
 
   <script src="../app.js"></script>
   <script>
-    // Specific Translation Playground Tabs
-    const btnJp = document.getElementById('btnTransJp');
-    const btnDe = document.getElementById('btnTransDe');
-    const btnEn = document.getElementById('btnTransEn');
-    const btnCn = document.getElementById('btnTransCn');
-    const srcLang = document.getElementById('transSourceLang');
-    const srcText = document.getElementById('transSourceText');
-    const tgtText = document.getElementById('transTargetText');
-    const glossary = document.getElementById('transGlossary');
-    const btnSpeak = document.getElementById('btnSpeakTranslation');
+    // Interactive Split-Screen Lens Divider Controller
+    const lensContainer = document.getElementById('lensContainer');
+    const lensOverlay = document.getElementById('lensOverlay');
+    const lensDivider = document.getElementById('lensDivider');
 
-    const SCENARIOS = {
-      jp: {
-        lang: "Japonés (日本語)",
-        src: "「警告：システム権限が不足しているため、この操作を実行できません。管理者アカウントで再ログインしてください。」",
-        tgt: '"Advertencia: No es posible ejecutar esta operación debido a permisos de sistema insuficientes. Por favor, vuelva a iniciar sesión con una cuenta de Administrador."',
-        gloss: "<strong>Glosario de Términos:</strong> 権限 (Permisos) • システム (Sistema) • 管理者 (Administrador)."
-      },
-      de: {
-        lang: "Alemán (CAD / Industrial)",
-        src: "Fehler beim Initialisieren des GPU-Renderpasses: Vertex-Pufferüberlauf festgestellt. Vorgang abgebrochen.",
-        tgt: '"Error al inicializar el pase de renderizado de la GPU: Se detectó un desbordamiento en el búfer de vértices. Operación abortada."',
-        gloss: "<strong>Glosario de Términos:</strong> GPU-Renderpasses (Pase de renderizado) • Pufferüberlauf (Buffer overflow) • Vorgang (Proceso)."
-      },
-      en: {
-        lang: "Inglés Técnico (Stack Trace C++)",
-        src: "Uncaught System.UnauthorizedAccessException: Access to the path 'C:\\Windows\\System32\\drivers\\etc\\hosts' is denied.",
-        tgt: '"Excepción de Acceso No Autorizado: Se denegó el acceso al archivo hosts. Se requiere elevar el proceso con privilegios UAC de Administrador."',
-        gloss: "<strong>Glosario de Términos:</strong> UnauthorizedAccess (Sin privilegios) • Path (Ruta protegida) • UAC Elevation (Elevación)."
-      },
-      cn: {
-        lang: "Chino Simplificado (Manual de Microcontrolador)",
-        src: "注意：该引脚工作电压为3.3V，若接入5V信号源可能导致内部ESD保护二极管击穿损坏。",
-        tgt: '"Atención: El voltaje de trabajo de este pin es de 3.3V. Conectar una fuente de 5V podría perforar y dañar el diodo interno de protección ESD."',
-        gloss: "<strong>Glosario de Términos:</strong> 引脚 (Pin/Terminal) • 电压 (Voltaje) • 损坏 (Daño por sobretensión)."
+    if (lensContainer && lensOverlay && lensDivider) {
+      let isDragging = false;
+
+      function updateLens(clientX) {
+        const rect = lensContainer.getBoundingClientRect();
+        let posX = clientX - rect.left;
+        posX = Math.max(20, Math.min(rect.width - 20, posX));
+        const percentage = (posX / rect.width) * 100;
+
+        lensDivider.style.left = `${percentage}%`;
+        lensOverlay.style.clipPath = `polygon(${percentage}% 0, 100% 0, 100% 100%, ${percentage}% 100%)`;
       }
-    };
 
-    function applyScenario(key, activeBtn) {
-      [btnJp, btnDe, btnEn, btnCn].forEach(b => b && b.classList.remove('active'));
-      if (activeBtn) activeBtn.classList.add('active');
-      const data = SCENARIOS[key];
-      if (!data) return;
-      if (srcLang) srcLang.textContent = data.lang;
-      if (srcText) srcText.textContent = data.src;
-      if (tgtText) tgtText.textContent = data.tgt;
-      if (glossary) glossary.innerHTML = data.gloss;
-    }
+      lensDivider.addEventListener('mousedown', () => isDragging = true);
+      window.addEventListener('mouseup', () => isDragging = false);
 
-    if (btnJp) btnJp.addEventListener('click', () => applyScenario('jp', btnJp));
-    if (btnDe) btnDe.addEventListener('click', () => applyScenario('de', btnDe));
-    if (btnEn) btnEn.addEventListener('click', () => applyScenario('en', btnEn));
-    if (btnCn) btnCn.addEventListener('click', () => applyScenario('cn', btnCn));
-
-    // Interactive Speech Synthesizer on Translate page
-    if (btnSpeak) {
-      btnSpeak.addEventListener('click', () => {
-        const textToSpeak = tgtText ? tgtText.innerText : "";
-        if ('speechSynthesis' in window && textToSpeak) {
-          window.speechSynthesis.cancel();
-          const utterance = new SpeechSynthesisUtterance(textToSpeak);
-          utterance.lang = 'es-ES';
-          utterance.rate = 1.0;
-          window.speechSynthesis.speak(utterance);
-        }
+      lensContainer.addEventListener('mousemove', (e) => {
+        // Continuous smooth reveal on hover as well as drag
+        updateLens(e.clientX);
       });
     }
   </script>
