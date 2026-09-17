@@ -34,7 +34,8 @@ public partial class App : System.Windows.Application
 
     protected override void OnStartup(StartupEventArgs e)
     {
-        SafeLog($"[ToolTip AI] OnStartup iniciado a las {DateTime.Now} (PID {Environment.ProcessId})\n");
+        Loc.ApplySystemCulture();
+        SafeLog($"[ToolTip AI] OnStartup iniciado a las {DateTime.Now} (PID {Environment.ProcessId}) culture={Loc.Culture.Name}\n");
 
         AppDomain.CurrentDomain.UnhandledException += (s, args) =>
         {

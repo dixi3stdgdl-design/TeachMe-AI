@@ -27,7 +27,7 @@ public partial class HudWindow : Window
     public string Model { get; private set; } = GeminiClient.DefaultModel;
     public string AzureEndpoint { get; private set; } = string.Empty;
     public string AzureDeployment { get; private set; } = string.Empty;
-    public string AnalysisMode { get; private set; } = "Maestro & Guía de Acciones";
+    public string AnalysisMode { get; private set; } = Loc.T("AnalysisModeDefault");
     public double DwellSeconds { get; private set; } = 3.0;
 
     public AiCredentials CreateCredentials() => new()
@@ -156,11 +156,11 @@ public partial class HudWindow : Window
             ProviderLink.NavigateUri = new Uri(AiProviderCatalog.GetSignUpUrl(Provider));
             string label = Provider switch
             {
-                AiProviderCatalog.OpenAI => "Obtener clave en OpenAI Platform ↗",
-                AiProviderCatalog.AzureOpenAI => "Crear recurso Azure OpenAI ↗",
-                AiProviderCatalog.OpenRouter => "Obtener clave en OpenRouter ↗",
-                AiProviderCatalog.Claude => "Obtener clave en Anthropic Console ↗",
-                _ => "Obtener clave gratuita en Google AI Studio ↗"
+                AiProviderCatalog.OpenAI => Loc.T("GetKeyOpenAI"),
+                AiProviderCatalog.AzureOpenAI => Loc.T("GetKeyAzure"),
+                AiProviderCatalog.OpenRouter => Loc.T("GetKeyOpenRouter"),
+                AiProviderCatalog.Claude => Loc.T("GetKeyClaude"),
+                _ => Loc.T("GetKeyGemini")
             };
             ProviderLink.Inlines.Clear();
             ProviderLink.Inlines.Add(new System.Windows.Documents.Run(label));
@@ -461,7 +461,7 @@ public partial class HudWindow : Window
                     Dispatcher.Invoke(() =>
                     {
                         ConfidenceText.Text = $" • ⚠️ Error {Provider}";
-                        VerdictLabelText.Text = $"Error IA: {ex.Message}";
+                        VerdictLabelText.Text = Loc.T("AiErrorPrefix", ex.Message);
                     });
                 }
                 finally
@@ -618,7 +618,7 @@ public partial class HudWindow : Window
         AzureDeployment = AzureDeploymentBox.Text.Trim();
         if (AnalysisModeCombo.SelectedItem is ComboBoxItem modeItem)
         {
-            AnalysisMode = modeItem.Content.ToString() ?? "Maestro & Guía de Acciones";
+            AnalysisMode = modeItem.Content.ToString() ?? Loc.T("AnalysisModeDefault");
         }
         DwellSeconds = DwellSlider.Value;
 
@@ -629,8 +629,8 @@ public partial class HudWindow : Window
         }
         SettingsDrawer.Visibility = Visibility.Collapsed;
         MessageBox.Show(
-            $"Ajustes guardados ({Provider} · {Model}). Clave cifrada con DPAPI.",
-            "ToolTip AI",
+            Loc.T("SettingsSaved", Provider, Model),
+            Loc.T("AppName"),
             MessageBoxButton.OK,
             MessageBoxImage.Information);
     }
@@ -679,7 +679,7 @@ public partial class HudWindow : Window
             string answer = await AiBridge.AskQuestionAsync(CreateCredentials(), q, _currentData ?? new InspectionData(), _currentImageBytes);
             Dispatcher.Invoke(() =>
             {
-                AddChatMessage("Maestro IA", answer, isUser: false);
+                AddChatMessage(Loc.T("AiMaster"), answer, isUser: false);
             });
         });
     }
@@ -776,7 +776,7 @@ public partial class HudWindow : Window
                 }
                 if (root.TryGetProperty("AzureEndpoint", out var ae)) AzureEndpoint = ae.GetString() ?? string.Empty;
                 if (root.TryGetProperty("AzureDeployment", out var ad)) AzureDeployment = ad.GetString() ?? string.Empty;
-                if (root.TryGetProperty("AnalysisMode", out var a)) AnalysisMode = a.GetString() ?? "Maestro & Guía de Acciones";
+                if (root.TryGetProperty("AnalysisMode", out var a)) AnalysisMode = a.GetString() ?? Loc.T("AnalysisModeDefault");
                 if (root.TryGetProperty("DwellSeconds", out var d)) DwellSeconds = d.GetDouble();
             }
         }

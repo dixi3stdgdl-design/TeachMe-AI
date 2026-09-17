@@ -43,6 +43,7 @@ jobs:
           cp -r translate _site/ 2>/dev/null || true
           cp -r aura _site/ 2>/dev/null || true
           cp -r voice _site/ 2>/dev/null || true
+          cp -r en _site/ 2>/dev/null || true
           cp -r downloads _site/ 2>/dev/null || true
 
       - name: Setup Pages
