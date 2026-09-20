@@ -114,7 +114,7 @@
     <div class="hero-code-stream-banner" id="heroCodeBanner">
       <div class="pulse-emerald-dot"></div>
       <span class="code-stream-label">Canal Acústico Neuronal:</span>
-      <span class="code-stream-file" id="activeFileName">VoiceSynthesizer.cs (Windows WASAPI Exclusive • 48kHz HD Local)</span>
+      <span class="code-stream-file" id="activeFileName">VoiceSynthesizer.cs (Windows.Speech API · Voz Neural del SO · Atenuación Automática)</span>
       <span class="code-stream-hint">Audio Ducking Automático a Nivel Kernel</span>
     </div>
 
@@ -160,16 +160,16 @@
 
     <!-- VALUE-DRIVEN TELEMETRY METRICS -->
     <div class="hero-telemetry-grid">
-      <div class="telemetry-card tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Latencia de Inicio: < 10 ms" data-tooltip-body="Enrutamiento directo al pipeline de audio WASAPI de Windows sin buffering en la nube." data-spec-file="VoiceSynthesizer.cs">
-        <div class="telemetry-val emerald">&lt; 10 ms</div>
+      <div class="telemetry-card tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Latencia de Inicio: &lt; 500 ms" data-tooltip-body="System.Speech.SpeechSynthesizer de Windows. La síntesis comienza en menos de 500 ms desde la invocación, sin latencia de red." data-spec-file="VoiceSynthesizer.cs">
+        <div class="telemetry-val emerald">&lt; 500 ms</div>
         <div class="telemetry-label">Latencia de Invocación</div>
-        <div class="telemetry-sub">Buffer local WASAPI</div>
+        <div class="telemetry-sub">Windows Speech API local</div>
       </div>
 
-      <div class="telemetry-card tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Calidad de Muestreo: 48 kHz HD" data-tooltip-body="Audio neuronal sin compresión con pérdidas, afinado para pronunciación técnica en español." data-spec-file="VoiceSynthesizer.cs">
-        <div class="telemetry-val cyan">48 kHz</div>
-        <div class="telemetry-label">Muestreo de Audio</div>
-        <div class="telemetry-sub">Fidelidad cristalina</div>
+      <div class="telemetry-card tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Calidad de Voz: Voces del SO" data-tooltip-body="Usa las voces neuronales instaladas en Windows. La calidad depende del paquete de voz instalado por el usuario." data-spec-file="VoiceSynthesizer.cs">
+        <div class="telemetry-val cyan">Voz SO</div>
+        <div class="telemetry-label">Motor de Síntesis</div>
+        <div class="telemetry-sub">Windows Speech API</div>
       </div>
 
       <div class="telemetry-card tooltip-trigger" data-code-spec="voice_tts" data-tooltip-title="Privacidad: 100% Offline" data-tooltip-body="Tus textos nunca salen de tu ordenador. El audio se computa íntegramente en tu CPU local." data-spec-file="VoiceSynthesizer.cs">

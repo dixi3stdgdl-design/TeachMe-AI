@@ -139,10 +139,10 @@
 
     <!-- VALUE-DRIVEN TELEMETRY -->
     <div class="hero-telemetry-grid">
-      <div class="telemetry-card tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="Detección Dwell: < 1 ms" data-tooltip-body="Llamada nativa GetCursorPos de User32.dll sin polling continuo ni ciclos vacíos de CPU." data-spec-file="DwellRadarEngine.cs">
-        <div class="telemetry-val emerald">&lt; 1 ms</div>
-        <div class="telemetry-label">Tiempo de Respuesta</div>
-        <div class="telemetry-sub">Hook pasivo User32.dll</div>
+      <div class="telemetry-card tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="Detección Dwell: 80 ms de ciclo" data-tooltip-body="Timer de 80 ms que llama GetCursorPos y verifica si el cursor lleva inmóvil más de 3 segundos. Sin hooks de teclado ni interceptación de clics." data-spec-file="DwellRadarEngine.cs">
+        <div class="telemetry-val emerald">80 ms</div>
+        <div class="telemetry-label">Ciclo de Detección</div>
+        <div class="telemetry-sub">GetCursorPos polling pasivo</div>
       </div>
 
       <div class="telemetry-card tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="Matriz de Evaluación en 4 Cuadrantes" data-tooltip-body="Descompone cada elemento en Riesgo, Didáctica, Huella de Sistema y Solución PowerShell." data-spec-file="DwellRadarEngine.cs">
@@ -151,10 +151,10 @@
         <div class="telemetry-sub">Diagnóstico integral</div>
       </div>
 
-      <div class="telemetry-card tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="Consumo en Reposo: 0.02% CPU" data-tooltip-body="El hilo permanece en suspensión silenciosa en la bandeja del sistema hasta detectar reposo." data-spec-file="DwellRadarEngine.cs">
-        <div class="telemetry-val violet">0.02%</div>
+      <div class="telemetry-card tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="Impacto en CPU: Mínimo" data-tooltip-body="DispatcherTimer duerme entre ciclos. Sin bucle activo mientras el cursor esté en reposo prolongado." data-spec-file="DwellRadarEngine.cs">
+        <div class="telemetry-val violet">Mínimo</div>
         <div class="telemetry-label">Carga de CPU</div>
-        <div class="telemetry-sub">Totalmente invisible en segundo plano</div>
+        <div class="telemetry-sub">Timer pasivo en segundo plano</div>
       </div>
 
       <div class="telemetry-card tooltip-trigger" data-code-spec="aura_dwell" data-tooltip-title="Privacidad: Cero Telemetría" data-tooltip-body="Tus coordenadas de ratón y nombres de ventana jamás se envían a servidores externos." data-spec-file="DwellRadarEngine.cs">

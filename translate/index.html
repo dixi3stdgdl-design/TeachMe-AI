@@ -89,7 +89,7 @@
     <div class="hero-code-stream-banner" id="heroCodeBanner">
       <div class="pulse-emerald-dot"></div>
       <span class="code-stream-label">Detección Multilingüe Auto:</span>
-      <span class="code-stream-file" id="activeFileName">TranslateEngine.cs v1.1.2 (2,400 Glifos/Seg • 50+ Idiomas AVX2)</span>
+      <span class="code-stream-file" id="activeFileName">TranslateEngine.cs v1.1.2 (OCR WinRT GPU · Idiomas del SO · Sin inyección de proceso)</span>
       <span class="code-stream-hint">Captura Sin Inyección · Idioma Detectado Automáticamente</span>
     </div>
 
@@ -98,8 +98,8 @@
       <span class="gradient-neon">Detecta y Traduce Cualquier Idioma Automáticamente</span>
     </h1>
 
-    <p class="hero-description">
-      ¿Videojuego en japonés? ¿Software CAD en alemán? ¿Manual técnico en chino? <strong>Apunta y traduce</strong> — Tooltip-ai Translate v1.1.2 detecta el idioma automáticamente sin que configures nada. Captura cualquier ventana en <strong>menos de 5 ms</strong> con Direct3D, analiza los glifos con OCR nativo local y proyecta la traducción al idioma que tú eliges, <strong>sin pausar tu partida ni activar falsos positivos de anti-cheat</strong>.
+      <p class="hero-description">
+      ¿Videojuego en japonés? ¿Software CAD en alemán? ¿Manual técnico en chino? <strong>Apunta y traduce</strong> — Tooltip-ai Translate v1.1.2 detecta el idioma automáticamente sin que configures nada. Captura cualquier ventana con OCR nativo de Windows acelerado por GPU, analiza los glifos y proyecta la traducción al idioma que tú eliges, <strong>sin pausar tu partida ni activar falsos positivos de anti-cheat</strong>.
     </p>
 
     <!-- LANGUAGE QUICK MATRIX SWITCHER — Auto-detect source, fixed output -->
@@ -135,10 +135,10 @@
 
     <!-- VALUE-DRIVEN TELEMETRY METRICS -->
     <div class="hero-telemetry-grid">
-      <div class="telemetry-card tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="Extracción OCR: < 5 ms" data-tooltip-body="Utiliza el runtime WinRT de Windows 11 acelerado por hardware sin subir imágenes a la nube." data-spec-file="TranslateEngine.cs">
-        <div class="telemetry-val emerald">&lt; 5 ms</div>
+      <div class="telemetry-card tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="Latencia OCR promedio: ~12 ms" data-tooltip-body="Windows.Media.Ocr WinRT acelerado por GPU. Latencia promedio medida en el motor: ~12 ms según el texto capturado." data-spec-file="TranslateEngine.cs">
+        <div class="telemetry-val emerald">~12 ms</div>
         <div class="telemetry-label">Latencia de Extracción</div>
-        <div class="telemetry-sub">Hardware acelerado Direct3D</div>
+        <div class="telemetry-sub">OCR WinRT acelerado GPU</div>
       </div>
 
       <div class="telemetry-card tooltip-trigger" data-code-spec="translate_ocr" data-tooltip-title="Seguridad Anti-Cheat: 100% Inmune" data-tooltip-body="Captura a nivel DWM de Windows. Cero inyección de DLL en el proceso del juego." data-spec-file="TranslateEngine.cs">
