@@ -1,0 +1,28 @@
+# robots.txt — tooltip-ai.com
+# Tooltip-ai Suite v1.1.2 | Dixi3 Labs
+
+User-agent: *
+Allow: /
+Allow: /en/
+Allow: /de/
+Allow: /translate/
+Allow: /aura/
+Allow: /voice/
+Allow: /privacy/
+Allow: /downloads/
+Allow: /icon.png
+Allow: /favicon.ico
+
+# Block internal/dev paths
+Disallow: /src-dotnet/
+Disallow: /.git/
+Disallow: /node_modules/
+Disallow: /MicrosoftStore_Submission/
+Disallow: /.staging_publish/
+Disallow: /scripts/
+Disallow: /_qa_dossier/
+
+# Crawl budget hint
+Crawl-delay: 1
+
+Sitemap: https://tooltip-ai.com/sitemap.xml
