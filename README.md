@@ -12,7 +12,7 @@
 [![License - MIT](https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge)](LICENSE)
 
 <p align="center">
-  <b>Utilidad de escritorio para Windows 11 que explica botones, diálogos y errores con IA didáctica (Google Gemini, tu propia clave). Recorte global con <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd>, HUD flotante y bandeja del sistema.</b>
+  <b>Utilidad de escritorio para Windows 11 que explica botones, diálogos y errores con IA didáctica (tu propia clave API). Recorte global con <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd>, HUD flotante y bandeja del sistema.</b>
 </p>
 
 </div>
