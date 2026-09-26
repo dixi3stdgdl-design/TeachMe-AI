@@ -26,6 +26,27 @@
     .foot { margin-top:36px; color:var(--muted); font-size:.85rem; }
     a { color:var(--acc); }
   </style>
+<script>
+(function(){
+  var k="680724c1-2840-4ce4-9780-e9ccd5062f9d";
+  var endpoint="https://mexicocentral-0.in.applicationinsights.azure.com/v2/track";
+  function track(name,props){
+    try{
+      var item={
+        name:"Microsoft.ApplicationInsights.Event",
+        time:new Date().toISOString(),
+        iKey:k,
+        data:{baseType:"EventDataData",baseData:{
+          ver:2,name:name,properties:props||{},measurements:{}
+        }}
+      };
+      navigator.sendBeacon(endpoint,JSON.stringify(item));
+    }catch(e){}
+  }
+  track("PageView",{page:location.pathname,host:location.host});
+  window.ToolTipTelemetry={track:track};
+})();
+</script>
 </head>
 <body>
   <div class="wrap">
@@ -64,4 +85,5 @@
   </div>
 </body>
 </html>
+
 
