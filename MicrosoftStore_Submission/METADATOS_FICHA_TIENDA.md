@@ -1,11 +1,11 @@
-# Metadatos de Microsoft Store — ToolTip AI
+﻿# Metadatos de Microsoft Store — ToolTip AI
 
 Textos honestos listos para pegar en Partner Center. Sin claims imposibles de verificar.
 
 ## Información básica
 
 - **Nombre del producto:** `ToolTip AI`
-- **Subtítulo (máx. 100):** `Inspector de pantalla con IA didáctica para Windows 11`
+- **Subtítulo (máx. 100):** `Tooltip AI — Inspector de pantalla con IA para Windows 11`
 
 ## Descripción corta (máx. 270)
 
@@ -53,14 +53,13 @@ REQUISITOS
 
 ## Palabras clave (máx. 7)
 
-1. `ToolTip AI`
-2. `Inspector de pantalla`
-3. `Asistente IA`
-4. `Diálogos de error`
-5. `Gemini`
-6. `Windows 11`
-7. `Productividad`
-
+1. `tooltip`
+2. `ToolTip AI`
+3. `tooltip windows`
+4. `screen inspector`
+5. `asistente IA`
+6. `error dialog`
+7. `window helper`
 ## Justificación para funcionalidad restringida: runFullTrust (Copiar y pegar en Partner Center)
 
 Cuando Partner Center pregunte por la justificación de la capacidad restringida `runFullTrust`, ingresa el siguiente texto (en inglés o español según te lo solicite):
@@ -89,4 +88,5 @@ ToolTip AI es una utilidad de escritorio para Windows 10/11 desarrollada en .NET
 - **Capacidad declarada:** `runFullTrust` (justificación incluida arriba).
 - **Atajos globales:** `Ctrl+Shift+A` (recorte), `Ctrl+Shift+D` (radar hover), `Ctrl+Shift+C` (portapapeles) — ninguno interfiere con atajos estándar del sistema como `Ctrl+A`.
 - **Privacidad y Seguridad:** Cifrado DPAPI local para clave Gemini; no hay servidores intermediarios.
+
 
