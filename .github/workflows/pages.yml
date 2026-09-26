@@ -1,4 +1,4 @@
-name: Deploy GitHub Pages
+﻿name: Deploy GitHub Pages
 
 on:
   push:
@@ -39,6 +39,10 @@ jobs:
           cp .nojekyll _site/
           cp README.md _site/
           cp LICENSE _site/
+          cp robots.txt _site/
+          cp sitemap.xml _site/
+          cp status.html _site/
+          cp status.json _site/
           cp -r privacy _site/ 2>/dev/null || true
           cp -r translate _site/ 2>/dev/null || true
           cp -r aura _site/ 2>/dev/null || true
@@ -58,3 +62,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
