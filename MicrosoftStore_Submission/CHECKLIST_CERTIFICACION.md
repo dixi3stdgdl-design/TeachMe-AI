@@ -9,8 +9,8 @@
 | [x] | Identity | `Dixi3Lqbs.ToolTipAIAssistant` |
 | [x] | DisplayName | ToolTip AI |
 | [x] | Capturas 10.1.1.3 | 4 PNG 1920×1080, UI real, sin claims falsos |
-| [ ] | Privacy URL responde 200 | `https://tooltip-ai.com/privacy` |
-| [ ] | Ficha ES/EN = METADATOS | Sin claims de &lt;40 MB / privacidad absoluta |
+| [x] | Privacy URL responde 200 | Verificado 29/09: `https://tooltip-ai.com/privacy` → 200 |
+| [x] | Ficha ES/EN = METADATOS | `METADATOS_FICHA_TIENDA.md` sin claims de &lt;40 MB / privacidad absoluta |
 | [ ] | Opciones de envío completas | runFullTrust justificado |
 | [ ] | Precios / payout OK | Free Assistant; PayPal configurado |
 | [ ] | Paquete en Partner Center = este MSIX | `ToolTipAIAssistant_1.1.3.0_x64.msix` |
