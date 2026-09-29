@@ -63,6 +63,10 @@ _archive/scripts-cdp-2026-09/cdp_status_now/
 *.html
 !index.html
 !privacy.html
+!privacy/**
+!en/**
+!de/**
+!privacy.html
 !docs/**/*.html
 
 
@@ -81,5 +85,6 @@ usermgmt*.html
 # Instaladores de pago — NUNCA publicar en la web ni en git
 _paid_deliveries/
 _paid_deliveries/**
+
 
 
