@@ -65,8 +65,17 @@
       var mx = 0.5, my = 0.5, tmx = 0.5, tmy = 0.5;
       function resize() {
         var dpr = Math.min(window.devicePixelRatio || 1, 1.6);
-        canvas.width = Math.floor(innerWidth * dpr);
-        canvas.height = Math.floor(innerHeight * dpr);
+        var w = window.innerWidth || document.documentElement.clientWidth;
+        var h = window.innerHeight || document.documentElement.clientHeight;
+        // 100dvh / visualViewport evita que el canvas se quede corto al hacer scroll
+        if (window.visualViewport) {
+          w = window.visualViewport.width;
+          h = window.visualViewport.height;
+        }
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+        canvas.width = Math.floor(w * dpr);
+        canvas.height = Math.floor(h * dpr);
         gl.viewport(0, 0, canvas.width, canvas.height);
       }
       addEventListener('resize', resize);
@@ -145,42 +154,59 @@
       desc: 'Aura + Voice + Translate · licencia de por vida',
       product: 'Tooltip AI Bundle',
       total: '24.99 USD',
-      url: 'https://paypal.me/DixLqb/24.99'
+      url: 'https://paypal.me/DixLqb/24.99',
+      downloads: [
+        { label: 'Aura 1.0.3 (MSIX)', href: 'downloads/ToolTipAIAura_1.0.3.0_x64.msix' },
+        { label: 'Voice 1.0.2 (MSIX)', href: 'downloads/ToolTipAIVoice_1.0.2.0_x64.msix' },
+        { label: 'Translate 1.1.2 (MSIX)', href: 'downloads/ToolTipAITranslate_1.1.2.0_x64.msix' }
+      ]
     },
     module: {
       title: 'Módulo suelto',
-      desc: 'Aura, Voice o Translate · indícalo en el correo',
+      desc: 'Aura, Voice o Translate · elige el tuyo abajo',
       product: 'Tooltip AI Module',
       total: '9.99 USD',
-      url: 'https://paypal.me/DixLqb/9.99'
+      url: 'https://paypal.me/DixLqb/9.99',
+      downloads: [
+        { label: 'Aura 1.0.3 (MSIX)', href: 'downloads/ToolTipAIAura_1.0.3.0_x64.msix' },
+        { label: 'Voice 1.0.2 (MSIX)', href: 'downloads/ToolTipAIVoice_1.0.2.0_x64.msix' },
+        { label: 'Translate 1.1.2 (MSIX)', href: 'downloads/ToolTipAITranslate_1.1.2.0_x64.msix' }
+      ]
     },
     aura: {
       title: 'ToolTip AI Aura',
       desc: 'Contexto por reposo · licencia de por vida',
       product: 'Aura',
       total: '9.99 USD',
-      url: 'https://paypal.me/DixLqb/9.99'
+      url: 'https://paypal.me/DixLqb/9.99',
+      downloads: [{ label: 'Aura 1.0.3 (MSIX)', href: 'downloads/ToolTipAIAura_1.0.3.0_x64.msix' }]
     },
     voice: {
       title: 'ToolTip AI Voice',
       desc: 'Voz y ducking · licencia de por vida',
       product: 'Voice',
       total: '9.99 USD',
-      url: 'https://paypal.me/DixLqb/9.99'
+      url: 'https://paypal.me/DixLqb/9.99',
+      downloads: [{ label: 'Voice 1.0.2 (MSIX)', href: 'downloads/ToolTipAIVoice_1.0.2.0_x64.msix' }]
     },
     translate: {
       title: 'ToolTip AI Translate',
       desc: 'Traducción en pantalla · licencia de por vida',
       product: 'Translate',
       total: '9.99 USD',
-      url: 'https://paypal.me/DixLqb/9.99'
+      url: 'https://paypal.me/DixLqb/9.99',
+      downloads: [{ label: 'Translate 1.1.2 (MSIX)', href: 'downloads/ToolTipAITranslate_1.1.2.0_x64.msix' }]
     },
     assistant: {
       title: 'ToolTip AI Assistant',
-      desc: 'Inspector de pantalla · gratis',
+      desc: 'Inspector de pantalla · gratis · descarga directa',
       product: 'Assistant',
       total: '0 USD · gratis',
-      url: 'mailto:dixstdgdl3@gmail.com?subject=Descarga%20Assistant%20Tooltip%20AI'
+      url: '',
+      downloads: [
+        { label: 'Assistant 1.1.3 (MSIX)', href: 'downloads/ToolTipAIAssistant_1.1.3.0_x64.msix' },
+        { label: 'Assistant (EXE portable)', href: 'downloads/TooltipAI.exe' }
+      ]
     },
     team: {
       title: 'Tooltip AI Team',
@@ -199,15 +225,6 @@
   var ckPay = document.getElementById('ckPay');
   var current = catalog.bundle;
 
-  function openCk(key) {
-    current = catalog[key] || catalog.bundle;
-    ckTitle.textContent = current.title;
-    ckDesc.textContent = current.desc;
-    ckProduct.textContent = current.product;
-    ckTotal.textContent = current.total;
-    modal.hidden = false;
-    document.body.style.overflow = 'hidden';
-  }
   function closeCk() {
     modal.hidden = true;
     document.body.style.overflow = '';
@@ -226,11 +243,45 @@
     if (e.key === 'Escape') closeCk();
   });
 
+  function renderDl(list) {
+    var box = document.getElementById('ckDl');
+    if (!box) return;
+    if (!list || !list.length) { box.hidden = true; box.innerHTML = ''; return; }
+    box.hidden = false;
+    box.innerHTML = list.map(function (d) {
+      return '<a class="btn btn-ghost btn-block" href="' + d.href + '" download>' +
+        '<span>↓</span> Descargar ' + d.label + '</a>';
+    }).join('');
+  }
+
+  function openCk(key) {
+    current = catalog[key] || catalog.bundle;
+    ckTitle.textContent = current.title;
+    ckDesc.textContent = current.desc;
+    ckProduct.textContent = current.product;
+    ckTotal.textContent = current.total;
+    var payBtn = document.getElementById('ckPay');
+    if (!current.url) {
+      payBtn.textContent = 'Descargar gratis ahora';
+      payBtn.classList.remove('btn-primary');
+      payBtn.classList.add('btn-ghost');
+    } else {
+      payBtn.innerHTML = '<span class="btn-shine"></span>Pagar con PayPal';
+      payBtn.classList.add('btn-primary');
+      payBtn.classList.remove('btn-ghost');
+    }
+    renderDl(current.downloads);
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+
   ckPay.addEventListener('click', function () {
-    if (current.url.indexOf('mailto:') === 0) {
-      location.href = current.url;
+    // GRATIS: solo descarga, sin PayPal ni correo
+    if (!current.url) {
+      renderDl(current.downloads);
       return;
     }
+    // PAGO: PayPal en ventana aparte + descargas YA visibles en el modal
     var w = 520, h = 720;
     window.open(
       current.url,
@@ -240,6 +291,7 @@
       ',top=' + ((screen.height - h) / 2) +
       ',noopener,noreferrer'
     );
+    renderDl(current.downloads);
   });
 
   /* ---------- HUD parallax on pointer ---------- */

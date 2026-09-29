@@ -43,6 +43,10 @@ jobs:
           # i18n
           cp -r en _site/
           cp -r de _site/
+          mkdir -p _site/assets
+          cp -r assets/* _site/assets/ 2>/dev/null || true
+          mkdir -p _site/downloads
+          cp -r downloads/* _site/downloads/ 2>/dev/null || true
           cp -r privacy _site/
           # reportes públicos (opcional)
           mkdir -p _site/docs/reports
