@@ -9,7 +9,7 @@
   --sky:#38BDF8;
   --violet:#A78BFA;
   --amber:#FBBF24;
-  --glass:rgba(12,18,28,.58);
+  --glass:rgba(12,18,28,.92);
   --max:1180px;
   --font:"Inter",system-ui,sans-serif;
   --display:"Outfit",var(--font);
@@ -37,7 +37,7 @@ h1,h2,h3{font-family:var(--display);letter-spacing:-.035em;line-height:1.08;font
 .topbar{
   position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:1.25rem;
   padding:.95rem clamp(1.1rem,4vw,2.4rem);
-  background:rgba(4,6,10,.72);backdrop-filter:blur(22px) saturate(150%);
+  background:rgba(4,6,10,.92);backdrop-filter:blur(18px);
   border-bottom:1px solid var(--line);
 }
 .brand{display:flex;align-items:center;gap:.75rem;font-family:var(--display);font-weight:700;font-size:1.15rem}
@@ -95,8 +95,8 @@ h1,h2,h3{font-family:var(--display);letter-spacing:-.035em;line-height:1.08;font
 .hero-veil{
   position:absolute;inset:0;
   background:
-    linear-gradient(180deg,rgba(4,6,10,.25) 0%,rgba(4,6,10,.55) 45%,rgba(4,6,10,.92) 78%,var(--bg) 100%),
-    linear-gradient(90deg,rgba(4,6,10,.72) 0%,rgba(4,6,10,.15) 55%,rgba(4,6,10,.5) 100%);
+    linear-gradient(180deg,rgba(4,6,10,.45) 0%,rgba(4,6,10,.78) 42%,rgba(4,6,10,.97) 72%,var(--bg) 100%),
+    linear-gradient(90deg,rgba(4,6,10,.88) 0%,rgba(4,6,10,.42) 55%,rgba(4,6,10,.78) 100%);
 }
 .hero-glow{
   position:absolute;inset:auto 0 -20% 0;height:55%;
@@ -111,7 +111,7 @@ h1,h2,h3{font-family:var(--display);letter-spacing:-.035em;line-height:1.08;font
 .pill{
   display:inline-flex;align-items:center;gap:.55rem;
   padding:.5rem 1.05rem;border-radius:999px;
-  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+  background:rgba(10,15,24,.88);border:1px solid rgba(255,255,255,.14);
   font-size:.78rem;font-weight:600;letter-spacing:.12em;color:var(--ink2);
   margin-bottom:1.55rem;backdrop-filter:blur(14px);
 }
@@ -217,7 +217,7 @@ h1,h2,h3{font-family:var(--display);letter-spacing:-.035em;line-height:1.08;font
 .mod{
   display:flex;flex-direction:column;
   padding:1.65rem 1.45rem 1.35rem;border-radius:22px;
-  background:linear-gradient(180deg,rgba(18,26,40,.88),rgba(10,15,24,.92));
+  background:linear-gradient(180deg,rgba(18,26,40,.96),rgba(10,15,24,.98));
   border:1px solid var(--line);
   transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .25s,box-shadow .25s;
 }
@@ -246,14 +246,14 @@ h1,h2,h3{font-family:var(--display);letter-spacing:-.035em;line-height:1.08;font
 /* glass */
 .glass{
   border-radius:28px;padding:clamp(1.85rem,4vw,2.85rem);
-  background:linear-gradient(155deg,rgba(24,36,54,.62),rgba(12,18,28,.75));
+  background:linear-gradient(155deg,rgba(22,32,48,.92),rgba(10,15,24,.96));
   border:1px solid var(--line);
   box-shadow:0 40px 100px rgba(0,0,0,.35);
 }
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1.15rem;margin-bottom:1.65rem}
 .step{
   padding:1.45rem 1.35rem;border-radius:16px;
-  background:rgba(255,255,255,.03);border:1px solid var(--line);
+  background:rgba(14,20,30,.92);border:1px solid var(--line);
 }
 .step-n{
   display:block;font-family:var(--display);font-size:2rem;font-weight:700;
@@ -278,12 +278,12 @@ kbd{
 .prices{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;align-items:stretch}
 .price-card{
   position:relative;padding:2.15rem 1.65rem;border-radius:24px;
-  background:linear-gradient(180deg,rgba(18,26,40,.92),rgba(10,15,24,.95));
+  background:linear-gradient(180deg,rgba(18,26,40,.97),rgba(10,15,24,.99));
   border:1px solid var(--line);
   display:flex;flex-direction:column;
 }
 .price-card.featured{
-  background:linear-gradient(165deg,rgba(45,212,191,.2),rgba(56,189,248,.08) 42%,rgba(10,15,24,.95));
+  background:linear-gradient(165deg,rgba(45,212,191,.18),rgba(56,189,248,.06) 42%,rgba(10,15,24,.98));
   border-color:rgba(45,212,191,.5);
   box-shadow:0 40px 110px rgba(45,212,191,.22);
   transform:scale(1.035);
@@ -310,7 +310,7 @@ kbd{
 .tp{
   display:flex;align-items:baseline;justify-content:space-between;
   padding:1.25rem 1.35rem;border-radius:16px;
-  background:rgba(255,255,255,.04);border:1px solid var(--line);
+  background:rgba(14,20,30,.92);border:1px solid var(--line);
 }
 .tp strong{font-family:var(--display);font-size:1.55rem;color:var(--teal)}
 .tp span{color:var(--ink3);font-size:.9rem}
@@ -337,7 +337,7 @@ kbd{
 .modal-card{
   position:relative;width:min(460px,100%);padding:2.15rem 1.85rem 1.75rem;
   border-radius:24px;
-  background:linear-gradient(165deg,rgba(28,42,62,.97),rgba(10,16,26,.99));
+  background:linear-gradient(165deg,rgba(28,42,62,1),rgba(10,16,26,1));
   border:1px solid rgba(45,212,191,.3);
   box-shadow:0 50px 140px rgba(0,0,0,.65),0 0 80px rgba(45,212,191,.16);
   animation:pop .3s cubic-bezier(.2,.8,.2,1);
