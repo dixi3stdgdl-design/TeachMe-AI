@@ -173,7 +173,7 @@
                     <!-- Texto de instrucción flotante -->
                     <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
                         <TextBlock Text="⚡"
-                                   Foreground="#00F5A0"
+                                   Foreground="#2DD4BF"
                                    FontSize="13"
                                    VerticalAlignment="Center"
                                    Margin="0 0 9 0"/>

@@ -106,7 +106,7 @@
                         </LinearGradientBrush>
                     </Path.Stroke>
                     <Path.Effect>
-                        <DropShadowEffect BlurRadius="7" Color="#00F5A0" Opacity="0.55" ShadowDepth="0"/>
+                        <DropShadowEffect BlurRadius="7" Color="#2DD4BF" Opacity="0.55" ShadowDepth="0"/>
                     </Path.Effect>
                 </Path>
 
@@ -124,7 +124,7 @@
                     </TextBlock>
                     <TextBlock x:Name="TimeText"
                                Text=" 3.0s"
-                               Foreground="#00F5A0"
+                               Foreground="#2DD4BF"
                                FontSize="11"
                                FontWeight="Medium"
                                Margin="4 0 0 0"
