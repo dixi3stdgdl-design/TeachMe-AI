@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Política de Privacidad — ToolTip AI (tooltip-ai.com/privacy)</title>
-  <meta name="description" content="Política de privacidad de ToolTip AI: qué datos trata el software, a qué APIs de IA se envían tus capturas, qué se guarda en tu equipo y cómo ejercer tus derechos.">
+  <title>Política de Privacidad y Aviso Legal — ToolTip AI (tooltip-ai.com/privacy)</title>
+  <meta name="description" content="Política de privacidad, tratamiento de datos, limitación de responsabilidad y condiciones de uso de ToolTip AI (Assistant, Aura, Translate y Voice).">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://tooltip-ai.com/privacy/">
-  <meta property="og:title" content="Política de Privacidad — ToolTip AI">
+  <meta property="og:title" content="Política de Privacidad y Aviso Legal — ToolTip AI">
   <meta property="og:url" content="https://tooltip-ai.com/privacy/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,12 +37,12 @@
       color: var(--teal);
       font-size: 0.82rem;
       font-weight: 600;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
       display: block;
     }
     .privacy-card h2 {
       font-family: var(--display);
-      font-size: 1.18rem;
+      font-size: 1.12rem;
       margin: 1.85rem 0 0.75rem;
       padding-left: 0.85rem;
       border-left: 3px solid var(--teal);
@@ -51,17 +51,19 @@
     .privacy-card h3 {
       font-size: 1rem;
       margin: 1.15rem 0 0.45rem;
+      color: var(--ink);
     }
     .privacy-card p, .privacy-card li {
       color: var(--ink2);
-      font-size: 0.98rem;
+      font-size: 0.96rem;
       line-height: 1.72;
     }
-    .privacy-card ul {
+    .privacy-card ul, .privacy-card ol {
       padding-left: 1.25rem;
       margin: 0.55rem 0 1rem;
-      list-style: disc;
     }
+    .privacy-card ul { list-style: disc; }
+    .privacy-card ol { list-style: decimal; }
     .privacy-card li { margin-bottom: 0.45rem; }
     .privacy-card a { color: var(--sky); }
     .privacy-card strong { color: var(--ink); }
@@ -80,6 +82,19 @@
       color: var(--ink2);
     }
     .warn strong { color: var(--amber); }
+    .legal {
+      margin-top: 2.25rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid rgba(255,255,255,0.09);
+    }
+    .toc {
+      margin: 1.25rem 0 1.5rem;
+      padding: 1rem 1.15rem;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .toc ol { margin: 0.35rem 0 0; }
     .back-link {
       display: inline-flex;
       align-items: center;
@@ -88,6 +103,11 @@
       font-size: 0.88rem;
       font-weight: 600;
       margin-bottom: 1.15rem;
+    }
+    .foot-note {
+      margin-top: 1.75rem;
+      font-size: 0.86rem;
+      color: var(--ink3);
     }
   </style>
 </head>
@@ -112,189 +132,311 @@
   <main class="privacy-wrap">
     <a class="back-link" href="../">← Volver al inicio</a>
     <article class="privacy-card">
-      <h1>Política de Privacidad</h1>
-      <span class="privacy-meta">Última actualización: 30 de septiembre de 2026 · tooltip-ai.com/privacy · Versión 2.0</span>
+      <h1>Política de Privacidad y Aviso Legal</h1>
+      <span class="privacy-meta">ToolTip AI · tooltip-ai.com/privacy · Versión 3.0 · Vigente desde el 30 de septiembre de 2026</span>
 
       <p>
-        Esta política describe el tratamiento de datos de <strong>ToolTip AI</strong> (Assistant, Aura, Translate y Voice),
-        publicado por <strong>Dixi3 Lqbs</strong> («Dixi3», «nosotros»), y del sitio web <strong>tooltip-ai.com</strong>.
-        Está redactada para que sepas exactamente qué sale de tu equipo, a quién llega y qué permanece en tu disco.
+        Este documento rige el uso del software de escritorio <strong>ToolTip AI</strong>
+        (Assistant, Aura, Translate y Voice), del sitio web <strong>tooltip-ai.com</strong>
+        y de los servicios asociados (colectivamente, el «Producto»).
+        Al instalar, acceder o utilizar el Producto, usted acepta este régimen.
       </p>
 
       <div class="warn">
-        <strong>Aviso importante antes de usar la app.</strong>
-        ToolTip AI es una herramienta de <strong>IA en la nube con tu propia clave (BYOK)</strong>.
-        Cuando pides un análisis, <strong>el recorte de pantalla y el texto que extraigas se envían al proveedor de IA
-        que tú configures</strong> (Google Gemini, OpenAI, Azure OpenAI, OpenRouter o Anthropic Claude).
-        <strong>No usamos servidores propios para capturas</strong>, pero eso <strong>no</strong> significa que tus datos
-        no salgan de tu PC: salen hacia el proveedor de IA y quedan sujetos a la política de ese proveedor.
-        No analices zonas con contraseñas, datos bancarios o información personal de terceros si no quieres que ese contenido
-        se envíe a la API.
+        <strong>Advertencia funcional (no es letra pequeña).</strong>
+        ToolTip AI es una utilidad de <strong>IA con clave del usuario (BYOK)</strong>.
+        Cuando usted lanza un análisis, <strong>el recorte de pantalla y el texto extraído se envían
+        al proveedor de IA que usted configura</strong> (por ejemplo Google Gemini, OpenAI, Azure OpenAI,
+        OpenRouter o Anthropic Claude). <strong>No operamos un servidor propio de capturas</strong>;
+        eso <strong>no</strong> implica que sus datos permanezcan en su equipo.
+        No utilice el analizador sobre contraseñas, datos bancarios, documentos identificativos,
+        información sanitaria ni datos personales de terceros si no desea que ese contenido se envíe a la API.
       </div>
 
-      <h2>1. Responsable del tratamiento</h2>
+      <div class="toc">
+        <strong>Índice</strong>
+        <ol>
+          <li>Responsable y notificaciones</li>
+          <li>Objeto del tratamiento de datos</li>
+          <li>Datos que salen de su equipo</li>
+          <li>Datos que permanecen en su equipo</li>
+          <li>Sitio web y pagos</li>
+          <li>Terceros, encargados y transferencias</li>
+          <li>Base jurídica y conservación</li>
+          <li>Derechos del interesado</li>
+          <li>Menores de edad</li>
+          <li class="legal">Aviso legal y limitación de responsabilidad</li>
+          <li>Uso indebido, terceros y fraude</li>
+          <li>Exactitud de la información</li>
+          <li>Ley aplicable y jurisdicción</li>
+          <li>Cambios y contacto</li>
+        </ol>
+      </div>
+
+      <h2>1. Responsable y notificaciones</h2>
       <ul>
-        <li><strong>Responsable:</strong> Dixi3 Lqbs (comercial ToolTip AI / Dixi3 Labs).</li>
-        <li><strong>Dominio oficial:</strong> tooltip-ai.com</li>
-        <li><strong>Contacto de privacidad:</strong>
+        <li>
+          <strong>Responsable del tratamiento / titular del Producto:</strong>
+          Dixi3 Lqbs (también identificado comercialmente como ToolTip AI / Dixi3 Labs).
+        </li>
+        <li>
+          <strong>Canal oficial de notificaciones y ejercicio de derechos:</strong>
           <a href="mailto:dixstdgdl3@gmail.com">dixstdgdl3@gmail.com</a>
-          · <a href="https://github.com/dixi3stdgdl-design/TeachMe-AI/issues" target="_blank" rel="noopener">GitHub Issues</a>
+        </li>
+        <li>
+          <strong>Dominio oficial:</strong> tooltip-ai.com
+        </li>
+        <li>
+          Por razones de seguridad personal y prevención de suplantación / localización no deseada,
+          <strong>no se publica domicilio postal</strong> en esta página. Las comunicaciones formales
+          se realizan por el canal de correo indicado y, en su caso, a través de la cuenta de editor
+          de Microsoft Store / PayPal asociada al Producto.
         </li>
       </ul>
 
-      <h2>2. Qué datos trata la aplicación de escritorio</h2>
-      <h3>2.1. Datos que enviamos a terceros (proveedor de IA)</h3>
-      <ul>
-        <li>
-          <strong>Recortes de pantalla</strong> generados con el atajo <code>Ctrl+Shift+A</code>, la captura completa
-          o el análisis del portapapeles, cuando <strong>tú</strong> lanzas un análisis.
-        </li>
-        <li>
-          <strong>Texto y metadatos de interfaz</strong> (nombre del control, título de ventana, ayuda nativa de Windows
-          UI Automation) para enriquecer la explicación.
-        </li>
-        <li>
-          <strong>Preguntas del chat de seguimiento</strong> del HUD, si lo usas.
-        </li>
-      </ul>
+      <h2>2. Objeto del tratamiento de datos</h2>
       <p>
-        Todo eso viaja por HTTPS a la API del proveedor que hayas configurado, con <strong>tu clave</strong>.
-        Dixi3 no opera un backend intermedio de capturas y no recibe copia de esas imágenes.
+        El Producto es una utilidad de Windows que interpreta elementos de interfaz, recortes de pantalla
+        y texto copiado, con el fin de explicarlos, traducirlos o leerlos en voz alta.
+        <strong>No</strong> es un servicio de almacenamiento en la nube, ni un keylogger, ni un sistema
+        de vigilancia permanente: la captura y el envío a IA solo ocurren cuando <strong>usted</strong> los inicia.
       </p>
 
-      <h3>2.2. Datos que se quedan en tu equipo</h3>
+      <h2>3. Datos que salen de su equipo</h2>
+      <h3>3.1. Envíos a proveedores de IA (usted es quien los contrata)</h3>
+      <ul>
+        <li>Recortes de pantalla (<code>Ctrl+Shift+A</code>), captura completa o análisis de portapapeles, cuando usted lo solicita.</li>
+        <li>Texto de interfaz y metadatos de Windows UI Automation (nombre del control, título de ventana, ayuda nativa).</li>
+        <li>Preguntas del chat de seguimiento del HUD, si las usa.</li>
+        <li>Texto a traducir (Translate), salvo campos de contraseña, que se bloquean.</li>
+      </ul>
+      <p>
+        Ese contenido viaja por HTTPS a la API del proveedor que usted haya configurado, con <strong>su</strong> clave.
+        Dixi3 Lqbs no recibe copia de esas imágenes en servidores propios.
+        El proveedor de IA aplica <strong>su</strong> política de privacidad y sus condiciones de retención.
+      </p>
+
+      <h3>3.2. Responsabilidad sobre el contenido enviado</h3>
+      <p>
+        Usted es el único responsable del contenido que decide analizar o traducir, incluida la eventual
+        presencia de datos de terceros en su pantalla. El uso del Producto no autoriza a capturar,
+        tratar o difundir datos personales ajenos sin legitimación.
+      </p>
+
+      <h2>4. Datos que permanecen en su equipo</h2>
       <ul>
         <li>
-          <strong>Clave de API:</strong> cifrada con Windows DPAPI (alcance <em>CurrentUser</em>) en
+          <strong>Clave de API:</strong> cifrada con Windows DPAPI (alcance de usuario) en
           <code>%APPDATA%\TeachMeAI\config.json</code>. Protege frente a otros usuarios de Windows;
-          <strong>no</strong> frente a malware que ejecute con tu misma cuenta.
+          no frente a software malicioso que ejecute con su misma cuenta.
         </li>
         <li>
-          <strong>Preferencias:</strong> proveedor, modelo, ajustes de voz/dwell, idioma, primera ejecución.
+          <strong>Preferencias:</strong> proveedor, modelo, idioma, voz, dwell y opciones de arranque.
         </li>
         <li>
-          <strong>Registro técnico local</strong> <code>%APPDATA%\TeachMeAI\run.log</code>: eventos de arranque,
-          errores y fragmentos cortos de diagnóstico. Puedes borrarlo en cualquier momento.
+          <strong>Registro técnico local</strong> <code>%APPDATA%\TeachMeAI\run.log</code> (eventos y errores).
+          Puede eliminarlo en cualquier momento.
         </li>
         <li>
-          <strong>Traducciones recientes (Translate):</strong> caché local en
-          <code>%APPDATA%\ToolTipAITranslate\</code> si el módulo está instalado.
+          <strong>Caché de traducciones</strong> (Translate) en <code>%APPDATA%\ToolTipAITranslate\</code>, si procede.
         </li>
         <li>
-          <strong>Recortes en memoria:</strong> la imagen del análisis vive en RAM durante la consulta;
-          no la persistimos en un repositorio nuestro.
+          Las imágenes de análisis se manejan en memoria durante la consulta; no se incorporan a un
+          repositorio de Dixi3 Lqbs.
         </li>
       </ul>
 
-      <h3>2.3. Atajos reales del producto</h3>
+      <h3>4.1. Atajos reales</h3>
       <ul>
         <li><code>Ctrl+Shift+A</code> — recorte y análisis</li>
-        <li><code>Ctrl+Shift+D</code> — radar / dwell (opcional, apagado por defecto)</li>
+        <li><code>Ctrl+Shift+D</code> — radar / dwell (opcional; apagado por defecto)</li>
         <li><code>Ctrl+Shift+C</code> — ajustes</li>
         <li><code>Ctrl+Shift+T</code> — Translate</li>
       </ul>
 
-      <h2>3. Módulos de la suite</h2>
+      <h2>5. Sitio web y pagos</h2>
       <ul>
         <li>
-          <strong>Assistant:</strong> recorte + explicación con IA multi-proveedor (BYOK). Es el producto gratuito base.
+          <strong>Sin cookies publicitarias propias</strong> ni analítica de seguimiento en el código de la landing.
         </li>
         <li>
-          <strong>Translate:</strong> OCR local con <code>Windows.Media.Ocr</code>. Los campos de contraseña
-          (<code>IsPassword</code>) no se extraen. El texto a traducir se envía al proveedor de traducción/IA que configures.
+          <strong>Tipografías:</strong> la página puede solicitar recursos a Google Fonts; su navegador
+          contacta con esos servidores (datos técnicos de conexión habituales).
         </li>
         <li>
-          <strong>Aura:</strong> contexto por reposo del cursor. Puede enviar título de ventana y metadatos al proveedor de IA.
-          No creamos un histórico persistente fuera de la sesión.
+          <strong>Pagos:</strong> se canalizan mediante PayPal (u otros medios oficiales que se indiquen).
+          PayPal es el responsable del tratamiento de los datos de pago. Dixi3 Lqbs no almacena números de tarjeta.
         </li>
         <li>
-          <strong>Voice:</strong> síntesis de voz local (TTS de Windows). El texto leído puede provenir de análisis previos
-          ya enviados a la IA.
+          <strong>Descargas:</strong> solo se publican instaladores de uso gratuito / demostración.
+          Los instaladores de módulos de pago no se sirven públicamente desde la web.
         </li>
       </ul>
 
-      <h2>4. Cifrado y transporte</h2>
-      <ul>
-        <li>
-          Las llamadas a las APIs usan <strong>HTTPS/TLS</strong> según negocie el sistema.
-          <strong>No</strong> es cifrado de extremo a extremo: el proveedor de IA ve el contenido claro en su servidor.
-        </li>
-        <li>
-          Las claves se guardan cifradas con <strong>Windows DPAPI</strong> en tu perfil de usuario.
-        </li>
-      </ul>
-
-      <h2>5. Sitio web tooltip-ai.com</h2>
-      <ul>
-        <li>
-          <strong>Sin cookies publicitarias propias ni analítica de seguimiento</strong> en el código de la landing.
-        </li>
-        <li>
-          <strong>Tipografías de Google Fonts:</strong> al cargar la página, tu navegador contacta con servidores de Google
-          (IP y datos técnicos habituales).
-        </li>
-        <li>
-          <strong>Pagos:</strong> si compras módulos, el pago se abre en <strong>PayPal</strong>
-          (<code>paypal.me/DixLqb</code> u otros medios oficiales). PayPal trata tus datos de pago según su propia política.
-          Dixi3 no almacena números de tarjeta.
-        </li>
-        <li>
-          <strong>Descargas:</strong> los instaladores se sirven desde el propio sitio / GitHub Pages.
-          El servidor de hosting puede registrar datos técnicos de acceso (IP, user-agent) conforme a su política.
-        </li>
-      </ul>
-
-      <h2>6. Encargados y transferencias internacionales</h2>
+      <h2>6. Terceros, encargados y transferencias</h2>
       <p>
-        Los proveedores de IA actúan como <strong>encargados o responsables independientes</strong> del tratamiento
-        del contenido que les envías. Pueden tener infraestructura fuera del Espacio Económico Europeo
-        (p. ej. Estados Unidos). Al usar BYOK, <strong>eres tú quien contrata con ese proveedor</strong> con tu clave;
-        revisa sus condiciones de retención y entrenamiento de modelos. Si eliges Azure OpenAI con tu propia instancia,
-        se aplican las garantías de tu tenant de Microsoft.
+        Pueden intervenir, según el módulo y la configuración del usuario:
+        proveedores de modelos de IA (Google, OpenAI / Microsoft Azure, OpenRouter, Anthropic),
+        sistemas de pago (PayPal), Microsoft Store (si instala desde la tienda) y alojamiento del sitio (GitHub Pages).
+      </p>
+      <p>
+        Dichos terceros pueden tratar datos fuera del Espacio Económico Europeo (por ejemplo en Estados Unidos).
+        Cuando usted utiliza BYOK, <strong>usted</strong> se relaciona con el proveedor de IA elegido;
+        le recomendamos revisar sus cláusulas de transferencia, retención y entrenamiento de modelos.
+        Si utiliza Azure OpenAI en un tenant propio, se aplican las garantías de su organización.
       </p>
 
-      <h2>7. Base jurídica (RGPD)</h2>
+      <h2>7. Base jurídica y conservación</h2>
       <ul>
-        <li><strong>Ejecución de contrato / interés legítimo</strong> en proporcionarte la utilidad que instalas o compras.</li>
-        <li><strong>Consentimiento</strong> implícito en la acción de enviar un análisis a la API que tú configuraste.</li>
-        <li><strong>Obligación legal</strong> para facturación y atenciones de ley, si procede.</li>
+        <li>
+          <strong>Ejecución de contrato / prestación del servicio:</strong> poner a su disposición el Producto que instala o compra.
+        </li>
+        <li>
+          <strong>Interés legítimo:</strong> seguridad, prevención de abuso, diagnóstico técnico y defensa de reclamaciones.
+        </li>
+        <li>
+          <strong>Consentimiento / decisión del usuario:</strong> es usted quien activa el envío a la API de IA y quien configura la clave.
+        </li>
+        <li>
+          <strong>Obligación legal:</strong> facturación y obligaciones fiscales o de la tienda, cuando proceda.
+        </li>
       </ul>
-
-      <h2>8. Conservación</h2>
-      <ul>
-        <li>Datos en tu equipo (config, logs, caché): hasta que los borres o desinstales la app.</li>
-        <li>Contenido enviado a la IA: según retenga cada proveedor (consulta su política).</li>
-        <li>Datos de compra (PayPal / Microsoft Store): según obligaciones fiscales y de la tienda.</li>
-      </ul>
-
-      <h2>9. Tus derechos</h2>
       <p>
-        Puedes ejercer los derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad,
-        y retirar el consentimiento, escribiendo a
+        Conservación: datos locales hasta que usted los borre o desinstale el Producto;
+        contenido enviado a la IA según la retención de cada proveedor; datos de compra según normativa aplicable.
+      </p>
+
+      <h2>8. Derechos del interesado</h2>
+      <p>
+        Puede ejercer los derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad,
+        así como retirar el consentimiento cuando este sea la base, escribiendo a
         <a href="mailto:dixstdgdl3@gmail.com">dixstdgdl3@gmail.com</a>.
-        También puedes reclamar ante la
-        <a href="https://www.aepd.es" target="_blank" rel="noopener">Agencia Española de Protección de Datos (AEPD)</a>
-        o la autoridad de control de tu país.
+        Responderemos en el plazo legalmente exigible (con carácter general un mes).
+        El ejercicio es gratuito, salvo solicitudes manifiestamente infundadas o excesivas.
+        Puede reclamar ante la Agencia Española de Protección de Datos (AEPD) o ante la autoridad de control competente.
       </p>
 
-      <h2>10. Menores de edad</h2>
+      <h2>9. Menores de edad</h2>
       <p>
-        La suite no está dirigida a menores de 14 años. Si detectamos datos de un menor sin consentimiento adecuado,
-        los eliminaremos.
+        El Producto no se dirige a menores de 14 años. Si se detectara tratamiento de datos de un menor
+        sin base suficiente, se eliminarán sin dilación indebida.
       </p>
 
-      <h2>11. Cambios en esta política</h2>
-      <p>
-        Publicaremos cualquier cambio sustancial en esta misma URL con su nueva fecha.
-        La versión 2.0 sustituye textos anteriores que describían el flujo de datos de forma incompleta.
-      </p>
+      <!-- ================= LEGAL / DISCLAIMER ================= -->
+      <div class="legal">
+        <h2>10. Aviso legal y limitación de responsabilidad</h2>
+        <p>
+          Las siguientes cláusulas se aplican al uso del Producto y del sitio web. Su finalidad es
+          delimitar con claridad el alcance de la responsabilidad de Dixi3 Lqbs y evitar que
+          interpretaciones erróneas de este texto generen expectativas o reclamaciones improcedentes.
+        </p>
 
-      <h2>12. Contacto</h2>
-      <p>
-        Privacidad y seguridad:
-        <a href="mailto:dixstdgdl3@gmail.com">dixstdgdl3@gmail.com</a>
-        ·
-        <a href="https://github.com/dixi3stdgdl-design/TeachMe-AI/issues" target="_blank" rel="noopener">github.com/dixi3stdgdl-design/TeachMe-AI/issues</a>
+        <h3>10.1. Naturaleza del Producto</h3>
+        <p>
+          ToolTip AI es una <strong>utilidad de software</strong>, no un asesoramiento profesional
+          (jurídico, financiero, médico, de seguridad informática ni de peritaje).
+          Las explicaciones generadas por IA pueden ser inexactas, incompletas o inadecuadas.
+          <strong>No</strong> debe usarse como única fuente para decisiones críticas.
+        </p>
+
+        <h3>10.2. Exclusión de garantías</h3>
+        <p>
+          En la máxima medida permitida por la ley aplicable, el Producto se entrega
+          <strong>«tal cual» y «según disponibilidad»</strong>, sin garantía de idoneidad para un fin
+          concreto, de ausencia de errores, de resultados exactos ni de disponibilidad ininterrumpida.
+        </p>
+
+        <h3>10.3. Limitación de responsabilidad</h3>
+        <p>
+          Dixi3 Lqbs no responderá de daños indirectos, lucro cesante, pérdida de datos, pérdida de
+          beneficios, interrupción del negocio ni perjuicios derivados de:
+        </p>
+        <ul>
+          <li>el uso o la imposibilidad de uso del Producto;</li>
+          <li>la interpretación que usted haga de esta política, de la documentación o de las salidas de la IA;</li>
+          <li>el contenido enviado por usted a servicios de terceros (incluidos proveedores de IA y PayPal);</li>
+          <li>fallos, cambios de términos o corte de servicios de dichos terceros;</li>
+          <li>el uso de credenciales, claves de API o cuentas de su responsabilidad.</li>
+        </ul>
+        <p>
+          Cuando la ley no permita excluir cierta responsabilidad, esta se limitará al importe efectivamente
+          abonado por usted por el módulo o licencia en los doce (12) meses anteriores al hecho que la motive,
+          o a cien (100) USD si no hubiera precio pagado.
+        </p>
+
+        <h3>10.4. Cláusula de deslinde por interpretación</h3>
+        <p>
+          Este documento se redacta en lenguaje técnico-normativo orientado a la transparencia.
+          <strong>No</strong> constituye oferta de seguros, aval, fianza, patrocinio de un tercero
+          ni compromiso de resultado.
+          Ninguna frase de esta política puede interpretarse en el sentido de que:
+        </p>
+        <ul>
+          <li>garantizamos anonimato absoluto, privacidad absoluta o inviolabilidad total de sus datos;</li>
+          <li>asumimos responsabilidad por fraudes, suplantaciones o capturas realizadas por usted o por terceros usando el Producto;</li>
+          <li>modificamos unilateralmente derechos irrenunciables que la ley reconozca al consumidor;</li>
+          <li>sustituimos el criterio de un profesional cualificado ni el de la autoridad competente.</li>
+        </ul>
+        <p>
+          En caso de contradicción entre este aviso y una norma imperativa de derecho necesario,
+          <strong>prevalece la norma</strong>. El resto del texto se interpreta de buena fe y sin
+          atribuir a sus autores una voluntad distinta de la expresada.
+        </p>
+
+        <h2>11. Uso indebido, terceros y fraude</h2>
+        <ul>
+          <li>
+            Queda prohibido emplear el Producto para capturar, extraer o difundir datos personales de
+            terceros sin legitimación, ni para suplantar identidades, cometer fraude o eludir controles de seguridad.
+          </li>
+          <li>
+            Dixi3 Lqbs <strong>no</strong> es responsable de estafas, phishing o pérdidas económicas
+            derivadas de claves de API robadas, de webs suplantadas, de paquetes modificados por terceros
+            ni de pagos realizados fuera de los canales oficiales indicados.
+          </li>
+          <li>
+            Los instaladores auténticos son los publicados por este dominio / cuentas oficiales
+            (Microsoft Store, GitHub del proyecto). Cualquier otra fuente está fuera de nuestro control.
+          </li>
+          <li>
+            Si sospecha suplantación o fraude, cese el uso y comuníquelo a
+            <a href="mailto:dixstdgdl3@gmail.com">dixstdgdl3@gmail.com</a> y a las autoridades.
+          </li>
+        </ul>
+
+        <h2>12. Exactitud de la información</h2>
+        <p>
+          Los textos de producto, precios, versiones y descripciones se ofrecen de forma informativa
+          y pueden cambiar. No constituyen asesoramiento. Ante discrepancias entre marketing y este
+          documento legal, en materia de privacidad y responsabilidad <strong>prevalece este documento</strong>.
+        </p>
+
+        <h2>13. Ley aplicable y jurisdicción</h2>
+        <p>
+          Se rige por la legislación española y europea aplicable, con especial atención al RGPD
+          (Reglamento (UE) 2016/679) y a la Ley Orgánica 3/2018 (LOPDGDD).
+          Para las controversias con consumidores serán competentes los juzgados del domicilio del consumidor;
+          en el resto de casos, los juzgados que determine la ley aplicable, sin perjuicio de normas
+          imperativas de protección del consumidor que no puedan excluirse por contrato.
+        </p>
+
+        <h2>14. Cambios y contacto</h2>
+        <p>
+          Publicaremos en esta misma URL las modificaciones sustanciales, con su fecha de vigencia.
+          La versión 3.0 sustituye a las anteriores, que describían el flujo de datos de forma incompleta
+          o no incluían el régimen de responsabilidad.
+        </p>
+        <p>
+          <strong>Contacto (privacidad, legal y seguridad):</strong>
+          <a href="mailto:dixstdgdl3@gmail.com">dixstdgdl3@gmail.com</a>
+          ·
+          <a href="https://github.com/dixi3stdgdl-design/TeachMe-AI/issues" target="_blank" rel="noopener">GitHub Issues</a>
+        </p>
+      </div>
+
+      <p class="foot-note">
+        Documento informativo de cumplimiento y transparencia. No sustituye el asesoramiento de un abogado
+        en un caso concreto. Si una cláusula se declara nula, el resto del documento mantiene su validez.
       </p>
     </article>
   </main>
@@ -314,7 +456,7 @@
       <a href="mailto:dixstdgdl3@gmail.com">Contacto</a>
     </nav>
     <p class="footer-copy">
-      © 2026 Dixi3 Lqbs · tooltip-ai.com/privacy
+      © 2026 Dixi3 Lqbs · tooltip-ai.com/privacy · v3.0
     </p>
   </footer>
 
