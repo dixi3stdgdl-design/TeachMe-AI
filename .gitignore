@@ -10,7 +10,7 @@ target/
 !downloads/
 !downloads/**
 !downloads/*.exe
-!downloads/*.msix
+!downloads/ToolTipAIAssistant*.msix
 *.so
 *.dylib
 
@@ -77,3 +77,9 @@ APPINSIGHTS_CONFIG.json
 *secret*
 *credential*
 usermgmt*.html
+
+# Instaladores de pago — NUNCA publicar en la web ni en git
+_paid_deliveries/
+_paid_deliveries/**
+
+

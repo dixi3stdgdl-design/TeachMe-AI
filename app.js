@@ -1,4 +1,4 @@
-/* Tooltip AI — WebGL light-field + interactions */
+﻿/* Tooltip AI — WebGL light-field + interactions */
 (function () {
   'use strict';
 
@@ -148,6 +148,8 @@
   }
 
   /* ---------- checkout modal (PayPal in popup, no redirect) ---------- */
+  /* Solo Assistant es descarga directa. Los módulos de pago NUNCA se sirven
+     desde la web: se entregan tras confirmar el pago (correo / Store). */
   var catalog = {
     bundle: {
       title: 'Bundle Suite',
@@ -155,23 +157,17 @@
       product: 'Tooltip AI Bundle',
       total: '24.99 USD',
       url: 'https://paypal.me/DixLqb/24.99',
-      downloads: [
-        { label: 'Aura 1.0.3 (MSIX)', href: 'downloads/ToolTipAIAura_1.0.3.0_x64.msix' },
-        { label: 'Voice 1.0.2 (MSIX)', href: 'downloads/ToolTipAIVoice_1.0.2.0_x64.msix' },
-        { label: 'Translate 1.1.2 (MSIX)', href: 'downloads/ToolTipAITranslate_1.1.2.0_x64.msix' }
-      ]
+      downloads: [],
+      delivery: 'paid'
     },
     module: {
       title: 'Módulo suelto',
-      desc: 'Aura, Voice o Translate · elige el tuyo abajo',
+      desc: 'Aura, Voice o Translate · elige el tuyo',
       product: 'Tooltip AI Module',
       total: '9.99 USD',
       url: 'https://paypal.me/DixLqb/9.99',
-      downloads: [
-        { label: 'Aura 1.0.3 (MSIX)', href: 'downloads/ToolTipAIAura_1.0.3.0_x64.msix' },
-        { label: 'Voice 1.0.2 (MSIX)', href: 'downloads/ToolTipAIVoice_1.0.2.0_x64.msix' },
-        { label: 'Translate 1.1.2 (MSIX)', href: 'downloads/ToolTipAITranslate_1.1.2.0_x64.msix' }
-      ]
+      downloads: [],
+      delivery: 'paid'
     },
     aura: {
       title: 'ToolTip AI Aura',
@@ -179,7 +175,8 @@
       product: 'Aura',
       total: '9.99 USD',
       url: 'https://paypal.me/DixLqb/9.99',
-      downloads: [{ label: 'Aura 1.0.3 (MSIX)', href: 'downloads/ToolTipAIAura_1.0.3.0_x64.msix' }]
+      downloads: [],
+      delivery: 'paid'
     },
     voice: {
       title: 'ToolTip AI Voice',
@@ -187,7 +184,8 @@
       product: 'Voice',
       total: '9.99 USD',
       url: 'https://paypal.me/DixLqb/9.99',
-      downloads: [{ label: 'Voice 1.0.2 (MSIX)', href: 'downloads/ToolTipAIVoice_1.0.2.0_x64.msix' }]
+      downloads: [],
+      delivery: 'paid'
     },
     translate: {
       title: 'ToolTip AI Translate',
@@ -195,7 +193,8 @@
       product: 'Translate',
       total: '9.99 USD',
       url: 'https://paypal.me/DixLqb/9.99',
-      downloads: [{ label: 'Translate 1.1.2 (MSIX)', href: 'downloads/ToolTipAITranslate_1.1.2.0_x64.msix' }]
+      downloads: [],
+      delivery: 'paid'
     },
     assistant: {
       title: 'ToolTip AI Assistant',
@@ -206,14 +205,17 @@
       downloads: [
         { label: 'Assistant 1.1.3 (MSIX)', href: 'downloads/ToolTipAIAssistant_1.1.3.0_x64.msix' },
         { label: 'Assistant (EXE portable)', href: 'downloads/TooltipAI.exe' }
-      ]
+      ],
+      delivery: 'free'
     },
     team: {
       title: 'Tooltip AI Team',
       desc: 'Licencias por volumen · 299–999 USD',
       product: 'Team / Enterprise',
       total: 'A medida',
-      url: 'mailto:DixStdGdl@hotmail.com?subject=Tooltip%20AI%20Team'
+      url: 'mailto:DixStdGdl@hotmail.com?subject=Tooltip%20AI%20Team',
+      downloads: [],
+      delivery: 'team'
     }
   };
 
@@ -254,6 +256,20 @@
     }).join('');
   }
 
+  function renderPaidNotice(paid) {
+    var box = document.getElementById('ckDl');
+    if (!box) return;
+    box.hidden = false;
+    if (!paid) { box.innerHTML = ''; box.hidden = true; return; }
+    box.innerHTML =
+      '<div class="ck-note" style="margin:0.75rem 0 0">' +
+      '<strong>Entrega tras el pago.</strong> Los instaladores de Aura, Voice y Translate ' +
+      '<strong>no se descargan desde esta página</strong>. Tras pagar con PayPal, escríbenos a ' +
+      '<a href="mailto:dixstdgdl3@gmail.com?subject=Entrega%20ToolTip%20AI">dixstdgdl3@gmail.com</a> ' +
+      'con tu recibo (o compra en Microsoft Store) y te enviamos los enlaces.' +
+      '</div>';
+  }
+
   function openCk(key) {
     current = catalog[key] || catalog.bundle;
     ckTitle.textContent = current.title;
@@ -265,23 +281,32 @@
       payBtn.textContent = 'Descargar gratis ahora';
       payBtn.classList.remove('btn-primary');
       payBtn.classList.add('btn-ghost');
+      renderDl(current.downloads);
+    } else if (current.delivery === 'team') {
+      payBtn.innerHTML = '<span class="btn-shine"></span>Escribir a ventas';
+      payBtn.classList.add('btn-primary');
+      payBtn.classList.remove('btn-ghost');
+      renderPaidNotice(true);
     } else {
       payBtn.innerHTML = '<span class="btn-shine"></span>Pagar con PayPal';
       payBtn.classList.add('btn-primary');
       payBtn.classList.remove('btn-ghost');
+      /* Nunca mostrar instaladores de pago antes de cobrar */
+      renderPaidNotice(true);
     }
-    renderDl(current.downloads);
     modal.hidden = false;
     document.body.style.overflow = 'hidden';
   }
 
   ckPay.addEventListener('click', function () {
-    // GRATIS: solo descarga, sin PayPal ni correo
     if (!current.url) {
       renderDl(current.downloads);
       return;
     }
-    // PAGO: PayPal en ventana aparte + descargas YA visibles en el modal
+    if (current.delivery === 'team') {
+      window.location.href = current.url;
+      return;
+    }
     var w = 520, h = 720;
     window.open(
       current.url,
@@ -291,9 +316,9 @@
       ',top=' + ((screen.height - h) / 2) +
       ',noopener,noreferrer'
     );
-    renderDl(current.downloads);
+    /* Pago abierto en otra ventana: sin instaladores aquí */
+    renderPaidNotice(true);
   });
-
   /* ---------- HUD parallax on pointer ---------- */
   var hud = document.getElementById('heroHud');
   if (hud && !reduce) {
