@@ -65,3 +65,15 @@ _archive/scripts-cdp-2026-09/cdp_status_now/
 !privacy.html
 !docs/**/*.html
 
+
+# Seguridad — nunca versionar
+APPINSIGHTS_CONFIG.json
+*.pfx
+*.cer
+*.pem
+*.key
+.porkbun*
+.porkbun_*.json
+*secret*
+*credential*
+usermgmt*.html

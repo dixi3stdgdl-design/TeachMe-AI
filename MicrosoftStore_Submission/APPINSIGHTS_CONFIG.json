@@ -1,9 +1,0 @@
-﻿{
-  "appInsights": {
-    "instrumentationKey": "680724c1-2840-4ce4-9780-e9ccd5062f9d",
-    "connectionString": "InstrumentationKey=680724c1-2840-4ce4-9780-e9ccd5062f9d;IngestionEndpoint=https://mexicocentral-0.in.applicationinsights.azure.com/;LiveEndpoint=https://mexicocentral.livediagnostics.monitor.azure.com/;ApplicationId=0579b429-a40c-483a-9ea1-6e35c25c6d87",
-    "appId": "0579b429-a40c-483a-9ea1-6e35c25c6d87",
-    "resourceGroup": "ToolTipAI",
-    "note": "Usar en apps Windows para crash/telemetry. Visible en app Azure movil."
-  }
-}
