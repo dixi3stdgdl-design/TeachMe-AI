@@ -1,4 +1,4 @@
-﻿name: Deploy GitHub Pages
+name: Deploy GitHub Pages
 
 on:
   push:
@@ -28,28 +28,24 @@ jobs:
       - name: Create site directory
         run: |
           mkdir -p _site
+          # Páginas estáticas (GitHub Pages)
           cp index.html _site/
           cp privacy.html _site/
           cp styles.css _site/
-          cp app.js _site/
           cp favicon.ico _site/
-          cp app.ico _site/
           cp icon.png _site/
           cp CNAME _site/
           cp .nojekyll _site/
-          cp README.md _site/
           cp LICENSE _site/
           cp robots.txt _site/
           cp sitemap.xml _site/
-          cp status.html _site/
-          cp status.json _site/
-          cp -r privacy _site/ 2>/dev/null || true
-          cp -r translate _site/ 2>/dev/null || true
-          cp -r aura _site/ 2>/dev/null || true
-          cp -r voice _site/ 2>/dev/null || true
-          cp -r en _site/ 2>/dev/null || true
-          cp -r de _site/ 2>/dev/null || true
-          cp -r downloads _site/ 2>/dev/null || true
+          # i18n
+          cp -r en _site/
+          cp -r de _site/
+          cp -r privacy _site/
+          # reportes públicos (opcional)
+          mkdir -p _site/docs/reports
+          cp -r docs/reports/* _site/docs/reports/ 2>/dev/null || true
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -62,4 +58,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
