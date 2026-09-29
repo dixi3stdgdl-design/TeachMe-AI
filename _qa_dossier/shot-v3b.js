@@ -1,0 +1,25 @@
+﻿const { chromium } = require('D:/pwcli/node_modules/playwright');
+const BRAVE = 'C:\\Users\\drbea\\AppData\\Local\\BraveSoftware\\Brave-Browser\\Application\\brave.exe';
+const OUT = 'D:\\ToolTip AI\\_qa_dossier\\web-v3';
+(async () => {
+  const browser = await chromium.launch({ executablePath: BRAVE, headless: true });
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await page.goto('file:///D:/ToolTip AI/index.html', { waitUntil: 'load', timeout: 60000 });
+  await page.waitForTimeout(2000);
+  const h1 = await page.locator('h1').first().innerText();
+  console.log('H1:', h1.replace(/\n/g,' | '));
+  const heroImg = await page.locator('.hero-img').getAttribute('src').catch(()=>null);
+  console.log('hero img src:', heroImg);
+  await page.screenshot({ path: OUT + '/A-hero.png' });
+  await page.evaluate(() => document.querySelector('#producto').scrollIntoView({block:'center'}));
+  await page.waitForTimeout(400);
+  await page.screenshot({ path: OUT + '/B-producto.png' });
+  await page.evaluate(() => document.querySelector('#modulos').scrollIntoView({block:'start'}));
+  await page.waitForTimeout(400);
+  await page.screenshot({ path: OUT + '/C-modulos.png' });
+  await page.evaluate(() => document.querySelector('#precios').scrollIntoView({block:'center'}));
+  await page.waitForTimeout(400);
+  await page.screenshot({ path: OUT + '/D-precios.png' });
+  await browser.close();
+  console.log('done');
+})().catch(e => { console.error(e); process.exit(1); });

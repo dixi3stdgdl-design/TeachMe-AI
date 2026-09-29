@@ -1,55 +1,572 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToolTip AI Translate — Quantum Console</title>
   <style>
-    body {
-      width: 320px;
-      margin: 0;
-      padding: 16px;
-      background: #070d18;
-      color: #f8fafc;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    :root {
+      --bg-dark: #070a13;
+      --bg-card: rgba(14, 20, 36, 0.9);
+      --bg-card-hover: rgba(22, 31, 54, 0.95);
+      --border-cyan: rgba(56, 189, 248, 0.28);
+      --accent-cyan: #38bdf8;
+      --accent-emerald: #00f5a0;
+      --accent-violet: #a855f7;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
     }
-    .header {
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 340px;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      padding: 16px;
+      overflow-x: hidden;
+      user-select: none;
+    }
+
+    /* Ambient background grid */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: 
+        linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+      background-size: 24px 24px;
+      z-index: 0;
+    }
+
+    .console-container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Header */
+    .console-header {
       display: flex;
       align-items: center;
-      gap: 8px;
-      border-bottom: 1px solid #1e293b;
+      gap: 10px;
       padding-bottom: 12px;
-      margin-bottom: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
-    .dot { width: 10px; height: 10px; border-radius: 50%; background: #00e5ff; box-shadow: 0 0 8px #00e5ff; }
-    h1 { font-size: 14px; margin: 0; font-weight: 700; letter-spacing: 0.5px; }
-    .badge { font-size: 10px; background: #1e293b; color: #38bdf8; padding: 2px 6px; border-radius: 4px; margin-left: auto; }
-    .setting-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 12px; }
-    select { background: #0f172a; color: #38bdf8; border: 1px solid #334155; padding: 6px 10px; border-radius: 6px; outline: none; }
-    .btn { display: block; width: 100%; box-sizing: border-box; text-align: center; background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; text-decoration: none; padding: 8px; border-radius: 6px; font-size: 12px; font-weight: 600; margin-top: 14px; border: none; cursor: pointer; }
-    .btn:hover { filter: brightness(1.1); }
-    .footer { font-size: 10px; color: #64748b; text-align: center; margin-top: 12px; }
+
+    .brand-icon-box {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(59, 130, 246, 0.1));
+      border: 1px solid var(--accent-cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+    }
+
+    .brand-icon-box img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .brand-info {
+      flex: 1;
+    }
+
+    .brand-name {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .brand-accent {
+      color: var(--accent-cyan);
+    }
+
+    .brand-sub {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .status-chip {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 9px;
+      font-weight: 700;
+      font-family: monospace;
+      color: var(--accent-emerald);
+      background: rgba(0, 245, 160, 0.12);
+      border: 1px solid rgba(0, 245, 160, 0.3);
+      padding: 3px 7px;
+      border-radius: 20px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 6px var(--accent-emerald);
+      animation: pulseDot 1.8s infinite ease-in-out;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 0.6; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* Master Reactor Switch */
+    .master-switch-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-cyan);
+      border-radius: 10px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .master-switch-card:hover {
+      border-color: var(--accent-cyan);
+    }
+
+    .master-text-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .master-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .master-hint {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    /* Cyberpunk Toggle Switch */
+    .cyber-toggle {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+      cursor: pointer;
+    }
+
+    .cyber-toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      inset: 0;
+      background-color: #1e293b;
+      border-radius: 24px;
+      border: 1px solid #334155;
+      transition: 0.25s;
+    }
+
+    .slider::before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 3px;
+      bottom: 3px;
+      background-color: #94a3b8;
+      border-radius: 50%;
+      transition: 0.25s;
+    }
+
+    input:checked + .slider {
+      background-color: rgba(56, 189, 248, 0.25);
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+    }
+
+    input:checked + .slider::before {
+      transform: translateX(20px);
+      background-color: var(--accent-cyan);
+      box-shadow: 0 0 8px var(--accent-cyan);
+    }
+
+    /* Section Labels */
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Mode Selector Pills */
+    .modes-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .mode-option {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 8px 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .mode-option:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(56, 189, 248, 0.3);
+    }
+
+    .mode-option.active {
+      background: rgba(56, 189, 248, 0.12);
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.18);
+    }
+
+    .mode-icon {
+      font-size: 14px;
+    }
+
+    .mode-details {
+      flex: 1;
+    }
+
+    .mode-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .mode-desc {
+      font-size: 9.5px;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    /* Beam Color Swatches */
+    .beam-colors-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    .beam-btn {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      padding: 6px 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      font-size: 9.5px;
+      color: var(--text-muted);
+      transition: all 0.18s ease;
+    }
+
+    .beam-btn:hover {
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .beam-btn.active {
+      border-color: var(--accent-cyan);
+      color: #fff;
+      background: rgba(56, 189, 248, 0.1);
+    }
+
+    .color-swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .swatch-cyan { background: var(--accent-cyan); box-shadow: 0 0 6px var(--accent-cyan); }
+    .swatch-emerald { background: var(--accent-emerald); box-shadow: 0 0 6px var(--accent-emerald); }
+    .swatch-violet { background: var(--accent-violet); box-shadow: 0 0 6px var(--accent-violet); }
+    .swatch-stealth { background: #475569; border: 1px dashed #94a3b8; }
+
+    /* Language and Settings row */
+    .settings-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 8px 12px;
+    }
+
+    .settings-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .select-cyber {
+      background: #090e1c;
+      color: var(--accent-cyan);
+      border: 1px solid var(--border-cyan);
+      padding: 5px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Telemetry Grid */
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .telemetry-card {
+      background: rgba(14, 20, 36, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 8px;
+      text-align: center;
+    }
+
+    .telemetry-num {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--accent-cyan);
+      font-family: monospace;
+    }
+
+    .telemetry-sub {
+      font-size: 9px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Buttons */
+    .btn-action-primary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      border: 1px solid var(--accent-cyan);
+      box-shadow: 0 4px 15px rgba(2, 132, 199, 0.35);
+      color: #ffffff;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-action-primary:hover {
+      filter: brightness(1.15);
+      transform: translateY(-1px);
+    }
+
+    .btn-action-secondary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-muted);
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-size: 10.5px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-action-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    .footer-bar {
+      font-size: 9.5px;
+      color: #64748b;
+      text-align: center;
+      margin-top: 2px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .footer-bar a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
-  <div class="header">
-    <div class="dot"></div>
-    <h1>TOOLTIP TRANSLATE</h1>
-    <span class="badge">v1.0.1</span>
+  <div class="bg-grid"></div>
+
+  <div class="console-container">
+    <!-- Header -->
+    <div class="console-header">
+      <div class="brand-icon-box">
+        <img src="icon48.png" alt="Logo">
+      </div>
+      <div class="brand-info">
+        <div class="brand-name">TOOLTIP <span class="brand-accent">AI</span> TRANSLATE</div>
+        <div class="brand-sub">Consola de Escáner Cuántico v1.1.0</div>
+      </div>
+      <div class="status-chip">
+        <div class="status-dot"></div>
+        <span>ACTIVO</span>
+      </div>
+    </div>
+
+    <!-- Master Switch -->
+    <div class="master-switch-card">
+      <div class="master-text-group">
+        <span class="master-title">Haz Cuántico de Pantalla</span>
+        <span class="master-hint" id="lblMasterHint">El cursor escanea y traduce en tiempo real</span>
+      </div>
+      <label class="cyber-toggle">
+        <input type="checkbox" id="masterEnabled" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <!-- Scanner Modes -->
+    <div class="section-label">⚡ Modo de Activación del Haz</div>
+    <div class="modes-grid">
+      <div class="mode-option active" data-mode="hover">
+        <span class="mode-icon">✨</span>
+        <div class="mode-details">
+          <div class="mode-title">Luz de Puntero (Hover Instantáneo)</div>
+          <div class="mode-desc">Pasa el mouse sobre cualquier palabra para escanear y traducir al vuelo.</div>
+        </div>
+      </div>
+
+      <div class="mode-option" data-mode="alt">
+        <span class="mode-icon">🔦</span>
+        <div class="mode-details">
+          <div class="mode-title">Modo Linterna (Mantener Alt)</div>
+          <div class="mode-desc">El cursor solo emite el haz cuántico cuando mantienes presionada la tecla Alt.</div>
+        </div>
+      </div>
+
+      <div class="mode-option" data-mode="selection">
+        <span class="mode-icon">🔍</span>
+        <div class="mode-details">
+          <div class="mode-title">Lente de Selección Clásica</div>
+          <div class="mode-desc">Aparece únicamente al seleccionar o resaltar fragmentos de texto.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Beam Color Picker -->
+    <div class="section-label">🎨 Aura de Luz del Cursor</div>
+    <div class="beam-colors-row">
+      <button class="beam-btn active" data-color="theme-cyan">
+        <span class="color-swatch swatch-cyan"></span>
+        <span>Cian</span>
+      </button>
+      <button class="beam-btn" data-color="theme-emerald">
+        <span class="color-swatch swatch-emerald"></span>
+        <span>Esmeralda</span>
+      </button>
+      <button class="beam-btn" data-color="theme-violet">
+        <span class="color-swatch swatch-violet"></span>
+        <span>Violeta</span>
+      </button>
+      <button class="beam-btn" data-color="theme-stealth">
+        <span class="color-swatch swatch-stealth"></span>
+        <span>Invisible</span>
+      </button>
+    </div>
+
+    <!-- Target Language -->
+    <div class="settings-row">
+      <span class="settings-label">🌐 Idioma Destino</span>
+      <select id="targetLang" class="select-cyber">
+        <option value="es" selected>🇪🇸 Español</option>
+        <option value="en">🇬🇧 Inglés</option>
+        <option value="ja">🇯🇵 Japonés</option>
+        <option value="de">🇩🇪 Alemán</option>
+        <option value="fr">🇫🇷 Francés</option>
+        <option value="zh">🇨🇳 Chino</option>
+      </select>
+    </div>
+
+    <!-- Dock Widget Setting -->
+    <div class="settings-row">
+      <span class="settings-label">📌 Mini-Dock en Pantalla</span>
+      <label class="cyber-toggle" style="width: 36px; height: 20px;">
+        <input type="checkbox" id="showDock" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <!-- Telemetry Stats -->
+    <div class="telemetry-grid">
+      <div class="telemetry-card">
+        <div class="telemetry-num" id="statLatency">&lt; 2 ms</div>
+        <div class="telemetry-sub">Latencia Direct3D</div>
+      </div>
+      <div class="telemetry-card">
+        <div class="telemetry-num" style="color: var(--accent-emerald);">100% Zero-Ban</div>
+        <div class="telemetry-sub">Anti-Cheat Safe</div>
+      </div>
+    </div>
+
+    <!-- Primary Actions -->
+    <button class="btn-action-primary" id="btnTestSample">
+      <span>⚡ Probar Lente de Muestra</span>
+    </button>
+
+    <a href="https://tooltip-ai.com/translate#lensScanner" target="_blank" class="btn-action-secondary" id="btnOpenWeb">
+      <span>🔍 Abrir Simulador Interactivo Web</span>
+    </a>
+
+    <!-- Footer -->
+    <div class="footer-bar">
+      <span>Dixi3 Labs · Tooltip AI</span>
+      <a href="https://tooltip-ai.com" target="_blank">tooltip-ai.com</a>
+    </div>
   </div>
-  <div class="setting-row">
-    <span>Idioma Objetivo:</span>
-    <select id="targetLang">
-      <option value="es" selected>Español (ES)</option>
-      <option value="en">Inglés (EN)</option>
-      <option value="ja">Japonés (JA)</option>
-      <option value="fr">Francés (FR)</option>
-      <option value="de">Alemán (DE)</option>
-    </select>
-  </div>
-  <div class="setting-row">
-    <span>Lente Flotante en Selección:</span>
-    <input type="checkbox" id="autoLens" checked>
-  </div>
-  <button class="btn" id="btnTest">Probar Traducción de Muestra</button>
-  <div class="footer">Ecosistema ToolTip AI · dixi3stdgdl-design</div>
+
+  <script src="popup.js"></script>
 </body>
 </html>

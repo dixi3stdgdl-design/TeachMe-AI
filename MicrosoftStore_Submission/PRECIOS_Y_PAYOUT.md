@@ -46,19 +46,20 @@ Mientras HTTPS no esté forzado, puedes dejar la de Pages:
 
 - `https://dixi3stdgdl-design.github.io/TeachMe-AI/privacy/`
 
-## Estado dominio (verificado 2026-09-17)
+## Estado dominio (verificado 2026-09-17 noche)
 
 | Comprobación | Resultado |
 |---|---|
 | DNS `A @` | 185.199.108–111.153 (GitHub) ✅ |
-| `http://tooltip-ai.com` | HTTP 200, landing real Tooltip-ai ✅ |
-| GitHub Pages `cname` | `tooltip-ai.com` ✅ |
-| `CNAME www` | ✅ `dixi3stdgdl-design.github.io` (verificado 8.8.8.8) |
-| HTTPS / Enforce | Certificado GitHub aún no emitido (`certificate does not exist yet`) ⏳ |
+| `https://tooltip-ai.com` | **200 OK**, TLS Let's Encrypt, expira 16/12/2026 ✅ |
+| `http://tooltip-ai.com` | **301 → https://tooltip-ai.com/** ✅ |
+| GitHub Pages `https_enforced` | **true** (API) ✅ |
+| Privacy Store | Usar **`https://tooltip-ai.com/privacy`** (no la URL de github.io) |
 
-## Acciones manuales que solo tú puedes hacer
+## Acciones manuales en Partner Center (prioridad caja)
 
-1. **Partner Center → Pricing and availability**: Assistant = Free; módulos = 7.99 (o 9.99).
-2. **Payout account**: PayPal email o banco.
-3. **Store listings → Español (Assistant)**: dejar de «Incompleto» y **Volver a enviar para la certificación**.
-4. Cuando GitHub emita el cert: **Settings → Pages → Enforce HTTPS** (o lo activo yo con `gh api`).
+1. **Payout account**: email PayPal de la cuenta (no paypal.me).
+2. **Pricing**: Assistant = Free; Aura / Translate / Voice = **7.99 USD**; trial 7 días si está disponible.
+3. **Privacy URL** en Properties de cada submission → `https://tooltip-ai.com/privacy`.
+4. **Listings**: pegar METADATOS honestos (sin claims de neural/48 kHz/autoarranque).
+5. **Voice**: reservar nombre + subir MSIX **1.0.1.0** solo cuando el paquete y la ficha coincidan.

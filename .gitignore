@@ -1,4 +1,4 @@
-# Build and Binary Outputs
+﻿# Build and Binary Outputs
 [Bb]in/
 [Oo]bj/
 target/
@@ -7,6 +7,10 @@ target/
 *.pdb
 *.msi
 *.msix
+!downloads/
+!downloads/**
+!downloads/*.exe
+!downloads/*.msix
 *.so
 *.dylib
 
@@ -37,7 +41,6 @@ dist/
 .env.local
 .package_layout/
 .staging_publish/
-downloads/
 
 # Media & Recordings
 *.mp4
@@ -45,3 +48,20 @@ downloads/
 *.avi
 *.mkv
 *.mov
+
+# Secrets / keys (nunca commitear)
+*.pfx
+*.pem
+.porkbun*
+*secret*
+*credentials*
+APPINSIGHTS_CONFIG.json
+MicrosoftStore_Submission/Testing_Certificate/
+
+# dumps browser / posibles tokens
+_archive/scripts-cdp-2026-09/cdp_status_now/
+*.html
+!index.html
+!privacy.html
+!docs/**/*.html
+
