@@ -1,390 +1,254 @@
-/**
- * TOOLTIP-AI — REIMAGINED HIGH-END NEURAL INTERFACE
- * Horizontal Authentic Internet Creation Code Streams, Platinum Glass & Dynamic Tooltips
- */
+/* Tooltip AI — WebGL light-field + interactions */
+(function () {
+  'use strict';
 
-// Authentic Foundational Internet Creation Code Database
-const INTERNET_CREATION_CODE = [
-  "/* CERN WorldWideWeb v0.1 (1990) - Tim Berners-Lee */ char* HTParse(const char* aName, const char* relatedName, int flag);",
-  "// RFC 793 (1981) TCP Transmission Control Protocol - 3-Way Handshake [SYN] -> [SYN-ACK] -> [ACK]",
-  "struct tcphdr { uint16_t th_sport; uint16_t th_dport; uint32_t th_seq; uint32_t th_ack; uint8_t th_flags; /* SYN=0x02, ACK=0x10 */ };",
-  "/* ARPANET BBN Report 1822 (1969) */ int send_imp_message(struct imp_packet *pkt, uint8_t host_id, uint8_t link);",
-  "// 4.2BSD Sockets (1983) Berkeley Unix: int sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);",
-  "connect(sockfd, (struct sockaddr *)&server_addr, sizeof(struct sockaddr_in)); /* TCP 3-Way Handshake */",
-  "/* RFC 1035 Domain Names (BIND DNS 1987) */ struct dns_header { uint16_t id; uint16_t flags; uint16_t qdcount; uint16_t ancount; };",
-  "// HTTP/1.0 RFC 1945: GET /index.html HTTP/1.0\\r\\nHost: info.cern.ch\\r\\nUser-Agent: CERN-NextStep-WorldWideWeb.app\\r\\n\\r\\n",
-  "/* RFC 791 IPv4 Internet Protocol Header */ struct ip { uint8_t ip_v:4, ip_hl:4; uint8_t ip_tos; uint16_t ip_len; uint32_t ip_src, ip_dst; };",
-  "// RFC 4271 Border Gateway Protocol (BGP-4): struct bgp_msg { uint8_t marker[16]; uint16_t length; uint8_t type; /* KEEPALIVE */ };",
-  "/* RFC 2616 HTTP/1.1 Persistent Sockets */ HTTP/1.1 200 OK\\r\\nContent-Type: text/html; charset=utf-8\\r\\nConnection: keep-alive\\r\\n",
-  "// Vint Cerf & Bob Kahn (1974): A Protocol for Packet Network Intercommunication - IEEE Trans Comm",
-  "/* Windows 11 Native Kernel Engine (P/Invoke) */ [DllImport(\"user32.dll\")] public static extern IntPtr SetWindowsHookEx(int id, HookProc lp, IntPtr h, uint t);",
-  "// Zero-GC memory allocation: Span<char> buffer = stackalloc char[512]; GetClassNameW(hWnd, pBuf, 512);",
-  "/* Windows.Media.Ocr Native Engine */ OcrEngine engine = OcrEngine.TryCreateFromLanguage(new Language(\"es-ES\"));",
-  "// Multimodal Vision Inference Pipeline: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent"
-];
+  /* ---------- WebGL ambient light-field ---------- */
+  var canvas = document.getElementById('gl');
+  if (canvas && canvas.getContext) {
+    var gl = canvas.getContext('webgl', { antialias: false, alpha: false, premultipliedAlpha: false });
+    if (gl) {
+      var vs = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+      var fs = [
+        'precision highp float;',
+        'uniform vec2 u_res;uniform float u_t;uniform vec2 u_m;',
+        'void main(){',
+        '  vec2 p=(gl_FragCoord.xy-.5*u_res)/u_res.y;',
+        '  vec2 m=(u_m-.5)*vec2(u_res.x/u_res.y,1.);',
+        '  float t=u_t*.10;',
+        // thin flowing ribbons over deep void
+        '  float w1=sin(p.x*1.6+t*1.15+p.y*2.2)+.55*sin(p.y*2.4-t*.85);',
+        '  float w2=sin(p.x*2.1-t*.7-p.y*1.8)+.45*sin(length(p)*2.2+t*.5);',
+        '  float ribbon1=pow(max(0.,1.-abs(w1)*.95),6.0);',
+        '  float ribbon2=pow(max(0.,1.-abs(w2)*.9),7.0);',
+        '  float halo=exp(-abs(p.y+.22*sin(t*.6+p.x*1.1))*3.2);',
+        '  float d=length(p-m*.55);',
+        '  float lens=exp(-d*d*5.5);',
+        '  float r=length(p);',
+        '  float fade=smoothstep(1.45,.12,r);',
+        '  vec3 c1=vec3(.012,.018,.032);',
+        '  vec3 teal=vec3(.12,.78,.70);',
+        '  vec3 sky=vec3(.18,.62,.95);',
+        '  vec3 vio=vec3(.58,.42,.95);',
+        '  vec3 col=c1;',
+        '  col+=teal*ribbon1*.85*fade;',
+        '  col+=sky*ribbon2*.65*fade;',
+        '  col+=vio*halo*.22*fade;',
+        '  col+=vec3(.35,.75,.85)*lens*.35;',
+        '  col*=.88+.12*smoothstep(1.8,0.,r);',
+        '  gl_FragColor=vec4(col,1.);',
+        '}'
+      ].join('\n');
 
-const MODULE_CODE_DATABASE = {
-  core_unsafe: {
-    file: "NativeKernelEngine.cs",
-    title: "C# .NET 8 Unsafe Win32 Kernel Hook",
-    code: `[DllImport("user32.dll", SetLastError = true)]
-public static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
+      function sh(type, src) {
+        var s = gl.createShader(type);
+        gl.shaderSource(s, src);
+        gl.compileShader(s);
+        return s;
+      }
+      var prog = gl.createProgram();
+      gl.attachShader(prog, sh(gl.VERTEX_SHADER, vs));
+      gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, fs));
+      gl.linkProgram(prog);
+      gl.useProgram(prog);
 
-public unsafe static string GetWindowClassName(IntPtr hWnd) {
-    Span<char> buffer = stackalloc char[512];
-    fixed (char* pBuf = buffer) {
-        int len = NativeMethods.GetClassNameW(hWnd, pBuf, 512);
-        return len > 0 ? new string(pBuf, 0, len) : string.Empty;
+      var buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+      var loc = gl.getAttribLocation(prog, 'p');
+      gl.enableVertexAttribArray(loc);
+      gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+      var uRes = gl.getUniformLocation(prog, 'u_res');
+      var uT = gl.getUniformLocation(prog, 'u_t');
+      var uM = gl.getUniformLocation(prog, 'u_m');
+
+      var mx = 0.5, my = 0.5, tmx = 0.5, tmy = 0.5;
+      function resize() {
+        var dpr = Math.min(window.devicePixelRatio || 1, 1.6);
+        canvas.width = Math.floor(innerWidth * dpr);
+        canvas.height = Math.floor(innerHeight * dpr);
+        gl.viewport(0, 0, canvas.width, canvas.height);
+      }
+      addEventListener('resize', resize);
+      resize();
+
+      addEventListener('pointermove', function (e) {
+        tmx = e.clientX / innerWidth;
+        tmy = 1 - e.clientY / innerHeight;
+      }, { passive: true });
+
+      var t0 = performance.now();
+      function frame(now) {
+        mx += (tmx - mx) * 0.06;
+        my += (tmy - my) * 0.06;
+        gl.uniform2f(uRes, canvas.width, canvas.height);
+        gl.uniform1f(uT, (now - t0) * 0.001);
+        gl.uniform2f(uM, mx, my);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
     }
-}`
-  },
-  translate_ocr: {
-    file: "TranslateEngine.cs",
-    title: "Windows.Media.Ocr Local Engine",
-    code: `public async Task<string> RecognizeScreenAreaAsync(SoftwareBitmap bitmap) {
-    OcrEngine engine = OcrEngine.TryCreateFromLanguage(new Language("es-ES"));
-    OcrResult result = await engine.RecognizeAsync(bitmap);
-    if (focusedElement.IsPassword) return "[PROTECTED_PASSWORD_FIELD]";
-    return result.Text;
-}`
-  },
-  aura_dwell: {
-    file: "DwellRadarEngine.cs",
-    title: "Dwell Cursor Radar & 4-Quadrant Risk Matrix",
-    code: `public void OnMouseDwellCompleted(Point cursorPosition) {
-    AutomationElement target = AutomationElement.FromPoint(cursorPosition);
-    RiskAssessment risk = CognitiveEvaluator.Evaluate(target);
-    AcrylicHudWindow.ShowOverlay(target, risk, backdrop: BackdropType.Mica);
-}`
-  },
-  voice_tts: {
-    file: "VoiceSynthesizer.cs",
-    title: "Windows.Media.SpeechSynthesis HD Neural",
-    code: `using System.Speech.Synthesis;
-public void SpeakVerdict(string diagnosis) {
-    using var synth = new SpeechSynthesizer();
-    synth.SelectVoiceByHints(VoiceGender.Female, VoiceAge.Adult);
-    synth.SpeakAsync(diagnosis);
-}`
-  }
-};
-
-/* ========================================================================== */
-/* 1. HORIZONTAL SLOW INTERNET CREATION CODE STREAM ENGINE                    */
-/* ========================================================================== */
-class HorizontalInternetCodeEngine {
-  constructor() {
-    this.canvas = document.getElementById('codeRainCanvas');
-    if (!this.canvas) return;
-    this.ctx = this.canvas.getContext('2d');
-    this.lanes = [];
-    this.laneHeight = 32;
-    this.baseSpeed = 0.45; // Calm, slow, elegant horizontal speed
-    this.activeSpecSnippet = "";
-    
-    this.init();
   }
 
-  init() {
-    this.resize();
-    window.addEventListener('resize', () => this.resize());
-    this.animate();
+  /* ---------- scroll progress + reveals ---------- */
+  var progress = document.getElementById('progress');
+  function onScroll() {
+    var h = document.documentElement.scrollHeight - innerHeight;
+    if (progress) progress.style.width = (h > 0 ? (scrollY / h) * 100 : 0) + '%';
   }
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 
-  resize() {
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
-    const numLanes = Math.floor(this.canvas.height / this.laneHeight);
-    this.lanes = [];
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) {
+        en.target.classList.add('in');
+        io.unobserve(en.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  // hero visible immediately
+  document.querySelectorAll('.hero .reveal').forEach(function (el) {
+    requestAnimationFrame(function () { el.classList.add('in'); });
+  });
 
-    for (let i = 0; i < numLanes; i++) {
-      const codeIndex = i % INTERNET_CREATION_CODE.length;
-      this.lanes.push({
-        y: (i + 1) * this.laneHeight,
-        x: Math.random() * this.canvas.width,
-        speed: this.baseSpeed + (Math.random() * 0.25 - 0.1),
-        text: INTERNET_CREATION_CODE[codeIndex],
-        opacity: 0.12 + Math.random() * 0.16,
-        isHighlighted: false
+  /* ---------- magnetic buttons ---------- */
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce) {
+    document.querySelectorAll('.magnetic').forEach(function (btn) {
+      btn.addEventListener('pointermove', function (e) {
+        var r = btn.getBoundingClientRect();
+        var x = e.clientX - r.left - r.width / 2;
+        var y = e.clientY - r.top - r.height / 2;
+        btn.style.transform = 'translate(' + x * 0.18 + 'px,' + y * 0.22 + 'px)';
       });
-    }
-  }
-
-  highlightSpecCode(codeSnippet, fileName) {
-    this.activeSpecSnippet = codeSnippet;
-    const banner = document.getElementById('activeFileName');
-    if (banner && fileName) {
-      banner.textContent = `${fileName} • Código de Inferencia Activo`;
-    }
-
-    // Assign snippet lines to random lanes to smoothly illuminate
-    const lines = codeSnippet.split('\n').filter(l => l.trim().length > 0);
-    lines.forEach((line, idx) => {
-      const laneIdx = (idx * 3 + 2) % this.lanes.length;
-      if (this.lanes[laneIdx]) {
-        this.lanes[laneIdx].text = line;
-        this.lanes[laneIdx].isHighlighted = true;
-        this.lanes[laneIdx].opacity = 0.55;
-      }
+      btn.addEventListener('pointerleave', function () {
+        btn.style.transform = '';
+      });
     });
   }
 
-  resetHighlight() {
-    this.lanes.forEach((lane, i) => {
-      lane.isHighlighted = false;
-      lane.opacity = 0.12 + (i % 5) * 0.03;
-      lane.text = INTERNET_CREATION_CODE[i % INTERNET_CREATION_CODE.length];
+  /* ---------- mobile nav ---------- */
+  var menuBtn = document.getElementById('menuBtn');
+  if (menuBtn) {
+    menuBtn.addEventListener('click', function () {
+      document.body.classList.toggle('nav-open');
     });
   }
 
-  animate() {
-    requestAnimationFrame(() => this.animate());
-
-    // Clean background redraw with deep obsidian tint
-    this.ctx.fillStyle = 'rgba(7, 10, 19, 0.22)';
-    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
-    this.ctx.font = '13px "JetBrains Mono", Consolas, monospace';
-
-    for (let i = 0; i < this.lanes.length; i++) {
-      const lane = this.lanes[i];
-
-      // Smooth horizontal drift from right to left
-      lane.x -= lane.speed;
-
-      const textWidth = this.ctx.measureText(lane.text).width;
-
-      // Wrap around screen horizontally
-      if (lane.x + textWidth < 0) {
-        lane.x = this.canvas.width + 40;
-        if (!lane.isHighlighted) {
-          lane.text = INTERNET_CREATION_CODE[Math.floor(Math.random() * INTERNET_CREATION_CODE.length)];
-        }
-      }
-
-      // Elegant Color Palette: Luminescent Blue, Ice Cyan, Platinum White
-      if (lane.isHighlighted) {
-        this.ctx.fillStyle = `rgba(56, 189, 248, ${lane.opacity})`; // Vibrant Ice Cyan
-      } else if (i % 4 === 0) {
-        this.ctx.fillStyle = `rgba(96, 165, 250, ${lane.opacity})`; // Cobalt Sky
-      } else if (i % 4 === 1) {
-        this.ctx.fillStyle = `rgba(165, 180, 252, ${lane.opacity})`; // Soft Platinum Violet
-      } else {
-        this.ctx.fillStyle = `rgba(148, 163, 184, ${lane.opacity})`; // Deep Silver Gray
-      }
-
-      this.ctx.fillText(lane.text, lane.x, lane.y);
+  /* ---------- checkout modal (PayPal in popup, no redirect) ---------- */
+  var catalog = {
+    bundle: {
+      title: 'Bundle Suite',
+      desc: 'Aura + Voice + Translate · licencia de por vida',
+      product: 'Tooltip AI Bundle',
+      total: '24.99 USD',
+      url: 'https://paypal.me/DixLqb/24.99'
+    },
+    module: {
+      title: 'Módulo suelto',
+      desc: 'Aura, Voice o Translate · indícalo en el correo',
+      product: 'Tooltip AI Module',
+      total: '9.99 USD',
+      url: 'https://paypal.me/DixLqb/9.99'
+    },
+    aura: {
+      title: 'ToolTip AI Aura',
+      desc: 'Contexto por reposo · licencia de por vida',
+      product: 'Aura',
+      total: '9.99 USD',
+      url: 'https://paypal.me/DixLqb/9.99'
+    },
+    voice: {
+      title: 'ToolTip AI Voice',
+      desc: 'Voz y ducking · licencia de por vida',
+      product: 'Voice',
+      total: '9.99 USD',
+      url: 'https://paypal.me/DixLqb/9.99'
+    },
+    translate: {
+      title: 'ToolTip AI Translate',
+      desc: 'Traducción en pantalla · licencia de por vida',
+      product: 'Translate',
+      total: '9.99 USD',
+      url: 'https://paypal.me/DixLqb/9.99'
+    },
+    assistant: {
+      title: 'ToolTip AI Assistant',
+      desc: 'Inspector de pantalla · gratis',
+      product: 'Assistant',
+      total: '0 USD · gratis',
+      url: 'mailto:dixstdgdl3@gmail.com?subject=Descarga%20Assistant%20Tooltip%20AI'
+    },
+    team: {
+      title: 'Tooltip AI Team',
+      desc: 'Licencias por volumen · 299–999 USD',
+      product: 'Team / Enterprise',
+      total: 'A medida',
+      url: 'mailto:DixStdGdl@hotmail.com?subject=Tooltip%20AI%20Team'
     }
+  };
+
+  var modal = document.getElementById('checkout');
+  var ckTitle = document.getElementById('ckTitle');
+  var ckDesc = document.getElementById('ckDesc');
+  var ckProduct = document.getElementById('ckProduct');
+  var ckTotal = document.getElementById('ckTotal');
+  var ckPay = document.getElementById('ckPay');
+  var current = catalog.bundle;
+
+  function openCk(key) {
+    current = catalog[key] || catalog.bundle;
+    ckTitle.textContent = current.title;
+    ckDesc.textContent = current.desc;
+    ckProduct.textContent = current.product;
+    ckTotal.textContent = current.total;
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
   }
-}
-
-/* ========================================================================== */
-/* 2. AUDIO FEEDBACK HAPTIC SYNTH                                            */
-/* ========================================================================== */
-class AudioHapticSynth {
-  constructor() {
-    this.enabled = true;
-    this.ctx = null;
-  }
-
-  init() {
-    try {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if (AudioCtx) this.ctx = new AudioCtx();
-    } catch (e) {
-      this.enabled = false;
-    }
-  }
-
-  playBeep(freq = 520, duration = 0.05) {
-    if (!this.enabled) return;
-    if (!this.ctx) this.init();
-    if (!this.ctx) return;
-
-    if (this.ctx.state === 'suspended') {
-      this.ctx.resume();
-    }
-
-    try {
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-      gain.gain.setValueAtTime(0.03, this.ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
-
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-
-      osc.start();
-      osc.stop(this.ctx.currentTime + duration);
-    } catch (e) {}
-  }
-}
-
-/* ========================================================================== */
-/* 3. DYNAMIC FLOATING TOOLTIP & LASER BEAM ENGINE                           */
-/* ========================================================================== */
-class TooltipEngine {
-  constructor(codeEngine, audio) {
-    this.codeEngine = codeEngine;
-    this.audio = audio;
-    this.tooltipEl = document.getElementById('dynamicTooltip');
-    this.titleEl = document.getElementById('tooltipHeaderTitle');
-    this.specTagEl = document.getElementById('tooltipSpecTag');
-    this.bodyEl = document.getElementById('tooltipBodyText');
-    this.snippetEl = document.getElementById('tooltipCodeSnippet');
-
-    this.connectorSvg = document.getElementById('connectorSvg');
-    this.connectorPath = document.getElementById('connectorPath');
-    this.anchorDot = document.getElementById('connectorAnchorDot');
-    this.targetDot = document.getElementById('connectorTargetDot');
-
-    this.activeTarget = null;
-    this.init();
+  function closeCk() {
+    modal.hidden = true;
+    document.body.style.overflow = '';
   }
 
-  init() {
-    const triggers = document.querySelectorAll('.tooltip-trigger');
-    triggers.forEach(el => {
-      el.addEventListener('mouseenter', (e) => this.show(el, e));
-      el.addEventListener('mousemove', (e) => this.updatePosition(el, e));
-      el.addEventListener('mouseleave', () => this.hide());
-    });
-  }
-
-  show(target, e) {
-    this.activeTarget = target;
-    const specKey = target.getAttribute('data-code-spec') || 'core_unsafe';
-    const title = target.getAttribute('data-tooltip-title') || 'Inspección de Pantalla';
-    const body = target.getAttribute('data-tooltip-body') || 'Análisis en tiempo real de interfaz.';
-    const specFile = target.getAttribute('data-spec-file') || 'NativeKernelEngine.cs';
-
-    if (this.titleEl) this.titleEl.textContent = title;
-    if (this.specTagEl) this.specTagEl.textContent = specFile;
-    if (this.bodyEl) this.bodyEl.textContent = body;
-
-    const specData = MODULE_CODE_DATABASE[specKey];
-    if (specData && this.snippetEl) {
-      this.snippetEl.textContent = specData.code;
-    }
-
-    if (this.codeEngine && specData) {
-      this.codeEngine.highlightSpecCode(specData.code, specData.file);
-    }
-
-    if (this.audio) {
-      this.audio.playBeep(580, 0.04);
-    }
-
-    this.tooltipEl.classList.add('active');
-    this.updatePosition(target, e);
-  }
-
-  updatePosition(target, e) {
-    if (!this.activeTarget) return;
-
-    const tooltipWidth = 380;
-    const tooltipHeight = 220;
-    const padding = 20;
-
-    const targetRect = target.getBoundingClientRect();
-    const anchorX = targetRect.left + targetRect.width / 2;
-    const anchorY = targetRect.top + targetRect.height / 2;
-
-    let posX = e.clientX + 24;
-    let posY = e.clientY + 24;
-
-    // Viewport collision clamping
-    if (posX + tooltipWidth > window.innerWidth - padding) {
-      posX = e.clientX - tooltipWidth - 24;
-    }
-    if (posY + tooltipHeight > window.innerHeight - padding) {
-      posY = e.clientY - tooltipHeight - 24;
-    }
-
-    this.tooltipEl.style.transform = `translate(${posX}px, ${posY}px)`;
-
-    // Draw guide laser line
-    this.drawLaserBeam(anchorX, anchorY, posX + 20, posY + 20);
-  }
-
-  drawLaserBeam(x1, y1, x2, y2) {
-    if (!this.connectorPath) return;
-
-    const dx = x2 - x1;
-    const dy = y2 - y1;
-    const cx1 = x1 + dx * 0.4;
-    const cy1 = y1;
-    const cx2 = x1 + dx * 0.6;
-    const cy2 = y2;
-
-    const d = `M ${x1} ${y1} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${x2} ${y2}`;
-    this.connectorPath.setAttribute('d', d);
-
-    if (this.anchorDot) {
-      this.anchorDot.setAttribute('cx', x1);
-      this.anchorDot.setAttribute('cy', y1);
-    }
-    if (this.targetDot) {
-      this.targetDot.setAttribute('cx', x2);
-      this.targetDot.setAttribute('cy', y2);
-    }
-  }
-
-  hide() {
-    this.activeTarget = null;
-    this.tooltipEl.classList.remove('active');
-    if (this.connectorPath) {
-      this.connectorPath.setAttribute('d', '');
-    }
-    if (this.codeEngine) {
-      this.codeEngine.resetHighlight();
-    }
-  }
-}
-
-/* ========================================================================== */
-/* 4. WORKSPACE SCENARIO CONTROLLER                                          */
-/* ========================================================================== */
-function initScenarioSwitcher() {
-  const buttons = document.querySelectorAll('.scenario-pill-btn');
-  const targetInstaller = document.getElementById('targetInstaller');
-  const targetError = document.getElementById('targetError');
-
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      buttons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const scenario = btn.getAttribute('data-scenario');
-
-      if (scenario === 'error') {
-        if (targetError) targetError.style.display = 'block';
-        if (targetInstaller) targetInstaller.style.display = 'none';
-      } else {
-        if (targetError) targetError.style.display = 'none';
-        if (targetInstaller) targetInstaller.style.display = 'block';
-      }
+  document.querySelectorAll('[data-buy]').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      openCk(el.getAttribute('data-buy'));
     });
   });
-}
+  document.querySelectorAll('[data-close]').forEach(function (el) {
+    el.addEventListener('click', closeCk);
+  });
+  addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeCk();
+  });
 
-/* ========================================================================== */
-/* 5. APP BOOTSTRAP                                                          */
-/* ========================================================================== */
-document.addEventListener('DOMContentLoaded', () => {
-  const codeEngine = new HorizontalInternetCodeEngine();
-  const audio = new AudioHapticSynth();
-  new TooltipEngine(codeEngine, audio);
-  initScenarioSwitcher();
+  ckPay.addEventListener('click', function () {
+    if (current.url.indexOf('mailto:') === 0) {
+      location.href = current.url;
+      return;
+    }
+    var w = 520, h = 720;
+    window.open(
+      current.url,
+      'tooltip-paypal',
+      'width=' + w + ',height=' + h +
+      ',left=' + ((screen.width - w) / 2) +
+      ',top=' + ((screen.height - h) / 2) +
+      ',noopener,noreferrer'
+    );
+  });
 
-  // Audio button toggle
-  const btnSound = document.getElementById('btnSoundToggle');
-  if (btnSound) {
-    btnSound.addEventListener('click', () => {
-      audio.enabled = !audio.enabled;
-      btnSound.style.opacity = audio.enabled ? '1' : '0.4';
-      if (audio.enabled) audio.playBeep(720, 0.06);
-    });
+  /* ---------- HUD parallax on pointer ---------- */
+  var hud = document.getElementById('heroHud');
+  if (hud && !reduce) {
+    addEventListener('pointermove', function (e) {
+      var x = (e.clientX / innerWidth - 0.5) * 12;
+      var y = (e.clientY / innerHeight - 0.5) * 8;
+      hud.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0)';
+    }, { passive: true });
   }
-});
+})();

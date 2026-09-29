@@ -3,274 +3,268 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; connect-src 'self'; frame-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'">
-  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <link rel="canonical" href="https://tooltip-ai.com/de/">
-  <link rel="alternate" hreflang="de" href="https://tooltip-ai.com/de/">
-  <link rel="alternate" hreflang="de" href="https://tooltip-ai.com/de/en/">
-  <link rel="alternate" hreflang="de" href="https://tooltip-ai.com/de/de/">
+  <link rel="canonical" href="https://tooltip-ai.com/">
   <meta name="robots" content="index, follow">
   <meta name="author" content="Dixi3 Labs">
   <meta name="theme-color" content="#05070C">
-  <title>Tooltip AI — Bildschirm verstehen · Windows 11</title>
-  <meta name="description" content="Tooltip AI turns the Windows interface en contexto útil: explica errores, traduce lo que ves y lee en voz alta. Assistant gratis. Aura, Translate y Voice.">
-  <meta property="og:site_name" content="Tooltip AI">
-  <meta property="og:locale" content="es_ES">
+  <title>Tooltip AI — Entiende tu pantalla · Windows 11</title>
+  <meta name="description" content="Tooltip AI: la luz de tu pantalla se vuelve contexto. Explica errores, traduce y lee en voz alta. Suite nativa Windows 11.">
   <meta property="og:title" content="Tooltip AI — Entiende tu pantalla">
-  <meta property="og:description" content="Explica errores, traduce interfaces y lee en voz alta. Suite nativa para Windows 11.">
-  <meta property="og:url" content="https://tooltip-ai.com/de/">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://tooltip-ai.com/de/icon.png">
+  <meta property="og:description" content="Explica, traduce y lee en voz alta. Suite nativa para Windows 11.">
+  <meta property="og:image" content="https://tooltip-ai.com/icon.png">
+  <meta property="og:url" content="https://tooltip-ai.com/">
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Tooltip AI",
-    "operatingSystem": "Windows 10, Windows 11",
-    "applicationCategory": "UtilitiesApplication",
-    "url": "https://tooltip-ai.com/de/",
-    "downloadUrl": "https://tooltip-ai.com/de/#precios",
-    "softwareVersion": "1.1.3",
-    "offers": [
-      { "@type": "Offer", "name": "Assistant", "price": "0", "priceCurrency": "USD" },
-      { "@type": "Offer", "name": "Suite Bundle", "price": "24.99", "priceCurrency": "USD" },
-      { "@type": "Offer", "name": "Single module", "price": "9.99", "priceCurrency": "USD" }
-    ],
-    "publisher": { "@type": "Organization", "name": "Dixi3 Labs", "url": "https://tooltip-ai.com/de/" }
-  }
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Tooltip AI","operatingSystem":"Windows 10, Windows 11","applicationCategory":"UtilitiesApplication","url":"https://tooltip-ai.com/","softwareVersion":"1.1.3","offers":[{"@type":"Offer","name":"Bundle","price":"24.99","priceCurrency":"USD"},{"@type":"Offer","name":"Module","price":"9.99","priceCurrency":"USD"}],"publisher":{"@type":"Organization","name":"Dixi3 Labs"}}
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="favicon.ico">
   <link rel="icon" type="image/png" href="icon.png">
-  <link rel="apple-touch-icon" href="icon.png">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- CINEMATIC AURORA BACKDROP -->
-  <div class="backdrop" aria-hidden="true">
-    <div class="aurora a1"></div>
-    <div class="aurora a2"></div>
-    <div class="aurora a3"></div>
-    <div class="grid-fade"></div>
-    <div class="orb o1"></div>
-    <div class="orb o2"></div>
-    <div class="orb o3"></div>
-    <canvas id="stars"></canvas>
-    <div class="vignette"></div>
-  </div>
+  <canvas id="gl" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="progress" id="progress"></div>
 
   <header class="topbar">
     <a class="brand" href="./">
-      <span class="brand-mark"></span>
-      <img src="icon.png" alt="" width="30" height="30">
-      <span>Tooltip <em>AI</em></span>
+      <img src="icon.png" alt="" width="32" height="32">
+      <span>Tooltip<em>AI</em></span>
     </a>
-    <nav class="nav" id="nav">
+    <nav class="nav">
       <a href="#modulos">Module</a>
-      <a href="#como">So funktioniert's</a>
+      <a href="#como">Sistema</a>
       <a href="#precios">Preise</a>
       <a href="privacy/">Datenschutz</a>
     </nav>
     <div class="topbar-actions">
-      <div class="lang">
-        <a href="./" class="on">ES</a>
-        <a href="en/">EN</a>
-        <a href="de/">DE</a>
-      </div>
-      <button class="btn btn-primary btn-sm" data-buy="bundle">Suite kaufen</button>
-      <button class="menu-btn" id="menuBtn" aria-label="Menú"><span></span><span></span></button>
+      <div class="lang"><a href="./" class="on">ES</a><a href="en/">EN</a><a href="de/">DE</a></div>
+      <button class="btn btn-primary btn-sm magnetic" data-buy="bundle">Buy</button>
     </div>
+    <button class="menu-btn" id="menuBtn" aria-label="Menú"><span></span><span></span></button>
   </header>
 
   <main>
-    <!-- HERO -->
+    <!-- ACT 1 · HERO -->
     <section class="hero">
-      <div class="hero-badge">
-        <span class="pulse"></span>
-        Windows 10 / 11 · Native .NET · no Electron
+      <div class="hero-kicker reveal">
+        <span class="live-dot"></span>
+        SYSTEM ONLINE · WINDOWS 10/11 · NATIVE .NET
       </div>
-      <h1>
-        Your screen<br>
-        <span class="grad">won't stay quiet.</span>
+
+      <h1 class="hero-title">
+        <span class="line reveal d1">The interface</span>
+        <span class="line reveal d2"><em class="grad">hört auf zu lügen.</em></span>
       </h1>
-      <p class="lead">
-        Tooltip AI convierte cada botón, error y diálogo de Windows en contexto que entiendes
-        al instante. Explain, translate and read aloud — con <strong>tu</strong> clave de IA,
-        cifrada en tu equipo.
+
+      <p class="hero-lead reveal d3">
+        Tooltip AI turns every button, error y diálogo de Windows into light you understand.
+        Explain. Translate. Read aloud. Con <strong>tu</strong> clave de IA — cifrada en tu equipo.
       </p>
-      <div class="hero-cta">
-        <button class="btn btn-primary btn-lg" data-buy="bundle">
+
+      <div class="hero-cta reveal d4">
+        <button class="btn btn-primary btn-lg magnetic" data-buy="bundle">
           <span class="btn-shine"></span>
-          Suite kaufen · 24.99 USD
+          Suite kaufen · 24.99
         </button>
-        <a class="btn btn-ghost btn-lg" href="#modulos">Module entdecken</a>
+        <a class="btn btn-ghost btn-lg magnetic" href="#modulos">System ansehen</a>
       </div>
-      <div class="hero-stats">
-        <div class="stat">
-          <strong>4</strong>
-          <span>native WPF apps</span>
+
+      <div class="hero-hud reveal d5" id="heroHud">
+        <div class="hud-orb"></div>
+        <div class="hud-panel">
+          <div class="hud-label">CONTEXT ENGINE</div>
+          <div class="hud-value">READY</div>
+          <div class="hud-bars">
+            <i style="--w:92%"></i><i style="--w:78%"></i><i style="--w:64%"></i>
+          </div>
         </div>
-        <div class="stat">
-          <strong>BYOK</strong>
-          <span>DPAPI-encrypted key</span>
+        <div class="hud-chips">
+          <span>BYOK · DPAPI</span>
+          <span>Native WPF</span>
+          <span>MIT</span>
+          <span>0 servers</span>
         </div>
-        <div class="stat">
-          <strong>MIT</strong>
-          <span>código abierto</span>
-        </div>
-        <div class="stat">
-          <strong>0</strong>
-          <span>capture server</span>
-        </div>
+      </div>
+
+      <div class="scroll-hint reveal d6">
+        <span>scroll</span>
+        <div class="scroll-line"></div>
       </div>
     </section>
 
-    <!-- LIVE DEMO STRIP -->
-    <section class="showcase" aria-label="Demostración">
-      <div class="showcase-frame">
-        <div class="showcase-chrome">
-          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-          <span class="chrome-title">Windows 11 · Tooltip AI in action</span>
-        </div>
-        <div class="showcase-body">
-          <div class="mock-window">
-            <div class="mock-titlebar">Install wizard</div>
-            <div class="mock-row">
-              <div class="mock-check on"></div>
-              <div>
+    <!-- ACT 2 · SHOWCASE -->
+    <section class="section showcase-section" id="demo">
+      <div class="section-head">
+        <p class="eyebrow reveal">LIVE</p>
+        <h2 class="reveal">Look. Understand.<br><span class="grad">Decide.</span></h2>
+      </div>
+
+      <div class="stage reveal">
+        <div class="stage-glow"></div>
+        <div class="win">
+          <div class="win-bar">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="win-title">Install wizard — 2026</span>
+          </div>
+          <div class="win-body">
+            <div class="win-row">
+              <div class="check on"></div>
+              <div class="win-text">
                 <strong>Core engine</strong>
                 <small>Required · verified</small>
               </div>
               <span class="chip ok">OK</span>
             </div>
-            <div class="mock-row warn">
-              <div class="mock-check"></div>
-              <div>
+            <div class="win-row alert">
+              <div class="check"></div>
+              <div class="win-text">
                 <strong>Extra search bar</strong>
-                <small>Optional third-party software</small>
+                <small>Changes your browser · third-party addons</small>
               </div>
               <span class="chip warn">Review</span>
             </div>
-            <div class="mock-cta">Next</div>
-          </div>
-          <div class="hud-card">
-            <div class="hud-top">
-              <span class="hud-dot"></span>
-              Tooltip AI · Analysis
+            <div class="win-row">
+              <div class="check on"></div>
+              <div class="win-text">
+                <strong>Shortcuts</strong>
+                <small>Desktop · start menu</small>
+              </div>
+              <span class="chip ok">OK</span>
             </div>
-            <h3>That checkbox installs extra software</h3>
-            <p>“Barra de búsqueda” suele cambiar tu buscador y añadir addons. Desmárcalo si solo quieres el motor.</p>
-            <div class="hud-tags">
-              <span class="tag amber">Medium risk</span>
-              <span class="tag">Installción</span>
-              <span class="tag">Third-party</span>
-            </div>
+            <div class="win-btn">Next</div>
           </div>
         </div>
+
+        <aside class="scan">
+          <div class="scan-head">
+            <span class="live-dot"></span>
+            TOOLTIP AI · SCAN
+          </div>
+          <h3>That checkbox installs extra software</h3>
+          <p>
+            “Search bar” often changes your browser and adds addons.
+            Uncheck it if you only want the engine.
+          </p>
+          <div class="scan-tags">
+            <span class="tag amber">Medium risk</span>
+            <span class="tag">Install</span>
+            <span class="tag">Third-party</span>
+          </div>
+          <div class="scan-meter">
+            <div class="scan-meter-fill"></div>
+          </div>
+          <div class="scan-foot">Context confidence · 94%</div>
+        </aside>
       </div>
     </section>
 
-    <!-- MÓDULOS -->
+    <!-- ACT 3 · MÓDULOS -->
     <section class="section" id="modulos">
       <div class="section-head">
-        <p class="eyebrow">The suite</p>
-        <h2>One context engine.<br><span class="grad">Four powers.</span></h2>
+        <p class="eyebrow reveal">THE SUITE</p>
+        <h2 class="reveal">One engine.<br><span class="grad">Four portals.</span></h2>
       </div>
-      <div class="mod-grid">
-        <article class="mod-card free">
-          <div class="mod-icon">⌘</div>
-          <div class="mod-tag">Free</div>
+
+      <div class="mods">
+        <article class="mod reveal">
+          <div class="mod-glow t1"></div>
+          <div class="mod-top">
+            <span class="mod-ico">⌘</span>
+            <span class="mod-price">0</span>
+          </div>
           <h3>Assistant</h3>
-          <p>El inspector de pantalla. Señala lo que no entiendes y obtén una explicación clara antes de hacer clic.</p>
+          <p>The screen inspector. What you don't understand, explained before the click.</p>
           <ul class="ticks">
-            <li>UI explanations en contexto</li>
-            <li>Recorte inteligente</li>
+            <li>UI in context</li>
+            <li>Smart snip</li>
             <li>BYOK · DPAPI</li>
           </ul>
-          <div class="mod-foot">
-            <span class="price-tag">0 USD</span>
-            <button class="btn btn-ghost btn-sm" data-buy="assistant">Obtener</button>
-          </div>
+          <button class="btn btn-ghost btn-block magnetic" data-buy="assistant">Gratis holen</button>
         </article>
-        <article class="mod-card">
-          <div class="mod-icon teal">◎</div>
-          <div class="mod-tag">9.99 USD</div>
+
+        <article class="mod reveal">
+          <div class="mod-glow t2"></div>
+          <div class="mod-top">
+            <span class="mod-ico teal">◎</span>
+            <span class="mod-price">9.99</span>
+          </div>
           <h3>Aura</h3>
-          <p>Contexto por reposo. El cursor se detiene y Aura te orienta: qué hace el elemento y a qué prestar atención.</p>
+          <p>Cursor rests, context appears. Radar for what matters.</p>
           <ul class="ticks">
-            <li>Dwell / radar de contexto</li>
-            <li>Accesibilidad real</li>
-            <li>Hotkey global</li>
+            <li>Dwell radar</li>
+            <li>Accessibility</li>
+            <li>Global hotkey</li>
           </ul>
-          <div class="mod-foot">
-            <span class="price-tag">9.99 USD</span>
-            <button class="btn btn-ghost btn-sm" data-buy="aura">Comprar</button>
-          </div>
+          <button class="btn btn-ghost btn-block magnetic" data-buy="aura">Buy</button>
         </article>
-        <article class="mod-card">
-          <div class="mod-icon sky">文</div>
-          <div class="mod-tag">9.99 USD</div>
+
+        <article class="mod reveal">
+          <div class="mod-glow t3"></div>
+          <div class="mod-top">
+            <span class="mod-ico sky">文</span>
+            <span class="mod-price">9.99</span>
+          </div>
           <h3>Translate</h3>
-          <p>Traduce lo que ves, incluso cuando no puedes seleccionar el texto. Hover, OCR y multi-proveedor.</p>
+          <p>Translate what you see. Even when text can't be selected.</p>
           <ul class="ticks">
             <li>Hover + OCR</li>
-            <li>Gemini · DeepL · Azure…</li>
-            <li>Sin copiar y pegar</li>
+            <li>Multi-proveedor</li>
+            <li>No copy-paste</li>
           </ul>
-          <div class="mod-foot">
-            <span class="price-tag">9.99 USD</span>
-            <button class="btn btn-ghost btn-sm" data-buy="translate">Comprar</button>
-          </div>
+          <button class="btn btn-ghost btn-block magnetic" data-buy="translate">Buy</button>
         </article>
-        <article class="mod-card">
-          <div class="mod-icon violet">♪</div>
-          <div class="mod-tag">9.99 USD</div>
-          <h3>Voice</h3>
-          <p>Lee en voz alta lo que importa, atenuando la música de fondo para no competir contigo.</p>
-          <ul class="ticks">
-            <li>TTS del sistema</li>
-            <li>Ducking de audio</li>
-            <li>Ajustes persistentes</li>
-          </ul>
-          <div class="mod-foot">
-            <span class="price-tag">9.99 USD</span>
-            <button class="btn btn-ghost btn-sm" data-buy="voice">Comprar</button>
+
+        <article class="mod reveal">
+          <div class="mod-glow t4"></div>
+          <div class="mod-top">
+            <span class="mod-ico violet">♪</span>
+            <span class="mod-price">9.99</span>
           </div>
+          <h3>Voice</h3>
+          <p>What matters, out loud. Music ducks so it doesn't compete.</p>
+          <ul class="ticks">
+            <li>System TTS</li>
+            <li>Ducking</li>
+            <li>Persistent settings</li>
+          </ul>
+          <button class="btn btn-ghost btn-block magnetic" data-buy="voice">Buy</button>
         </article>
       </div>
     </section>
 
-    <!-- CÓMO -->
+    <!-- SYSTEM -->
     <section class="section" id="como">
-      <div class="glass-panel">
+      <div class="glass reveal">
         <div class="section-head left">
-          <p class="eyebrow">So funktioniert's</p>
-          <h2>Three steps.<br>Zero friction.</h2>
+          <p class="eyebrow">SYSTEM</p>
+          <h2>Three moves.<br>Zero theater.</h2>
         </div>
-        <ol class="steps">
-          <li>
+        <div class="steps">
+          <div class="step">
             <span class="step-n">01</span>
             <h3>Install</h3>
-            <p>Assistant es gratis. Los módulos se activan con tu licencia de por vida.</p>
-          </li>
-          <li>
+            <p>Assistant free. Module with lifetime license.</p>
+          </div>
+          <div class="step">
             <span class="step-n">02</span>
             <h3>Your AI, your key</h3>
-            <p>Pega la clave del proveedor que quieras. Se cifra con DPAPI en tu equipo. Nosotros no la vemos.</p>
-          </li>
-          <li>
+            <p>Encrypted with DPAPI on your machine. We never see it.</p>
+          </div>
+          <div class="step">
             <span class="step-n">03</span>
-            <h3>Use your screen</h3>
-            <p>Atajos reales: recorte <kbd>Ctrl+Shift+A</kbd>, radar <kbd>Ctrl+Shift+D</kbd>, ajustes <kbd>Ctrl+Shift+C</kbd>.</p>
-          </li>
-        </ol>
+            <h3>Act</h3>
+            <p>Real shortcuts: <kbd>Ctrl+Shift+A</kbd> · <kbd>Ctrl+Shift+D</kbd> · <kbd>Ctrl+Shift+C</kbd></p>
+          </div>
+        </div>
         <div class="callout">
-          <strong>Datenschutz real:</strong> la inferencia va de tu equipo a la API de IA que tú elijas.
-          Sin backend de capturas. <a href="privacy/">Read privacy</a>
+          <strong>Real privacy:</strong> client-side inference to your API.
+          No capture backend. <a href="privacy/">Read privacy</a>
         </div>
       </div>
     </section>
@@ -278,64 +272,67 @@
     <!-- PRECIOS -->
     <section class="section" id="precios">
       <div class="section-head">
-        <p class="eyebrow">Preise</p>
-        <h2>Start free.<br><span class="grad">Pay only for what you use.</span></h2>
-        <p class="section-sub">Secure PayPal checkout · entrega de licencia por correo · sin suscripciones.</p>
+        <p class="eyebrow reveal">ACCESS</p>
+        <h2 class="reveal">Start free.<br><span class="grad">Pay for what you use.</span></h2>
+        <p class="section-sub reveal">PayPal · lifetime license · no subscriptions</p>
       </div>
-      <div class="price-grid">
-        <article class="price-card">
+
+      <div class="prices">
+        <article class="price-card reveal">
           <h3>Assistant</h3>
-          <p class="price"><span>Free</span></p>
-          <p class="price-note">Screen inspector</p>
+          <div class="amount">Gratis</div>
+          <p class="amount-note">Screen inspector</p>
           <ul class="ticks">
             <li>UI explanations</li>
             <li>BYOK DPAPI</li>
             <li>Personal & commercial use</li>
           </ul>
-          <button class="btn btn-ghost btn-block" data-buy="assistant">Request download</button>
+          <button class="btn btn-ghost btn-block magnetic" data-buy="assistant">Request download</button>
         </article>
-        <article class="price-card featured">
-          <div class="badge">Best value</div>
+
+        <article class="price-card featured reveal">
+          <div class="badge">BEST VALUE</div>
           <h3>Suite Bundle</h3>
-          <p class="price"><span>24.99</span> <small>USD</small></p>
-          <p class="price-note">Aura + Voice + Translate</p>
+          <div class="amount">24.99 <small>USD</small></div>
+          <p class="amount-note">Aura + Voice + Translate</p>
           <ul class="ticks">
             <li>Three lifetime modules</li>
             <li>Save ~5 USD</li>
-            <li>Delivery prioritaria</li>
+            <li>Priority delivery</li>
           </ul>
-          <button class="btn btn-primary btn-block" data-buy="bundle">Bundle kaufen</button>
+          <button class="btn btn-primary btn-block magnetic" data-buy="bundle">
+            <span class="btn-shine"></span>
+            Bundle kaufen
+          </button>
         </article>
-        <article class="price-card">
-          <h3>Single module</h3>
-          <p class="price"><span>9.99</span> <small>USD</small></p>
-          <p class="price-note">Aura · Voice · Translate</p>
+
+        <article class="price-card reveal">
+          <h3>Module</h3>
+          <div class="amount">9.99 <small>USD</small></div>
+          <p class="amount-note">Aura · Voice · Translate</p>
           <ul class="ticks">
             <li>Whichever you prefer</li>
             <li>Lifetime license</li>
             <li>Updates in that line</li>
           </ul>
-          <button class="btn btn-ghost btn-block" data-buy="module">Modul kaufen</button>
+          <button class="btn btn-ghost btn-block magnetic" data-buy="module">Buy</button>
         </article>
       </div>
     </section>
 
-    <!-- EQUIPOS -->
-    <section class="section" id="equipos">
-      <div class="glass-panel teams">
+    <!-- TEAMS -->
+    <section class="section">
+      <div class="glass teams reveal">
         <div>
-          <p class="eyebrow">Equipos</p>
-          <h2>For support, QA<br>and accessibility.</h2>
-          <p class="lead-sm">
-            Volume licensing, despliegue MSIX / Intune y factura única.
-            Para equipos que viven en la pantalla.
-          </p>
-          <button class="btn btn-primary" data-buy="team">Vertrieb kontaktieren</button>
+          <p class="eyebrow">TEAMS</p>
+          <h2>Support · QA ·<br>Accessibility.</h2>
+          <p class="lead-sm">Volume, Intune, single invoice. For those who live on screen.</p>
+          <button class="btn btn-primary magnetic" data-buy="team">Vertrieb kontaktieren</button>
         </div>
-        <div class="team-points">
+        <div class="team-grid">
           <div class="tp"><strong>299–999</strong><span>USD / team</span></div>
-          <div class="tp"><strong>24–48 h</strong><span>response</span></div>
-          <div class="tp"><strong>Intune</strong><span>deployment ready</span></div>
+          <div class="tp"><strong>24–48h</strong><span>response</span></div>
+          <div class="tp"><strong>Intune</strong><span>deployment</span></div>
         </div>
       </div>
     </section>
@@ -343,7 +340,7 @@
 
   <footer class="footer">
     <div class="footer-brand">
-      <img src="icon.png" alt="" width="28" height="28">
+      <img src="icon.png" alt="" width="32" height="32">
       <div>
         <strong>Tooltip AI</strong>
         <span>Dixi3 Labs · tooltip-ai.com</span>
@@ -356,206 +353,37 @@
       <a href="mailto:dixstdgdl3@gmail.com">Contact</a>
     </nav>
     <p class="footer-copy">
-      © 2026 Dixi3 Labs · Licencia MIT ·
-      Built with Xiaomi MiMo Desktop (development environment) y proveedores de IA del usuario.
-      No official affiliation.
+      © 2026 Dixi3 Labs · MIT ·
+      Built with Xiaomi MiMo Desktop and the user's AI providers. No official affiliation.
     </p>
   </footer>
 
-  <!-- CHECKOUT MODAL (sin salir del sitio) -->
+  <!-- CHECKOUT -->
   <div class="modal" id="checkout" hidden>
     <div class="modal-backdrop" data-close></div>
-    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="ckTitle">
+    <div class="modal-card" role="dialog" aria-modal="true">
       <button class="modal-close" data-close aria-label="Cerrar">×</button>
-      <div class="ck-kicker">Secure checkout</div>
+      <div class="ck-kicker">SECURE CHECKOUT</div>
       <h2 id="ckTitle">Suite Bundle</h2>
       <p class="ck-desc" id="ckDesc">Aura + Voice + Translate · lifetime license</p>
-
       <div class="ck-summary">
-        <div class="ck-line">
-          <span>Product</span>
-          <strong id="ckProduct">Tooltip AI Bundle</strong>
-        </div>
-        <div class="ck-line">
-          <span>Delivery</span>
-          <strong>Por correo en 24 h</strong>
-        </div>
-        <div class="ck-line total">
-          <span>Total</span>
-          <strong id="ckTotal">24.99 USD</strong>
-        </div>
+        <div class="ck-line"><span>Product</span><strong id="ckProduct">Tooltip AI Bundle</strong></div>
+        <div class="ck-line"><span>Delivery</span><strong>Email · 24 h</strong></div>
+        <div class="ck-line total"><span>Total</span><strong id="ckTotal">24.99 USD</strong></div>
       </div>
-
-      <button class="btn btn-primary btn-block btn-lg" id="ckPay">
+      <button class="btn btn-primary btn-block btn-lg magnetic" id="ckPay">
         <span class="btn-shine"></span>
         Mit PayPal zahlen
       </button>
       <p class="ck-note">
         PayPal opens in a separate window — <strong>you never leave this page</strong>.
-        Tras el pago, envía el comprobante a
-        <a href="mailto:dixstdgdl3@gmail.com">dixstdgdl3@gmail.com</a>
-        and you get installers + license.
+        Send your receipt to <a href="mailto:dixstdgdl3@gmail.com">dixstdgdl3@gmail.com</a>
+        and get installers + license.
       </p>
-      <div class="ck-trust">
-        <span>🔒 PayPal</span>
-        <span>· Lifetime license</span>
-        <span>· No subscription</span>
-      </div>
+      <div class="ck-trust"><span>PayPal</span><span>· Lifetime license</span><span>· No subscription</span></div>
     </div>
   </div>
 
-  <script>
-  (function () {
-    // ——— fondo: estrellas suaves ———
-    var c = document.getElementById('stars');
-    if (c && c.getContext) {
-      var ctx = c.getContext('2d');
-      var stars = [];
-      function resize() {
-        c.width = window.innerWidth;
-        c.height = window.innerHeight;
-        stars = [];
-        var n = Math.min(120, Math.floor((c.width * c.height) / 14000));
-        for (var i = 0; i < n; i++) {
-          stars.push({
-            x: Math.random() * c.width,
-            y: Math.random() * c.height,
-            r: Math.random() * 1.4 + 0.2,
-            a: Math.random() * 0.5 + 0.1,
-            s: Math.random() * 0.15 + 0.02
-          });
-        }
-      }
-      function tick() {
-        ctx.clearRect(0, 0, c.width, c.height);
-        for (var i = 0; i < stars.length; i++) {
-          var st = stars[i];
-          st.y -= st.s;
-          if (st.y < -2) { st.y = c.height + 2; st.x = Math.random() * c.width; }
-          ctx.beginPath();
-          ctx.fillStyle = 'rgba(180,220,255,' + st.a + ')';
-          ctx.arc(st.x, st.y, st.r, 0, Math.PI * 2);
-          ctx.fill();
-        }
-        requestAnimationFrame(tick);
-      }
-      window.addEventListener('resize', resize);
-      resize();
-      tick();
-    }
-
-    // ——— menú móvil ———
-    var menuBtn = document.getElementById('menuBtn');
-    if (menuBtn) {
-      menuBtn.addEventListener('click', function () {
-        document.body.classList.toggle('nav-open');
-      });
-    }
-
-    // ——— checkout ———
-    var catalog = {
-      bundle: {
-        title: 'Suite Bundle',
-        desc: 'Aura + Voice + Translate · lifetime license',
-        product: 'Tooltip AI Bundle',
-        total: '24.99 USD',
-        url: 'https://paypal.me/DixLqb/24.99'
-      },
-      module: {
-        title: 'Single module',
-        desc: 'Aura, Voice or Translate · note it in your email',
-        product: 'Tooltip AI Module',
-        total: '9.99 USD',
-        url: 'https://paypal.me/DixLqb/9.99'
-      },
-      aura: {
-        title: 'ToolTip AI Aura',
-        desc: 'Hover context · lifetime license',
-        product: 'Aura',
-        total: '9.99 USD',
-        url: 'https://paypal.me/DixLqb/9.99'
-      },
-      voice: {
-        title: 'ToolTip AI Voice',
-        desc: 'Voice & ducking · lifetime license',
-        product: 'Voice',
-        total: '9.99 USD',
-        url: 'https://paypal.me/DixLqb/9.99'
-      },
-      translate: {
-        title: 'ToolTip AI Translate',
-        desc: 'On-screen translation · lifetime license',
-        product: 'Translate',
-        total: '9.99 USD',
-        url: 'https://paypal.me/DixLqb/9.99'
-      },
-      assistant: {
-        title: 'ToolTip AI Assistant',
-        desc: 'Screen inspector · gratis',
-        product: 'Assistant',
-        total: '0 USD · gratis',
-        url: 'mailto:dixstdgdl3@gmail.com?subject=Descarga%20Assistant%20Tooltip%20AI'
-      },
-      team: {
-        title: 'Tooltip AI Team',
-        desc: 'Volume licensing · 299–999 USD',
-        product: 'Team / Enterprise',
-        total: 'A medida',
-        url: 'mailto:DixStdGdl@hotmail.com?subject=Tooltip%20AI%20Team'
-      }
-    };
-
-    var modal = document.getElementById('checkout');
-    var ckTitle = document.getElementById('ckTitle');
-    var ckDesc = document.getElementById('ckDesc');
-    var ckProduct = document.getElementById('ckProduct');
-    var ckTotal = document.getElementById('ckTotal');
-    var ckPay = document.getElementById('ckPay');
-    var current = catalog.bundle;
-
-    function openCk(key) {
-      current = catalog[key] || catalog.bundle;
-      ckTitle.textContent = current.title;
-      ckDesc.textContent = current.desc;
-      ckProduct.textContent = current.product;
-      ckTotal.textContent = current.total;
-      modal.hidden = false;
-      document.body.style.overflow = 'hidden';
-    }
-    function closeCk() {
-      modal.hidden = true;
-      document.body.style.overflow = '';
-    }
-
-    document.querySelectorAll('[data-buy]').forEach(function (el) {
-      el.addEventListener('click', function (e) {
-        e.preventDefault();
-        openCk(el.getAttribute('data-buy'));
-      });
-    });
-    document.querySelectorAll('[data-close]').forEach(function (el) {
-      el.addEventListener('click', closeCk);
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeCk();
-    });
-
-    ckPay.addEventListener('click', function () {
-      if (current.url.indexOf('mailto:') === 0) {
-        window.location.href = current.url;
-        return;
-      }
-      // PayPal en ventana aparte: el sitio no se redirige
-      var w = 520, h = 720;
-      var left = (window.screen.width - w) / 2;
-      var top = (window.screen.height - h) / 2;
-      window.open(
-        current.url,
-        'tooltip-paypal',
-        'width=' + w + ',height=' + h + ',left=' + left + ',top=' + top + ',noopener,noreferrer'
-      );
-    });
-  })();
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
