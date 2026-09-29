@@ -3,49 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; connect-src 'self'; frame-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <link rel="canonical" href="https://tooltip-ai.com/">
   <link rel="alternate" hreflang="es" href="https://tooltip-ai.com/">
   <link rel="alternate" hreflang="en" href="https://tooltip-ai.com/en/">
   <link rel="alternate" hreflang="de" href="https://tooltip-ai.com/de/">
-  <link rel="alternate" hreflang="x-default" href="https://tooltip-ai.com/">
   <meta name="robots" content="index, follow">
   <meta name="author" content="Dixi3 Labs">
-  <meta name="theme-color" content="#0B0F14">
+  <meta name="theme-color" content="#05070C">
   <title>Tooltip AI — Entiende tu pantalla · Windows 11</title>
-  <meta name="description" content="Tooltip AI convierte la interfaz de Windows en contexto útil: explica errores, traduce lo que ves y lee en voz alta. Assistant gratis. Módulos Aura, Translate y Voice.">
+  <meta name="description" content="Tooltip AI convierte la interfaz de Windows en contexto útil: explica errores, traduce lo que ves y lee en voz alta. Assistant gratis. Aura, Translate y Voice.">
   <meta property="og:site_name" content="Tooltip AI">
   <meta property="og:locale" content="es_ES">
   <meta property="og:title" content="Tooltip AI — Entiende tu pantalla">
-  <meta property="og:description" content="Explica errores, traduce interfaces y lee en voz alta. Assistant gratis. Suite para Windows 11.">
+  <meta property="og:description" content="Explica errores, traduce interfaces y lee en voz alta. Suite nativa para Windows 11.">
   <meta property="og:url" content="https://tooltip-ai.com/">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://tooltip-ai.com/icon.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Tooltip AI — Entiende tu pantalla">
-  <meta name="twitter:description" content="Inspector de pantalla con IA para Windows 11. Assistant gratis.">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "Tooltip AI Assistant",
+    "name": "Tooltip AI",
     "operatingSystem": "Windows 10, Windows 11",
     "applicationCategory": "UtilitiesApplication",
     "url": "https://tooltip-ai.com/",
-    "downloadUrl": "https://tooltip-ai.com/#comprar",
+    "downloadUrl": "https://tooltip-ai.com/#precios",
     "softwareVersion": "1.1.3",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Dixi3 Labs",
-      "url": "https://tooltip-ai.com/"
-    }
+    "offers": [
+      { "@type": "Offer", "name": "Assistant", "price": "0", "priceCurrency": "USD" },
+      { "@type": "Offer", "name": "Bundle Suite", "price": "24.99", "priceCurrency": "USD" },
+      { "@type": "Offer", "name": "Módulo suelto", "price": "9.99", "priceCurrency": "USD" }
+    ],
+    "publisher": { "@type": "Organization", "name": "Dixi3 Labs", "url": "https://tooltip-ai.com/" }
   }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -57,12 +50,26 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- CINEMATIC AURORA BACKDROP -->
+  <div class="backdrop" aria-hidden="true">
+    <div class="aurora a1"></div>
+    <div class="aurora a2"></div>
+    <div class="aurora a3"></div>
+    <div class="grid-fade"></div>
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="orb o3"></div>
+    <canvas id="stars"></canvas>
+    <div class="vignette"></div>
+  </div>
+
   <header class="topbar">
     <a class="brand" href="./">
-      <img src="icon.png" alt="" width="28" height="28">
+      <span class="brand-mark"></span>
+      <img src="icon.png" alt="" width="30" height="30">
       <span>Tooltip <em>AI</em></span>
     </a>
-    <nav class="nav">
+    <nav class="nav" id="nav">
       <a href="#modulos">Módulos</a>
       <a href="#como">Cómo funciona</a>
       <a href="#precios">Precios</a>
@@ -70,116 +77,201 @@
     </nav>
     <div class="topbar-actions">
       <div class="lang">
-        <a href="./" class="on" hreflang="es">ES</a>
-        <a href="en/" hreflang="en">EN</a>
-        <a href="de/" hreflang="de">DE</a>
+        <a href="./" class="on">ES</a>
+        <a href="en/">EN</a>
+        <a href="de/">DE</a>
       </div>
-      <a class="btn btn-primary btn-sm" href="#precios">Comprar</a>
+      <button class="btn btn-primary btn-sm" data-buy="bundle">Comprar Suite</button>
+      <button class="menu-btn" id="menuBtn" aria-label="Menú"><span></span><span></span></button>
     </div>
-    <button class="menu-btn" id="menuBtn" aria-label="Menú"><span></span><span></span></button>
   </header>
 
   <main>
     <!-- HERO -->
     <section class="hero">
-      <p class="eyebrow">Windows 10 / 11 · .NET nativo · sin Electron</p>
-      <h1>Entiende tu pantalla<br>sin salir de ella.</h1>
+      <div class="hero-badge">
+        <span class="pulse"></span>
+        Windows 10 / 11 · .NET nativo · sin Electron
+      </div>
+      <h1>
+        Tu pantalla<br>
+        <span class="grad">ya no se calla.</span>
+      </h1>
       <p class="lead">
-        Tooltip AI lee el contexto de lo que hay bajo el cursor: explica errores,
-        traduce interfaces y lee en voz alta. Tu clave de IA, cifrada en tu equipo.
+        Tooltip AI convierte cada botón, error y diálogo de Windows en contexto que entiendes
+        al instante. Explica, traduce y lee en voz alta — con <strong>tu</strong> clave de IA,
+        cifrada en tu equipo.
       </p>
       <div class="hero-cta">
-        <a class="btn btn-primary" href="#precios">Ver precios</a>
-        <a class="btn btn-ghost" href="#modulos">Conocer los módulos</a>
+        <button class="btn btn-primary btn-lg" data-buy="bundle">
+          <span class="btn-shine"></span>
+          Comprar Suite · 24.99 USD
+        </button>
+        <a class="btn btn-ghost btn-lg" href="#modulos">Explorar módulos</a>
       </div>
-      <ul class="trust-row">
-        <li>Assistant gratis</li>
-        <li>BYOK · DPAPI</li>
-        <li>Licencia de por vida</li>
-        <li>Código C# WPF</li>
-      </ul>
+      <div class="hero-stats">
+        <div class="stat">
+          <strong>4</strong>
+          <span>apps nativas WPF</span>
+        </div>
+        <div class="stat">
+          <strong>BYOK</strong>
+          <span>clave cifrada DPAPI</span>
+        </div>
+        <div class="stat">
+          <strong>MIT</strong>
+          <span>código abierto</span>
+        </div>
+        <div class="stat">
+          <strong>0</strong>
+          <span>servidor de capturas</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIVE DEMO STRIP -->
+    <section class="showcase" aria-label="Demostración">
+      <div class="showcase-frame">
+        <div class="showcase-chrome">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="chrome-title">Windows 11 · Tooltip AI en acción</span>
+        </div>
+        <div class="showcase-body">
+          <div class="mock-window">
+            <div class="mock-titlebar">Asistente de instalación</div>
+            <div class="mock-row">
+              <div class="mock-check on"></div>
+              <div>
+                <strong>Motor principal</strong>
+                <small>Requerido · verificado</small>
+              </div>
+              <span class="chip ok">OK</span>
+            </div>
+            <div class="mock-row warn">
+              <div class="mock-check"></div>
+              <div>
+                <strong>Barra de búsqueda extra</strong>
+                <small>Software opcional de terceros</small>
+              </div>
+              <span class="chip warn">Revisar</span>
+            </div>
+            <div class="mock-cta">Siguiente</div>
+          </div>
+          <div class="hud-card">
+            <div class="hud-top">
+              <span class="hud-dot"></span>
+              Tooltip AI · Análisis
+            </div>
+            <h3>Ese checkbox instala software extra</h3>
+            <p>“Barra de búsqueda” suele cambiar tu buscador y añadir addons. Desmárcalo si solo quieres el motor.</p>
+            <div class="hud-tags">
+              <span class="tag amber">Riesgo medio</span>
+              <span class="tag">Instalación</span>
+              <span class="tag">Terceros</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- MÓDULOS -->
     <section class="section" id="modulos">
       <div class="section-head">
         <p class="eyebrow">La suite</p>
-        <h2>Un motor de contexto.<br>Cuatro formas de usarlo.</h2>
+        <h2>Un motor de contexto.<br><span class="grad">Cuatro poderes.</span></h2>
       </div>
-      <div class="cards">
-        <article class="card">
-          <div class="card-tag">Gratis</div>
+      <div class="mod-grid">
+        <article class="mod-card free">
+          <div class="mod-icon">⌘</div>
+          <div class="mod-tag">Gratis</div>
           <h3>Assistant</h3>
-          <p>Inspector de pantalla. Señala un botón, un diálogo o un error y obtén una explicación clara antes de hacer clic.</p>
+          <p>El inspector de pantalla. Señala lo que no entiendes y obtén una explicación clara antes de hacer clic.</p>
           <ul class="ticks">
             <li>Explicación de UI en contexto</li>
-            <li>Recorte y análisis</li>
-            <li>BYOK cifrado (DPAPI)</li>
+            <li>Recorte inteligente</li>
+            <li>BYOK · DPAPI</li>
           </ul>
-          <p class="card-price">0 USD</p>
+          <div class="mod-foot">
+            <span class="price-tag">0 USD</span>
+            <button class="btn btn-ghost btn-sm" data-buy="assistant">Obtener</button>
+          </div>
         </article>
-        <article class="card">
-          <div class="card-tag">9.99 USD</div>
+        <article class="mod-card">
+          <div class="mod-icon teal">◎</div>
+          <div class="mod-tag">9.99 USD</div>
           <h3>Aura</h3>
-          <p>Contexto por reposo. Posas el cursor y Aura te orienta: qué hace el elemento y a qué prestar atención.</p>
+          <p>Contexto por reposo. El cursor se detiene y Aura te orienta: qué hace el elemento y a qué prestar atención.</p>
           <ul class="ticks">
             <li>Dwell / radar de contexto</li>
-            <li>Ideal para accesibilidad</li>
+            <li>Accesibilidad real</li>
             <li>Hotkey global</li>
           </ul>
-          <p class="card-price">9.99 USD</p>
+          <div class="mod-foot">
+            <span class="price-tag">9.99 USD</span>
+            <button class="btn btn-ghost btn-sm" data-buy="aura">Comprar</button>
+          </div>
         </article>
-        <article class="card">
-          <div class="card-tag">9.99 USD</div>
+        <article class="mod-card">
+          <div class="mod-icon sky">文</div>
+          <div class="mod-tag">9.99 USD</div>
           <h3>Translate</h3>
-          <p>Traduce lo que ves, incluso cuando no puedes seleccionar el texto. Al posar el cursor o con un atajo.</p>
+          <p>Traduce lo que ves, incluso cuando no puedes seleccionar el texto. Hover, OCR y multi-proveedor.</p>
           <ul class="ticks">
             <li>Hover + OCR</li>
-            <li>Multi-proveedor de IA</li>
+            <li>Gemini · DeepL · Azure…</li>
             <li>Sin copiar y pegar</li>
           </ul>
-          <p class="card-price">9.99 USD</p>
+          <div class="mod-foot">
+            <span class="price-tag">9.99 USD</span>
+            <button class="btn btn-ghost btn-sm" data-buy="translate">Comprar</button>
+          </div>
         </article>
-        <article class="card">
-          <div class="card-tag">9.99 USD</div>
+        <article class="mod-card">
+          <div class="mod-icon violet">♪</div>
+          <div class="mod-tag">9.99 USD</div>
           <h3>Voice</h3>
-          <p>Lee en voz alta explicaciones y textos, atenuando la música de fondo para que no compita contigo.</p>
+          <p>Lee en voz alta lo que importa, atenuando la música de fondo para no competir contigo.</p>
           <ul class="ticks">
             <li>TTS del sistema</li>
             <li>Ducking de audio</li>
             <li>Ajustes persistentes</li>
           </ul>
-          <p class="card-price">9.99 USD</p>
+          <div class="mod-foot">
+            <span class="price-tag">9.99 USD</span>
+            <button class="btn btn-ghost btn-sm" data-buy="voice">Comprar</button>
+          </div>
         </article>
       </div>
     </section>
 
     <!-- CÓMO -->
-    <section class="section section-alt" id="como">
-      <div class="section-head">
-        <p class="eyebrow">Cómo funciona</p>
-        <h2>Tres pasos. Cero fricción.</h2>
-      </div>
-      <ol class="steps">
-        <li>
-          <span class="step-n">1</span>
-          <h3>Instala</h3>
-          <p>Assistant es gratis. Los módulos se activan con tu licencia.</p>
-        </li>
-        <li>
-          <span class="step-n">2</span>
-          <h3>Configura tu IA</h3>
-          <p>Pega tu clave (Gemini, Azure, DeepL…). Se guarda cifrada en tu equipo, no en nuestro servidor.</p>
-        </li>
-        <li>
-          <span class="step-n">3</span>
-          <h3>Usa la pantalla</h3>
-          <p>Atajos rápidos: recorte <kbd>Ctrl+Shift+A</kbd>, radar <kbd>Ctrl+Shift+D</kbd>, ajustes <kbd>Ctrl+Shift+C</kbd>.</p>
-        </li>
-      </ol>
-      <div class="callout">
-        <strong>Privacidad real:</strong> la inferencia va de tu equipo a la API de IA que tú elijas.
-        No operamos un backend de capturas. Detalle en <a href="privacy/">privacidad</a>.
+    <section class="section" id="como">
+      <div class="glass-panel">
+        <div class="section-head left">
+          <p class="eyebrow">Cómo funciona</p>
+          <h2>Tres pasos.<br>Cero fricción.</h2>
+        </div>
+        <ol class="steps">
+          <li>
+            <span class="step-n">01</span>
+            <h3>Instala</h3>
+            <p>Assistant es gratis. Los módulos se activan con tu licencia de por vida.</p>
+          </li>
+          <li>
+            <span class="step-n">02</span>
+            <h3>Tu IA, tu clave</h3>
+            <p>Pega la clave del proveedor que quieras. Se cifra con DPAPI en tu equipo. Nosotros no la vemos.</p>
+          </li>
+          <li>
+            <span class="step-n">03</span>
+            <h3>Usa la pantalla</h3>
+            <p>Atajos reales: recorte <kbd>Ctrl+Shift+A</kbd>, radar <kbd>Ctrl+Shift+D</kbd>, ajustes <kbd>Ctrl+Shift+C</kbd>.</p>
+          </li>
+        </ol>
+        <div class="callout">
+          <strong>Privacidad real:</strong> la inferencia va de tu equipo a la API de IA que tú elijas.
+          Sin backend de capturas. <a href="privacy/">Leer privacidad</a>
+        </div>
       </div>
     </section>
 
@@ -187,8 +279,8 @@
     <section class="section" id="precios">
       <div class="section-head">
         <p class="eyebrow">Precios</p>
-        <h2>Empieza gratis.<br>Paga solo lo que uses.</h2>
-        <p class="section-sub">Compra directa con PayPal · entrega de instaladores por correo · también en Microsoft Store cuando esté publicado.</p>
+        <h2>Empieza gratis.<br><span class="grad">Paga solo lo que uses.</span></h2>
+        <p class="section-sub">Pago seguro con PayPal · entrega de licencia por correo · sin suscripciones.</p>
       </div>
       <div class="price-grid">
         <article class="price-card">
@@ -200,83 +292,50 @@
             <li>BYOK DPAPI</li>
             <li>Uso personal y comercial</li>
           </ul>
-          <a class="btn btn-ghost btn-block" href="mailto:dixstdgdl3@gmail.com?subject=Descarga%20Assistant%20Tooltip%20AI">Pedir descarga</a>
+          <button class="btn btn-ghost btn-block" data-buy="assistant">Pedir descarga</button>
         </article>
         <article class="price-card featured">
           <div class="badge">Mejor valor</div>
           <h3>Bundle Suite</h3>
-          <p class="price"><span>24.99</span> USD</p>
+          <p class="price"><span>24.99</span> <small>USD</small></p>
           <p class="price-note">Aura + Voice + Translate</p>
           <ul class="ticks">
             <li>Tres módulos de por vida</li>
             <li>Ahorras ~5 USD</li>
-            <li>Entrega por correo</li>
+            <li>Entrega prioritaria</li>
           </ul>
-          <a class="btn btn-primary btn-block" href="https://paypal.me/DixLqb/24.99" target="_blank" rel="noopener noreferrer">Comprar Bundle</a>
+          <button class="btn btn-primary btn-block" data-buy="bundle">Comprar Bundle</button>
         </article>
         <article class="price-card">
           <h3>Módulo suelto</h3>
-          <p class="price"><span>9.99</span> USD</p>
+          <p class="price"><span>9.99</span> <small>USD</small></p>
           <p class="price-note">Aura · Voice · Translate</p>
           <ul class="ticks">
             <li>El que prefieras</li>
             <li>Licencia de por vida</li>
             <li>Actualizaciones de esa línea</li>
           </ul>
-          <a class="btn btn-ghost btn-block" href="https://paypal.me/DixLqb/9.99" target="_blank" rel="noopener noreferrer">Comprar módulo</a>
+          <button class="btn btn-ghost btn-block" data-buy="module">Comprar módulo</button>
         </article>
       </div>
-      <p class="fineprint">
-        Tras el pago, escribe a
-        <a href="mailto:dixstdgdl3@gmail.com?subject=Entrega%20licencia%20Tooltip%20AI">dixstdgdl3@gmail.com</a>
-        con el comprobante. En Microsoft Store el precio de lista es 7.99 USD por módulo.
-      </p>
     </section>
 
     <!-- EQUIPOS -->
-    <section class="section section-alt" id="equipos">
-      <div class="teams">
+    <section class="section" id="equipos">
+      <div class="glass-panel teams">
         <div>
           <p class="eyebrow">Equipos</p>
-          <h2>Para soporte, QA y accesibilidad.</h2>
+          <h2>Para soporte, QA<br>y accesibilidad.</h2>
           <p class="lead-sm">
-            Licencias por volumen, despliegue asistido (MSIX / Intune) y factura única.
-            Ideal para equipos que viven en la pantalla todo el día.
+            Licencias por volumen, despliegue MSIX / Intune y factura única.
+            Para equipos que viven en la pantalla.
           </p>
+          <button class="btn btn-primary" data-buy="team">Hablar con ventas</button>
         </div>
-        <div class="teams-cta">
-          <a class="btn btn-primary" href="mailto:DixStdGdl@hotmail.com?subject=Tooltip%20AI%20Team">Hablar con ventas</a>
-          <p class="fineprint">299–999 USD / equipo · respuesta en 24–48 h</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- APOYO -->
-    <section class="section" id="apoyar">
-      <div class="support">
-        <div>
-          <p class="eyebrow">Proyecto</p>
-          <h2>Hecho con rigor, en MIT.</h2>
-          <p class="lead-sm">
-            Assistant se mantiene libre. Los módulos de pago financian dominio, builds y la siguiente versión.
-            Si te sirve, también puedes apoyar el proyecto.
-          </p>
-          <div class="hero-cta">
-            <a class="btn btn-primary" href="https://www.paypal.com/ncp/payment/HPDSLDCAGVHFL" target="_blank" rel="noopener noreferrer">Apoyar con PayPal</a>
-            <a class="btn btn-ghost" href="https://paypal.me/DixLqb" target="_blank" rel="noopener noreferrer">paypal.me/DixLqb</a>
-          </div>
-        </div>
-        <div class="credit">
-          <h3>Construido en</h3>
-          <p>
-            Suite <strong>Tooltip AI</strong> desarrollada con
-            <strong>Xiaomi MiMo Desktop</strong> (entorno de trabajo) y
-            proveedores de IA del usuario (p. ej. Gemini).
-          </p>
-          <p class="fineprint">
-            Xiaomi MiMo y Google Gemini son marcas de sus titulares.
-            Su mención describe el entorno de desarrollo; no implica patrocinio oficial.
-          </p>
+        <div class="team-points">
+          <div class="tp"><strong>299–999</strong><span>USD / equipo</span></div>
+          <div class="tp"><strong>24–48 h</strong><span>respuesta</span></div>
+          <div class="tp"><strong>Intune</strong><span>despliegue listo</span></div>
         </div>
       </div>
     </section>
@@ -284,25 +343,218 @@
 
   <footer class="footer">
     <div class="footer-brand">
-      <img src="icon.png" alt="" width="24" height="24">
-      <span>Tooltip AI · Dixi3 Labs</span>
+      <img src="icon.png" alt="" width="28" height="28">
+      <div>
+        <strong>Tooltip AI</strong>
+        <span>Dixi3 Labs · tooltip-ai.com</span>
+      </div>
     </div>
     <nav class="footer-nav">
       <a href="#modulos">Módulos</a>
       <a href="#precios">Precios</a>
       <a href="privacy/">Privacidad</a>
       <a href="mailto:dixstdgdl3@gmail.com">Contacto</a>
-      <a href="https://tooltip-ai.com/">tooltip-ai.com</a>
     </nav>
-    <p class="footer-copy">© 2026 Dixi3 Labs · Licencia MIT</p>
+    <p class="footer-copy">
+      © 2026 Dixi3 Labs · Licencia MIT ·
+      Construido con Xiaomi MiMo Desktop (entorno de desarrollo) y proveedores de IA del usuario.
+      Sin afiliación oficial.
+    </p>
   </footer>
 
+  <!-- CHECKOUT MODAL (sin salir del sitio) -->
+  <div class="modal" id="checkout" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="ckTitle">
+      <button class="modal-close" data-close aria-label="Cerrar">×</button>
+      <div class="ck-kicker">Checkout seguro</div>
+      <h2 id="ckTitle">Bundle Suite</h2>
+      <p class="ck-desc" id="ckDesc">Aura + Voice + Translate · licencia de por vida</p>
+
+      <div class="ck-summary">
+        <div class="ck-line">
+          <span>Producto</span>
+          <strong id="ckProduct">Tooltip AI Bundle</strong>
+        </div>
+        <div class="ck-line">
+          <span>Entrega</span>
+          <strong>Por correo en 24 h</strong>
+        </div>
+        <div class="ck-line total">
+          <span>Total</span>
+          <strong id="ckTotal">24.99 USD</strong>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-block btn-lg" id="ckPay">
+        <span class="btn-shine"></span>
+        Pagar con PayPal
+      </button>
+      <p class="ck-note">
+        Se abre PayPal en una ventana aparte — <strong>no sales de esta página</strong>.
+        Tras el pago, envía el comprobante a
+        <a href="mailto:dixstdgdl3@gmail.com">dixstdgdl3@gmail.com</a>
+        y recibes instaladores + licencia.
+      </p>
+      <div class="ck-trust">
+        <span>🔒 PayPal</span>
+        <span>· Licencia de por vida</span>
+        <span>· Sin suscripción</span>
+      </div>
+    </div>
+  </div>
+
   <script>
-  (function(){
-    var b=document.getElementById('menuBtn');
-    if(b){b.addEventListener('click',function(){
-      document.body.classList.toggle('nav-open');
-    });}
+  (function () {
+    // ——— fondo: estrellas suaves ———
+    var c = document.getElementById('stars');
+    if (c && c.getContext) {
+      var ctx = c.getContext('2d');
+      var stars = [];
+      function resize() {
+        c.width = window.innerWidth;
+        c.height = window.innerHeight;
+        stars = [];
+        var n = Math.min(120, Math.floor((c.width * c.height) / 14000));
+        for (var i = 0; i < n; i++) {
+          stars.push({
+            x: Math.random() * c.width,
+            y: Math.random() * c.height,
+            r: Math.random() * 1.4 + 0.2,
+            a: Math.random() * 0.5 + 0.1,
+            s: Math.random() * 0.15 + 0.02
+          });
+        }
+      }
+      function tick() {
+        ctx.clearRect(0, 0, c.width, c.height);
+        for (var i = 0; i < stars.length; i++) {
+          var st = stars[i];
+          st.y -= st.s;
+          if (st.y < -2) { st.y = c.height + 2; st.x = Math.random() * c.width; }
+          ctx.beginPath();
+          ctx.fillStyle = 'rgba(180,220,255,' + st.a + ')';
+          ctx.arc(st.x, st.y, st.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        requestAnimationFrame(tick);
+      }
+      window.addEventListener('resize', resize);
+      resize();
+      tick();
+    }
+
+    // ——— menú móvil ———
+    var menuBtn = document.getElementById('menuBtn');
+    if (menuBtn) {
+      menuBtn.addEventListener('click', function () {
+        document.body.classList.toggle('nav-open');
+      });
+    }
+
+    // ——— checkout ———
+    var catalog = {
+      bundle: {
+        title: 'Bundle Suite',
+        desc: 'Aura + Voice + Translate · licencia de por vida',
+        product: 'Tooltip AI Bundle',
+        total: '24.99 USD',
+        url: 'https://paypal.me/DixLqb/24.99'
+      },
+      module: {
+        title: 'Módulo suelto',
+        desc: 'Aura, Voice o Translate · indícalo en el correo',
+        product: 'Tooltip AI Module',
+        total: '9.99 USD',
+        url: 'https://paypal.me/DixLqb/9.99'
+      },
+      aura: {
+        title: 'ToolTip AI Aura',
+        desc: 'Contexto por reposo · licencia de por vida',
+        product: 'Aura',
+        total: '9.99 USD',
+        url: 'https://paypal.me/DixLqb/9.99'
+      },
+      voice: {
+        title: 'ToolTip AI Voice',
+        desc: 'Voz y ducking · licencia de por vida',
+        product: 'Voice',
+        total: '9.99 USD',
+        url: 'https://paypal.me/DixLqb/9.99'
+      },
+      translate: {
+        title: 'ToolTip AI Translate',
+        desc: 'Traducción en pantalla · licencia de por vida',
+        product: 'Translate',
+        total: '9.99 USD',
+        url: 'https://paypal.me/DixLqb/9.99'
+      },
+      assistant: {
+        title: 'ToolTip AI Assistant',
+        desc: 'Inspector de pantalla · gratis',
+        product: 'Assistant',
+        total: '0 USD · gratis',
+        url: 'mailto:dixstdgdl3@gmail.com?subject=Descarga%20Assistant%20Tooltip%20AI'
+      },
+      team: {
+        title: 'Tooltip AI Team',
+        desc: 'Licencias por volumen · 299–999 USD',
+        product: 'Team / Enterprise',
+        total: 'A medida',
+        url: 'mailto:DixStdGdl@hotmail.com?subject=Tooltip%20AI%20Team'
+      }
+    };
+
+    var modal = document.getElementById('checkout');
+    var ckTitle = document.getElementById('ckTitle');
+    var ckDesc = document.getElementById('ckDesc');
+    var ckProduct = document.getElementById('ckProduct');
+    var ckTotal = document.getElementById('ckTotal');
+    var ckPay = document.getElementById('ckPay');
+    var current = catalog.bundle;
+
+    function openCk(key) {
+      current = catalog[key] || catalog.bundle;
+      ckTitle.textContent = current.title;
+      ckDesc.textContent = current.desc;
+      ckProduct.textContent = current.product;
+      ckTotal.textContent = current.total;
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+    }
+    function closeCk() {
+      modal.hidden = true;
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('[data-buy]').forEach(function (el) {
+      el.addEventListener('click', function (e) {
+        e.preventDefault();
+        openCk(el.getAttribute('data-buy'));
+      });
+    });
+    document.querySelectorAll('[data-close]').forEach(function (el) {
+      el.addEventListener('click', closeCk);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeCk();
+    });
+
+    ckPay.addEventListener('click', function () {
+      if (current.url.indexOf('mailto:') === 0) {
+        window.location.href = current.url;
+        return;
+      }
+      // PayPal en ventana aparte: el sitio no se redirige
+      var w = 520, h = 720;
+      var left = (window.screen.width - w) / 2;
+      var top = (window.screen.height - h) / 2;
+      window.open(
+        current.url,
+        'tooltip-paypal',
+        'width=' + w + ',height=' + h + ',left=' + left + ',top=' + top + ',noopener,noreferrer'
+      );
+    });
   })();
   </script>
 </body>
