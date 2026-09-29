@@ -1,0 +1,505 @@
+<Window x:Class="TeachMeAI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ToolTip AI — Centro de Traducción Inteligente"
+        Icon="app.ico"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Foreground="#FFFFFF"
+        Width="680"
+        Height="48"
+        WindowStartupLocation="Manual"
+        Topmost="True"
+        ShowInTaskbar="True"
+        ShowActivated="True"
+        ResizeMode="NoResize"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType"
+        RenderOptions.ClearTypeHint="Enabled"
+        RenderOptions.BitmapScalingMode="HighQuality"
+        Loaded="Window_Loaded"
+        Closing="Window_Closing"
+        MouseEnter="Window_MouseEnter"
+        MouseLeave="Window_MouseLeave"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown">
+
+    <Window.Resources>
+        <!-- Capsule Button Style -->
+        <Style x:Key="CapsuleButton" TargetType="Button">
+            <Setter Property="Background" Value="#182234"/>
+            <Setter Property="Foreground" Value="#E2E8F0"/>
+            <Setter Property="BorderBrush" Value="#25FFFFFF"/>
+            <Setter Property="BorderThickness" Value="0.8"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="btnBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="btnBorder" Property="Background" Value="#263852"/>
+                                <Setter TargetName="btnBorder" Property="BorderBrush" Value="#6000F5A0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Cyber TabItem Style -->
+        <Style x:Key="CyberTabItem" TargetType="TabItem">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#94A3B8"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="10 5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border x:Name="TabBorder"
+                                Background="#1A0D1525"
+                                BorderBrush="#25FFFFFF"
+                                BorderThickness="0.8"
+                                CornerRadius="8"
+                                Margin="0 0 6 0"
+                                Padding="{TemplateBinding Padding}"
+                                Cursor="Hand">
+                            <ContentPresenter ContentSource="Header" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="TabBorder" Property="Background" Value="#3500F5A0"/>
+                                <Setter TargetName="TabBorder" Property="BorderBrush" Value="#2DD4BF"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="TabBorder" Property="BorderBrush" Value="#8000F5A0"/>
+                                <Setter Property="Foreground" Value="#F8FAFC"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <!-- PREMIUM CHASSIS — tokens de Theme.Premium.xaml -->
+    <Border x:Name="MainBorder"
+            Background="{StaticResource Glass.Panel}"
+            BorderBrush="{StaticResource Glass.Edge}"
+            BorderThickness="1.2"
+            CornerRadius="22"
+            ClipToBounds="True"
+            Margin="2">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="28" Color="#FF000000" Opacity="0.72" Direction="270" ShadowDepth="6"/>
+        </Border.Effect>
+
+        <Grid>
+            <!-- A. VISTA HORIZONTAL INTELIGENTE (Cápsula Superior + Dashboard Expandible) -->
+            <Grid x:Name="HorizontalCapsuleContainer" Visibility="Visible">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="44"/> <!-- Cápsula Principal siempre visible -->
+                    <RowDefinition Height="*"/>  <!-- Dashboard de Traducción y Soporte -->
+                </Grid.RowDefinitions>
+
+                <!-- Row 0: Barra Cápsula Principal -->
+                <Grid Grid.Row="0" Margin="10 0 10 0" Background="Transparent">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/> <!-- Marca & Estado Láser -->
+                        <ColumnDefinition Width="*"/>    <!-- Selectores de Idioma & Herramientas -->
+                        <ColumnDefinition Width="Auto"/> <!-- Controles Dashboard & Ventana -->
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Col 0: Marca ToolTip AI Translate + Estado Escáner -->
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Cursor="SizeAll" ToolTip="Arrastra para mover la barra a cualquier parte de la pantalla">
+                        <TextBlock Text="🌐" FontSize="14" VerticalAlignment="Center" Margin="0 0 4 0"/>
+                        <TextBlock Text="ToolTip AI" FontWeight="Bold" FontSize="11.5" Foreground="#FFFFFF" VerticalAlignment="Center"/>
+                        <TextBlock Text="TRANSLATE" FontWeight="Black" FontSize="9" Foreground="#2DD4BF" Margin="4 0 8 0" VerticalAlignment="Center"/>
+
+                        <!-- Toggle Escáner Láser de Cursor -->
+                        <Border x:Name="BtnToggleTranslateBorder" Background="#141F30" BorderBrush="#3500F5A0" BorderThickness="0.8" CornerRadius="12" Padding="7 3" Margin="0 0 4 0" Cursor="Hand" MouseLeftButtonDown="BtnToggleTranslate_MouseDown" ToolTip="Activar/Pausar Escáner Láser de Pantalla (Ctrl+Shift+T)">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <Border x:Name="TranslateDot" Width="6" Height="6" CornerRadius="3" Background="#2DD4BF" Margin="0 0 5 0" VerticalAlignment="Center">
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="4" Color="#2DD4BF" Opacity="0.9"/>
+                                    </Border.Effect>
+                                </Border>
+                                <TextBlock x:Name="TranslateStatusLabel" Text="Láser: ON" Foreground="#2DD4BF" FontSize="9" FontWeight="Bold" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Col 1: Selector Único de Idioma de Destino (Detección Multilenguaje 100% Automática) -->
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <!-- Idioma Destino Único -->
+                        <Border Background="#162234" BorderBrush="#3538BDF8" BorderThickness="0.8" CornerRadius="10" Padding="8 2" Margin="2 0">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock Text="🌐 Traducir a:" Foreground="#7DD3FC" FontSize="9" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0 0 6 0"/>
+                                <ComboBox x:Name="CmbTargetLang" Background="Transparent" Foreground="#F8FAFC" BorderThickness="0" FontSize="9.5" FontWeight="Bold" Cursor="Hand" SelectionChanged="CmbTargetLang_SelectionChanged">
+                                    <ComboBoxItem Content="Español (ES)" Tag="es" IsSelected="True"/>
+                                    <ComboBoxItem Content="English (EN)" Tag="en"/>
+                                    <ComboBoxItem Content="日本語 (JA)" Tag="ja"/>
+                                    <ComboBoxItem Content="Deutsch (DE)" Tag="de"/>
+                                    <ComboBoxItem Content="Français (FR)" Tag="fr"/>
+                                    <ComboBoxItem Content="Italiano (IT)" Tag="it"/>
+                                    <ComboBoxItem Content="Português (PT)" Tag="pt"/>
+                                    <ComboBoxItem Content="中文 (ZH)" Tag="zh"/>
+                                    <ComboBoxItem Content="Русский (RU)" Tag="ru"/>
+                                    <ComboBoxItem Content="한국어 (KO)" Tag="ko"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Botón Recortar Área -->
+                        <Button x:Name="BtnStartSnip" Background="#1800F5A0" BorderBrush="#3500F5A0" BorderThickness="0.9" Foreground="#2DD4BF" FontWeight="Bold" FontSize="10" Padding="8 3" Margin="4 0 2 0" Cursor="Hand" Click="BtnStartSnip_Click" ToolTip="Recortar y Traducir Área (Ctrl+Shift+A)">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="b" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10" Padding="{TemplateBinding Padding}">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <TextBlock x:Name="t" Text="⚡ Recortar" FontWeight="Bold" FontSize="9" Foreground="#2DD4BF"/>
+                                        </StackPanel>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="b" Property="Background" Value="#3500F5A0"/>
+                                            <Setter TargetName="b" Property="BorderBrush" Value="#9000F5A0"/>
+                                            <Setter TargetName="t" Property="Foreground" Value="#FFFFFF"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+                        <!-- Botón Portapapeles -->
+                        <Button x:Name="BtnClipboardQuick" Style="{StaticResource CapsuleButton}" Padding="6 3" Margin="2 0" Click="BtnClipboard_Click" ToolTip="Traducir portapapeles">
+                            <TextBlock Text="📋 Portapapeles" FontSize="9" Foreground="#E2E8F0"/>
+                        </Button>
+                    </StackPanel>
+
+                    <!-- Col 2: Expandir Dashboard, Fijar y Minimizar -->
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                        <!-- Toggle Dashboard -->
+                        <Button x:Name="BtnExpandToggle" Style="{StaticResource CapsuleButton}" Padding="7 3" Margin="0 0 4 0" Click="BtnExpandToggle_Click" ToolTip="Abrir / Cerrar Dashboard de Traducción">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="📊 Consola" FontSize="9" FontWeight="SemiBold" Margin="0 0 3 0"/>
+                                <TextBlock x:Name="TxtExpandChevron" Text="▾" FontSize="9" Foreground="#2DD4BF"/>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- Botón Fijar -->
+                        <Button x:Name="BtnPin" Content="📌" Width="22" Height="22" Background="Transparent" Foreground="#64748B" BorderThickness="0" Cursor="Hand" FontSize="10" Click="BtnPin_Click" ToolTip="Fijar Dashboard"/>
+
+                        <!-- Botón Cerrar / Minimizar -->
+                        <Button x:Name="BtnClose" Content="✕" Width="22" Height="22" Background="Transparent" Foreground="#F43F5E" BorderThickness="0" Cursor="Hand" FontSize="11" Click="BtnClose_Click" ToolTip="Minimizar a la Bandeja"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Row 1: Dashboard Integral de Traducción (Se despliega al expandir) -->
+                <Grid x:Name="DrawerGrid" Grid.Row="1" Margin="10 2 10 10" Opacity="0" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/> <!-- Separador sutil -->
+                        <RowDefinition Height="*"/>    <!-- Contenido de Pestañas -->
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" Height="0.8" Background="#20FFFFFF" Margin="0 2 0 6"/>
+
+                    <!-- TabControl con Pestañas Operativas -->
+                    <TabControl Grid.Row="1" Background="Transparent" BorderThickness="0">
+                        <!-- TAB 1: CONSOLA DE TRADUCCIÓN INTERACTIVA -->
+                        <TabItem Header="✍️ Traductor Interactivo" Style="{StaticResource CyberTabItem}">
+                            <Grid Margin="0 6 0 0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>    <!-- Panel Entrada -->
+                                    <RowDefinition Height="Auto"/> <!-- Barra de Acción Central -->
+                                    <RowDefinition Height="*"/>    <!-- Panel Salida -->
+                                </Grid.RowDefinitions>
+
+                                <!-- Entrada de Texto -->
+                                <Border Grid.Row="0" Background="#121B2B" BorderBrush="#3038BDF8" BorderThickness="0.8" CornerRadius="10" Padding="8 6" Margin="0 0 0 6">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid Grid.Row="0" Margin="0 0 0 4">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="TEXTO DE ENTRADA" Foreground="#7DD3FC" FontSize="8.5" FontWeight="Bold"/>
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                                <Button Content="📋 Pegar" Style="{StaticResource CapsuleButton}" Padding="5 1" FontSize="8.5" Margin="0 0 4 0" Click="BtnPasteInput_Click"/>
+                                                <Button Content="🧹 Limpiar" Style="{StaticResource CapsuleButton}" Padding="5 1" FontSize="8.5" Click="BtnClearInput_Click"/>
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <TextBox x:Name="TxtSourceInput" Grid.Row="1"
+                                                 Background="Transparent"
+                                                 Foreground="#F8FAFC"
+                                                 CaretBrush="#2DD4BF"
+                                                 BorderThickness="0"
+                                                 FontSize="11.5"
+                                                 TextWrapping="Wrap"
+                                                 AcceptsReturn="True"
+                                                 VerticalScrollBarVisibility="Auto"
+                                                 Text="Enter or paste text here to translate instantly..."
+                                                 GotFocus="TxtSourceInput_GotFocus"/>
+                                    </Grid>
+                                </Border>
+
+                                <!-- Botón de Acción Traducir -->
+                                <Grid Grid.Row="1" Margin="0 0 0 6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock x:Name="TxtDetectedInfo" Grid.Column="0" Text="⚡ Motor de Traducción Directa D3D + Neural" Foreground="#64748B" FontSize="9" VerticalAlignment="Center"/>
+
+                                    <Button x:Name="BtnTranslateManual" Grid.Column="1" Background="#2DD4BF" Foreground="#040810" FontWeight="Black" FontSize="11" Padding="14 5" Cursor="Hand" Click="BtnTranslateManual_Click">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}" CornerRadius="12" Padding="{TemplateBinding Padding}">
+                                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                        <TextBlock Text="⚡ TRADUCIR CON IA" FontWeight="Black" FontSize="10.5" Foreground="#040810"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                </Grid>
+
+                                <!-- Salida de Traducción -->
+                                <Border Grid.Row="2" Background="#121B2B" BorderBrush="#3500F5A0" BorderThickness="0.8" CornerRadius="10" Padding="8 6">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid Grid.Row="0" Margin="0 0 0 4">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                                                <TextBlock Text="TRADUCCIÓN RESULTANTE" Foreground="#2DD4BF" FontSize="8.5" FontWeight="Bold"/>
+                                                <TextBlock x:Name="TxtManualLatency" Text="⚡ 0ms" Foreground="#64748B" FontSize="8" Margin="6 0 0 0" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                                <Button x:Name="BtnSpeakManual" Style="{StaticResource CapsuleButton}" Padding="5 1" FontSize="8.5" Margin="0 0 4 0" Click="BtnSpeakManual_Click" ToolTip="Reproducir pronunciación">
+                                                    <TextBlock Text="🔊 Escuchar"/>
+                                                </Button>
+                                                <Button x:Name="BtnCopyManual" Style="{StaticResource CapsuleButton}" Padding="5 1" FontSize="8.5" Click="BtnCopyManual_Click" ToolTip="Copiar traducción">
+                                                    <TextBlock Text="📋 Copiar"/>
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                                            <TextBlock x:Name="TxtTranslatedOutput"
+                                                       Text="La traducción instantánea aparecerá aquí con máximo contraste y fidelidad."
+                                                       Foreground="#FFFFFF"
+                                                       FontWeight="Bold"
+                                                       FontSize="12.5"
+                                                       TextWrapping="Wrap">
+                                                <TextBlock.Effect>
+                                                    <DropShadowEffect BlurRadius="3" Color="#000000" Opacity="1.0" ShadowDepth="1"/>
+                                                </TextBlock.Effect>
+                                            </TextBlock>
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </TabItem>
+
+                        <!-- TAB 2: HISTORIAL DE PANTALLA EN VIVO -->
+                        <TabItem Header="🕒 Historial de Pantalla" Style="{StaticResource CyberTabItem}">
+                            <Grid Margin="0 6 0 0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0" Margin="0 0 0 4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="FRASES Y PALABRAS ESCANEADAS RECIENTEMENTE" Foreground="#94A3B8" FontSize="8.5" FontWeight="Bold" VerticalAlignment="Center"/>
+                                    <Button Grid.Column="1" Content="🗑️ Vaciar Historial" Style="{StaticResource CapsuleButton}" Padding="6 2" FontSize="8.5" Click="BtnClearHistory_Click"/>
+                                </Grid>
+
+                                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                                    <ItemsControl x:Name="ListHistoryItems">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Background="#141F30" BorderBrush="#20FFFFFF" BorderThickness="0.8" CornerRadius="8" Padding="8 5" Margin="0 0 0 4">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <StackPanel Grid.Column="0">
+                                                            <StackPanel Orientation="Horizontal" Margin="0 0 0 2">
+                                                                <Border Background="#2538BDF8" CornerRadius="3" Padding="4 1" Margin="0 0 4 0">
+                                                                    <TextBlock Text="{Binding SourceLang}" Foreground="#7DD3FC" FontSize="7.5" FontWeight="Bold"/>
+                                                                </Border>
+                                                                <TextBlock Text="➔" Foreground="#2DD4BF" FontSize="7.5" Margin="0 0 4 0"/>
+                                                                <Border Background="#2500F5A0" CornerRadius="3" Padding="4 1" Margin="0 0 6 0">
+                                                                    <TextBlock Text="{Binding TargetLang}" Foreground="#2DD4BF" FontSize="7.5" FontWeight="Bold"/>
+                                                                </Border>
+                                                                <TextBlock Text="{Binding TimeString}" Foreground="#64748B" FontSize="8" Margin="0 0 6 0"/>
+                                                                <TextBlock Text="{Binding LatencyMs, StringFormat='⚡ {0:F0}ms'}" Foreground="#64748B" FontSize="8"/>
+                                                            </StackPanel>
+
+                                                            <TextBlock Text="{Binding Original, StringFormat='「{0}」'}" Foreground="#CBD5E1" FontSize="9.5" TextTrimming="CharacterEllipsis"/>
+                                                            <TextBlock Text="{Binding Translated}" Foreground="#FFFFFF" FontWeight="Bold" FontSize="11" TextWrapping="Wrap" Margin="0 1 0 0">
+                                                                <TextBlock.Effect>
+                                                                    <DropShadowEffect BlurRadius="2" Color="#000000" Opacity="0.9" ShadowDepth="1"/>
+                                                                </TextBlock.Effect>
+                                                            </TextBlock>
+                                                        </StackPanel>
+
+                                                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="6 0 0 0">
+                                                            <Button Content="🔊" Style="{StaticResource CapsuleButton}" Width="22" Height="22" Margin="0 0 2 0" Click="BtnHistorySpeak_Click" ToolTip="Pronunciar"/>
+                                                            <Button Content="📋" Style="{StaticResource CapsuleButton}" Width="22" Height="22" Click="BtnHistoryCopy_Click" ToolTip="Copiar"/>
+                                                        </StackPanel>
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </Grid>
+                        </TabItem>
+
+                        <!-- TAB 3: CENTRO OPERATIVO Y TELEMETRÍA -->
+                        <TabItem Header="🎛️ Centro Operativo" Style="{StaticResource CyberTabItem}">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 6 0 0">
+                                <StackPanel>
+                                    <!-- Sensibilidad de Escáner -->
+                                    <Border Background="#141F30" BorderBrush="#20FFFFFF" BorderThickness="0.8" CornerRadius="8" Padding="10 8" Margin="0 0 0 6">
+                                        <StackPanel>
+                                            <TextBlock Text="SENSIBILIDAD DEL ESCÁNER DE PANTALLA" Foreground="#2DD4BF" FontSize="9" FontWeight="Bold" Margin="0 0 0 6"/>
+                                            <TextBlock Text="Selecciona el tiempo de reposo del cursor antes de activar la traducción automática:" Foreground="#94A3B8" FontSize="9" Margin="0 0 0 6"/>
+                                            
+                                            <StackPanel Orientation="Horizontal">
+                                                <Button x:Name="BtnDelay1000" Content="⚡ 1000ms (Rápido)" Style="{StaticResource CapsuleButton}" Padding="8 4" Margin="0 0 6 0" Click="BtnDelay1000_Click"/>
+                                                <Button x:Name="BtnDelay2000" Content="🎯 2000ms (Equilibrado)" Style="{StaticResource CapsuleButton}" Padding="8 4" Margin="0 0 6 0" Click="BtnDelay2000_Click"/>
+                                                <Button x:Name="BtnDelay3000" Content="🐢 3000ms (Recomendado 3s)" Background="#2538BDF8" BorderBrush="#38BDF8" Foreground="#38BDF8" Style="{StaticResource CapsuleButton}" Padding="8 4" Click="BtnDelay3000_Click"/>
+                                            </StackPanel>
+
+                                            <CheckBox x:Name="ChkAutoSpeak" Content="🔊 Reproducir pronunciación por voz automáticamente al detectar texto" Foreground="#E2E8F0" FontSize="9.5" Margin="0 8 0 0" Checked="ChkAutoSpeak_Changed" Unchecked="ChkAutoSpeak_Changed"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <!-- Tarjetas de Telemetría -->
+                                    <Grid Margin="0 0 0 6">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="6"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="6"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Border Grid.Column="0" Background="#141F30" BorderBrush="#20FFFFFF" BorderThickness="0.8" CornerRadius="8" Padding="8">
+                                            <StackPanel HorizontalAlignment="Center">
+                                                <TextBlock Text="TRADUCCIONES" Foreground="#64748B" FontSize="8" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                                <TextBlock x:Name="TxtStatCount" Text="0" Foreground="#2DD4BF" FontSize="16" FontWeight="Black" HorizontalAlignment="Center"/>
+                                                <TextBlock Text="en esta sesión" Foreground="#64748B" FontSize="7.5" HorizontalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Border>
+
+                                        <Border Grid.Column="2" Background="#141F30" BorderBrush="#20FFFFFF" BorderThickness="0.8" CornerRadius="8" Padding="8">
+                                            <StackPanel HorizontalAlignment="Center">
+                                                <TextBlock Text="LATENCIA MEDIA" Foreground="#64748B" FontSize="8" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                                <TextBlock x:Name="TxtStatLatency" Text="12 ms" Foreground="#38BDF8" FontSize="16" FontWeight="Black" HorizontalAlignment="Center"/>
+                                                <TextBlock Text="Direct3D11 OCR" Foreground="#64748B" FontSize="7.5" HorizontalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Border>
+
+                                        <Border Grid.Column="4" Background="#141F30" BorderBrush="#20FFFFFF" BorderThickness="0.8" CornerRadius="8" Padding="8">
+                                            <StackPanel HorizontalAlignment="Center">
+                                                <TextBlock Text="MOTOR ACTIVO" Foreground="#64748B" FontSize="8" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                                <TextBlock Text="WinRT + AI" Foreground="#F59E0B" FontSize="14" FontWeight="Black" HorizontalAlignment="Center" Margin="0 2"/>
+                                                <TextBlock Text="100% Sin lag" Foreground="#64748B" FontSize="7.5" HorizontalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </Grid>
+
+                                    <!-- Acceso Directo a Ajustes / API Key -->
+                                    <Border Background="#141F30" BorderBrush="#20FFFFFF" BorderThickness="0.8" CornerRadius="8" Padding="10 8">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0">
+                                                <TextBlock Text="CLAVE DE API GEMINI (TRADUCCIÓN NEURONAL ILIMITADA)" Foreground="#F59E0B" FontSize="8.5" FontWeight="Bold"/>
+                                                <TextBlock Text="Añade tu clave gratuita para traducir párrafos y modismos complejos." Foreground="#94A3B8" FontSize="8"/>
+                                            </StackPanel>
+                                            <Button Grid.Column="1" Content="⚙️ Gestionar Clave" Style="{StaticResource CapsuleButton}" Padding="8 4" FontSize="9" Click="BtnSettingsQuick_Click"/>
+                                        </Grid>
+                                    </Border>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </Grid>
+
+            <!-- B. VISTA VERTICAL INTELIGENTE (Sidebar Lateral si se arrastra a los bordes) -->
+            <Grid x:Name="VerticalSidebarContainer" Visibility="Collapsed" Background="Transparent">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 6">
+                    <Border Background="#1200F5A0" BorderBrush="#2000F5A0" BorderThickness="0.8" Width="36" Height="36" CornerRadius="18" Margin="0 0 0 6" ToolTip="Arrastrar (ToolTip AI Translate)" Cursor="SizeAll">
+                        <TextBlock Text="🌐" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+
+                    <Button x:Name="BtnStartSnipV" Width="36" Height="36" Background="#1500F5A0" BorderBrush="#3500F5A0" BorderThickness="0.9" Cursor="Hand" Margin="0 0 0 6" Click="BtnStartSnip_Click" ToolTip="Recortar y Traducir (Ctrl+Shift+A)">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="b" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="18">
+                                    <TextBlock x:Name="t" Text="⚡" FontSize="14" Foreground="#2DD4BF" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="b" Property="Background" Value="#3500F5A0"/>
+                                        <Setter TargetName="b" Property="BorderBrush" Value="#9000F5A0"/>
+                                        <Setter TargetName="t" Property="Foreground" Value="#FFFFFF"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Border x:Name="BtnToggleTranslateBorderV" Background="#101724" BorderBrush="#1AFFFFFF" BorderThickness="0.8" Width="36" Height="36" CornerRadius="18" Margin="0 0 0 6" Cursor="Hand" MouseLeftButtonDown="BtnToggleTranslate_MouseDown" ToolTip="Láser On/Off (Ctrl+Shift+T)">
+                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Text="🎯" FontSize="13" Foreground="#94A3B8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border x:Name="TranslateDotV" Width="7" Height="7" CornerRadius="3.5" Background="#2DD4BF" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8 -4 0 0"/>
+                        </Grid>
+                    </Border>
+
+                    <Button Width="32" Height="32" Style="{StaticResource CapsuleButton}" Margin="0 0 0 4" Click="BtnClipboard_Click" ToolTip="Traducir Portapapeles">
+                        <TextBlock Text="📋" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+
+                    <Button Width="32" Height="32" Style="{StaticResource CapsuleButton}" Margin="0 0 0 4" Click="BtnExpandToggle_Click" ToolTip="Abrir Dashboard">
+                        <TextBlock Text="📊" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+
+                    <Button Width="32" Height="32" Background="Transparent" Foreground="#64748B" BorderThickness="0" Cursor="Hand" Click="BtnClose_Click" ToolTip="Minimizar">
+                        <TextBlock Text="✕" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
