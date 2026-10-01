@@ -1,15 +1,15 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <!-- HUB PRINCIPAL -->
+  <!-- HUB PRINCIPAL (ES) -->
   <url>
     <loc>https://tooltip-ai.com/</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://tooltip-ai.com/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://tooltip-ai.com/en/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://tooltip-ai.com/de/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tooltip-ai.com/"/>
-    <lastmod>2026-09-20</lastmod>
+    <lastmod>2026-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -21,7 +21,7 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tooltip-ai.com/en/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://tooltip-ai.com/de/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tooltip-ai.com/"/>
-    <lastmod>2026-09-20</lastmod>
+    <lastmod>2026-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -33,50 +33,22 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tooltip-ai.com/en/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://tooltip-ai.com/de/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tooltip-ai.com/"/>
-    <lastmod>2026-09-20</lastmod>
+    <lastmod>2026-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-  </url>
-
-  <!-- TRANSLATE v1.1.2 -->
-  <url>
-    <loc>https://tooltip-ai.com/translate/</loc>
-    <lastmod>2026-09-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.95</priority>
-  </url>
-
-  <!-- AURA v1.1.2 -->
-  <url>
-    <loc>https://tooltip-ai.com/aura/</loc>
-    <lastmod>2026-09-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-
-  <!-- VOICE v1.1.2 -->
-  <url>
-    <loc>https://tooltip-ai.com/voice/</loc>
-    <lastmod>2026-09-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
   </url>
 
   <!-- PRIVACIDAD -->
   <url>
     <loc>https://tooltip-ai.com/privacy/</loc>
-    <lastmod>2026-09-20</lastmod>
+    <lastmod>2026-09-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
-
-  <!-- ESTADO SUITE -->
-  <url>
-    <loc>https://tooltip-ai.com/status.html</loc>
-    <lastmod>2026-09-26</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
+  <!--
+    NOTA: se retiraron del sitemap /translate/ /aura/ /voice/ /status.html
+    porque devolvían 404 y dañaban la indexación (Google Search Console).
+    Volver a añadir cuando esas páginas estén publicadas.
+  -->
 </urlset>
-

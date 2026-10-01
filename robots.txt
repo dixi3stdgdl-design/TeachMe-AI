@@ -1,17 +1,11 @@
 # robots.txt — tooltip-ai.com
-# Tooltip-ai Suite v1.1.2 | Dixi3 Labs
+# Tooltip-ai Suite | Dixi3 Labs
 
 User-agent: *
 Allow: /
 Allow: /en/
 Allow: /de/
-Allow: /translate/
-Allow: /aura/
-Allow: /voice/
 Allow: /privacy/
-Allow: /downloads/
-Allow: /icon.png
-Allow: /favicon.ico
 
 # Block internal/dev paths
 Disallow: /src-dotnet/
