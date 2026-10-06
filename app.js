@@ -215,7 +215,7 @@
       storeUri: 'ms-windows-store://pdp/?productid=9N3D02KXKD3D',
       storeWeb: 'https://apps.microsoft.com/detail/9N3D02KXKD3D',
       downloads: [
-        { label: 'Assistant 1.1.5 (MSIX - 24 horas gratis)', href: '/downloads/ToolTipAIAssistant_1.1.5.0_x64.msix' },
+        { label: 'Assistant 1.1.6 (MSIX - 24 horas gratis)', href: '/downloads/ToolTipAIAssistant_1.1.6.0_x64.msix' },
         { label: 'Assistant (EXE portable - 24 horas gratis)', href: '/downloads/TooltipAI.exe' }
       ],
       delivery: 'free'

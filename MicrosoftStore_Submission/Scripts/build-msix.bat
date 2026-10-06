@@ -5,7 +5,7 @@ echo   Compilador y Empaquetador Automatico MSIX - ToolTip AI
 echo ==========================================================
 echo.
 echo [1/2] Publicando binarios self-contained win-x64 con dotnet...
-dotnet publish "%~dp0..\..\src-dotnet\ToolTipAI.csproj" -c Release -r win-x64 --self-contained true -o "%~dp0..\..\.staging_publish"
+dotnet publish "%~dp0..\..\src\ToolTipAI.csproj" -c Release -r win-x64 --self-contained true -o "%~dp0..\..\.staging_publish"
 if %ERRORLEVEL% neq 0 (
     echo [ERROR] Fallo la publicacion de dotnet.
     pause

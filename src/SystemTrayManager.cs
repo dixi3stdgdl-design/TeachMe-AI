@@ -49,7 +49,7 @@ public class SystemTrayManager : IDisposable
                 try
                 {
                     icon = new Icon(icoPath, 32, 32);
-                    File.AppendAllText(LogFile, $"[SystemTrayManager] Icono cargado desde {icoPath}\n");
+                    App.SafeLog($"[SystemTrayManager] Icono cargado desde {icoPath}\n");
                 }
                 catch { }
             }
@@ -62,7 +62,7 @@ public class SystemTrayManager : IDisposable
                     if (!string.IsNullOrEmpty(exePath) && File.Exists(exePath))
                     {
                         icon = Icon.ExtractAssociatedIcon(exePath);
-                        File.AppendAllText(LogFile, $"[SystemTrayManager] Icono extraído de {exePath}\n");
+                        App.SafeLog($"[SystemTrayManager] Icono extraído de {exePath}\n");
                     }
                 }
                 catch { }
@@ -107,11 +107,11 @@ public class SystemTrayManager : IDisposable
                 });
             };
 
-            File.AppendAllText(LogFile, $"[SystemTrayManager] NotifyIcon inicializado con éxito. Visible: {_notifyIcon.Visible}\n");
+            App.SafeLog($"[SystemTrayManager] NotifyIcon inicializado con éxito. Visible: {_notifyIcon.Visible}\n");
         }
         catch (Exception ex)
         {
-            try { File.AppendAllText(LogFile, $"[SystemTrayManager] Error creando NotifyIcon: {ex.Message}\n"); } catch { }
+            App.SafeLog($"[SystemTrayManager] Error creando NotifyIcon: {ex.Message}\n");
         }
     }
 

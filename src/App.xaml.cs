@@ -33,11 +33,8 @@ public partial class App : System.Windows.Application
         catch { }
     }
 
-    protected override void OnStartup(StartupEventArgs e)
+    public App()
     {
-        Loc.ApplySystemCulture();
-        SafeLog($"[ToolTip AI] OnStartup iniciado a las {DateTime.Now} (PID {Environment.ProcessId}) culture={Loc.Culture.Name}\n");
-
         AppDomain.CurrentDomain.UnhandledException += (s, args) =>
         {
             SafeLog($"[Unhandled] terminating={args.IsTerminating} {args.ExceptionObject}\n");
@@ -52,9 +49,14 @@ public partial class App : System.Windows.Application
         DispatcherUnhandledException += (s, args) =>
         {
             SafeLog($"[DispatcherUnhandled] {args.Exception}\n");
-            // Política Store 10.1.2.10: una excepción en UI no debe tumbar la app al arrancar.
             args.Handled = true;
         };
+    }
+
+    protected override void OnStartup(StartupEventArgs e)
+    {
+        Loc.ApplySystemCulture();
+        SafeLog($"[ToolTip AI] OnStartup iniciado a las {DateTime.Now} (PID {Environment.ProcessId}) culture={Loc.Culture.Name}\n");
 
         // --- GESTIÓN DE INSTANCIA ÚNICA Y ACTUALIZACIÓN LIMPIA ---
         // Si el usuario abre ToolTip AI (por acceso directo, script o actualización) y ya existía

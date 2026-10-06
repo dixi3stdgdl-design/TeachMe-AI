@@ -56,7 +56,7 @@
   </LinearGradientBrush>
 
   <!-- Botón primario (shine de la web) -->
-  <LinearGradientBrush x:Key="Button.Primary" StartPoint="0,0" EndPoint="1,1">
+  <LinearGradientBrush x:Key="Button.Primary.Brush" StartPoint="0,0" EndPoint="1,1">
     <GradientStop Color="#FF2DD4BF" Offset="0"/>
     <GradientStop Color="#FF14B8A6" Offset="0.45"/>
     <GradientStop Color="#FF38BDF8" Offset="1"/>
@@ -148,7 +148,7 @@
 
   <!-- Botón primario con shine -->
   <Style x:Key="Button.Primary" TargetType="Button">
-    <Setter Property="Background" Value="{StaticResource Button.Primary}"/>
+    <Setter Property="Background" Value="{StaticResource Button.Primary.Brush}"/>
     <Setter Property="Foreground" Value="#FF042F2A"/>
     <Setter Property="BorderThickness" Value="0"/>
     <Setter Property="Padding" Value="16,8"/>

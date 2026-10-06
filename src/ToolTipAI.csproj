@@ -13,9 +13,9 @@
     <AssemblyName>TeachMeAI</AssemblyName>
     <ApplicationIcon>app.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Version>1.1.5.0</Version>
-    <AssemblyVersion>1.1.5.0</AssemblyVersion>
-    <FileVersion>1.1.5.0</FileVersion>
+    <Version>1.1.6.0</Version>
+    <AssemblyVersion>1.1.6.0</AssemblyVersion>
+    <FileVersion>1.1.6.0</FileVersion>
     <!-- MSIX Store: publicar en carpeta (NO single-file). El bundler de un solo .exe
          falla al arrancar en máquinas de certificación (10.1.2.10). -->
     <PublishSingleFile>false</PublishSingleFile>
