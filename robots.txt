@@ -20,7 +20,4 @@ Disallow: /.staging_publish/
 Disallow: /scripts/
 Disallow: /_qa_dossier/
 
-# Crawl budget hint
-Crawl-delay: 1
-
 Sitemap: https://tooltip-ai.com/sitemap.xml
