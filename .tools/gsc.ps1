@@ -1,7 +1,7 @@
 # gsc.ps1 — Google Search Console & SEO Automation CLI for ToolTip AI
 param(
   [Parameter(Position=0)]
-  [ValidateSet("status", "open", "sitemaps", "inspect", "indexnow", "dns-verify", "help")]
+  [ValidateSet("status", "open", "welcome", "sitemaps", "inspect", "indexnow", "dns-verify", "help")]
   [string]$Action = "status",
 
   [Parameter(Position=1)]
@@ -61,8 +61,18 @@ switch ($Action) {
 
   "open" {
     Write-Header
-    $url = "https://search.google.com/search-console?resource_id=https%3A%2F%2Ftooltip-ai.com%2F"
-    Write-Host "Abriendo Google Search Console para https://tooltip-ai.com/..." -ForegroundColor Green
+    $url = "https://search.google.com/search-console/welcome"
+    Write-Host "Abriendo Google Search Console (Pantalla de bienvenida y añadir propiedad)..." -ForegroundColor Green
+    Write-Host "1. Elige 'Prefijo de la URL' a la derecha." -ForegroundColor Yellow
+    Write-Host "2. Pega: https://tooltip-ai.com/" -ForegroundColor Cyan
+    Write-Host "3. Haz clic en 'Continuar' (se validara al instante con tu metaetiqueta)." -ForegroundColor Yellow
+    Start-Process $url
+  }
+
+  "welcome" {
+    Write-Header
+    $url = "https://search.google.com/search-console/welcome"
+    Write-Host "Abriendo pantalla de bienvenida en Google Search Console..." -ForegroundColor Green
     Start-Process $url
   }
 
