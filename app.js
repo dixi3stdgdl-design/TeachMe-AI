@@ -1,4 +1,4 @@
-﻿/* Tooltip AI — WebGL light-field + interactions */
+/* Tooltip AI — WebGL light-field + interactions */
 (function () {
   'use strict';
 
@@ -152,8 +152,8 @@
      desde la web: se entregan tras confirmar el pago (correo / Store). */
   var catalog = {
     bundle: {
-      title: 'Bundle Suite',
-      desc: 'Aura + Voice + Translate · licencia de por vida',
+      title: 'Bundle Suite (4 Apps)',
+      desc: 'Assistant (Gratis) + Aura + Voice + Translate · licencia de por vida',
       product: 'Tooltip AI Bundle',
       total: '24.99 USD',
       url: 'https://paypal.me/DixLqb/24.99',
@@ -198,13 +198,13 @@
     },
     assistant: {
       title: 'ToolTip AI Assistant',
-      desc: 'Inspector de pantalla · gratis · descarga directa',
+      desc: 'Inspector de pantalla · prueba 3 días gratis · incluido de por vida en la Suite',
       product: 'Assistant',
-      total: '0 USD · gratis',
+      total: 'Prueba 3 días · Gratis con la Suite (24.99 USD)',
       url: '',
       downloads: [
-        { label: 'Assistant 1.1.3 (MSIX)', href: 'downloads/ToolTipAIAssistant_1.1.3.0_x64.msix' },
-        { label: 'Assistant (EXE portable)', href: 'downloads/TooltipAI.exe' }
+        { label: 'Assistant 1.1.3 (MSIX - 3 días gratis)', href: '/downloads/ToolTipAIAssistant_1.1.3.0_x64.msix' },
+        { label: 'Assistant (EXE portable - 3 días gratis)', href: '/downloads/TooltipAI.exe' }
       ],
       delivery: 'free'
     },
@@ -278,7 +278,7 @@
     ckTotal.textContent = current.total;
     var payBtn = document.getElementById('ckPay');
     if (!current.url) {
-      payBtn.textContent = 'Descargar gratis ahora';
+      payBtn.textContent = 'Descargar prueba (3 días gratis)';
       payBtn.classList.remove('btn-primary');
       payBtn.classList.add('btn-ghost');
       renderDl(current.downloads);

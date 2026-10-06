@@ -1,8 +1,12 @@
 # robots.txt — tooltip-ai.com
-# Tooltip-ai Suite | Dixi3 Labs
+# ToolTip AI Suite | Dixi3 Labs
 
 User-agent: *
 Allow: /
+Allow: /assistant/
+Allow: /aura/
+Allow: /translate/
+Allow: /voice/
 Allow: /en/
 Allow: /de/
 Allow: /privacy/

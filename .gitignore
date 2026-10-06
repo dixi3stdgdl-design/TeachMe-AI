@@ -1,4 +1,4 @@
-﻿# Build and Binary Outputs
+# Build and Binary Outputs
 [Bb]in/
 [Oo]bj/
 target/
@@ -67,6 +67,15 @@ _archive/scripts-cdp-2026-09/cdp_status_now/
 !en/**
 !de/**
 !privacy.html
+!404.html
+!assistant.html
+!aura.html
+!translate.html
+!voice.html
+!assistant/**
+!aura/**
+!translate/**
+!voice/**
 !docs/**/*.html
 
 
