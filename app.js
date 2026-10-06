@@ -175,6 +175,9 @@
       product: 'Aura',
       total: '9.99 USD',
       url: 'https://paypal.me/DixLqb/9.99',
+      storeId: '9P33P1P5Z8DC',
+      storeUri: 'ms-windows-store://pdp/?productid=9P33P1P5Z8DC',
+      storeWeb: 'https://apps.microsoft.com/detail/9P33P1P5Z8DC',
       downloads: [],
       delivery: 'paid'
     },
@@ -184,6 +187,9 @@
       product: 'Voice',
       total: '9.99 USD',
       url: 'https://paypal.me/DixLqb/9.99',
+      storeId: '9P417GZB0FVB',
+      storeUri: 'ms-windows-store://pdp/?productid=9P417GZB0FVB',
+      storeWeb: 'https://apps.microsoft.com/detail/9P417GZB0FVB',
       downloads: [],
       delivery: 'paid'
     },
@@ -193,6 +199,9 @@
       product: 'Translate',
       total: '9.99 USD',
       url: 'https://paypal.me/DixLqb/9.99',
+      storeId: '9NQN3RZ2Z655',
+      storeUri: 'ms-windows-store://pdp/?productid=9NQN3RZ2Z655',
+      storeWeb: 'https://apps.microsoft.com/detail/9NQN3RZ2Z655',
       downloads: [],
       delivery: 'paid'
     },
@@ -202,6 +211,9 @@
       product: 'Assistant',
       total: 'Prueba 3 días · Gratis con la Suite (24.99 USD)',
       url: '',
+      storeId: '9N3D02KXKD3D',
+      storeUri: 'ms-windows-store://pdp/?productid=9N3D02KXKD3D',
+      storeWeb: 'https://apps.microsoft.com/detail/9N3D02KXKD3D',
       downloads: [
         { label: 'Assistant 1.1.3 (MSIX - 3 días gratis)', href: '/downloads/ToolTipAIAssistant_1.1.3.0_x64.msix' },
         { label: 'Assistant (EXE portable - 3 días gratis)', href: '/downloads/TooltipAI.exe' }
@@ -250,7 +262,12 @@
     if (!box) return;
     if (!list || !list.length) { box.hidden = true; box.innerHTML = ''; return; }
     box.hidden = false;
-    box.innerHTML = list.map(function (d) {
+    var storeBtn = '';
+    if (current && current.storeUri) {
+      storeBtn = '<a class="btn btn-ghost btn-block" style="margin-bottom:0.75rem; text-align:center;" href="' + current.storeUri + '">' +
+        '🏪 Obtener en Microsoft Store</a>';
+    }
+    box.innerHTML = storeBtn + list.map(function (d) {
       return '<a class="btn btn-ghost btn-block" href="' + d.href + '" download>' +
         '<span>↓</span> Descargar ' + d.label + '</a>';
     }).join('');
@@ -261,12 +278,18 @@
     if (!box) return;
     box.hidden = false;
     if (!paid) { box.innerHTML = ''; box.hidden = true; return; }
+    var storeBtn = '';
+    if (current.storeUri) {
+      storeBtn = '<a class="btn btn-ghost btn-block" style="margin-bottom:0.75rem; text-align:center;" href="' + current.storeUri + '">' +
+        '🏪 Ver en Microsoft Store</a>';
+    }
     box.innerHTML =
+      storeBtn +
       '<div class="ck-note" style="margin:0.75rem 0 0">' +
-      '<strong>Entrega tras el pago.</strong> Los instaladores de Aura, Voice y Translate ' +
-      '<strong>no se descargan desde esta página</strong>. Tras pagar con PayPal, escríbenos a ' +
-      '<a href="mailto:dixstdgdl3@gmail.com?subject=Entrega%20ToolTip%20AI">dixstdgdl3@gmail.com</a> ' +
-      'con tu recibo (o compra en Microsoft Store) y te enviamos los enlaces.' +
+      '<strong>Entrega directa o Microsoft Store.</strong> Los instaladores de Aura, Voice y Translate ' +
+      'pueden abrirse en Microsoft Store o entregarse tras pago con PayPal. ' +
+      'Escríbenos a <a href="mailto:dixstdgdl3@gmail.com?subject=Entrega%20ToolTip%20AI">dixstdgdl3@gmail.com</a> ' +
+      'con cualquier consulta.' +
       '</div>';
   }
 
