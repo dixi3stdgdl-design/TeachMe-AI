@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
-namespace TeachMeAI;
+namespace ToolTipAI;
 
 /// <summary>
 /// Escáner Cuántico de Traducción Visual de Pantalla.
@@ -52,26 +52,40 @@ public class ScreenTranslateScanner
 
     public void Start()
     {
-        IsEnabled = true;
-        GetCursorPos(out _lastPos);
-        _restStartTime = DateTime.UtcNow;
-        _timer.Start();
+        try
+        {
+            IsEnabled = true;
+            GetCursorPos(out _lastPos);
+            _restStartTime = DateTime.UtcNow;
+            _timer.Start();
 
-        CursorBeamOverlayWindow.Instance.UpdatePosition(_lastPos.X, _lastPos.Y);
-        CursorBeamOverlayWindow.Instance.SetDwellProgress(0.0);
-        OnStateChanged?.Invoke(true);
+            CursorBeamOverlayWindow.Instance.UpdatePosition(_lastPos.X, _lastPos.Y);
+            CursorBeamOverlayWindow.Instance.SetDwellProgress(0.0);
+            OnStateChanged?.Invoke(true);
+        }
+        catch (Exception ex)
+        {
+            App.SafeLog($"[ScreenTranslateScanner] Start notice: {ex.Message}\n");
+        }
     }
 
     public void Stop()
     {
-        IsEnabled = false;
-        _timer.Stop();
-        CursorBeamOverlayWindow.Instance.SetDwellProgress(0.0);
-        CursorBeamOverlayWindow.Instance.Hide();
-        TranslateOverlayWindow.Instance.FadeOutAndHide(100);
-        _hasActiveTranslation = false;
-        _lastTranslatedWord = null;
-        OnStateChanged?.Invoke(false);
+        try
+        {
+            IsEnabled = false;
+            _timer.Stop();
+            CursorBeamOverlayWindow.Instance.SetDwellProgress(0.0);
+            CursorBeamOverlayWindow.Instance.Hide();
+            TranslateOverlayWindow.Instance.FadeOutAndHide(100);
+            _hasActiveTranslation = false;
+            _lastTranslatedWord = null;
+            OnStateChanged?.Invoke(false);
+        }
+        catch (Exception ex)
+        {
+            App.SafeLog($"[ScreenTranslateScanner] Stop notice: {ex.Message}\n");
+        }
     }
 
     private async void Timer_Tick(object? sender, EventArgs e)

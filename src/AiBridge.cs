@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace TeachMeAI;
+namespace ToolTipAI;
 
 /// <summary>
 /// Puente de APIs multi-proveedor para visión multimodal y chat didáctico.

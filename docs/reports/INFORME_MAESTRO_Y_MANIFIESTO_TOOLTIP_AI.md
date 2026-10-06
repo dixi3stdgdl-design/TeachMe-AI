@@ -1,6 +1,6 @@
 # 📋 DOSSIER EJECUTIVO, ARQUITECTURA TÉCNICA Y MANIFIESTO ESTRATÉGICO
 ## Tooltip AI — Cognitive Screen Inspector & Assisted Decision Engine for Windows 11
-**Código de Proyecto:** TeachMe AI / Tooltip AI  
+**Código de Proyecto:** ToolTip AI / Tooltip AI  
 **Organización Desarrolladora:** Dixi3 Labs  
 **Versión de Documento:** 2.0 (Enterprise & Store Release Standard)  
 **Entorno Operativo:** Windows 11 / Windows 10 (Arquitectura x64 Desktop Bridge)
@@ -201,7 +201,7 @@ Para la **Fase de Diversificación (Q2)**, Tooltip AI habilitará el nivel **Saa
 ### 7.1. Compilación de Release Autocontenido de Alto Rendimiento
 Comando PowerShell para generar los binarios sin dependencias de runtime externo:
 ```powershell
-dotnet publish src-dotnet/TeachMeAI.csproj `
+dotnet publish src-dotnet/ToolTipAI.csproj `
     -c Release `
     -r win-x64 `
     --self-contained true `
@@ -211,10 +211,10 @@ dotnet publish src-dotnet/TeachMeAI.csproj `
 ```
 
 ### 7.2. Pipeline de Empaquetado MSIX para Nuevas Versiones de Store
-1. Actualizar el elemento `<Version>` en `src-dotnet/TeachMeAI.csproj` (ej. `1.0.1.0`).
+1. Actualizar el elemento `<Version>` en `src-dotnet/ToolTipAI.csproj` (ej. `1.0.1.0`).
 2. Ejecutar el empaquetador oficial del proyecto:
 ```powershell
-cd "d:\TeachMe AI\MicrosoftStore_Submission\Scripts"
+cd "d:\ToolTip AI\MicrosoftStore_Submission\Scripts"
 .\build-msix.bat
 ```
 3. El instalador certificado se deposita automáticamente en:

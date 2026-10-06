@@ -18,7 +18,7 @@ El script `scripts/generate_store_screenshots.ps1` generaba **posters de marketi
 | Versión desactualizada | Capturas decían v1.0.1; el paquete es **1.0.3.0** |
 | Claims falsos | “&lt;40 MB RAM”, “Privacidad Absoluta”, “Cero almacenamiento en la nube” |
 | Branding inglés inventado | “Neural Screen Inspector & Cognitive HUD” |
-| Ruta obsoleta del generador | Apuntaba a `D:\TeachMe AI\…` (proyecto movido a `D:\ToolTip AI`) |
+| Ruta obsoleta del generador | Apuntaba a `D:\ToolTip AI\…` (proyecto movido a `D:\ToolTip AI`) |
 
 Microsoft interpreta eso como imaginería de un producto distinto al publicado → 10.1.1.3.
 

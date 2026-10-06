@@ -94,9 +94,9 @@ flowchart TD
 ## 📁 Estructura del Repositorio
 
 ```text
-TeachMe AI/
+ToolTip AI/
 ├── src-dotnet/                          # Aplicación de escritorio C# / .NET 8 WPF
-│   ├── TeachMeAI.csproj                 # Configuración del proyecto WPF standalone
+│   ├── ToolTipAI.csproj                 # Configuración del proyecto WPF standalone
 │   ├── MainWindow.xaml                  # Ventana acrílica de superposición
 │   ├── MainWindow.xaml.cs               # Lógica de captura, hotkeys y WebView2 IPC
 │   ├── GlobalHotKey.cs                  # Registrador de atajos de sistema Win32
@@ -131,10 +131,10 @@ Si deseas compilar la aplicación tú mismo:
 ```powershell
 # 1. Clonar el repositorio
 git clone https://github.com/dixi3stdgdl-design/TeachMe-AI.git
-cd TeachMe-AI
+cd ToolTip AI
 
 # 2. Compilar binario autónomo de archivo único (Self-contained)
-dotnet publish src-dotnet/TeachMeAI.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o ./dist
+dotnet publish src-dotnet/ToolTipAI.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o ./dist
 
 # 3. Ejecutar
 .\dist\TooltipAI.exe

@@ -1,4 +1,4 @@
-# ⚡ Guía: Publicar TeachMe AI por Línea de Comandos con MSStore CLI y Azure
+# ⚡ Guía: Publicar ToolTip AI por Línea de Comandos con MSStore CLI y Azure
 
 La herramienta oficial de Microsoft para publicar aplicaciones en la **Microsoft Store** desde la terminal es **Microsoft Store Developer CLI (`msstore`)**.
 
@@ -14,7 +14,7 @@ Esta guía te muestra cómo obtener tus 4 credenciales en menos de 2 minutos y e
 2. Haz clic en el icono de **Engranaje (Configuración)** en la esquina superior derecha > **Configuración de la cuenta (Account settings)**.
 3. En el menú lateral izquierdo, haz clic en **Administración de usuarios (User management)** > pestaña **Aplicaciones de Azure AD (Azure AD applications)**.
 4. Haz clic en **Crear aplicación de Azure AD** (o selecciona una existente).
-   - Asigna un nombre como: `TeachMeAI-Publisher-CLI`.
+   - Asigna un nombre como: `ToolTipAI-Publisher-CLI`.
    - Selecciona el rol: `Manager` o `Developer`.
 5. En la pantalla de la aplicación verás inmediatamente:
    * **Tenant ID (Id. de inquilino de Azure AD):** Un GUID largo como `12345678-abcd-1234-abcd-1234567890ab`.
@@ -33,7 +33,7 @@ Ya hemos dejado instalado `MSStore.exe` en tu equipo y preparado el script inter
 
 1. Abre una terminal de PowerShell en esta carpeta:
    ```powershell
-   cd "d:\TeachMe AI\MicrosoftStore_Submission\Scripts"
+   cd "d:\ToolTip AI\MicrosoftStore_Submission\Scripts"
    .\Publicar-Con-MSStore-CLI.ps1
    ```
 2. El script te solicitará por única vez:
@@ -41,8 +41,8 @@ Ya hemos dejado instalado `MSStore.exe` en tu equipo y preparado el script inter
    * `Seller ID`
    * `Client ID`
    * `Client Secret`
-3. Una vez autenticado, consultará automáticamente tu lista de aplicaciones en Microsoft Store y te pedirá el **Product ID** de TeachMe AI (ejemplo: `9NXXXXXXXXXX`).
-4. La herramienta subirá `TeachMeAI_1.0.0.0_x64.msix` directamente a los servidores de Microsoft Store y creará el nuevo envío para certificación.
+3. Una vez autenticado, consultará automáticamente tu lista de aplicaciones en Microsoft Store y te pedirá el **Product ID** de ToolTip AI (ejemplo: `9NXXXXXXXXXX`).
+4. La herramienta subirá `ToolTipAI_1.0.0.0_x64.msix` directamente a los servidores de Microsoft Store y creará el nuevo envío para certificación.
 
 ---
 
@@ -61,5 +61,5 @@ msstore info
 msstore apps list
 
 # 4. Publicar el paquete MSIX a la tienda:
-msstore publish "d:\TeachMe AI\MicrosoftStore_Submission\Package\TeachMeAI_1.0.0.0_x64.msix" --id "<TU_PRODUCT_ID>"
+msstore publish "d:\ToolTip AI\MicrosoftStore_Submission\Package\ToolTipAI_1.0.0.0_x64.msix" --id "<TU_PRODUCT_ID>"
 ```

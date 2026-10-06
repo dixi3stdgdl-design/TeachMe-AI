@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 
-namespace TeachMeAI;
+namespace ToolTipAI;
 
 /// <summary>
 /// Global hotkeys for ToolTip AI.
@@ -61,7 +61,7 @@ public class GlobalHotKey : IDisposable
     {
         string logFile = System.IO.Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "TeachMeAI",
+            "ToolTipAI",
             "run.log");
 
         _windowHandle = hWnd;
@@ -145,7 +145,7 @@ public class GlobalHotKey : IDisposable
         {
             string logFile = System.IO.Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                "TeachMeAI",
+                "ToolTipAI",
                 "run.log");
             System.IO.File.AppendAllText(logFile, $"[ToolTip AI] {message} at {DateTime.Now}\n");
         }

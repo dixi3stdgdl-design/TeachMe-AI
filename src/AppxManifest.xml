@@ -9,7 +9,7 @@
   <Identity
     Name="Dixi3Lqbs.ToolTipAIAssistant"
     Publisher="CN=5A4F9620-3DD9-4496-B7BF-3252D9BF4477"
-    Version="1.0.4.0"
+    Version="1.1.5.0"
     ProcessorArchitecture="x64" />
 
   <Properties>
@@ -20,7 +20,7 @@
   </Properties>
 
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.26100.0" />
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.26200.0" />
   </Dependencies>
 
   <Resources>
@@ -31,7 +31,7 @@
 
   <Applications>
     <Application Id="ToolTipAI"
-      Executable="TeachMeAI.exe"
+      Executable="ToolTipAI.exe"
       EntryPoint="Windows.FullTrustApplication">
       <uap:VisualElements
         DisplayName="ToolTip AI"

@@ -10,7 +10,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Windows.Media.SpeechSynthesis;
 
-namespace TeachMeAI;
+namespace ToolTipAI;
 
 public partial class MainWindow : Window
 {
@@ -60,7 +60,7 @@ public partial class MainWindow : Window
         _unfoldedLeft = this.Left;
         _unfoldedTop = this.Top;
 
-        string logFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TeachMeAI", "run.log");
+        string logFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ToolTipAI", "run.log");
 
         this.Closed += (s, e) =>
         {
@@ -104,24 +104,38 @@ public partial class MainWindow : Window
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
-        string logFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TeachMeAI", "run.log");
+        string logFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ToolTipAI", "run.log");
         try { File.AppendAllText(logFile, $"[ToolTip AI] Window_Loaded entered at {DateTime.Now}\n"); } catch { }
 
         try
         {
             // Ubicación inicial: Cápsula dinámica superior en el centro de la pantalla principal
-            var primary = System.Windows.Forms.Screen.PrimaryScreen ?? System.Windows.Forms.Screen.AllScreens[0];
-            var dpi = VisualTreeHelper.GetDpi(this);
-            double scaleX = dpi.DpiScaleX > 0 ? dpi.DpiScaleX : 1.0;
-            double scaleY = dpi.DpiScaleY > 0 ? dpi.DpiScaleY : 1.0;
-            double workLeft = primary.WorkingArea.Left / scaleX;
-            double workTop = primary.WorkingArea.Top / scaleY;
-            double screenW = primary.WorkingArea.Width / scaleX;
+            // (Fallback si Screen.AllScreens viene vacío en máquinas de certificación.)
+            var screens = System.Windows.Forms.Screen.AllScreens;
+            var primary = System.Windows.Forms.Screen.PrimaryScreen
+                ?? (screens is { Length: > 0 } ? screens[0] : null);
 
             this.Width = 680;
             this.Height = 48;
-            this.Left = workLeft + Math.Max(10, (screenW - 680) / 2.0);
-            this.Top = workTop + 8;
+
+            if (primary == null)
+            {
+                this.Left = Math.Max(10, (SystemParameters.PrimaryScreenWidth - 680) / 2.0);
+                this.Top = 8;
+            }
+            else
+            {
+                var dpi = VisualTreeHelper.GetDpi(this);
+                double scaleX = dpi.DpiScaleX > 0 ? dpi.DpiScaleX : 1.0;
+                double scaleY = dpi.DpiScaleY > 0 ? dpi.DpiScaleY : 1.0;
+                double workLeft = primary.WorkingArea.Left / scaleX;
+                double workTop = primary.WorkingArea.Top / scaleY;
+                double screenW = primary.WorkingArea.Width / scaleX;
+
+                this.Left = workLeft + Math.Max(10, (screenW - 680) / 2.0);
+                this.Top = workTop + 8;
+            }
+
             _unfoldedLeft = this.Left;
             _unfoldedTop = this.Top;
 
@@ -919,7 +933,7 @@ public partial class MainWindow : Window
         var dummyData = new InspectionData
         {
             Name = "ToolTip AI Inspector",
-            ProcessName = "TeachMeAI.exe",
+            ProcessName = "ToolTipAI.exe",
             ProcessId = (uint)System.Diagnostics.Process.GetCurrentProcess().Id,
             Summary = $"Panel de ToolTip AI activo. Pulsa '{GlobalHotKey.SnipDisplay}' para recortar o '{GlobalHotKey.RadarDisplay}' para el radar.",
             VerdictText = "Sistema Activo • Cápsula Superior",
@@ -949,7 +963,7 @@ public partial class MainWindow : Window
 
     private void Window_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
     {
-        string logFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TeachMeAI", "run.log");
+        string logFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ToolTipAI", "run.log");
         try { File.AppendAllText(logFile, $"[ToolTip AI] Window_Closing triggered. ExplicitExit: {_isExplicitExit}. Cancel: {!_isExplicitExit}\n"); } catch { }
 
         if (!_isExplicitExit)

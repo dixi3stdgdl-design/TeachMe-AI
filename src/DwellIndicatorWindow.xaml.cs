@@ -1,7 +1,7 @@
 using System.Windows;
 using System.Windows.Media.Animation;
 
-namespace TeachMeAI;
+namespace ToolTipAI;
 
 public partial class DwellIndicatorWindow : Window
 {

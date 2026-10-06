@@ -10,7 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Point = System.Windows.Point;
 
-namespace TeachMeAI;
+namespace ToolTipAI;
 
 public partial class SnippingWindow : Window
 {

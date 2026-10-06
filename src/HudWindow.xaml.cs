@@ -8,7 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace TeachMeAI;
+namespace ToolTipAI;
 
 public partial class HudWindow : Window
 {
@@ -91,7 +91,7 @@ public partial class HudWindow : Window
         };
 
         string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        string folder = Path.Combine(appData, "TeachMeAI");
+        string folder = Path.Combine(appData, "ToolTipAI");
         Directory.CreateDirectory(folder);
         _settingsPath = Path.Combine(folder, "config.json");
 
@@ -435,6 +435,14 @@ public partial class HudWindow : Window
         // If Gemini API Key is configured and this isn't already the AI result, trigger multimodal vision in background!
         if (triggerAiAnalysis && !_isAiAnalyzing && !string.IsNullOrWhiteSpace(ApiKey) && imageBytes != null && imageBytes.Length > 0)
         {
+            var trial = TrialLicenseManager.CheckStatus();
+            if (trial.IsExpired)
+            {
+                ConfidenceText.Text = " • ⌛ Prueba de 24h finalizada";
+                VerdictLabelText.Text = "Tu periodo de prueba de 24 horas ha expirado. Obtén la Suite completa en https://tooltip-ai.com/ o Microsoft Store para continuar usándolo de por vida.";
+                return;
+            }
+
             _isAiAnalyzing = true;
             ConfidenceText.Text = $" • ✨ Maestro {Provider} Analizando...";
             Task.Run(async () =>
@@ -677,6 +685,13 @@ public partial class HudWindow : Window
     {
         string q = ChatInputBox.Text.Trim();
         if (string.IsNullOrWhiteSpace(q)) return;
+
+        var trial = TrialLicenseManager.CheckStatus();
+        if (trial.IsExpired)
+        {
+            AddChatMessage("Sistema", "Tu periodo de evaluación de 24 horas ha expirado. Adquiere ToolTip AI Suite en https://tooltip-ai.com/ o Microsoft Store para continuar.", isUser: false);
+            return;
+        }
 
         ChatInputBox.Text = "";
         AddChatMessage("Tú", q, isUser: true);

@@ -59,7 +59,8 @@ APPINSIGHTS_CONFIG.json
 MicrosoftStore_Submission/Testing_Certificate/
 
 # dumps browser / posibles tokens
-_archive/scripts-cdp-2026-09/cdp_status_now/
+_archive/
+_qa_dossier/
 *.html
 !index.html
 !privacy.html

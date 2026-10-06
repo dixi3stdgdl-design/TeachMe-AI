@@ -12,7 +12,7 @@ using Windows.Graphics.Imaging;
 using Windows.Media.Ocr;
 using Windows.Storage.Streams;
 
-namespace TeachMeAI;
+namespace ToolTipAI;
 
 /// <summary>
 /// Reporte estructurado de traducción contextual obtenido por OCR nativo Direct3D/WinRT

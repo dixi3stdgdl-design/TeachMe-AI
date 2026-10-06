@@ -381,7 +381,7 @@ Get-MpComputerStatus | Select-Object RealTimeProtectionEnabled, AntivirusSignatu
     cliSnippet: `# Iniciar Blender en segundo plano para renderizar escena:
 blender -b "escena.blend" -o "//render_" -F PNG -x 1 -a`
   },
-  tray_teachme: {
+  tray_tooltip: {
     name: "Servicio Tooltip AI (Kernel Accessibility Hook)",
     controlType: "UIA_NotificationTrayIcon / Daemon",
     confidence: "100.0% Exacto",
@@ -536,7 +536,7 @@ Stop-Process -Name "nombre_proceso"`
 function generateDynamicInspection(el) {
   if (!el) return INSPECTION_DATABASE.installer_bloatware;
 
-  const rawText = (el.dataset.teachmeNativeTitle || el.title || el.innerText || el.textContent || '').trim().replace(/\s+/g, ' ');
+  const rawText = (el.dataset.tooltipNativeTitle || el.title || el.innerText || el.textContent || '').trim().replace(/\s+/g, ' ');
   const cleanName = rawText.length > 0 ? (rawText.length > 40 ? rawText.substring(0, 40) + '...' : rawText) : (el.tagName.toLowerCase());
 
   let processName = "explorer.exe";
@@ -640,7 +640,7 @@ const state = {
 
 // Cached DOM Elements
 const DOM = {
-  card: document.getElementById('teachmeOverlayCard'),
+  card: document.getElementById('tooltipOverlayCard'),
   specularGlow: document.getElementById('specularGlow'),
   connectorSvg: document.getElementById('connectorSvg'),
   connectorPath: document.getElementById('connectorPath'),
@@ -932,13 +932,13 @@ function setupEventListeners() {
     // Solo activar reposo/dwell si el cursor está sobre la estación de trabajo simulada (#desktopContainer)
     const targetEl = document.elementFromPoint(e.clientX, e.clientY);
     const isInSimulator = targetEl && targetEl.closest('#desktopContainer');
-    const isOverUi = targetEl && (targetEl.closest('#teachmeOverlayCard') || targetEl.closest('#designStudioDrawer') || targetEl.closest('.top-nav-bar') || targetEl.closest('.site-header'));
+    const isOverUi = targetEl && (targetEl.closest('#tooltipOverlayCard') || targetEl.closest('#designStudioDrawer') || targetEl.closest('.top-nav-bar') || targetEl.closest('.site-header'));
 
     // Detector de Reposo en Simulador: si el ratón descansa dentro de #desktopContainer, arrancar Dwell
     if (isInSimulator && !state.isPinned && !isOverUi && !state.dwellAnimationFrame) {
       state.mouseStillTimer = setTimeout(() => {
         const el = document.elementFromPoint(e.clientX, e.clientY);
-        if (!el || !el.closest('#desktopContainer') || el.closest('#teachmeOverlayCard') || el.closest('#designStudioDrawer') || el.closest('.top-nav-bar') || el.closest('.site-header')) return;
+        if (!el || !el.closest('#desktopContainer') || el.closest('#tooltipOverlayCard') || el.closest('#designStudioDrawer') || el.closest('.top-nav-bar') || el.closest('.site-header')) return;
 
         let targetId = el.getAttribute('data-target-id') || el.closest('[data-target-id]')?.getAttribute('data-target-id');
         if (!targetId) {
@@ -992,7 +992,7 @@ function setupEventListeners() {
     '#desktopContainer .mock-win-btn',
     '#desktopContainer .taskbar-item',
     '#desktopContainer .win-logo-btn',
-    '#desktopContainer .tray-teachme-icon',
+    '#desktopContainer .tooltip-tray-icon',
     '#desktopContainer .tray-clock',
     '#desktopContainer .mock-win-controls span',
     '#desktopContainer [data-target-id]',
@@ -1004,7 +1004,7 @@ function setupEventListeners() {
   inspectables.forEach(el => {
     // Suppress native browser tooltips so they don't block the screen
     if (el.title && el.title.trim().length > 0) {
-      el.dataset.teachmeNativeTitle = el.title;
+      el.dataset.tooltipNativeTitle = el.title;
       el.title = ''; // Suppress browser native tooltip
     }
 
@@ -1016,7 +1016,7 @@ function setupEventListeners() {
 
       // Suppress any native title
       if (el.title) {
-        el.dataset.teachmeNativeTitle = el.title;
+        el.dataset.tooltipNativeTitle = el.title;
         el.title = '';
       }
 
@@ -1887,7 +1887,7 @@ function setupDesignStudio() {
         const key = DOM.inputApiKey.value.trim();
         state.geminiApiKey = key;
         // Do not write API keys to localStorage — session memory only.
-        try { localStorage.removeItem('teachme_gemini_api_key'); } catch (_) {}
+        try { localStorage.removeItem('tooltip_gemini_api_key'); } catch (_) {}
         if (key) {
           if (DOM.aiStatusPill) {
             DOM.aiStatusPill.classList.add('connected');

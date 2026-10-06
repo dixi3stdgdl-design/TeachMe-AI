@@ -10,7 +10,7 @@ commits: 0e8a04a..08e3af3
 
 ## Report
 
-**What was built** — El dominio `tooltip-ai.com` (Porkbun) quedó cableado a GitHub Pages del repo `TeachMe-AI`: 4×A + CNAME www, CNAME en Pages, y la suite (home, /translate, /voice, /aura, /privacy) sirve en `http://tooltip-ai.com`. Las landings reflejan IA multi-proveedor BYOK, bloque de aportación con enlace PayPal Business profesional (`paypal.com/ncp/payment/HPDSLDCAGVHFL`, USD, importe libre) más `paypal.me/DixLqb`, y acreditación de Xiaomi MiMo Desktop + Gemini con disclaimer de no-afiliación. Se documentó la matriz de precios Store (Assistant gratis; módulos 7.99–9.99 USD) y el payout por email PayPal en Partner Center.
+**What was built** — El dominio `tooltip-ai.com` (Porkbun) quedó cableado a GitHub Pages del repo `ToolTip AI`: 4×A + CNAME www, CNAME en Pages, y la suite (home, /translate, /voice, /aura, /privacy) sirve en `http://tooltip-ai.com`. Las landings reflejan IA multi-proveedor BYOK, bloque de aportación con enlace PayPal Business profesional (`paypal.com/ncp/payment/HPDSLDCAGVHFL`, USD, importe libre) más `paypal.me/DixLqb`, y acreditación de Xiaomi MiMo Desktop + Gemini con disclaimer de no-afiliación. Se documentó la matriz de precios Store (Assistant gratis; módulos 7.99–9.99 USD) y el payout por email PayPal en Partner Center.
 
 **Verification** — `Resolve-DnsName tooltip-ai.com -Server 8.8.8.8` → 185.199.108–111.153. `Invoke-WebRequest http://tooltip-ai.com/` → 200 con `HPDSLDCAGVHFL`, «Xiaomi MiMo» y copy multi-proveedor. `gh run list` → Deploy GitHub Pages success en `08e3af3`. `gh api .../pages` → `cname=tooltip-ai.com`. Porkbun API retrieve → registros A/CNAME/MX/TXT esperados. HTTPS aún no emitido por GitHub (`certificate does not exist yet`); vigilante programado cada 7 min para forzar Enforce HTTPS.
 
@@ -32,7 +32,7 @@ Dominio comprado sin apuntar a la suite; landings posicionaban Gemini como únic
 - **Store**: payout = email PayPal; privacy URL github.io hasta HTTPS.
 
 ## [S3] Out of Scope
-Chrome Web Store; código WPF de módulos; renombrar repo `TeachMe-AI`; activar 2FA (requiere authenticator del usuario); completar listing Partner Center (requiere login Microsoft del usuario).
+Chrome Web Store; código WPF de módulos; renombrar repo `ToolTip AI`; activar 2FA (requiere authenticator del usuario); completar listing Partner Center (requiere login Microsoft del usuario).
 
 ## Tasks
 - [x] T1: CNAME en GitHub Pages API — acceptance: `cname=tooltip-ai.com` (covers: S2)

@@ -4,17 +4,17 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using Microsoft.Win32;
 
-namespace TeachMeAI;
+namespace ToolTipAI;
 
 public static class StartupManager
 {
     private const string RunKeyPath = @"Software\Microsoft\Windows\CurrentVersion\Run";
-    private const string AppName = "TeachMeAI";
+    private const string AppName = "ToolTipAI";
 
     private static string GetConfigPath()
     {
         string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        string folder = Path.Combine(appData, "TeachMeAI");
+        string folder = Path.Combine(appData, "ToolTipAI");
         Directory.CreateDirectory(folder);
         return Path.Combine(folder, "config.json");
     }

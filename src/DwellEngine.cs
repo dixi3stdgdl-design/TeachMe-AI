@@ -5,7 +5,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Threading;
 
-namespace TeachMeAI;
+namespace ToolTipAI;
 
 public class DwellEngine
 {
@@ -105,7 +105,7 @@ public class DwellEngine
 
         GetCursorPos(out POINT currentPos);
 
-        // 1. Si el cursor está sobre la ventana HUD de TeachMe AI (usuario interactuando con las pestañas o chat)
+        // 1. Si el cursor está sobre la ventana HUD de ToolTip AI (usuario interactuando con las pestañas o chat)
         if (HudWindow.Instance.IsMouseOverHud(currentPos.X, currentPos.Y))
         {
             _restStartTime = DateTime.UtcNow;
@@ -117,7 +117,7 @@ public class DwellEngine
             return;
         }
 
-        // 2. Si el cursor está sobre la ventana principal de TeachMe AI
+        // 2. Si el cursor está sobre la ventana principal de ToolTip AI
         try
         {
             IntPtr hwndAtCursor = RustNativeBridge.WindowFromPoint(new RustNativeBridge.POINT { X = currentPos.X, Y = currentPos.Y });

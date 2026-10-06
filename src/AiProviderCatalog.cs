@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace TeachMeAI;
+namespace ToolTipAI;
 
 public static class AiProviderCatalog
 {

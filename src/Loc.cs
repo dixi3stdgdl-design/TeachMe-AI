@@ -1,12 +1,12 @@
 using System.Globalization;
 using System.Resources;
 
-namespace TeachMeAI;
+namespace ToolTipAI;
 
 /// <summary>UI strings. English is the native product language; follows Windows UI culture when es/de/… is available.</summary>
 public static class Loc
 {
-    private static readonly ResourceManager Rm = new("TeachMeAI.Strings", typeof(Loc).Assembly);
+    private static readonly ResourceManager Rm = new("ToolTipAI.Strings", typeof(Loc).Assembly);
 
     public static CultureInfo Culture { get; private set; } = CultureInfo.GetCultureInfo("en-US");
 

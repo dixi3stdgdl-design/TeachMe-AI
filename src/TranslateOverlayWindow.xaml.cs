@@ -7,7 +7,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using Windows.Media.SpeechSynthesis;
 
-namespace TeachMeAI;
+namespace ToolTipAI;
 
 public partial class TranslateOverlayWindow : Window
 {

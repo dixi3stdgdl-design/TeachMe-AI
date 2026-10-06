@@ -207,16 +207,16 @@
     },
     assistant: {
       title: 'ToolTip AI Assistant',
-      desc: 'Inspector de pantalla · prueba 3 días gratis · incluido de por vida en la Suite',
+      desc: 'Inspector de pantalla · prueba de 24 horas gratis · incluido de por vida en la Suite',
       product: 'Assistant',
-      total: 'Prueba 3 días · Gratis con la Suite (24.99 USD)',
+      total: 'Prueba 24 horas · Gratis con la Suite (24.99 USD)',
       url: '',
       storeId: '9N3D02KXKD3D',
       storeUri: 'ms-windows-store://pdp/?productid=9N3D02KXKD3D',
       storeWeb: 'https://apps.microsoft.com/detail/9N3D02KXKD3D',
       downloads: [
-        { label: 'Assistant 1.1.5 (MSIX - 3 días gratis)', href: '/downloads/ToolTipAIAssistant_1.1.5.0_x64.msix' },
-        { label: 'Assistant (EXE portable - 3 días gratis)', href: '/downloads/TooltipAI.exe' }
+        { label: 'Assistant 1.1.5 (MSIX - 24 horas gratis)', href: '/downloads/ToolTipAIAssistant_1.1.5.0_x64.msix' },
+        { label: 'Assistant (EXE portable - 24 horas gratis)', href: '/downloads/TooltipAI.exe' }
       ],
       delivery: 'free'
     },
@@ -301,7 +301,7 @@
     ckTotal.textContent = current.total;
     var payBtn = document.getElementById('ckPay');
     if (!current.url) {
-      payBtn.textContent = 'Descargar prueba (3 días gratis)';
+      payBtn.textContent = 'Descargar prueba (24 horas gratis)';
       payBtn.classList.remove('btn-primary');
       payBtn.classList.add('btn-ghost');
       renderDl(current.downloads);

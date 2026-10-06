@@ -2,7 +2,7 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace TeachMeAI;
+namespace ToolTipAI;
 
 public static class VaultManager
 {

@@ -1,13 +1,13 @@
-# 🚀 Guía Paso a Paso para Publicar TeachMe AI en Microsoft Store
+# 🚀 Guía Paso a Paso para Publicar ToolTip AI en Microsoft Store
 
-Esta guía te explica de forma clara y directa cómo publicar **TeachMe AI** en la tienda oficial de Windows (**Microsoft Store**) utilizando **Microsoft Partner Center** y el paquete `.msix` que acabamos de generar en esta carpeta.
+Esta guía te explica de forma clara y directa cómo publicar **ToolTip AI** en la tienda oficial de Windows (**Microsoft Store**) utilizando **Microsoft Partner Center** y el paquete `.msix` que acabamos de generar en esta carpeta.
 
 ---
 
 ## 📑 Contenido de la Carpeta de Entrega
 
 La carpeta `MicrosoftStore_Submission/` contiene todo lo necesario:
-* `Package/TeachMeAI_1.0.0.0_x64.msix`: Tu aplicación empaquetada lista para subir o probar.
+* `Package/ToolTipAI_1.0.0.0_x64.msix`: Tu aplicación empaquetada lista para subir o probar.
 * `Package/AppxManifest.xml`: El manifiesto con capacidades Desktop Bridge FullTrust.
 * `Store_Assets/`: Todos los logotipos e iconos en las resoluciones oficiales (50x50, 44x44, 150x150, 310x150, 310x310, Splash 620x300, etc.).
 * `Store_Assets/Screenshots/`: 3 capturas promocionales en alta definición (1920x1080) listas para la ficha de la tienda.
@@ -25,7 +25,7 @@ Si deseas probar cómo se instala y ejecuta el paquete `.msix` en tu propio equi
 1. Ve a la carpeta `MicrosoftStore_Submission/Testing_Certificate/`.
 2. Haz clic derecho en `Instalar-Certificado-Prueba.ps1` y selecciona **Ejecutar con PowerShell como Administrador**.
    *(Esto instala el certificado de prueba en el almacén de Personas de Confianza de Windows).*
-3. Una vez instalado, ve a `MicrosoftStore_Submission/Package/` y haz **doble clic en `TeachMeAI_1.0.0.0_x64.msix`**.
+3. Una vez instalado, ve a `MicrosoftStore_Submission/Package/` y haz **doble clic en `ToolTipAI_1.0.0.0_x64.msix`**.
 4. Se abrirá la ventana oficial del Instalador de aplicaciones de Windows. Haz clic en **Instalar**.
 5. ¡Listo! La app se iniciará y quedará registrada en tu menú Inicio de Windows 11 como cualquier app de la Store.
 
@@ -44,7 +44,7 @@ Si deseas probar cómo se instala y ejecuta el paquete `.msix` en tu propio equi
 ## 🏷️ Paso 2: Crear una Nueva Aplicación y Reservar el Nombre
 
 1. Haz clic en el botón azul **Nueva aplicación / Crear un producto nuevo**.
-2. Escribe el nombre: `TeachMe AI`.
+2. Escribe el nombre: `ToolTip AI`.
 3. Haz clic en **Comprobar disponibilidad** y luego en **Reservar nombre del producto**.
 
 ---
@@ -55,7 +55,7 @@ Para que Microsoft Store acepte tu paquete `.msix`, el `Name` y `Publisher` del 
 
 1. Dentro de tu aplicación en Partner Center, en el menú izquierdo haz clic en **Administración de productos (Product management)** > **Identidad del producto (Product identity)**.
 2. Verás estos 3 valores clave:
-   * **Nombre del paquete (Package identity name):** *(Ejemplo: `12345TuNombre.TeachMeAI`)*
+   * **Nombre del paquete (Package identity name):** *(Ejemplo: `12345TuNombre.ToolTipAI`)*
    * **Id. de publicador (Package/Identity/Publisher):** *(Ejemplo: `CN=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX`)*
    * **Nombre para mostrar del publicador (Publisher display name):** *(Ejemplo: `Tu Nombre o Empresa`)*
 
@@ -72,7 +72,7 @@ Para que Microsoft Store acepte tu paquete `.msix`, el `Name` y `Publisher` del 
 1. En Partner Center, dentro de la ficha de tu aplicación, haz clic en **Iniciar envío (Start your submission)**.
 2. Haz clic en la sección **Paquetes (Packages)**.
 3. Arrastra y suelta el archivo:
-   `MicrosoftStore_Submission/Package/TeachMeAI_1.0.0.0_x64.msix`
+   `MicrosoftStore_Submission/Package/ToolTipAI_1.0.0.0_x64.msix`
 4. Microsoft analizará el paquete automáticamente. Validará:
    - Arquitectura: `x64`
    - Versión: `1.0.0.0`
@@ -127,13 +127,13 @@ Sigue el orden de secciones en la página de envío:
 3. Tu aplicación entrará en el proceso de certificación de Microsoft:
    - **Paso 1 (Automatizado):** Pruebas de seguridad, análisis antivirus y cumplimiento del paquete (tarda de 15 a 45 minutos).
    - **Paso 2 (Revisión humana de Microsoft):** Certificación final (suele tardar entre 12 y 48 horas).
-4. Cuando sea aprobada, recibirás un correo de felicitación y **TeachMe AI** estará publicada y disponible para millones de usuarios en Microsoft Store.
+4. Cuando sea aprobada, recibirás un correo de felicitación y **ToolTip AI** estará publicada y disponible para millones de usuarios en Microsoft Store.
 
 ---
 
 ## 💡 Consejos para Actualizaciones Futuras (v1.0.1, v1.1.0...)
 
 Cuando hagas mejoras o nuevas versiones en el código:
-1. Cambia la versión en `src-dotnet/TeachMeAI.csproj` (por ejemplo `<Version>1.0.1.0</Version>`).
+1. Cambia la versión en `src-dotnet/ToolTipAI.csproj` (por ejemplo `<Version>1.0.1.0</Version>`).
 2. Ejecuta `MicrosoftStore_Submission/Scripts/build-msix.bat`.
 3. En Partner Center, crea un **Nuevo envío**, sube el nuevo `.msix` y pulsa **Enviar**.

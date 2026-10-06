@@ -6,7 +6,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace TeachMeAI;
+namespace ToolTipAI;
 
 /// <summary>
 /// Motor Nativo de Ultra-Alto Rendimiento en C# Moderno (Unsafe, Stackalloc, Zero-Allocation).

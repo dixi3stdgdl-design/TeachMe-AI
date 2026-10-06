@@ -5,7 +5,7 @@
 | # | Hallazgo | Riesgo | Estado |
 |---|---|---|---|
 | 1 | **Token Entra** en `_archive/.../usermgmt.html` (dump de browser) | Alto — GitHub Push Protection lo detectó | Fuera del commit `d74a480`. **Aún puede estar en historial de commits antiguos** → **revocar el token en Entra** |
-| 2 | `TeachMeAI_Test.pfx` / `.cer` en `Testing_Certificate/` | Medio — certificado de prueba | Fuera de git; sigue en disco local |
+| 2 | `ToolTipAI_Test.pfx` / `.cer` en `Testing_Certificate/` | Medio — certificado de prueba | Fuera de git; sigue en disco local |
 | 3 | `APPINSIGHTS_CONFIG.json` con InstrumentationKey + ApplicationId | Bajo-medio — telemetry key de cliente | **Fuera del tracking** (`git rm --cached`) |
 | 4 | `porkbun.ps1` lee `~\.porkbun_tooltip.json` | Bajo — keys fuera del repo | OK (no versionado) |
 | 5 | Scripts `Configurar-MSStore-CLI.ps1` / `Solucionar-Y-Mandar.ps1` | Bajo — `ClientSecret` solo como parámetro | OK (no hay valor hardcodeado) |

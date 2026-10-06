@@ -1,4 +1,4 @@
-<Window x:Class="TeachMeAI.SnippingWindow"
+<Window x:Class="ToolTipAI.SnippingWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="ToolTip AI — Ambient Capture Lens"
@@ -68,12 +68,6 @@
                     </LinearGradientBrush>
                 </Rectangle.Stroke>
                 <Rectangle.StrokeThickness>1.5</Rectangle.StrokeThickness>
-                <Rectangle.StrokeDashArray>
-                    <x:Array Type="sys:Double" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-                        <sys:Double>5</sys:Double>
-                        <sys:Double>3</sys:Double>
-                    </x:Array>
-                </Rectangle.StrokeDashArray>
                 <Rectangle.Fill>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                         <GradientStop Color="#0A38BDF8" Offset="0.0"/>

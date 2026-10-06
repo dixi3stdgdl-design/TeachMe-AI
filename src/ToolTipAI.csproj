@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -13,16 +13,16 @@
     <AssemblyName>TeachMeAI</AssemblyName>
     <ApplicationIcon>app.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Version>1.1.3.0</Version>
-    <AssemblyVersion>1.1.3.0</AssemblyVersion>
-    <FileVersion>1.1.3.0</FileVersion>
+    <Version>1.1.5.0</Version>
+    <AssemblyVersion>1.1.5.0</AssemblyVersion>
+    <FileVersion>1.1.5.0</FileVersion>
+    <!-- MSIX Store: publicar en carpeta (NO single-file). El bundler de un solo .exe
+         falla al arrancar en máquinas de certificación (10.1.2.10). -->
+    <PublishSingleFile>false</PublishSingleFile>
     <Company>Dixi3 Lqbs</Company>
     <Product>ToolTip AI</Product>
     <Description>ToolTip AI — Screen inspector with didactic AI for Windows 11</Description>
     <Copyright>Copyright © 2026 Dixi3 Lqbs</Copyright>
-    <PublishSingleFile Condition="'$(Configuration)' == 'Release'">true</PublishSingleFile>
-    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
-    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
   </PropertyGroup>
 
   <ItemGroup>

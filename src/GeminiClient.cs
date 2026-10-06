@@ -6,7 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace TeachMeAI;
+namespace ToolTipAI;
 
 public class InspectionData
 {
@@ -135,7 +135,7 @@ public class GeminiClient
 
     private static readonly string LogFile = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), 
-        "TeachMeAI", 
+        "ToolTipAI", 
         "run.log");
 
     public const string DefaultModel = "gemini-2.0-flash";

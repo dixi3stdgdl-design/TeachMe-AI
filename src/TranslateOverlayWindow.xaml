@@ -1,4 +1,4 @@
-<Window x:Class="TeachMeAI.TranslateOverlayWindow"
+<Window x:Class="ToolTipAI.TranslateOverlayWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="ToolTip AI — Pure Ambient Text Lens"

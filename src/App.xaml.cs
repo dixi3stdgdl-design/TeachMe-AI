@@ -1,19 +1,20 @@
 using System;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 
-namespace TeachMeAI;
+namespace ToolTipAI;
 
 public partial class App : System.Windows.Application
 {
     private static readonly string LogFile = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), 
-        "TeachMeAI", 
+        "ToolTipAI", 
         "run.log");
 
-    private const string MutexName = @"Local\TeachMeAI_SingleInstance_Mutex_Dixi3";
-    private const string EventName = @"Local\TeachMeAI_BringToFront_Event_Dixi3";
+    private const string MutexName = @"Local\ToolTipAI_SingleInstance_Mutex_Dixi3";
+    private const string EventName = @"Local\ToolTipAI_BringToFront_Event_Dixi3";
 
     private static Mutex? _singleInstanceMutex;
     private static EventWaitHandle? _bringToFrontEvent;
@@ -39,22 +40,30 @@ public partial class App : System.Windows.Application
 
         AppDomain.CurrentDomain.UnhandledException += (s, args) =>
         {
-            SafeLog($"[Unhandled] {args.ExceptionObject}\n");
+            SafeLog($"[Unhandled] terminating={args.IsTerminating} {args.ExceptionObject}\n");
+        };
+
+        TaskScheduler.UnobservedTaskException += (s, args) =>
+        {
+            SafeLog($"[UnobservedTask] {args.Exception}\n");
+            args.SetObserved();
         };
 
         DispatcherUnhandledException += (s, args) =>
         {
             SafeLog($"[DispatcherUnhandled] {args.Exception}\n");
+            // Política Store 10.1.2.10: una excepción en UI no debe tumbar la app al arrancar.
+            args.Handled = true;
         };
 
         // --- GESTIÓN DE INSTANCIA ÚNICA Y ACTUALIZACIÓN LIMPIA ---
-        // Si el usuario abre TeachMe AI (por acceso directo, script o actualización) y ya existía
+        // Si el usuario abre ToolTip AI (por acceso directo, script o actualización) y ya existía
         // una instancia anterior (o proceso en segundo plano), la cerramos limpiamente para que la
         // versión actualizada tome el control de inmediato y nunca se cancele ni se congele.
         int currentPid = Environment.ProcessId;
         try
         {
-            var processes = System.Diagnostics.Process.GetProcessesByName("TeachMeAI")
+            var processes = System.Diagnostics.Process.GetProcessesByName("ToolTipAI")
                 .Concat(System.Diagnostics.Process.GetProcessesByName("ToolTipAITranslate"));
 
             foreach (var p in processes)
@@ -100,7 +109,7 @@ public partial class App : System.Windows.Application
                             {
                                 try
                                 {
-                                    TeachMeAI.MainWindow.Instance?.RestoreWindow();
+                                    ToolTipAI.MainWindow.Instance?.RestoreWindow();
                                 }
                                 catch (Exception ex)
                                 {
@@ -118,7 +127,7 @@ public partial class App : System.Windows.Application
             })
             {
                 IsBackground = true,
-                Name = "TeachMeAI_SignalListenerThread"
+                Name = "ToolTipAI_SignalListenerThread"
             };
             _signalListenerThread.Start();
         }

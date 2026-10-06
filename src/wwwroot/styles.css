@@ -1,5 +1,5 @@
 /* ========================================================================== */
-/* TEACHME AI — WINDOWS 11 FLUENT ACRYLIC & HOLOGRAPHIC DESIGN SYSTEM (PRO)   */
+/* TOOLTIP AI — WINDOWS 11 FLUENT ACRYLIC & HOLOGRAPHIC DESIGN SYSTEM (PRO)   */
 /* ========================================================================== */
 
 :root {
@@ -753,7 +753,7 @@ kbd {
   color: var(--text-secondary);
 }
 
-.tray-teachme-icon {
+.tooltip-tray-icon {
   display: flex;
   align-items: center;
   gap: 7px;
@@ -823,8 +823,8 @@ kbd {
 }
 
 /* ========================================================================== */
-/* TEACHME AI ULTRA-PROFESSIONAL ACRYLIC HUD OVERLAY CARD                     */
-/* ========================================================================== */.teachme-overlay-card {
+/* TOOLTIP AI ULTRA-PROFESSIONAL ACRYLIC HUD OVERLAY CARD                     */
+/* ========================================================================== */.tooltip-overlay-card {
   position: fixed;
   width: 270px;
   max-width: calc(100vw - 20px);
@@ -1988,7 +1988,7 @@ kbd {
   display: none;
 }
 
-.teachme-overlay-card.analyzing .card-analyzing-shimmer {
+.tooltip-overlay-card.analyzing .card-analyzing-shimmer {
   display: block;
 }
 
@@ -1998,7 +1998,7 @@ kbd {
 }
 
 /* ========================================================================== */
-/* TEACHME AI — FULL ENVELOPING LANDING PAGE & SHOWCASE EXPERIENCE           */
+/* TOOLTIP AI — FULL ENVELOPING LANDING PAGE & SHOWCASE EXPERIENCE           */
 /* ========================================================================== */
 
 /* Top Navigation Bar */

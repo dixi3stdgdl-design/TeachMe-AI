@@ -8,13 +8,13 @@ using System.Windows.Forms;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 using MenuItem = System.Windows.Controls.MenuItem;
 
-namespace TeachMeAI;
+namespace ToolTipAI;
 
 public class SystemTrayManager : IDisposable
 {
     private static readonly string LogFile = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), 
-        "TeachMeAI", 
+        "ToolTipAI", 
         "run.log");
 
     private NotifyIcon? _notifyIcon;

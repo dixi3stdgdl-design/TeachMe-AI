@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Automation;
 using System.Windows.Automation.Text;
 
-namespace TeachMeAI;
+namespace ToolTipAI;
 
 /// <summary>
 /// Información de accesibilidad nativa y UI Automation extraída en microsegundos desde Windows.
