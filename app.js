@@ -157,7 +157,9 @@
       product: 'Tooltip AI Bundle',
       total: '24.99 USD',
       url: 'https://paypal.me/DixLqb/24.99',
-      downloads: [],
+      downloads: [
+        { label: 'Bridge Companion Android (APK)', href: '/downloads/ToolTipAIBridge.apk' }
+      ],
       delivery: 'paid'
     },
     module: {
@@ -211,7 +213,9 @@
       product: 'Bridge',
       total: '9.99 USD',
       url: 'https://paypal.me/DixLqb/9.99',
-      downloads: [],
+      downloads: [
+        { label: 'Companion Android (APK)', href: '/downloads/ToolTipAIBridge.apk' }
+      ],
       delivery: 'paid'
     },
     assistant: {
@@ -296,7 +300,15 @@
         (current.storeWeb ? '<a class="btn btn-ghost btn-block" style="margin-bottom:0.75rem; text-align:center; text-decoration:none; font-size:0.85rem;" target="_blank" rel="noopener" href="' + current.storeWeb + '">' +
         '🌐 Abrir ficha web en Microsoft Store</a>' : '');
     }
+    var dlBtns = '';
+    if (current.downloads && current.downloads.length) {
+      dlBtns = current.downloads.map(function (d) {
+        return '<a class="btn btn-primary btn-block" style="margin-bottom:0.6rem; text-align:center; text-decoration:none;" href="' + d.href + '" download>' +
+          '<span>📱</span> Descargar ' + d.label + '</a>';
+      }).join('');
+    }
     box.innerHTML =
+      dlBtns +
       storeBtn +
       '<div class="ck-note" style="margin:0.75rem 0 0">' +
       '<strong>Entrega directa o Microsoft Store.</strong> Los instaladores de Aura, Voice, Translate y Bridge ' +
