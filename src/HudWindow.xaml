@@ -173,6 +173,29 @@
                     </Grid>
                 </Border>
 
+                <!-- 1b. Banner de Periodo de Prueba y Compras Microsoft Store -->
+                <Border x:Name="TrialNoticeBanner" Grid.Row="1" Margin="10 2 10 4" Background="#E00C2238" BorderBrush="#38BDF8" BorderThickness="1" CornerRadius="6" Padding="6 5" Visibility="Collapsed">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="TrialNoticeIcon" Text="⏱️" FontSize="11" Margin="0 0 6 0" VerticalAlignment="Center"/>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock x:Name="TrialNoticeTitle" Text="PRUEBA DE 24 HORAS ACTIVA" Foreground="#38BDF8" FontWeight="Bold" FontSize="8"/>
+                            <TextBlock x:Name="TrialNoticeSubtitle" Text="Evaluación gratuita de la Store" Foreground="#E2E8F0" FontSize="7.5" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <Button x:Name="BtnPurchaseApp" Grid.Column="2" Background="#1E293B" BorderBrush="#38BDF8" BorderThickness="0.8" Cursor="Hand" Margin="3 0" Padding="5 2" Click="BtnPurchaseApp_Click" ToolTip="Comprar licencia individual de esta app en Microsoft Store">
+                            <TextBlock x:Name="BtnPurchaseAppText" Text="App $9.99" Foreground="#38BDF8" FontWeight="Bold" FontSize="7.5"/>
+                        </Button>
+                        <Button x:Name="BtnPurchaseBundle" Grid.Column="3" Background="#38BDF8" Cursor="Hand" Margin="2 0 0 0" Padding="5 2" Click="BtnPurchaseBundle_Click" ToolTip="Desbloquear las 4 aplicaciones de la Suite de por vida en Microsoft Store">
+                            <TextBlock x:Name="BtnPurchaseBundleText" Text="Suite $24.99" Foreground="#080D1A" FontWeight="Bold" FontSize="7.5"/>
+                        </Button>
+                    </Grid>
+                </Border>
+
                 <!-- 2. CENTERPIECE: EL CONSEJO DEL MAESTRO (Hero Advice Card al Frente) -->
                 <Border x:Name="AdviceCardBorder" Grid.Row="2" Margin="10 4 10 6" Background="#C0080E1C" BorderBrush="#50A855F7" BorderThickness="1.2" CornerRadius="8" Padding="8 7">
                     <StackPanel>

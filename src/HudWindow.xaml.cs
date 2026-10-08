@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Interop;
 
 namespace ToolTipAI;
 
@@ -100,8 +101,9 @@ public partial class HudWindow : Window
         string folder = Path.Combine(appData, "ToolTipAI");
         Directory.CreateDirectory(folder);
         _settingsPath = Path.Combine(folder, "config.json");
-
         LoadSettings();
+        this.Loaded += async (s, e) => await RefreshLicenseBannerAsync();
+        StoreCommerceManager.OnLicenseChanged += status => Dispatcher.InvokeAsync(RefreshLicenseBannerAsync);
     }
 
     private void HandleDockModeChanged(DockMode mode)
@@ -452,11 +454,12 @@ public partial class HudWindow : Window
         // If Gemini API Key is configured and this isn't already the AI result, trigger multimodal vision in background!
         if (triggerAiAnalysis && !_isAiAnalyzing && !string.IsNullOrWhiteSpace(ApiKey) && imageBytes != null && imageBytes.Length > 0)
         {
-            var trial = TrialLicenseManager.CheckStatus();
+            var trial = StoreCommerceManager.GetCachedStatus();
             if (trial.IsExpired)
             {
                 ConfidenceText.Text = " • ⌛ Prueba de 24h finalizada";
-                VerdictLabelText.Text = "Tu periodo de prueba de 24 horas ha expirado. Obtén la Suite completa en https://tooltip-ai.com/ o Microsoft Store para continuar usándolo de por vida.";
+                VerdictLabelText.Text = $"Tu periodo de evaluación de 24 horas ha expirado. Adquiere esta app ({trial.AppPriceFormatted}) o la Suite completa ({trial.BundlePriceFormatted}) en Microsoft Store.";
+                _ = RefreshLicenseBannerAsync();
                 return;
             }
 
@@ -703,10 +706,11 @@ public partial class HudWindow : Window
         string q = ChatInputBox.Text.Trim();
         if (string.IsNullOrWhiteSpace(q)) return;
 
-        var trial = TrialLicenseManager.CheckStatus();
+        var trial = StoreCommerceManager.GetCachedStatus();
         if (trial.IsExpired)
         {
-            AddChatMessage("Sistema", "Tu periodo de evaluación de 24 horas ha expirado. Adquiere ToolTip AI Suite en https://tooltip-ai.com/ o Microsoft Store para continuar.", isUser: false);
+            AddChatMessage("Sistema", $"Tu periodo de evaluación de 24 horas ha finalizado. Puedes adquirir la app ({trial.AppPriceFormatted}) o la Suite completa ({trial.BundlePriceFormatted}) en Microsoft Store.", isUser: false);
+            _ = RefreshLicenseBannerAsync();
             return;
         }
 
@@ -846,4 +850,86 @@ public partial class HudWindow : Window
         }
         catch { }
     }
+
+    #region Microsoft Store Commerce & Trial Management
+
+    public async Task RefreshLicenseBannerAsync()
+    {
+        try
+        {
+            var helper = new WindowInteropHelper(this);
+            var status = await StoreCommerceManager.GetLicenseStatusAsync(helper.Handle);
+
+            Dispatcher.Invoke(() =>
+            {
+                if (TrialNoticeBanner == null) return;
+
+                if (status.IsLicensed && !status.IsTrial)
+                {
+                    // Licencia activa completa de por vida (individual o Suite bundle)
+                    TrialNoticeBanner.Visibility = Visibility.Collapsed;
+                }
+                else if (status.IsExpired)
+                {
+                    // Periodo de prueba de 24 horas caducado
+                    TrialNoticeBanner.Visibility = Visibility.Visible;
+                    TrialNoticeBanner.Background = new SolidColorBrush(Color.FromArgb(0xF0, 0x2A, 0x0D, 0x15));
+                    TrialNoticeBanner.BorderBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0xF4, 0x3F, 0x5E));
+                    TrialNoticeIcon.Text = "⌛";
+                    TrialNoticeTitle.Text = "PRUEBA DE 24 HORAS FINALIZADA";
+                    TrialNoticeTitle.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xF4, 0x3F, 0x5E));
+                    TrialNoticeSubtitle.Text = "Desbloquea el análisis IA y la Suite en Microsoft Store:";
+                    BtnPurchaseAppText.Text = $"App {status.AppPriceFormatted}";
+                    BtnPurchaseBundleText.Text = $"Suite {status.BundlePriceFormatted}";
+                }
+                else
+                {
+                    // Periodo de prueba de 24 horas activo
+                    TrialNoticeBanner.Visibility = Visibility.Visible;
+                    TrialNoticeBanner.Background = new SolidColorBrush(Color.FromArgb(0xE0, 0x0C, 0x22, 0x38));
+                    TrialNoticeBanner.BorderBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x38, 0xBD, 0xF8));
+                    TrialNoticeIcon.Text = "⏱️";
+                    TrialNoticeTitle.Text = "PRUEBA DE 24 HORAS ACTIVA";
+                    TrialNoticeTitle.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x38, 0xBD, 0xF8));
+                    TrialNoticeSubtitle.Text = $"Restan {FormatSpan(status.TrialTimeRemaining)} de evaluación gratuita";
+                    BtnPurchaseAppText.Text = $"App {status.AppPriceFormatted}";
+                    BtnPurchaseBundleText.Text = $"Suite {status.BundlePriceFormatted}";
+                }
+            });
+        }
+        catch { }
+    }
+
+    private async void BtnPurchaseApp_Click(object sender, RoutedEventArgs e)
+    {
+        var helper = new WindowInteropHelper(this);
+        var res = await StoreCommerceManager.RequestPurchaseAppAsync(helper.Handle, StoreCommerceManager.AssistantStoreId);
+        if (res == Windows.Services.Store.StorePurchaseStatus.Succeeded)
+        {
+            MessageBox.Show("¡Gracias por adquirir ToolTip AI! Tu licencia ha sido activada de por vida.", "Microsoft Store", MessageBoxButton.OK, MessageBoxImage.Information);
+            await RefreshLicenseBannerAsync();
+        }
+    }
+
+    private async void BtnPurchaseBundle_Click(object sender, RoutedEventArgs e)
+    {
+        var helper = new WindowInteropHelper(this);
+        var res = await StoreCommerceManager.RequestPurchaseBundleAsync(helper.Handle);
+        if (res == Windows.Services.Store.StorePurchaseStatus.Succeeded)
+        {
+            MessageBox.Show("¡Felicitaciones! Has desbloqueado ToolTip AI Suite completa (4 Apps de por vida).", "Microsoft Store", MessageBoxButton.OK, MessageBoxImage.Information);
+            await RefreshLicenseBannerAsync();
+        }
+    }
+
+    private static string FormatSpan(TimeSpan span)
+    {
+        if (span.TotalHours >= 1.0)
+        {
+            return $"{(int)span.TotalHours}h {span.Minutes}m";
+        }
+        return $"{Math.Max(1, span.Minutes)}m";
+    }
+
+    #endregion
 }
