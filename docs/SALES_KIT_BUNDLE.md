@@ -1,21 +1,21 @@
-# Kit primeras 10 ventas — Bundle Suite 24.99
+# Kit de ventas — Bundle Suite 48.88
 
-Objetivo: **10 bundles** = ~250 USD de caja real.
+Objetivo: **10 bundles** = ~488 USD de caja real.
 
-## Oferta
+## Oferta (Estrategia A)
 
 | Producto | Precio | Qué incluye |
 |---|---|---|
-| **Bundle Suite** | **24.99 USD** | Aura + Voice + Translate (MSIX, licencia de por vida) |
-| Módulo suelto | 9.99 USD | Uno de los tres |
-| Assistant | Gratis | Inspector de pantalla |
+| **Bundle Suite** | **48.88 USD** (Regular: 56.96 USD) | Assistant + Aura + Voice + Translate + Bridge (MSIX/EXE + APK, licencia de por vida) |
+| Módulo suelto | 9.99 USD | Uno de los cuatro módulos de pago |
+| Assistant | Gratis con Suite | Inspector de pantalla (3 días prueba en Store) |
 
-**Pago:** https://paypal.me/DixLqb/24.99  
+**Pago:** https://paypal.me/DixLqb/48.88  
 **Entrega:** descarga directa en `tooltip-ai.com` (modal de compra) + soporte `dixstdgdl3@gmail.com`
 
 ## Pitch (15 segundos)
 
-> «Tooltip AI te explica lo que hay en tu pantalla de Windows: errores, menús en otros idiomas y esos checkboxes que instalan basura. La suite completa con licencia de por vida, 24.99 dólares.»
+> «Tooltip AI te explica lo que hay en tu pantalla de Windows: errores, menús en otros idiomas y esos checkboxes que instalan basura. La suite completa con 5 apps y licencia de por vida, 48.88 dólares.»
 
 ## Dónde conseguir las 10 primeras
 

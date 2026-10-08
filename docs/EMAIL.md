@@ -34,9 +34,9 @@ La web ya enlaza a los correos reales (`gmail` para ventas, `hotmail` para Team)
 ## Flujo de una venta
 
 ```text
-1. Cliente paga (PayPal.me 24.99 / 9.99)
+1. Cliente paga (PayPal.me 48.88 / 9.99)
 2. Te escribe a dixstdgdl3@gmail.com con el comprobante
-3. Respondes con MSIX + licencia (24 h máx.)
+3. Respondes con instaladores (MSIX/EXE + APK) + licencia (24 h máx.)
 4. Registras la venta en tu hoja de caja
 ```
 

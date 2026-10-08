@@ -153,10 +153,10 @@
   var catalog = {
     bundle: {
       title: 'Bundle Suite (5 Apps)',
-      desc: 'Assistant (Gratis) + Aura + Voice + Translate + Bridge · licencia de por vida',
+      desc: 'Oferta de Lanzamiento (Regular: 56.96 USD) · Assistant + Aura + Voice + Translate + Bridge · licencia de por vida',
       product: 'Tooltip AI Bundle',
-      total: '24.99 USD',
-      url: 'https://paypal.me/DixLqb/24.99',
+      total: '48.88 USD',
+      url: 'https://paypal.me/DixLqb/48.88',
       downloads: [
         { label: 'Bridge Companion Android (APK)', href: '/downloads/ToolTipAIBridge.apk' }
       ],
@@ -222,7 +222,7 @@
       title: 'ToolTip AI Assistant',
       desc: 'Inspector de pantalla · Disponible en Microsoft Store · Incluido de por vida en la Suite',
       product: 'Assistant',
-      total: 'Disponible en Microsoft Store · Gratis con la Suite (24.99 USD)',
+      total: 'Disponible en Microsoft Store · Gratis con la Suite (48.88 USD)',
       url: '',
       storeId: '9N3D02KXKD3D',
       storeUri: 'ms-windows-store://pdp/?productid=9N3D02KXKD3D',
