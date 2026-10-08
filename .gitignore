@@ -77,6 +77,8 @@ _qa_dossier/
 !aura/**
 !translate/**
 !voice/**
+!bridge.html
+!bridge/**
 !docs/**/*.html
 
 

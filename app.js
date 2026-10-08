@@ -152,8 +152,8 @@
      desde la web: se entregan tras confirmar el pago (correo / Store). */
   var catalog = {
     bundle: {
-      title: 'Bundle Suite (4 Apps)',
-      desc: 'Assistant (Gratis) + Aura + Voice + Translate · licencia de por vida',
+      title: 'Bundle Suite (5 Apps)',
+      desc: 'Assistant (Gratis) + Aura + Voice + Translate + Bridge · licencia de por vida',
       product: 'Tooltip AI Bundle',
       total: '24.99 USD',
       url: 'https://paypal.me/DixLqb/24.99',
@@ -162,7 +162,7 @@
     },
     module: {
       title: 'Módulo suelto',
-      desc: 'Aura, Voice o Translate · elige el tuyo',
+      desc: 'Aura, Voice, Translate o Bridge · elige el tuyo',
       product: 'Tooltip AI Module',
       total: '9.99 USD',
       url: 'https://paypal.me/DixLqb/9.99',
@@ -202,6 +202,15 @@
       storeId: '9NQN3RZ2Z655',
       storeUri: 'ms-windows-store://pdp/?productid=9NQN3RZ2Z655',
       storeWeb: 'https://apps.microsoft.com/detail/9NQN3RZ2Z655',
+      downloads: [],
+      delivery: 'paid'
+    },
+    bridge: {
+      title: 'ToolTip AI Bridge',
+      desc: 'Sincronización PC-Móvil en tiempo real · Wi-Fi local · licencia de por vida',
+      product: 'Bridge',
+      total: '9.99 USD',
+      url: 'https://paypal.me/DixLqb/9.99',
       downloads: [],
       delivery: 'paid'
     },
@@ -290,7 +299,7 @@
     box.innerHTML =
       storeBtn +
       '<div class="ck-note" style="margin:0.75rem 0 0">' +
-      '<strong>Entrega directa o Microsoft Store.</strong> Los instaladores de Aura, Voice y Translate ' +
+      '<strong>Entrega directa o Microsoft Store.</strong> Los instaladores de Aura, Voice, Translate y Bridge ' +
       'pueden abrirse en Microsoft Store o entregarse tras pago con PayPal. ' +
       'Escríbenos a <a href="mailto:dixstdgdl3@gmail.com?subject=Entrega%20ToolTip%20AI">dixstdgdl3@gmail.com</a> ' +
       'con cualquier consulta.' +
