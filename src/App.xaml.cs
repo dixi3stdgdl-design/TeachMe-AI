@@ -38,17 +38,20 @@ public partial class App : System.Windows.Application
         AppDomain.CurrentDomain.UnhandledException += (s, args) =>
         {
             SafeLog($"[Unhandled] terminating={args.IsTerminating} {args.ExceptionObject}\n");
+            if (args.ExceptionObject is Exception ex) TelemetryManager.TrackException(ex, "AppDomainUnhandled");
         };
 
         TaskScheduler.UnobservedTaskException += (s, args) =>
         {
             SafeLog($"[UnobservedTask] {args.Exception}\n");
+            if (args.Exception != null) TelemetryManager.TrackException(args.Exception, "UnobservedTask");
             args.SetObserved();
         };
 
         DispatcherUnhandledException += (s, args) =>
         {
             SafeLog($"[DispatcherUnhandled] {args.Exception}\n");
+            if (args.Exception != null) TelemetryManager.TrackException(args.Exception, "DispatcherUnhandled");
             args.Handled = true;
         };
     }
@@ -57,6 +60,11 @@ public partial class App : System.Windows.Application
     {
         Loc.ApplySystemCulture();
         SafeLog($"[ToolTip AI] OnStartup iniciado a las {DateTime.Now} (PID {Environment.ProcessId}) culture={Loc.Culture.Name}\n");
+        TelemetryManager.TrackEvent("App_Startup", new System.Collections.Generic.Dictionary<string, string>
+        {
+            ["Culture"] = Loc.Culture.Name,
+            ["PID"] = Environment.ProcessId.ToString()
+        });
 
         // --- GESTIÓN DE INSTANCIA ÚNICA Y ACTUALIZACIÓN LIMPIA ---
         // Si el usuario abre ToolTip AI (por acceso directo, script o actualización) y ya existía

@@ -125,6 +125,12 @@ public partial class SnippingWindow : Window
                 data.ExePath    = winInfo.ExePath;
                 data.CliSnippet = $"Get-Process -Id {winInfo.ProcessId} | Select-Object Id, ProcessName, Path, CPU, WorkingSet64";
 
+                TelemetryManager.TrackEvent("Snip_Completed", new System.Collections.Generic.Dictionary<string, string>
+                {
+                    ["Process"] = winInfo.ProcessName ?? "Unknown",
+                    ["ControlType"] = nativeInfo.ControlType ?? "Unknown"
+                });
+
                 OnSnipCompleted?.Invoke(imageBytes, data, (int)(x + width + 14), (int)y);
             }
             catch (Exception ex)

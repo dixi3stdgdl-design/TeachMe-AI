@@ -376,4 +376,45 @@
       hud.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0)';
     }, { passive: true });
   }
+  /* ---------- Azure Application Insights Telemetry ---------- */
+  (function initTelemetry() {
+    var endpoint = 'https://mexicocentral-0.in.applicationinsights.azure.com/v2/track';
+    var k = '680724c1-2840-4ce4-9780-e9ccd5062f9d';
+    function sendTelemetry(name, props) {
+      try {
+        var payload = {
+          name: 'Microsoft.ApplicationInsights.Event',
+          time: new Date().toISOString(),
+          iKey: k,
+          data: {
+            baseType: 'EventData',
+            baseData: {
+              ver: 2,
+              name: name,
+              properties: props || {}
+            }
+          }
+        };
+        if (navigator.sendBeacon) {
+          navigator.sendBeacon(endpoint, JSON.stringify(payload));
+        } else {
+          fetch(endpoint, { method: 'POST', body: JSON.stringify(payload), headers: { 'Content-Type': 'application/json' }, keepalive: true }).catch(function(){});
+        }
+      } catch (e) {}
+    }
+
+    sendTelemetry('Web_PageView', { path: location.pathname, referrer: document.referrer });
+
+    document.querySelectorAll('a[href*="apps.microsoft.com"], a[href*="ms-windows-store"]').forEach(function(el) {
+      el.addEventListener('click', function() {
+        sendTelemetry('Click_StoreListing', { target: el.href });
+      });
+    });
+
+    document.querySelectorAll('a[href*=".msix"], a[href*=".exe"]').forEach(function(el) {
+      el.addEventListener('click', function() {
+        sendTelemetry('Click_DownloadInstaller', { file: el.href });
+      });
+    });
+  })();
 })();
