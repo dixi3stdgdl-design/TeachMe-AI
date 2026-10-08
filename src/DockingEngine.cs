@@ -51,19 +51,31 @@ public class DockingEngine
             ? new System.Drawing.Point(mouse.X, mouse.Y)
             : new System.Drawing.Point((int)Math.Round(window.Left), (int)Math.Round(window.Top));
 
+        var screens = System.Windows.Forms.Screen.AllScreens;
         var currentScreen = System.Windows.Forms.Screen.FromPoint(refPoint) 
                             ?? System.Windows.Forms.Screen.PrimaryScreen 
-                            ?? System.Windows.Forms.Screen.AllScreens[0];
+                            ?? (screens is { Length: > 0 } ? screens[0] : null);
 
         var dpi = VisualTreeHelper.GetDpi(window);
         double scaleX = dpi.DpiScaleX > 0 ? dpi.DpiScaleX : 1.0;
         double scaleY = dpi.DpiScaleY > 0 ? dpi.DpiScaleY : 1.0;
 
         // Área de trabajo del monitor actual convertida a DIPs
-        double workLeft = currentScreen.WorkingArea.Left / scaleX;
-        double workTop = currentScreen.WorkingArea.Top / scaleY;
-        double screenW = currentScreen.WorkingArea.Width / scaleX;
-        double screenH = currentScreen.WorkingArea.Height / scaleY;
+        double workLeft, workTop, screenW, screenH;
+        if (currentScreen == null || currentScreen.Primary)
+        {
+            workLeft = SystemParameters.WorkArea.Left;
+            workTop = SystemParameters.WorkArea.Top;
+            screenW = SystemParameters.WorkArea.Width;
+            screenH = SystemParameters.WorkArea.Height;
+        }
+        else
+        {
+            workLeft = currentScreen.WorkingArea.Left / scaleX;
+            workTop = currentScreen.WorkingArea.Top / scaleY;
+            screenW = currentScreen.WorkingArea.Width / scaleX;
+            screenH = currentScreen.WorkingArea.Height / scaleY;
+        }
 
         double winLeft = window.Left;
         double winTop = window.Top;
@@ -113,8 +125,8 @@ public class DockingEngine
             if (isCapsule)
             {
                 targetMode = DockMode.TopCapsule;
-                targetWidth = 580;
-                targetHeight = 46;
+                targetWidth = Math.Min(680, screenW - 20);
+                targetHeight = 48;
                 targetLeft = workLeft + Math.Max(10, (screenW - targetWidth) / 2.0);
                 targetTop = workTop + 8;
             }
@@ -133,8 +145,8 @@ public class DockingEngine
             if (isCapsule)
             {
                 targetMode = DockMode.BottomRibbon;
-                targetWidth = 580;
-                targetHeight = 46;
+                targetWidth = Math.Min(680, screenW - 20);
+                targetHeight = 48;
                 targetLeft = workLeft + Math.Max(10, (screenW - targetWidth) / 2.0);
                 targetTop = workTop + screenH - targetHeight - 8;
             }
@@ -151,8 +163,8 @@ public class DockingEngine
         else
         {
             targetMode = DockMode.Floating;
-            targetWidth = isCapsule ? 580 : 325;
-            targetHeight = isCapsule ? 46 : 435;
+            targetWidth = isCapsule ? Math.Min(680, screenW - 20) : 325;
+            targetHeight = isCapsule ? 48 : Math.Min(435, screenH - 40);
             targetLeft = Math.Max(workLeft + 10, Math.Min(winLeft, workLeft + screenW - targetWidth - 10));
             targetTop = Math.Max(workTop + 10, Math.Min(winTop, workTop + screenH - targetHeight - 10));
         }
@@ -180,18 +192,30 @@ public class DockingEngine
             ? new System.Drawing.Point(mouse.X, mouse.Y)
             : new System.Drawing.Point((int)Math.Round(window.Left), (int)Math.Round(window.Top));
 
+        var screens = System.Windows.Forms.Screen.AllScreens;
         var currentScreen = System.Windows.Forms.Screen.FromPoint(refPoint) 
                             ?? System.Windows.Forms.Screen.PrimaryScreen 
-                            ?? System.Windows.Forms.Screen.AllScreens[0];
+                            ?? (screens is { Length: > 0 } ? screens[0] : null);
 
         var dpi = VisualTreeHelper.GetDpi(window);
         double scaleX = dpi.DpiScaleX > 0 ? dpi.DpiScaleX : 1.0;
         double scaleY = dpi.DpiScaleY > 0 ? dpi.DpiScaleY : 1.0;
 
-        double workLeft = currentScreen.WorkingArea.Left / scaleX;
-        double workTop = currentScreen.WorkingArea.Top / scaleY;
-        double screenW = currentScreen.WorkingArea.Width / scaleX;
-        double screenH = currentScreen.WorkingArea.Height / scaleY;
+        double workLeft, workTop, screenW, screenH;
+        if (currentScreen == null || currentScreen.Primary)
+        {
+            workLeft = SystemParameters.WorkArea.Left;
+            workTop = SystemParameters.WorkArea.Top;
+            screenW = SystemParameters.WorkArea.Width;
+            screenH = SystemParameters.WorkArea.Height;
+        }
+        else
+        {
+            workLeft = currentScreen.WorkingArea.Left / scaleX;
+            workTop = currentScreen.WorkingArea.Top / scaleY;
+            screenW = currentScreen.WorkingArea.Width / scaleX;
+            screenH = currentScreen.WorkingArea.Height / scaleY;
+        }
 
         if (CurrentMode == DockMode.BottomRibbon)
         {

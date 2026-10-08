@@ -104,12 +104,21 @@ public partial class SnippingWindow : Window
         {
             try
             {
-                byte[] imageBytes = CaptureScreenArea((int)x, (int)y, (int)width, (int)height);
+                var dpi = VisualTreeHelper.GetDpi(this);
+                double scaleX = dpi.DpiScaleX > 0 ? dpi.DpiScaleX : 1.0;
+                double scaleY = dpi.DpiScaleY > 0 ? dpi.DpiScaleY : 1.0;
 
-                int centerX = (int)(x + width  / 2);
-                int centerY = (int)(y + height / 2);
-                var winInfo    = NativeKernelEngine.InspectWindowAtPoint(centerX, centerY);
-                var nativeInfo = UiAutomationInspector.InspectElementAt(centerX, centerY);
+                int physX = (int)Math.Round(x * scaleX);
+                int physY = (int)Math.Round(y * scaleY);
+                int physW = (int)Math.Round(width * scaleX);
+                int physH = (int)Math.Round(height * scaleY);
+
+                byte[] imageBytes = CaptureScreenArea(physX, physY, physW, physH);
+
+                int centerPhysX = (int)Math.Round((x + width / 2.0) * scaleX);
+                int centerPhysY = (int)Math.Round((y + height / 2.0) * scaleY);
+                var winInfo    = NativeKernelEngine.InspectWindowAtPoint(centerPhysX, centerPhysY);
+                var nativeInfo = UiAutomationInspector.InspectElementAt(centerPhysX, centerPhysY);
 
                 var data = GeminiClient.GenerateFallbackData(
                     winInfo.Title, winInfo.ProcessName, winInfo.ProcessId, nativeInfo);

@@ -99,14 +99,15 @@ public partial class TranslateOverlayWindow : Window
         double dipY = screenY / dpiY;
 
         // Posicionamiento inteligente en el monitor correspondiente
+        var screens = System.Windows.Forms.Screen.AllScreens;
         var currentScreen = System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point(screenX, screenY))
                             ?? System.Windows.Forms.Screen.PrimaryScreen 
-                            ?? System.Windows.Forms.Screen.AllScreens[0];
+                            ?? (screens is { Length: > 0 } ? screens[0] : null);
 
-        double workLeft = currentScreen.WorkingArea.Left / dpiX;
-        double workTop = currentScreen.WorkingArea.Top / dpiY;
-        double workW = currentScreen.WorkingArea.Width / dpiX;
-        double workH = currentScreen.WorkingArea.Height / dpiY;
+        double workLeft = currentScreen != null ? currentScreen.WorkingArea.Left / dpiX : SystemParameters.WorkArea.Left;
+        double workTop = currentScreen != null ? currentScreen.WorkingArea.Top / dpiY : SystemParameters.WorkArea.Top;
+        double workW = currentScreen != null ? currentScreen.WorkingArea.Width / dpiX : SystemParameters.WorkArea.Width;
+        double workH = currentScreen != null ? currentScreen.WorkingArea.Height / dpiY : SystemParameters.WorkArea.Height;
 
         // Medir dimensiones reales según el contenido dinámico del texto
         this.UpdateLayout();

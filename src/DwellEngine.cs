@@ -189,8 +189,19 @@ public class DwellEngine
                 if (elapsed > 1.0) phase = "🧠 Extrayendo OCR...";
                 if (elapsed > 2.0) phase = "✨ Analizando IA...";
 
-                _indicator.Left = currentPos.X + 18;
-                _indicator.Top = currentPos.Y - 24;
+                var dpi = System.Windows.Media.VisualTreeHelper.GetDpi(_indicator);
+                double scaleX = dpi.DpiScaleX > 0 ? dpi.DpiScaleX : 1.0;
+                double scaleY = dpi.DpiScaleY > 0 ? dpi.DpiScaleY : 1.0;
+                double dipX = currentPos.X / scaleX;
+                double dipY = currentPos.Y / scaleY;
+
+                double workLeft = System.Windows.SystemParameters.WorkArea.Left;
+                double workTop = System.Windows.SystemParameters.WorkArea.Top;
+                double workW = System.Windows.SystemParameters.WorkArea.Width;
+                double workH = System.Windows.SystemParameters.WorkArea.Height;
+
+                _indicator.Left = Math.Max(workLeft + 10, Math.Min(dipX + 18, workLeft + workW - 160));
+                _indicator.Top = Math.Max(workTop + 10, Math.Min(dipY - 24, workTop + workH - 60));
                 _indicator.UpdateProgress(remaining, phase);
 
                 if (!_indicator.IsVisible)
@@ -238,7 +249,13 @@ public class DwellEngine
             data.ExePath = $"C:\\Windows\\System32\\{winInfo.ProcessName}.exe";
             data.CliSnippet = $"Get-Process -Id {winInfo.ProcessId} | Select-Object Id, ProcessName, Path, CPU, WorkingSet64";
 
-            OnDwellTriggered?.Invoke(data, imageBytes, x + 24, y - 24);
+            var dpi = System.Windows.Media.VisualTreeHelper.GetDpi(_indicator);
+            double scaleX = dpi.DpiScaleX > 0 ? dpi.DpiScaleX : 1.0;
+            double scaleY = dpi.DpiScaleY > 0 ? dpi.DpiScaleY : 1.0;
+            int dipX = (int)Math.Round((x + 24) / scaleX);
+            int dipY = (int)Math.Round((y - 24) / scaleY);
+
+            OnDwellTriggered?.Invoke(data, imageBytes, dipX, dipY);
         }
         catch { }
     }

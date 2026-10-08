@@ -16,11 +16,11 @@ param (
     [string]$DisplayName = "ToolTip AI",
 
     [Parameter(Mandatory=$false)]
-    [string]$Version = "1.0.3.0"
+    [string]$Version = "1.1.8.0"
 )
 
 $rootDir = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
-$scriptPackage = Join-Path $rootDir "scripts\package_msix.ps1"
+$scriptPackage = Join-Path $PSScriptRoot "package_msix.ps1"
 
 Write-Host "=========================================================="
 Write-Host "  Sincronizador de Identidad & Empaquetador MSIX"

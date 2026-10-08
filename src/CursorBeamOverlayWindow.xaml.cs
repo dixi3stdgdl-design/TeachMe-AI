@@ -61,9 +61,21 @@ public partial class CursorBeamOverlayWindow : Window
         double dipX = cursorX / dpiX;
         double dipY = cursorY / dpiY;
 
-        this.Left = dipX - (this.Width / 2.0);
-        // Se posiciona sutilmente 14px debajo del cursor como un latido óptico
-        this.Top = dipY + 14.0;
+        double workW = SystemParameters.WorkArea.Width;
+        double workH = SystemParameters.WorkArea.Height;
+        double workLeft = SystemParameters.WorkArea.Left;
+        double workTop = SystemParameters.WorkArea.Top;
+
+        double targetX = dipX - (this.Width / 2.0);
+        double targetY = dipY + 14.0;
+
+        if (targetX + this.Width > workLeft + workW - 8) targetX = workLeft + workW - this.Width - 8;
+        if (targetX < workLeft + 8) targetX = workLeft + 8;
+        if (targetY + this.Height > workTop + workH - 8) targetY = workTop + workH - this.Height - 8;
+        if (targetY < workTop + 8) targetY = workTop + 8;
+
+        this.Left = targetX;
+        this.Top = targetY;
 
         if (!this.IsVisible)
         {

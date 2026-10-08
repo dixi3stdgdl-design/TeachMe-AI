@@ -28,74 +28,82 @@
   <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
-  <canvas id="gl" aria-hidden="true"></canvas>
-  <div class="grain" aria-hidden="true"></div>
   <div class="progress" id="progress"></div>
 
   <header class="topbar">
     <a class="brand" href="./">
-      <img src="../icon.png" alt="" width="32" height="32">
+      <img src="../icon.png" alt="" width="30" height="30">
       <span>Tooltip<em>AI</em></span>
     </a>
     <nav class="nav">
+      <a href="#demo">Demo</a>
       <a href="#modulos">Modules</a>
-      <a href="#como">Sistema</a>
       <a href="#precios">Pricing</a>
       <a href="../privacy/en.html">Privacy</a>
     </nav>
     <div class="topbar-actions">
       <div class="lang"><a href="../">ES</a><a href="./" class="on">EN</a><a href="../de/">DE</a></div>
-      <button class="btn btn-primary btn-sm magnetic" data-buy="bundle">Buy</button>
+      <button class="btn btn-primary btn-sm magnetic" data-buy="bundle">Buy 24.99</button>
     </div>
-    <button class="menu-btn" id="menuBtn" aria-label="Menú"><span></span><span></span></button>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu"><span></span><span></span></button>
   </header>
 
   <main>
-    <!-- ACT 1 · HERO -->
+    <!-- ========== CINEMATIC HERO ========== -->
     <section class="hero">
-      <div class="hero-kicker reveal">
-        <span class="live-dot"></span>
-        SYSTEM ONLINE · WINDOWS 10/11 · NATIVE .NET
+      <div class="hero-bg" aria-hidden="true">
+        <img src="../assets/hero-closeup.png" alt="" class="hero-img" fetchpriority="high">
+        <div class="hero-veil"></div>
+        <div class="hero-glow"></div>
       </div>
 
-      <h1 class="hero-title">
-        <span class="line reveal d1">The interface</span>
-        <span class="line reveal d2"><em class="grad">stops lying.</em></span>
-      </h1>
-
-      <p class="hero-lead reveal d3">
-        Tooltip AI turns every Windows button, error and dialog into light you understand.
-        Explain. Translate. Read aloud. With <strong>your</strong> AI key — encrypted on your machine.
-      </p>
-
-      <div class="hero-cta reveal d4">
-        <button class="btn btn-primary btn-lg magnetic" data-buy="assistant">
-          <span class="btn-shine"></span>
-          Try Assistant — 1-Day Free Trial
-        </button>
-        <button class="btn btn-ghost btn-lg magnetic" data-buy="bundle">Get Full Suite · 24.99 USD</button>
-      </div>
-
-      <div class="hero-hud reveal d5" id="heroHud">
-        <div class="hud-orb"></div>
-        <div class="hud-panel">
-          <div class="hud-label">CONTEXT ENGINE</div>
-          <div class="hud-value">READY</div>
-          <div class="hud-bars">
-            <i style="--w:92%"></i><i style="--w:78%"></i><i style="--w:64%"></i>
-          </div>
+      <div class="hero-copy">
+        <div class="pill reveal">
+          <span class="dot-live"></span>
+          Windows 10 / 11 · Native .NET · Zero Electron
         </div>
-        <div class="hud-chips">
-          <span>BYOK · DPAPI</span>
-          <span>Native WPF</span>
-          <span>MIT</span>
-          <span>0 servers</span>
-        </div>
-      </div>
 
-      <div class="scroll-hint reveal d6">
-        <span>scroll</span>
-        <div class="scroll-line"></div>
+        <h1 class="reveal d1">
+          Your screen,<br>
+          <span class="shimmer">finally explained.</span>
+        </h1>
+
+        <p class="lead reveal d2">
+          Tooltip AI sees what's under your cursor and explains it clearly:
+          <strong>what that button does</strong>, what that error hides,
+          what that foreign interface says. Instantly. On your machine.
+        </p>
+
+        <div class="hero-actions reveal d3">
+          <button class="btn btn-primary btn-xl magnetic" data-buy="bundle">
+            <span class="btn-shine"></span>
+            Get the Suite · 24.99 USD
+          </button>
+          <button class="btn btn-ghost btn-xl magnetic" data-buy="assistant">
+            🏪 Assistant on Microsoft Store
+          </button>
+        </div>
+
+        <ul class="proof reveal d4">
+          <li><strong>4 apps</strong> native WPF</li>
+          <li><strong>BYOK</strong> DPAPI-encrypted key</li>
+          <li><strong>Lifetime</strong> license</li>
+          <li><strong>0</strong> capture servers</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ========== TICKER ========== -->
+    <section class="ticker-strip" aria-hidden="true">
+      <div class="ticker">
+        <span>EXPLAINS ERRORS</span><i></i>
+        <span>TRANSLATES UI</span><i></i>
+        <span>READS ALOUD</span><i></i>
+        <span>DETECTS TRICKY INSTALLERS</span><i></i>
+        <span>REAL ACCESSIBILITY</span><i></i>
+        <span>EXPLAINS ERRORS</span><i></i>
+        <span>TRANSLATES UI</span><i></i>
+        <span>READS ALOUD</span><i></i>
       </div>
     </section>
 
@@ -187,8 +195,8 @@
             <li>Free with Suite ($24.99)</li>
           </ul>
           <div style="display:flex; gap:0.5rem; margin-top:1rem;">
+            <a class="btn btn-primary btn-block magnetic" href="ms-windows-store://pdp/?productid=9N3D02KXKD3D" style="text-align:center; text-decoration:none;">Store ↗</a>
             <a class="btn btn-ghost btn-block magnetic" href="/assistant/" style="text-align:center;">Details</a>
-            <button class="btn btn-primary btn-block magnetic" data-buy="assistant">1-Day Trial</button>
           </div>
         </article>
 
@@ -293,14 +301,17 @@
       <div class="prices">
         <article class="price-card reveal">
           <h3>Assistant</h3>
-          <div class="amount">1-Day Trial</div>
-          <p class="amount-note">Free forever with Suite ($24.99)</p>
+          <div class="amount">Store <small>Official</small></div>
+          <p class="amount-note">Available on Microsoft Store · Free with Suite</p>
           <ul class="ticks">
-            <li>UI explanations</li>
-            <li>BYOK DPAPI</li>
-            <li>Included free with Suite</li>
+            <li>On-screen UI explanation</li>
+            <li>Encrypted DPAPI BYOK</li>
+            <li>Free for life with the Suite</li>
           </ul>
-          <button class="btn btn-ghost btn-block magnetic" data-buy="assistant">Download 1-Day Trial</button>
+          <div style="display:flex; gap:0.5rem; flex-direction:column;">
+            <a href="ms-windows-store://pdp/?productid=9N3D02KXKD3D" class="btn btn-primary btn-block magnetic" style="text-decoration:none; text-align:center;">🏪 Get on Store</a>
+            <button class="btn btn-ghost btn-block magnetic" data-buy="assistant">Direct Download</button>
+          </div>
         </article>
 
         <article class="price-card featured reveal">

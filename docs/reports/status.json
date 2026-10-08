@@ -1,17 +1,17 @@
-﻿{
+{
   "product": "ToolTip AI Suite",
   "publisher": "Dixi3 Lqbs",
   "domain": "https://tooltip-ai.com",
-  "updated": "2026-09-29",
+  "updated": "2026-10-08",
   "apps": [
     {
       "id": "9N3D02KXKD3D",
       "name": "ToolTip AI Assistant",
-      "version": "1.1.4.0",
-      "status": "in_certification",
-      "statusEs": "En proceso de certificación",
-      "submitted": "2026-09-29",
-      "note": "Fix 10.1.2.10 SnippingWindow StrokeDashArray crash."
+      "version": "1.1.8.0",
+      "status": "available",
+      "statusEs": "Disponible en Microsoft Store",
+      "submitted": "2026-10-08",
+      "note": "Oficial en Microsoft Store. Aprobado y publicado en la tienda."
     },
     {
       "id": "9NQN3RZ2Z655",

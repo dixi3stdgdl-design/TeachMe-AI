@@ -192,14 +192,15 @@ public class TranslateEngine
             catch { }
 
             // 1. Identificar monitor físico correspondiente mediante coordenadas físicas
+            var screens = System.Windows.Forms.Screen.AllScreens;
             var currentScreen = System.Windows.Forms.Screen.FromPoint(new Point(cursorX, cursorY))
                                 ?? System.Windows.Forms.Screen.PrimaryScreen
-                                ?? System.Windows.Forms.Screen.AllScreens[0];
+                                ?? (screens is { Length: > 0 } ? screens[0] : null);
 
-            int screenLeft = currentScreen.Bounds.Left;
-            int screenTop = currentScreen.Bounds.Top;
-            int screenWidth = currentScreen.Bounds.Width;
-            int screenHeight = currentScreen.Bounds.Height;
+            int screenLeft = currentScreen != null ? currentScreen.Bounds.Left : 0;
+            int screenTop = currentScreen != null ? currentScreen.Bounds.Top : 0;
+            int screenWidth = currentScreen != null ? currentScreen.Bounds.Width : (int)System.Windows.SystemParameters.PrimaryScreenWidth;
+            int screenHeight = currentScreen != null ? currentScreen.Bounds.Height : (int)System.Windows.SystemParameters.PrimaryScreenHeight;
 
             // Ventana amplia de captura (760x150 físico) centrada en el cursor
             int capW = 760;

@@ -52,13 +52,17 @@ public partial class MainWindow : Window
             AutoHideWindow();
         };
 
-        // Establecer dimensiones y posición inicial inmediata de la cápsula
-        this.Width = 500;
-        this.Height = 46;
-        this.Left = Math.Max(10, (SystemParameters.PrimaryScreenWidth - 500) / 2);
-        this.Top = 8;
+        // Establecer dimensiones y posición inicial inmediata de la cápsula (coherente con WorkArea en DIPs)
+        double initWorkW = SystemParameters.WorkArea.Width;
+        double initWorkLeft = SystemParameters.WorkArea.Left;
+        double initWorkTop = SystemParameters.WorkArea.Top;
+        this.Width = Math.Min(680, Math.Max(320, initWorkW - 20));
+        this.Height = 48;
+        this.Left = initWorkLeft + Math.Max(10, (initWorkW - this.Width) / 2);
+        this.Top = initWorkTop + 8;
         _unfoldedLeft = this.Left;
         _unfoldedTop = this.Top;
+        _isPinned = true; // Fijada por defecto para accesibilidad plena (política 10.1.2.10)
 
         string logFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ToolTipAI", "run.log");
 
@@ -109,32 +113,18 @@ public partial class MainWindow : Window
 
         try
         {
-            // Ubicación inicial: Cápsula dinámica superior en el centro de la pantalla principal
-            // (Fallback si Screen.AllScreens viene vacío en máquinas de certificación.)
-            var screens = System.Windows.Forms.Screen.AllScreens;
-            var primary = System.Windows.Forms.Screen.PrimaryScreen
-                ?? (screens is { Length: > 0 } ? screens[0] : null);
+            // Ubicación inicial: Cápsula dinámica superior centrada en el WorkArea nativo de WPF
+            // Respetar estrictamente SystemParameters.WorkArea (DIPs) para compatibilidad total con
+            // cualquier resolución y escala DPI de Windows 11 (100%, 125%, 150%, 200%)
+            double workW = SystemParameters.WorkArea.Width;
+            double workH = SystemParameters.WorkArea.Height;
+            double workLeft = SystemParameters.WorkArea.Left;
+            double workTop = SystemParameters.WorkArea.Top;
 
-            this.Width = 680;
+            this.Width = Math.Min(680, Math.Max(320, workW - 20));
             this.Height = 48;
-
-            if (primary == null)
-            {
-                this.Left = Math.Max(10, (SystemParameters.PrimaryScreenWidth - 680) / 2.0);
-                this.Top = 8;
-            }
-            else
-            {
-                var dpi = VisualTreeHelper.GetDpi(this);
-                double scaleX = dpi.DpiScaleX > 0 ? dpi.DpiScaleX : 1.0;
-                double scaleY = dpi.DpiScaleY > 0 ? dpi.DpiScaleY : 1.0;
-                double workLeft = primary.WorkingArea.Left / scaleX;
-                double workTop = primary.WorkingArea.Top / scaleY;
-                double screenW = primary.WorkingArea.Width / scaleX;
-
-                this.Left = workLeft + Math.Max(10, (screenW - 680) / 2.0);
-                this.Top = workTop + 8;
-            }
+            this.Left = workLeft + Math.Max(10, (workW - this.Width) / 2.0);
+            this.Top = workTop + 8;
 
             _unfoldedLeft = this.Left;
             _unfoldedTop = this.Top;
@@ -142,8 +132,10 @@ public partial class MainWindow : Window
             this.WindowState = WindowState.Normal;
             this.Visibility = Visibility.Visible;
             this.Topmost = true;
+            this.Opacity = 1.0;
 
-            _autoHideTimer.Start();
+            // Mantener fija y visible al iniciar (política de funcionalidad 10.1.2.10)
+            _autoHideTimer.Stop();
 
             if (ListHistoryItems != null)
             {
@@ -487,38 +479,40 @@ public partial class MainWindow : Window
         var ease = new CubicEase { EasingMode = EasingMode.EaseInOut };
         var duration = TimeSpan.FromMilliseconds(240);
 
-        // 1. Reducir 4 tonos de opacidad (a 0.20) para total discreción visual
-        var animOpacity = new DoubleAnimation(this.Opacity, 0.20, duration) { EasingFunction = ease };
+        // 1. Reducir sutilmente opacidad (a 0.75) para que permanezca visible y elegante en cualquier fondo
+        var animOpacity = new DoubleAnimation(this.Opacity, 0.75, duration) { EasingFunction = ease };
         this.BeginAnimation(OpacityProperty, animOpacity);
 
         // 2. Auto-ocultamiento deslizante contra los bordes de la pantalla
         try
         {
+            var screens = System.Windows.Forms.Screen.AllScreens;
             var screen = System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point((int)Math.Round(this.Left), (int)Math.Round(this.Top)))
                           ?? System.Windows.Forms.Screen.PrimaryScreen
-                          ?? System.Windows.Forms.Screen.AllScreens[0];
+                          ?? (screens is { Length: > 0 } ? screens[0] : null);
             var dpi = VisualTreeHelper.GetDpi(this);
             double scaleX = dpi.DpiScaleX > 0 ? dpi.DpiScaleX : 1.0;
             double scaleY = dpi.DpiScaleY > 0 ? dpi.DpiScaleY : 1.0;
-            double workLeft = screen.WorkingArea.Left / scaleX;
-            double workTop = screen.WorkingArea.Top / scaleY;
-            double workW = screen.WorkingArea.Width / scaleX;
+            double workLeft = screen != null ? screen.WorkingArea.Left / scaleX : SystemParameters.WorkArea.Left;
+            double workTop = screen != null ? screen.WorkingArea.Top / scaleY : SystemParameters.WorkArea.Top;
+            double workW = screen != null ? screen.WorkingArea.Width / scaleX : SystemParameters.WorkArea.Width;
 
             if (_currentDockMode == DockMode.RightSidebar)
             {
-                double hideX = workLeft + workW - 14.0;
+                double hideX = workLeft + workW - 28.0;
                 var animLeft = new DoubleAnimation(this.Left, hideX, duration) { EasingFunction = ease };
                 this.BeginAnimation(LeftProperty, animLeft);
             }
             else if (_currentDockMode == DockMode.LeftSidebar)
             {
-                double hideX = workLeft - this.Width + 14.0;
+                double hideX = workLeft - this.Width + 28.0;
                 var animLeft = new DoubleAnimation(this.Left, hideX, duration) { EasingFunction = ease };
                 this.BeginAnimation(LeftProperty, animLeft);
             }
             else if (_currentDockMode == DockMode.TopCapsule)
             {
-                double hideY = workTop - this.Height + 10.0;
+                // Dejar 28 DIPs visibles para que sea accesible en pantallas de alta resolución y escalados DPI altos
+                double hideY = workTop - this.Height + 28.0;
                 var animTop = new DoubleAnimation(this.Top, hideY, duration) { EasingFunction = ease };
                 this.BeginAnimation(TopProperty, animTop);
             }
@@ -588,12 +582,25 @@ public partial class MainWindow : Window
     private void SetExpandedState(bool expand)
     {
         _isExpanded = expand;
+        double workH = SystemParameters.WorkArea.Height;
+        double workTop = SystemParameters.WorkArea.Top;
+
         if (expand)
         {
             MainBorder.CornerRadius = new CornerRadius(18);
             DrawerGrid.Visibility = Visibility.Visible;
             DrawerGrid.Opacity = 1.0;
-            this.Height = 440;
+
+            double targetH = Math.Min(440, Math.Max(200, workH - 40));
+            this.Height = targetH;
+
+            // Clamping vertical estricto: asegurar que los controles expandidos no queden cortados
+            // por la barra de tareas ni fuera de la pantalla en escalados como 125% o 150%
+            if (this.Top + targetH > workTop + workH - 8)
+            {
+                this.Top = Math.Max(workTop + 8, workTop + workH - targetH - 8);
+            }
+
             if (TxtExpandChevron != null) TxtExpandChevron.Text = "▴";
             BtnExpandToggle.ToolTip = "Ocultar Consola de Traducción";
 
@@ -610,6 +617,12 @@ public partial class MainWindow : Window
             DrawerGrid.Opacity = 0.0;
             MainBorder.CornerRadius = new CornerRadius(24);
             this.Height = 48;
+
+            if (_currentDockMode == DockMode.BottomRibbon)
+            {
+                this.Top = workTop + workH - 48 - 8;
+            }
+
             if (TxtExpandChevron != null) TxtExpandChevron.Text = "▾";
             BtnExpandToggle.ToolTip = "Abrir Consola de Traducción";
         }

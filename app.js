@@ -207,16 +207,16 @@
     },
     assistant: {
       title: 'ToolTip AI Assistant',
-      desc: 'Inspector de pantalla · prueba de 24 horas gratis · incluido de por vida en la Suite',
+      desc: 'Inspector de pantalla · Disponible en Microsoft Store · Incluido de por vida en la Suite',
       product: 'Assistant',
-      total: 'Prueba 24 horas · Gratis con la Suite (24.99 USD)',
+      total: 'Disponible en Microsoft Store · Gratis con la Suite (24.99 USD)',
       url: '',
       storeId: '9N3D02KXKD3D',
       storeUri: 'ms-windows-store://pdp/?productid=9N3D02KXKD3D',
       storeWeb: 'https://apps.microsoft.com/detail/9N3D02KXKD3D',
       downloads: [
-        { label: 'Assistant 1.1.6 (MSIX - 24 horas gratis)', href: '/downloads/ToolTipAIAssistant_1.1.6.0_x64.msix' },
-        { label: 'Assistant (EXE portable - 24 horas gratis)', href: '/downloads/TooltipAI.exe' }
+        { label: 'Assistant 1.1.8 (MSIX Oficial)', href: '/downloads/ToolTipAIAssistant_1.1.8.0_x64.msix' },
+        { label: 'Assistant (EXE portable)', href: '/downloads/TooltipAI.exe' }
       ],
       delivery: 'free'
     },
@@ -264,8 +264,10 @@
     box.hidden = false;
     var storeBtn = '';
     if (current && current.storeUri) {
-      storeBtn = '<a class="btn btn-ghost btn-block" style="margin-bottom:0.75rem; text-align:center;" href="' + current.storeUri + '">' +
-        '🏪 Obtener en Microsoft Store</a>';
+      storeBtn = '<a class="btn btn-primary btn-block" style="margin-bottom:0.6rem; text-align:center; text-decoration:none;" href="' + current.storeUri + '">' +
+        '🏪 Obtener en Microsoft Store</a>' +
+        (current.storeWeb ? '<a class="btn btn-ghost btn-block" style="margin-bottom:0.75rem; text-align:center; text-decoration:none; font-size:0.85rem;" target="_blank" rel="noopener" href="' + current.storeWeb + '">' +
+        '🌐 Abrir ficha web en Microsoft Store</a>' : '');
     }
     box.innerHTML = storeBtn + list.map(function (d) {
       return '<a class="btn btn-ghost btn-block" href="' + d.href + '" download>' +
@@ -280,8 +282,10 @@
     if (!paid) { box.innerHTML = ''; box.hidden = true; return; }
     var storeBtn = '';
     if (current.storeUri) {
-      storeBtn = '<a class="btn btn-ghost btn-block" style="margin-bottom:0.75rem; text-align:center;" href="' + current.storeUri + '">' +
-        '🏪 Ver en Microsoft Store</a>';
+      storeBtn = '<a class="btn btn-ghost btn-block" style="margin-bottom:0.6rem; text-align:center; text-decoration:none;" href="' + current.storeUri + '">' +
+        '🏪 Ver en Microsoft Store</a>' +
+        (current.storeWeb ? '<a class="btn btn-ghost btn-block" style="margin-bottom:0.75rem; text-align:center; text-decoration:none; font-size:0.85rem;" target="_blank" rel="noopener" href="' + current.storeWeb + '">' +
+        '🌐 Abrir ficha web en Microsoft Store</a>' : '');
     }
     box.innerHTML =
       storeBtn +

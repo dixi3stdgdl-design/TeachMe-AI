@@ -44,8 +44,14 @@ public partial class HudWindow : Window
     public bool IsMouseOverHud(int screenX, int screenY)
     {
         if (!this.IsVisible) return false;
-        return screenX >= this.Left && screenX <= (this.Left + this.Width) &&
-               screenY >= this.Top && screenY <= (this.Top + this.Height);
+        var dpi = VisualTreeHelper.GetDpi(this);
+        double scaleX = dpi.DpiScaleX > 0 ? dpi.DpiScaleX : 1.0;
+        double scaleY = dpi.DpiScaleY > 0 ? dpi.DpiScaleY : 1.0;
+        double dipX = screenX / scaleX;
+        double dipY = screenY / scaleY;
+
+        return dipX >= this.Left && dipX <= (this.Left + this.Width) &&
+               dipY >= this.Top && dipY <= (this.Top + this.Height);
     }
 
     public bool IsInteractingWithHud()
@@ -241,8 +247,8 @@ public partial class HudWindow : Window
                 default:
                     accentBrush = new SolidColorBrush(Color.FromRgb(0x38, 0xBD, 0xF8)); // Cyan
                     bgBadgeBrush = new SolidColorBrush(Color.FromArgb(0x35, 0x38, 0xBD, 0xF8));
-                    domainLabel = "🧠 COPILOTO COGNITIVO // WINDOWS";
-                    adviceTitle = "🧠 ASISTENCIA COGNITIVA WINDOWS";
+                    domainLabel = "🧠 ASISTENTE COGNITIVO // ESCRITORIO";
+                    adviceTitle = "🧠 ASISTENCIA DIDÁCTICA COGNITIVA";
                     break;
             }
 
@@ -287,17 +293,28 @@ public partial class HudWindow : Window
         ApplyDomainTheme(domain);
         MainWindow.Instance?.UpdateActiveDomain(domain);
 
-        // Position near target
-        double screenW = SystemParameters.PrimaryScreenWidth;
-        double screenH = SystemParameters.PrimaryScreenHeight;
+        // Posicionamiento inteligente dentro del WorkArea nativo de WPF (respetando barra de tareas y DPI)
+        double workW = SystemParameters.WorkArea.Width;
+        double workH = SystemParameters.WorkArea.Height;
+        double workLeft = SystemParameters.WorkArea.Left;
+        double workTop = SystemParameters.WorkArea.Top;
 
         double posX = targetX;
         double posY = targetY;
 
-        if (posX + this.Width > screenW - 20) posX = screenW - this.Width - 20;
-        if (posX < 20) posX = 20;
-        if (posY + this.Height > screenH - 50) posY = screenH - this.Height - 50;
-        if (posY < 40) posY = 40;
+        var dpi = VisualTreeHelper.GetDpi(this);
+        double scaleX = dpi.DpiScaleX > 0 ? dpi.DpiScaleX : 1.0;
+        double scaleY = dpi.DpiScaleY > 0 ? dpi.DpiScaleY : 1.0;
+
+        // Si las coordenadas vinieron en píxeles físicos nativos mayores al área de trabajo, normalizar a DIPs
+        if (posX > workLeft + workW) posX /= scaleX;
+        if (posY > workTop + workH) posY /= scaleY;
+
+        // Clamping estricto para que la ventana nunca quede cortada por la barra de tareas ni fuera del monitor
+        if (posX + this.Width > workLeft + workW - 16) posX = workLeft + workW - this.Width - 16;
+        if (posX < workLeft + 16) posX = workLeft + 16;
+        if (posY + this.Height > workTop + workH - 16) posY = workTop + workH - this.Height - 16;
+        if (posY < workTop + 16) posY = workTop + 16;
 
         this.Left = posX;
         this.Top = posY;
