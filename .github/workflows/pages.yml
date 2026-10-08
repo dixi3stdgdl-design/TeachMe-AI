@@ -47,10 +47,12 @@ jobs:
           cp -r aura _site/ 2>/dev/null || true
           cp -r translate _site/ 2>/dev/null || true
           cp -r voice _site/ 2>/dev/null || true
+          cp -r bridge _site/ 2>/dev/null || true
           cp assistant.html _site/ 2>/dev/null || true
           cp aura.html _site/ 2>/dev/null || true
           cp translate.html _site/ 2>/dev/null || true
           cp voice.html _site/ 2>/dev/null || true
+          cp bridge.html _site/ 2>/dev/null || true
           # i18n
           cp -r en _site/
           cp -r de _site/
