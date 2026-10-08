@@ -9,7 +9,7 @@
   "endpoints": {
     "landing": "https://tooltip-ai.com/",
     "privacy": "https://tooltip-ai.com/privacy",
-    "repository": "https://github.com/dixi3stdgdl-design/TeachMe-AI"
+    "repository": "https://github.com/dixi3stdgdl-design/ToolTip-AI"
   },
   "projects": [
     {
@@ -18,9 +18,9 @@
       "storeId": "9N3D02KXKD3D",
       "packageName": "Dixi3Lqbs.ToolTipAIAssistant",
       "pricing": "Free",
-      "version": "1.1.3.0",
+      "version": "1.1.8.0",
       "projectDir": "D:\\ToolTip AI",
-      "latestPackage": "D:\\ToolTip AI\\MicrosoftStore_Submission\\Package\\ToolTipAIAssistant_1.1.3.0_x64.msix",
+      "latestPackage": "D:\\ToolTip AI\\MicrosoftStore_Submission\\Package\\ToolTipAIAssistant_1.1.8.0_x64.msix",
       "storeUrl": "https://apps.microsoft.com/detail/9N3D02KXKD3D"
     },
     {

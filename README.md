@@ -5,9 +5,9 @@
 # 🧠 ToolTip AI
 ### Inspector de pantalla con IA didáctica para Windows 11
 
-[![GitHub Pages](https://img.shields.io/badge/Web%20Oficial-Landing%20Page-00F5A0?style=for-the-badge&logo=github&logoColor=black)](https://dixi3stdgdl-design.github.io/TeachMe-AI/)
-[![Microsoft Store](https://img.shields.io/badge/Microsoft%20Store-v1.0.2-0078D4?style=for-the-badge&logo=windows11&logoColor=white)](https://dixi3stdgdl-design.github.io/TeachMe-AI/)
-[![Direct Download](https://img.shields.io/badge/Descarga%20Directa-v1.0.2.0-10B981?style=for-the-badge&logo=windows&logoColor=white)](https://dixi3stdgdl-design.github.io/TeachMe-AI/downloads/TooltipAI.exe)
+[![Web Oficial](https://img.shields.io/badge/Web%20Oficial-tooltip--ai.com-00F5A0?style=for-the-badge&logo=googlechrome&logoColor=black)](https://tooltip-ai.com/)
+[![Microsoft Store](https://img.shields.io/badge/Microsoft%20Store-v1.1.8-0078D4?style=for-the-badge&logo=windows11&logoColor=white)](https://apps.microsoft.com/detail/9N3D02KXKD3D)
+[![Descarga Directa](https://img.shields.io/badge/Descarga%20Directa-MSIX%20v1.1.8.0-10B981?style=for-the-badge&logo=windows&logoColor=white)](https://tooltip-ai.com/downloads/ToolTipAIAssistant_1.1.8.0_x64.msix)
 [![Runtime - .NET 8](https://img.shields.io/badge/.NET-8.0%20WPF%20Standalone-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
 [![License - MIT](https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge)](LICENSE)
 
@@ -21,13 +21,13 @@
 
 ## ⚡ Descarga e Instalación
 
-### 1. Descarga Directa (Binario Standalone)
-* 📥 **[Descargar ToolTip AI v1.0.2.0 para Windows 11 (.exe)](https://dixi3stdgdl-design.github.io/TeachMe-AI/downloads/TooltipAI.exe)**
-* Compilado `win-x64 --self-contained`. Ejecuta y se aloja en la bandeja del sistema.
+### 1. Microsoft Store (Oficial)
+* 🏪 **[Obtener en Microsoft Store (Product ID: 9N3D02KXKD3D)](https://apps.microsoft.com/detail/9N3D02KXKD3D)**
+* Protocolo directo Windows: `ms-windows-store://pdp/?productid=9N3D02KXKD3D`
 
-### 2. Microsoft Store
-* **Partner Center ID:** `2f19281b-3d22-4767-9246-e6fe7d6e2d8a`
-* Versión de reenvío limpia: **1.0.2.0** (atajos no conflictivos, branding unificado, vault DPAPI).
+### 2. Descarga Directa (Instalador MSIX Certificado)
+* 📥 **[Descargar ToolTip AI Assistant v1.1.8.0 (.msix)](https://tooltip-ai.com/downloads/ToolTipAIAssistant_1.1.8.0_x64.msix)**
+* Paquete firmado y validado para Windows 10/11 x64.
 
 ---
 
@@ -130,14 +130,14 @@ Si deseas compilar la aplicación tú mismo:
 ### Comandos de Compilación
 ```powershell
 # 1. Clonar el repositorio
-git clone https://github.com/dixi3stdgdl-design/TeachMe-AI.git
-cd ToolTip AI
+git clone https://github.com/dixi3stdgdl-design/ToolTip-AI.git
+cd "ToolTip AI"
 
 # 2. Compilar binario autónomo de archivo único (Self-contained)
-dotnet publish src-dotnet/ToolTipAI.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o ./dist
+dotnet publish src/ToolTipAI.csproj -c Release -r win-x64 --self-contained true -o ./dist
 
 # 3. Ejecutar
-.\dist\TooltipAI.exe
+.\dist\TeachMeAI.exe
 ```
 
 ---

@@ -94,7 +94,7 @@ Sigue el orden de secciones en la página de envío:
 * **Categoría:** Selecciona `Productivity` (Productividad).
 * **Subcategoría:** Selecciona `Developer Tools` o `Utilities & tools`.
 * **URL de directiva de privacidad:** Pega:
-  `https://dixi3stdgdl-design.github.io/TeachMe-AI/`
+  `https://tooltip-ai.com/privacy`
 * **Información de soporte:** Pega la URL de tu repositorio o correo de contacto.
 * Guarda los cambios.
 

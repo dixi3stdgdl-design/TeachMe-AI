@@ -44,7 +44,7 @@ Usar ya (una vez el cert salga):
 
 Mientras HTTPS no esté forzado, puedes dejar la de Pages:
 
-- `https://dixi3stdgdl-design.github.io/TeachMe-AI/privacy/`
+- `https://dixi3stdgdl-design.github.io/ToolTip-AI/privacy/`
 
 ## Estado dominio (verificado 2026-09-17 noche)
 
