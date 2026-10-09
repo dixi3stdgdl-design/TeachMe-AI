@@ -39,7 +39,7 @@
   <link rel="icon" type="image/png" href="/icon.png">
   <link rel="stylesheet" href="/styles.css">
 </head>
-<body>
+<body class="hero-subpage">
   <div class="progress" id="progress"></div>
 
   <header class="topbar">
@@ -57,12 +57,13 @@
       <button class="btn btn-ghost btn-sm magnetic" onclick="location.href='/#precios'">Ver Suite (48.88)</button>
       <button class="btn btn-primary btn-sm magnetic" data-buy="bridge">Comprar 9.99</button>
     </div>
+    <button class="menu-btn" id="menuBtn" aria-label="Menú"><span></span><span></span></button>
   </header>
 
   <!-- HERO SECTION -->
   <main>
-    <section class="hero" style="min-height: auto; padding-top: 4rem; padding-bottom: 3.5rem;">
-      <div class="hero-copy">
+    <section class="hero" style="min-height: auto; padding-top: 2rem; padding-bottom: 2rem;">
+      <div class="hero-copy" style="padding-top: 2rem; padding-bottom: 2rem;">
         <div class="pill reveal">
           <span class="dot-live"></span>
           Windows 10 / 11 + Android · Wi-Fi Local P2P · Sin Nube · HUD 80% Translúcido
@@ -165,10 +166,10 @@
 
     <!-- COMPANION ANDROID & DESCARGA DIRECTA -->
     <section class="section" id="companion">
-      <div class="glass" style="padding: 2.5rem; max-width: 900px; margin: 0 auto; border-radius: 20px;">
+      <div class="glass" style="padding: 2.5rem clamp(1.5rem, 4vw, 3rem); max-width: 1040px; margin: 0 auto; border-radius: 24px;">
         <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1.75rem;">
           <div style="flex:1; min-width:280px;">
-            <span class="badge" style="display:inline-block; margin-bottom:1rem; border-color:rgba(56,189,248,.4); color:var(--sky);">COMPANION MÓVIL GRATIS</span>
+            <span class="badge badge-inline" style="border-color:rgba(56,189,248,.4); color:var(--sky);">COMPANION MÓVIL GRATIS</span>
             <h2>Instala el APK en tu Android<br><span class="shimmer">en solo 30 segundos.</span></h2>
             <p class="lead-sm" style="margin: 1rem 0 1.5rem;">
               La app móvil de <strong>ToolTip AI Bridge</strong> es un companion ultraligero (pesa solo 25 KB) sin publicidad, sin telemetría y sin consumo de batería en segundo plano. Se integra nativamente en el menú de selección de texto de tu teléfono.
@@ -198,18 +199,65 @@
       </div>
     </section>
 
-    <!-- OFERTA Y COMPARACIÓN -->
-    <section class="section">
-      <div class="glass" style="padding: 2.5rem; text-align: center; max-width: 800px; margin: 0 auto;">
-        <span class="badge" style="display:inline-block; margin-bottom:1rem;">OFERTA DE LA SUITE COMPLETA</span>
-        <h2>Todo el ecosistema ToolTip AI en tus manos</h2>
-        <p class="lead-sm" style="margin: 1rem 0 2rem;">
-          Consigue <strong>ToolTip AI Bridge</strong> por <strong>9.99 USD</strong> o desbloquea las <strong>5 apps completas con la Suite por 48.88 USD</strong> (Assistant oficial + Aura + Translate + Voice + Bridge).
-          <br><small style="color:var(--ink3); display:inline-block; margin-top:0.6rem;">Precio regular de referencia: 56.96 USD · Oferta especial de por vida</small>
-        </p>
-        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-          <button class="btn btn-primary btn-lg magnetic" data-buy="bridge">Comprar solo Bridge (9.99 USD)</button>
-          <button class="btn btn-ghost btn-lg magnetic" data-buy="bundle">Comprar Suite Completa (48.88 USD)</button>
+    <!-- OFERTA Y COMPARACIÓN DEL ECOSISTEMA -->
+    <section class="section" id="ecosistema">
+      <div class="glass" style="padding: 2.5rem clamp(1.5rem, 4vw, 3rem); max-width: 1040px; margin: 0 auto; border-radius: 24px;">
+        <div style="text-align: center; max-width: 680px; margin: 0 auto 2.25rem;">
+          <span class="badge badge-inline">TODO EL ECOSISTEMA TOOLTIP AI</span>
+          <h2>Elige solo Bridge o la Suite Completa</h2>
+          <p class="lead-sm" style="margin-top: 0.75rem; color: var(--ink2);">
+            Potencia tu flujo de trabajo con el módulo independiente o desbloquea las 5 herramientas de por vida con la Suite.
+          </p>
+        </div>
+
+        <div class="ecosystem-grid">
+          <!-- CARD BRIDGE -->
+          <article class="eco-card">
+            <div>
+              <span class="mod-tag" style="margin-bottom:0.75rem;">MÓDULO INDIVIDUAL</span>
+              <h3 style="font-size:1.6rem; margin-bottom:0.35rem;">ToolTip AI Bridge</h3>
+              <p style="color:var(--ink3); font-size:0.9rem; margin-bottom:1.25rem;">Sincronización PC-Móvil local ultra rápida</p>
+              <div class="amount" style="font-size:2.5rem; margin-bottom:0.5rem;">9.99 <small>USD</small></div>
+              <p class="amount-note" style="margin-bottom:1.25rem;">Pago único · Licencia de por vida</p>
+              <ul class="ticks" style="font-size:0.92rem; line-height:1.7; margin-bottom:1.75rem;">
+                <li>App nativa para Windows 10/11 (.NET 8 WPF)</li>
+                <li>Panel Cyber-Glass translúcido acoplable a 4 bordes</li>
+                <li>Invocación automática al pasar el mouse (Hover)</li>
+                <li>Companion móvil Android (APK 25 KB) sin costo</li>
+                <li>Actualizaciones y soporte permanente</li>
+              </ul>
+            </div>
+            <button class="btn btn-ghost btn-block btn-lg magnetic" data-buy="bridge">
+              Comprar solo Bridge · 9.99 USD
+            </button>
+          </article>
+
+          <!-- CARD BUNDLE SUITE -->
+          <article class="eco-card featured">
+            <div class="badge">OFERTA DE LANZAMIENTO · 5 APPS</div>
+            <div>
+              <span class="mod-tag free" style="margin-bottom:0.75rem;">MÁXIMO VALOR</span>
+              <h3 style="font-size:1.6rem; margin-bottom:0.35rem;">Bundle Suite (5 Apps)</h3>
+              <p style="color:var(--teal); font-size:0.9rem; margin-bottom:1.25rem;">Assistant + Aura + Translate + Voice + Bridge</p>
+              <div class="amount" style="font-size:2.5rem; margin-bottom:0.5rem;">
+                <del style="font-size:1.15rem; color:var(--ink3); font-weight:500; margin-right:8px;">56.96</del>48.88 <small>USD</small>
+              </div>
+              <p class="amount-note" style="margin-bottom:1.25rem;">Precio especial (Regular: 56.96 USD) · 5 Apps de por vida</p>
+              <ul class="ticks" style="font-size:0.92rem; line-height:1.7; margin-bottom:1.75rem;">
+                <li><strong>5 Aplicaciones completas</strong> sin suscripciones</li>
+                <li><strong>Assistant</strong> (oficial en Microsoft Store) de por vida</li>
+                <li><strong>Aura</strong> (radar de contexto al detener el cursor)</li>
+                <li><strong>Translate</strong> (traducción de interfaces en tiempo real)</li>
+                <li><strong>Voice</strong> (audio ducking y lectura por voz)</li>
+                <li><strong>Bridge</strong> (sincronización PC-Android en tiempo real)</li>
+                <li>Descarga directa (.exe / .msix) + Companion APK</li>
+              </ul>
+            </div>
+            <button class="btn btn-primary btn-block btn-lg magnetic" data-buy="bundle">
+              <span class="btn-shine"></span>
+              Comprar Suite Completa · 48.88 USD
+            </button>
+          </article>
         </div>
       </div>
     </section>

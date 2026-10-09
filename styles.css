@@ -268,6 +268,7 @@ h1,h2,h3{font-family:var(--display);letter-spacing:-.035em;line-height:1.08;font
 
 /* glass */
 .glass{
+  position:relative;
   border-radius:28px;padding:clamp(2.15rem,4.5vw,3.15rem);
   background:linear-gradient(155deg,rgba(22,32,48,.92),rgba(10,15,24,.96));
   border:1px solid var(--line);
@@ -317,6 +318,16 @@ kbd{
   font-size:.72rem;font-weight:800;letter-spacing:.08em;
   padding:.42rem 1rem;border-radius:999px;white-space:nowrap;
   box-shadow:0 12px 34px rgba(45,212,191,.4);
+}
+.badge-inline,
+.badge.inline{
+  position:relative;
+  top:auto;
+  left:auto;
+  transform:none;
+  display:inline-flex;
+  align-items:center;
+  margin-bottom:1rem;
 }
 .amount{
   font-family:var(--display);font-size:3.25rem;font-weight:700;
@@ -567,3 +578,34 @@ kbd{
 .amber{color:var(--amber)}.y{color:var(--amber)}
 .warn{color:var(--amber)}
 .alert{color:var(--amber)}
+
+/* Ecosystem comparison grid */
+.hero-subpage .hero h1{
+  max-width:24ch;
+}
+.ecosystem-grid{
+  display:grid;
+  grid-template-columns:1fr 1.15fr;
+  gap:1.75rem;
+  align-items:stretch;
+  margin-top:2rem;
+  text-align:left;
+}
+@media (max-width:860px){
+  .ecosystem-grid{grid-template-columns:1fr}
+}
+.eco-card{
+  background:rgba(12,18,28,.85);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:2rem;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  position:relative;
+}
+.eco-card.featured{
+  background:linear-gradient(160deg,rgba(18,28,44,.95),rgba(10,16,26,.98));
+  border-color:rgba(45,212,191,.45);
+  box-shadow:0 20px 60px rgba(45,212,191,.18);
+}
