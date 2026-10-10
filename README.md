@@ -6,28 +6,33 @@
 ### Inspector de pantalla con IA didáctica para Windows 11
 
 [![Web Oficial](https://img.shields.io/badge/Web%20Oficial-tooltip--ai.com-00F5A0?style=for-the-badge&logo=googlechrome&logoColor=black)](https://tooltip-ai.com/)
-[![Microsoft Store](https://img.shields.io/badge/Microsoft%20Store-v1.1.8-0078D4?style=for-the-badge&logo=windows11&logoColor=white)](https://apps.microsoft.com/detail/9N3D02KXKD3D)
-[![Descarga Directa](https://img.shields.io/badge/Descarga%20Directa-MSIX%20v1.1.8.0-10B981?style=for-the-badge&logo=windows&logoColor=white)](https://tooltip-ai.com/downloads/ToolTipAIAssistant_1.1.8.0_x64.msix)
+[![Microsoft Store Suite](https://img.shields.io/badge/Microsoft%20Store-Suite%20Oficial-0078D4?style=for-the-badge&logo=windows11&logoColor=white)](https://tooltip-ai.com/)
+[![Descarga Directa](https://img.shields.io/badge/Descarga%20Directa-MSIX%20x64-10B981?style=for-the-badge&logo=windows&logoColor=white)](https://tooltip-ai.com/downloads/ToolTipAIAssistant_1.1.8.0_x64.msix)
 [![Runtime - .NET 8](https://img.shields.io/badge/.NET-8.0%20WPF%20Standalone-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
 [![License - MIT](https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge)](LICENSE)
 
 <p align="center">
-  <b>Utilidad de escritorio para Windows 11 que explica botones, diálogos y errores con IA didáctica (tu propia clave API). Recorte global con <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd>, HUD flotante y bandeja del sistema.</b>
+  <b>Suite nativa para Windows 11 que explica pantallas, detecta contexto por reposo, traduce interfaces y sintetiza voz con IA (tu propia clave API).</b>
 </p>
 
 </div>
 
 ---
 
-## ⚡ Descarga e Instalación
+## ⚡ Suite Oficial en Microsoft Store
 
-### 1. Microsoft Store (Oficial)
-* 🏪 **[Obtener en Microsoft Store (Product ID: 9N3D02KXKD3D)](https://apps.microsoft.com/detail/9N3D02KXKD3D)**
-* Protocolo directo Windows: `ms-windows-store://pdp/?productid=9N3D02KXKD3D`
+La suite completa de **ToolTip AI** ya está disponible oficialmente en Microsoft Store:
 
-### 2. Descarga Directa (Instalador MSIX Certificado)
+| Aplicación | Función | Product ID | Enlace Store | Protocolo Directo Windows |
+| :--- | :--- | :--- | :--- | :--- |
+| **ToolTip AI Assistant** | Inspector de pantalla y UI con IA didáctica | `9N3D02KXKD3D` | [Ver en Store](https://apps.microsoft.com/detail/9N3D02KXKD3D) | `ms-windows-store://pdp/?productid=9N3D02KXKD3D` |
+| **ToolTip AI Aura** | Dwell radar y orientación por reposo del mouse | `9P33P1P5Z8DC` | [Ver en Store](https://apps.microsoft.com/detail/9P33P1P5Z8DC) | `ms-windows-store://pdp/?productid=9P33P1P5Z8DC` |
+| **ToolTip AI Translate** | Traducción on-hover con OCR e IA | `9NQN3RZ2Z655` | [Ver en Store](https://apps.microsoft.com/detail/9NQN3RZ2Z655) | `ms-windows-store://pdp/?productid=9NQN3RZ2Z655` |
+| **ToolTip AI Voice** | Síntesis de voz y audio ducking WASAPI | `9P417GZB0FVB` | [Ver en Store](https://apps.microsoft.com/detail/9P417GZB0FVB) | `ms-windows-store://pdp/?productid=9P417GZB0FVB` |
+
+### Descarga Directa (Instalador MSIX Certificado)
 * 📥 **[Descargar ToolTip AI Assistant v1.1.8.0 (.msix)](https://tooltip-ai.com/downloads/ToolTipAIAssistant_1.1.8.0_x64.msix)**
-* Paquete firmado y validado para Windows 10/11 x64.
+* Paquetes firmados y validados para Windows 10/11 x64.
 
 ---
 
